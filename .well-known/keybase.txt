@@ -1,0 +1,56 @@
+==================================================================
+https://keybase.io/eureka_bing
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of https://ruibing.org
+  * I am eureka_bing (https://keybase.io/eureka_bing) on keybase.
+  * I have a public key ASAW78Xa_u1Yk599KqP3N2sFttsPn0chkKrIjoGRpVJ2qwo
+
+To do so, I am signing this object:
+
+{
+  "body": {
+    "key": {
+      "eldest_kid": "012016efc5dafeed58939f7d2aa3f7376b05b6db0f9f472190aac88e8191a55276ab0a",
+      "host": "keybase.io",
+      "kid": "012016efc5dafeed58939f7d2aa3f7376b05b6db0f9f472190aac88e8191a55276ab0a",
+      "uid": "1986092f5eddcb32d189a6a195620719",
+      "username": "eureka_bing"
+    },
+    "merkle_root": {
+      "ctime": 1575899945,
+      "hash": "88478ce0d1d1e02fd7622cf570cd0703c5867a4bbfbcf5c0d26497d0c79ada2669181f8170752f959a42985062a96891dba4f09a3d7c19ec723964d2f4552ab4",
+      "hash_meta": "2699f647bb0d26d31333776bea13ab705c0a686354263da060028e28885a9144",
+      "seqno": 13045742
+    },
+    "service": {
+      "entropy": "znmSOcHAksCE7ZmdjHXsC/+a",
+      "hostname": "ruibing.org",
+      "protocol": "https:"
+    },
+    "type": "web_service_binding",
+    "version": 2
+  },
+  "client": {
+    "name": "keybase.io go client",
+    "version": "5.0.0"
+  },
+  "ctime": 1575899953,
+  "expire_in": 504576000,
+  "prev": "1b991d1606cbe518a1c3242851e3ebb4835e5e8d90fc7388d7f2ad1128d3a8c5",
+  "seqno": 23,
+  "tag": "signature"
+}
+
+which yields the signature:
+
+hKRib2R5hqhkZXRhY2hlZMOpaGFzaF90eXBlCqNrZXnEIwEgFu/F2v7tWJOffSqj9zdrBbbbD59HIZCqyI6BkaVSdqsKp3BheWxvYWTESpcCF8QgG5kdFgbL5RihwyQoUePrtINeXo2Q/HOI1/KtESjTqMXEIAfhDVx8rxjy47iCrqzHs8CioSMcSz+g0WF2wp2YZu87AgHCo3NpZ8RAALHw+ydMclBxlLl+Fg3vj+U7PHDA6iqWv2Ih5lT8UPnlzRYCpL9qJOffNMtOuNCgIyyonO9JbiWVQTi+8O1yAahzaWdfdHlwZSCkaGFzaIKkdHlwZQildmFsdWXEIO7lSr1Nl3cnc9gzt4HXlTOiAAEZRXu7gMHpXzXpbo4Io3RhZ80CAqd2ZXJzaW9uAQ==
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/eureka_bing
+
+==================================================================
