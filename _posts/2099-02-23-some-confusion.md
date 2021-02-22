@@ -22,10 +22,8 @@ Writing down my confusion, and solving it  subsequently.
 ---
 
 ## How to measure CPE?
-source: CSAPP, 5.12.1 Load Performance, *pp554*.
-
-CPE = Cycles Per Element
-
+NOTE： CPE == Cycles Per Element    
+Source: CSAPP, 5.12.1 Load Performance, *pp554*.   
 Might help: [How to determine CPE: Cycles Per Element](https://stackoverflow.com/questions/10419316/how-to-determine-cpe-cycles-per-element)
 
 书中作者提到测量的list_len函数的CPE为4，我想知道他怎么测出来的。
