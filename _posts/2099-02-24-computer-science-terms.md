@@ -1,6 +1,6 @@
 ---
 published: true
-title: Some Computer Science terminoloy(一些计算机术语)
+title: Some Computer Science Terminoloy(一些计算机术语)
 layout: post
 author: RuiBing
 category: programming
