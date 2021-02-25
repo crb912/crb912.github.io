@@ -28,5 +28,6 @@ Might help: [How to determine CPE: Cycles Per Element](https://stackoverflow.com
 
 书中作者提到测量的list_len函数的CPE为4，我想知道他怎么测出来的。
 
+注: 已经知道了，采用的线性拟合。增加元素的个数，拟合数元素个数和CPU始终的关系 (2021.02.25)
 
 

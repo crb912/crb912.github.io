@@ -39,4 +39,17 @@ In computer science, [locality of reference(wikipedia)](https://en.wikipedia.org
 
 今天，我在看[Resource acquisition is initialization](https://en.wikipedia.org/wiki/Resource_acquisition_is_initialization) 时，注意它有提到了locality，原话是: locality (it allows acquisition and release logic to be written next to each other).  复习一下，就知道了这个是属于*Temporal locality*的范畴，它常常容易被忽略。比如我们在代码的开头申请了一个变量，在代码快结束的时候才使用这个变量，这违反了temporal locality的原则。
 
-常“温故而知新”，虽不能“为师矣”，但也可以帮助自己融会贯通不断进步。
+常“温故而知新”，虽不能“为师矣”，但也可以帮助自己融会贯通不断进步。 
+
+## RAII <a name="RAII"></a>
+The technique of acquiring resources in a constructor and releasing them in a destructor, known as Resource Acquisition Is Initialization or RAII, allows us to eliminate “naked new operations,” that is, to avoid allocations in general code and keep them buried inside the implementation of well-behaved abstractions. 
+
+The technique was developed for exception-safe resource management in C++ during 1984–89, primarily by Bjarne Stroustrup and Andrew Koenig, and the term itself was coined by Stroustrup.
+
+对于一个用惯了Python的人，刚开始并不能理解为什么有这种技术--在constructor申请资源，在destructor释放资源。经过一些思考，也就能理解了。解释如下：
+
+Python把对象的创建交给了程序员，把对象的销毁交给了garbage collection; 而C++把对象的创建和销毁都交给了程序员。所以写Python时不需要过于关心资源的释放的问题，而写C++的程序员就要明确自己释放资源的时机。
+
+我们知道，C++的所有对象，除了在free store中申请的资源，对象和相应的资源都会在离开作用域时自动销毁。那么，为了防止程序员忘记了释放在free store中申请的资源，**C++设计者在对于OO的类进行设计时，应该为类显式地提供一个进入和离开的作用域，以便于程序员在离开作用域之前释放资源**。 Bjarne Stroustrup给出的解决方案是：C++为你提供构造函数(constructor)和析构函数(destructor)，也就有了明确的作用域(scope)，程序员有意识的在构造函数申请资源在析构函数释放资源。就不会因为离开作用域而忘掉资源的释放，就会让代码很好的安全性，避免了资源泄露。
+
+我认为，C++完全可以不为我们提供析构函数(destructor)。但是，这就要求每个编写C++的**程序员都要有很好的自我修养--时刻清楚地知道资源是否有被安全地释放**。 Bjarne Stroustrup为C++引入的 RAII技术，就减少了我们写出不安全代码的可能性。也简化了资源管理的过程，简化了整体代码。我认为这是一个十分优秀的设计。
