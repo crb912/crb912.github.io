@@ -9,6 +9,7 @@ category: programming
 # Table of Contents(目录)
 1. [Array Decayt](#ArrayDecay)
 2. [Locality](#Locality)
+3. [RAII](#RAII)
 
 ## Array Decay <a name="ArrayDecay"></a>
 language: C\+\+ 
