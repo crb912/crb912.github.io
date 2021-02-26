@@ -37,7 +37,8 @@ A problem solver.
 **提前祝大家端午节，中秋节，国庆节，全部节日快乐**。
 
 ### 个人相册
-帅就完事了，完全不需要开什么美颜
+帅就完事了，完全不需要开什么美颜。    
+如果我是个女人，一定会爱上这么帅气的男人。
 
 ![照片](https://i.loli.net/2021/02/26/6FaowBZRvzGCjt9.png  "https://github.com/crb912/crb912.github.io/blob/master/my_private/image/my/IMG-2021-02-11.png?raw=true")
 
