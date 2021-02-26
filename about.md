@@ -32,9 +32,12 @@ A problem solver.
 我决定再也不能浪费我的脑子和时间在追求“少艾”这件事上。     
 
 一个人的精力始终有限，在工作和女人之间，我选择工作。   
-小孩子才会全都要，聪明的成年人会做选择。    
+小孩子才会全都要，聪明的成年人做选择。    
 
 **提前祝大家端午节，中秋节，国庆节，全部节日快乐**。
+
+### 个人相册
+帅就完事了，完全不需要开什么美颜
 
 ![照片](https://i.loli.net/2021/02/26/6FaowBZRvzGCjt9.png  "https://github.com/crb912/crb912.github.io/blob/master/my_private/image/my/IMG-2021-02-11.png?raw=true")
 
