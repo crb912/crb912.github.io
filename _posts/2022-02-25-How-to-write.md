@@ -34,12 +34,19 @@ category: Programming
 
 这篇文章先从C++存在值类别(value category)的现象说起，然后直接抛出了C++17的几种值类型。为了说明类别之间的关系，采用了结构图。接下来有具体的对上面的一些特定value categories做出解释，最后给出代码示例。
 
-尽管文章非常之简洁，但是思路清晰，很快地就能让读者了解到Lvalues和Rvalues的基本概念(Basic concepts)。非常之好。
+每个段落的开头首句，都总结了最核心的一句话，比如这两句。
+
+- An lvalue has an address that your program can access. 
+- A prvalue expression has no address that is accessible by your program.
+
+
+尽管文章非常之简洁，但是思路清晰，很快地就能让读者了解到Lvalues和Rvalues的基本概念(Basic concepts)知识。非常之好，不可多得的技术文章，毕竟微软人才济济，能写出这种思路清晰的技术文章也就见怪不怪了。
 
 #### 值得学习的地方有：
 
 1. 概念解释类的文章最好要有三部分：概念阐述，具体解释，示例
-2. 图表能更好的阐述关系结构，表达思想。有句话叫，A picture is worth a thousand words.(一图胜千言)
+2. 图表能更好的阐述关系结构，表达思想。有句话叫，A picture is worth a thousand words.(一图胜千言)。
+3. 段落的的一句话要简明扼要，切中概念的关键点。
 
 ### Example 2
 阅读这篇： Python的文章 [Writing An Hadoop MapReduce Program In Python](https://www.michael-noll.com/tutorials/writing-an-hadoop-mapreduce-program-in-python/)    
