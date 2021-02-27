@@ -1,0 +1,165 @@
+---
+published: true
+title:  C++的左值和右值
+layout: post
+author: RuiBing
+category: Programming
+---  
+
+首先我承认我是个小偷，我已经把别人的知识剽窃过来据为己有了。I confess~
+
+被我偷过的无辜“受害者”列表(在此，我向他们的无私慷慨表示感谢):
+
+- [Lvalues and Rvalues (C++)](https://docs.microsoft.com/en-us/cpp/cpp/lvalues-and-rvalues-visual-cpp?view=msvc-160)
+- [Understanding the meaning of lvalues and rvalues in C++](https://www.internalpointers.com/post/understanding-meaning-lvalues-and-rvalues-c)
+- [What are rvalues, lvalues, xvalues, glvalues, and prvalues?](https://stackoverflow.com/questions/3601602/what-are-rvalues-lvalues-xvalues-glvalues-and-prvalues)
+- [PDF: n3055--](http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2010/n3055.pdf)
+
+如果你想偷我的，不劳而获窃取最后的成果，欢迎你开始阅读；如果你有好耐心，又是一个不怕麻烦的小偷，那么上述列出的文章，建议不要错过。
+
+正文如下：
+
+---
+## 1 背景(Background)
+### 1.1 在其它语言中的历史
+术语"lvalue"(左值)和“rvalue”(右值)，最早是由Christopher Strachey为CPL编程语言引入(B语言的祖先)。在他1967年这篇颇具影响力的讲义: [Fundamental Concepts in Programming Languages](https://classes.cs.uoregon.edu/14S/cis607pl/Papers/fundamental-1967.pdf), 他提到了`L-values`和`R-values`(见p15)。
+
+引用他几句经典的论述：
+
+>An L-value represents an area of the store of the computer. We call this a location...
+Some locations are addressable but some are not.
+The two essential features of a location are that it has a content—i.e. an associated R-value
+
+其大意是说，L-value表示一个位置，R-value表示它的内容。用如今的话说，L-value具有程序可访问的(内存)地址，R-value是内容。可以有趣认为，左值就是一个盛水果的容器，而右值就是容器内的水果。他这一最初的概念，一直沿用至今。
+
+然后，C语言之父丹尼斯·里奇(Dennis Ritchie)，使用"lvalue"的概念描述C（见[K&R,1978](http://www.ccapitalia.net/descarga/docs/1978-ritchie-the-c-programming-language.pdf), p183, APPENDIX A, Objects and lvalues)。但是他忽略了"rvalue"， 因为“lvalue”和非“lvalue”对C语言来说已经足够了。
+
+### 1.2 在C++中的发展
+再到后来的C++的草案也就有了“lvalue”和“ravlue”。[这份PDF](https://www.stroustrup.com/terminology.pdf) ，Stroustrup记录了他们讨论和思考的过程。
+
+每个值都有两个独立的属性：
+
+- 具有身份（has identity) --比如一个指针，一个地址，用户能决定这两份拷贝是同一个。
+- 可移动(can be moved from)--就是允许“移动之后，脱离拷贝的来源”。
+
+然后基于这两个属性，就有了三种的结果：
+
+- 具有身份+不可移动
+- 具有身份+可移动
+- 没有身份+可移动
+
+第四种可能性，“没身份且不可移动”，这种值对C++没有用（以及其它任何语言）。
+
+经过这样的思考也就得出了这样的结论：**值拥有三个基本的分类，两个独立属性；简称为“三类两属性”**。基于这样的概念，也就有了相应的命名。
+
+![关系](https://docs.microsoft.com/en-us/cpp/cpp/media/value_categories.png?view=msvc-160, "Source:docs.microsoft.com") 
+
+属性“具有身份”，对应了gvalue
+属性“可移动”，对应了ravlue
+
+基于这两个属性的三种结果结果，分别命名：
+- 具有身份+不可移动 -->  lvalue
+- 具有身份+可移动  -->xvalue 
+- 没有身份+可移动  --> 
+
+
+在过去, C++左值和右值的概念相对简单，过去有一句经典的论述：
+>Every expression is either an lvalue or an rvalue.
+每个表达式不是左值就是右值
+
+这句话经常在各种C++文章中看到，但是我得提醒你，大清已经亡了。 自从2011年起(ISOC++11 , ISO/IEC 14882:2011)，上面的那句经典论述已经不再成立。发生了什么事情呢？
+
+ISO C++11，新的C++标准引入了新的特性和概念，比如：
+
+- 右值引用()
+- xvalue, glvale, pvalue, 表达式的value类型分类
+- 移动语义
+
+如果我们想了解新表达式值类别的概念，则必须知道C++11有右值和左值引用，观察下面C++11的代码：
+
+```C++
+int y = 10;
+int& r_i = y;     // OK，正确的左值引用
+int&& rr_i = y;   //  compile error
+
+int& r_i2 = 7;    // compile error
+int&& rr_i2 = 7;   // OK，正确的右值引用， C++11
+```
+
+然而在过去的C++98标准中，没有右值引用的概念，下面的写法是错误的。
+```
+int&& rr_i2 = 7;  //  compile error ， C++98
+```
+基于C++98的编译器会给出错误：
+>expected unqualified-id before ‘&&’ token
+
+
+## 基本概念(Basic concepts)
+正文：
+
+下面的图表说明了不同分类的关系：
+
+
+![关系](https://docs.microsoft.com/en-us/cpp/cpp/media/value_categories.png?view=msvc-160, "Source:docs.microsoft.com") 
+
+
+
+那么问题来了，什么是变量？变量是命名的对象。什么是对象？对象是某特定类型的内存空间。什么是类型？类型是一组可能值及其操作。 不好意思，我这追根问底的毛病犯了，一系列基本问题可能会让你措手不及。
+
+不过也正因为对基本概念的透彻把握，所以在理解更复杂的概念时，你才会轻松。经过我这几个问题，你应该知道了：**变量有内存空间的，它是左值(lvalue)**. 那么这里就有一个疑惑了，变量能是右值(ravalue)吗？这是一会儿要解释的地方，如果你迫不及待的话，可以跳转[lavalue像ravalue]
+
+
+## 左值向右值转换，可以
+
+
+## 右值向左值转换，不可以
+
+```C++
+int y = 10;
+int& yref = y; 
+```
+
+yref是左值引用(lvalue reference)，这是lvalue 表达式。
+
+所以说，左值引用(lvalue reference)，顾名思义只能去引用左值(lvalue)，而不能试图去引用右值(ravlue). ** 为什么不能引用右值？ 因为右值没有内存地址呀** 。
+
+引用右值是编译器禁止的行为。如果我天生头铁，一定要引用右值呢？
+
+给你两个例子：
+
+```C++
+int& yref = 10;  // 可以吗?
+```
+
+当然，上述写法是不可以的，编译器会给出错误：
+>
+cannot bind non-const lvalue reference of type ‘int&’ to an rvalue of type ‘int’
+// 不能把<左值引用>绑定到右值
+
+
+包括下面这样的方式，试图引用右值，编译器会给出相同的错误提示。
+
+```C++
+void fnc(int& x)
+{
+}
+
+int main()
+{
+    fnc(10);  // 不可以
+}
+
+
+```
+但是我引用左值就没有任何问题，看这里
+```C++
+void fnc(int& x) {}
+
+int main()
+{
+   int x = 10;
+   fnc(x);
+}
+
+```
+还没写完，今天接着写,.. 先更新一点
