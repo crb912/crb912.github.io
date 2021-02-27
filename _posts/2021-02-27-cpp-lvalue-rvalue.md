@@ -30,50 +30,70 @@ category: Programming
 Some locations are addressable but some are not.
 The two essential features of a location are that it has a content—i.e. an associated R-value
 
-其大意是说，L-value表示一个位置，R-value表示它的内容。用如今的话说，L-value具有程序可访问的(内存)地址，R-value是内容。可以有趣认为，左值就是一个盛水果的容器，而右值就是容器内的水果。他这一最初的概念，一直沿用至今。
+其大意是说，L-value表示一个位置，R-value表示它的内容。用如今的话说，**L-value具有程序可访问的(内存)地址，R-value是内容**。可以有趣认为，左值就是一个盛水果的容器，而右值就是容器内的水果。他这一最初的概念，一直沿用至今。
 
 然后，C语言之父丹尼斯·里奇(Dennis Ritchie)，使用"lvalue"的概念描述C（见[K&R,1978](http://www.ccapitalia.net/descarga/docs/1978-ritchie-the-c-programming-language.pdf), p183, APPENDIX A, Objects and lvalues)。但是他忽略了"rvalue"， 因为“lvalue”和非“lvalue”对C语言来说已经足够了。
 
 ### 1.2 在C++中的发展
-再到后来的C++的草案也就有了“lvalue”和“ravlue”。[这份PDF](https://www.stroustrup.com/terminology.pdf) ，Stroustrup记录了他们讨论和思考的过程。
 
-每个值都有两个独立的属性：
+再到后来的C++，草案也就有了“lvalue”和“ravlue”，他们也在FCD中沿用了过去常规的含义。
 
-- 具有身份（has identity) --比如一个指针，一个地址，用户能决定这两份拷贝是同一个。
-- 可移动(can be moved from)--就是允许“移动之后，脱离拷贝的来源”。
+C++规范对这两个术语的精确措辞很难，但是有助于解决一些已知的规范问题（与右值引用有关）。Stroustrup原先不打算做出更改，但是，CWG大多数人都不同意并坚持认为，必须有一些更改或使用新术语来解决已知问题和使规范保持一致。
 
-然后基于这两个属性，就有了三种的结果：
+简单地说，就是因为C++11即将引入的左值引用和移动语义的新特性，导致用原有旧术语的lvalue和rvalue不好解释了。所以他们要重新命名和定义。
+
+[这份PDF](https://www.stroustrup.com/terminology.pdf) ，Stroustrup记录了他们讨论和思考的过程。他们找到了问题的关键，每个表达式的值都具有两个属性。
+
+#### 每个值都有两个独立的属性：
+
+- 具有身份（has identity) --比如一个指针，一个地址，用户能决定这两份拷贝是具有身份的。
+- 可移动(can be moved from)--就是允许移动之后，脱离拷贝的来源，其状态有效。
+
+关于"可移动"的语义，类似于计算机中对文件操作的剪切，而拷贝操作类似于文件的复制。
+
+#### 基于这两个属性，就有了三种不同的分类结果：
 
 - 具有身份+不可移动
 - 具有身份+可移动
 - 没有身份+可移动
 
-第四种可能性，“没身份且不可移动”，这种值对C++没有用（以及其它任何语言）。
+排列组合，是有第四种可能性的。但是“没身份且不可移动”，这种值对C++没有用（以及其它任何语言）。
 
 经过这样的思考也就得出了这样的结论：**值拥有三个基本的分类，两个独立属性；简称为“三类两属性”**。基于这样的概念，也就有了相应的命名。
 
 ![关系](https://docs.microsoft.com/en-us/cpp/cpp/media/value_categories.png?view=msvc-160, "Source:docs.microsoft.com") 
 
-属性“具有身份”，对应了gvalue
+属性“具有身份”，对应了glvalue
 属性“可移动”，对应了ravlue
 
 基于这两个属性的三种结果结果，分别命名：
-- 具有身份+不可移动 -->  lvalue
-- 具有身份+可移动  -->xvalue 
-- 没有身份+可移动  --> 
 
+- 具有身份+不可移动 -->  lvalue
+- 具有身份+可移动  --> xvalue 
+- 没有身份+可移动  --> prvalue
+
+好了，C++表达式类型的历史演变也就解释完毕了。
+
+## 2 基本概念(Basic concepts)
 
 在过去, C++左值和右值的概念相对简单，过去有一句经典的论述：
 >Every expression is either an lvalue or an rvalue.
 每个表达式不是左值就是右值
 
-这句话经常在各种C++文章中看到，但是我得提醒你，大清已经亡了。 自从2011年起(ISOC++11 , ISO/IEC 14882:2011)，上面的那句经典论述已经不再成立。发生了什么事情呢？
+这句话经常在各种C++文章中看到，但是我得提醒你，自从2011年起(ISOC++11 , ISO/IEC 14882)，上面的那句经典论述已经不再成立。
 
-ISO C++11，新的C++标准引入了新的特性和概念，比如：
+发生了什么事情呢？ ISO C++11，新的C++标准引入了新的术语，并且定义了表达式的各种类别。那么直接快进到这些术语：
 
-- 右值引用()
-- xvalue, glvale, pvalue, 表达式的value类型分类
-- 移动语义
+| 值类别  |  定义  |  
+|---|---|
+|  lvalue  |  一个左值(在历史上，因为左值可能出现在赋值表达式的左侧)指定一个函数或者对象。【例子：如果p是一个表达式的指针类型，那么*p就是一个左值表达式，它引用p所指的一个对象或者函数。另一个例子：调用一个函数，它的返回值类型是左值引用，那么函数的结果是左值。】  |  
+| xvalue | xvalue (an “eXpiring”过期的值)。它也引用一个对象，该对象通常接近它的生命周期(以至于它的资源可被移动)。xvalue是某些包含右值引用的表达式【示例：函数返回类型为右值引用的是xvalue。】 |
+| glvalue |  (“generalized” lvalue， 广义的左值)，它是一个lvalue或者xvalue|
+| rvalue |  （在历史上，因为右值可能出现在赋值表达式的右侧）是一个xvalue，一个临时对象或子对象，或没有与任何对象关联的值。|
+| prvalue |  (“pure” rvalue) 是一个ralue，但不是xvalue. 【比如函数的调用结果，其返回值不是一个引用，那就是pvalue；再比如字面的12,7.e5, 或者ture 都是prvalue】|
+
+详细的英文定义在这里： [n3055](http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2010/n3055.pdf), 第五页
+
 
 如果我们想了解新表达式值类别的概念，则必须知道C++11有右值和左值引用，观察下面C++11的代码：
 
