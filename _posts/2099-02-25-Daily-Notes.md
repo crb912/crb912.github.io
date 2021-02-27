@@ -9,7 +9,7 @@ category: Programming
 
 ---
 ## 02-27
-今天在写这篇[C++的左值和右值](http://ruibing.org/programming/2021/02/27/cpp-lvalue-rvalue.html) ，当是笔记吧。写东西好费脑子，查资料也和费时间，还没写完。
+今天在写这篇[C++的左值和右值](http://ruibing.org/programming/2021/02/27/cpp-lvalue-rvalue.html) ，当是笔记吧。写东西好费脑子，查资料也很费时间，还没写完。**还是不够专注，下午特别疲惫**。
 
 ## 02-26
 忙一些杂事去了，没学多少东西，笔记就不写了。
