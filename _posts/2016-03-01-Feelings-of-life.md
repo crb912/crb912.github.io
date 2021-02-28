@@ -37,6 +37,7 @@ category: work and life
 ---
 
 ## 朝花夕拾  <a name="old_stories"></a>
+> 标题借用了鲁迅的朝花夕拾，原意是旧事重提。
 
 下午有点犯困，笔记没写完，就趟床上休息了。
 
