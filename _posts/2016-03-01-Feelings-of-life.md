@@ -9,10 +9,29 @@ category: work and life
 # 目录
 
 1. [2021](#2021)
-1.1 [ 朝花夕拾](#old_stories)
-1.2 [不再使用社交软件](#quit_social_media)
-1.3 [喜欢追究事物的本源](#investigate_the_origin_of_things)
-1.4 [回家](#come_back_home)
+-- [每天都写](#write_every_day)
+-- [ 朝花夕拾](#old_stories)
+--[不再使用社交软件](#quit_social_media)
+-- [喜欢追究事物的本源](#investigate_the_origin_of_things)
+-- [回家](#come_back_home)
+
+
+## 每天都写  <a name="write_every_day"></a>
+写博客是孤独的，尤其是写博客的人。
+
+我写的心情和议论没人看。我写的编程文章，没朋友可以看懂(尽管有时候会收到陌生网友的夸赞，但也只是偶尔会有人给我反馈)。    
+
+我知道，大多时候，我都在自言自语。
+
+也许因为常年以来我整日的时间都花在电脑和桌子面前，而身边没有一个可以说话的人。偶尔情绪上来，也会觉得特别孤独。
+
+所以我现在每天都看书，每天都学习，每天都在写。
+
+尽管无人问津。
+
+用这种方式，倾听各种写书的作者，也同这个世界说话聊天。
+
+---
 
 ## 朝花夕拾  <a name="old_stories"></a>
 
