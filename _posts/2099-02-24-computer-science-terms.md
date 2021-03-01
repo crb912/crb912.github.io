@@ -11,7 +11,7 @@ category: programming
 2. [Locality](#Locality)
 3. [C++: RAII](#RAII)
 4. [C++: 具有身份(has identity)](#has_indentity)
-5. [C++: 移动语义(has identity)](#can_be_moved_from)
+5. [C++: 移动语义(can be moved from)](#can_be_moved_from)
 
 ## Array Decay <a name="ArrayDecay"></a>
 language: C\+\+ 

@@ -8,6 +8,16 @@ category: Programming
 每日的学习内容简记，方便复习和回顾
 
 ---
+
+## 03-01
+写了一点东西，解释了C++“具有身份”和“移动”的语义，分别这两篇是：
+
+-  [C++: 具有身份(has identity)](http://ruibing.org/programming/2099/02/24/computer-science-terms.html#has_indentity) 
+-  [C++: 移动语义(can be moved from)](http://ruibing.org/programming/2099/02/24/computer-science-terms.html#can_be_moved_from)
+
+要不是英语写的不如中文准确，我都想用英文写了。还得多练习和使用英语！
+
+
 ## 02-27
 今天在写这篇[C++的左值和右值](http://ruibing.org/programming/2021/02/27/cpp-lvalue-rvalue.html) ，当是笔记吧。写东西好费脑子，查资料也很费时间。拖到晚上11点了，还没写完，困了就休息。**感觉还是不够专注，特别是下午容易疲惫**。
 
