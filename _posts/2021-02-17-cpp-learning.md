@@ -5,15 +5,17 @@ layout: post
 author: Eureka Bing
 category: Programming
 ---  
+小师妹对林平之情有独钟，令狐冲情场失意，在思过崖上，经风清扬指点，学会了独孤九剑。
+
 ![令狐冲](http://www.luxst.com/uploads/article/201912/14/143317bwluknkwudlr55oq.jpeg)
 
-小师妹对林平之情有独钟，令狐冲情场失意。在思过崖上，经风清扬指点，学会了独孤九剑。
 
-我想每个程序员都有一个这样的心愿：有一门自己特别喜欢并且擅长的编程语言，就像令狐冲的独孤九剑。如果让我去选择一门编程语言，作为我的独孤九剑全心全意去修炼的话，我选择了`C++`。
 
-既然是修炼武功秘籍，那就有修炼的过程。或心得体会，或困惑，或一些备忘的东西，全都记在这里好了。
+我想每个程序员都有一个这样的心愿：有一门自己特别喜欢并且擅长的编程语言，就像令狐冲的独孤九剑。如果让我去选择一门编程语言，作为我的独孤九剑全心全意去修炼的话，我选择`C++`。
 
-在此声明：我不保证你能看懂我写的东西，我只保证我自己写的我自己能看懂。
+既然是修炼武功秘籍，那就有修炼的过程。或心得体会，或困惑，或一些备忘，全都记在这里好了。
+
+在此声明：我不保证你能看懂我写的东西，我只保证我自己写的自己看懂。
 
 ---
 
@@ -30,7 +32,7 @@ category: Programming
 
 ## RAII <a name="RAII"></a>
 
-The technique of acquiring resources in a constructor and releasing them in a destructor, known as Resource Acquisition Is Initialization or RAII, allows us to eliminate “naked new operations,” that is, to avoid allocations in general code and keep them buried inside the implementation of well-behaved abstractions. 
+The technique of acquiring resources in a constructor and releasing them in a destructor, known as **Resource Acquisition Is Initialization** or RAII, allows us to eliminate “naked new operations,” that is, to avoid allocations in general code and keep them buried inside the implementation of well-behaved abstractions. 
 
 The technique was developed for exception-safe resource management in C++ during 1984–89, primarily by Bjarne Stroustrup and Andrew Koenig, and the term itself was coined by Stroustrup.
 
