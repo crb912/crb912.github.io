@@ -1,6 +1,6 @@
 ---
 published: true
-title: 修炼我的独孤九剑--C++
+title: 修炼我的独孤九剑：C++
 layout: post
 author: Eureka Bing
 category: Programming
@@ -8,8 +8,6 @@ category: Programming
 小师妹对林平之情有独钟，令狐冲情场失意，在思过崖上，经风清扬指点，学会了独孤九剑。
 
 ![令狐冲](http://www.luxst.com/uploads/article/201912/14/143317bwluknkwudlr55oq.jpeg)
-
-
 
 我想每个程序员都有一个这样的心愿：有一门自己特别喜欢并且擅长的编程语言，就像令狐冲的独孤九剑。如果让我去选择一门编程语言，作为我的独孤九剑全心全意去修炼的话，我选择`C++`。
 
