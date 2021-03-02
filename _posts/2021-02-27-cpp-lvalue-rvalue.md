@@ -205,9 +205,9 @@ lvalue required as unary ‘&’ operand
 那么xvalue呢？　欲知后事如何，请看下文分解。
 
 #### 3.1.3 更多的lvalue示例和左值引用
-左值表达式的示例包括变量名，包括const变量，数组元素，位字段，union和类成员等等...我不打算给出全部的示例了, 我想下面的示例已经足够了吧。
+左值表达式的示例包括变量名，包括const变量，数组元素，位字段，union和类成员等等...我不打算给出全部的示例, 我想下面的示例已经足够了吧。
 
-```
+```cpp
 int i, j, *p;
 i = 7;   // the variable i is lvalue
 const j = 7;   //  the constant j is a non-modifiable lvalue
@@ -226,7 +226,7 @@ S s = {6};
 ...
 ```
 
-但是我们注意的是，一种特殊的左值--lvalue reference（左值引用）
+我们注意的是，一种特殊的左值: lvalue reference（左值引用）
 
 ```cpp
     int y = 10;
@@ -235,13 +235,36 @@ S s = {6};
     y++;        // both y and yref now are 12;
     
     const int& yref_2 = y;
-    yref_2++;        //  error!  can't do this!
+    yref_2++;        //  error!  cannot modify through reference to const!
     y++;        // y ，yref, yref_2;   both three variables increase by 1
 ```    
 
-yref它是一个左值引用，yref_2是const修饰的左值引用。我们可以认为非const修饰的yref是y完全等价的别名。
+yref它是一个左值引用，yref_2是const修饰的左值引用。我们可以认为非const修饰的yref是y完全等价的别名。【Lvalue references can be used to alias an existing object (optionally with different cv-qualification)】
 
+函数返回的左值引用：
 
+```cpp
+int y = 10;
+int& z = y;
+
+int& fct_lvalue_ref(){
+    z++;
+    return z;
+}
+
+fct_lvalue_ref()++;   // now  z is 12
+```
+上面的例子只是告诉你，从C++语法的角度，左值引用的是可以这么写的。但是我不建议你在C++代码中使用这么古怪的写法。大多数时候，我们使用左值引用的最多的情况是--函数的传引用(准确说法是：传左值引用)，只是为了避免对象的拷贝：
+
+```cpp
+
+struct Widget{int n;} ;
+void foo(Widget& w){};   // Pass by rvalue reference
+void c_foo(const Widget& w){};    // Pass by const rvalue reference
+```
+
+**wrap up**:
+关于使用左值引用去得到别名，我不认为以这样的方式增加一个对象的别名具有显著的意义。可能在我们维护代码的时候有一些小小的帮助，尤其是对一个作用域比较广的全局变量，使用别名可以很好区分”新变动的代码“与”旧代码“之间的改动区别，容易识别代码的改动是基于哪个别名的。这是我个人的观点。
 
 ### 3.2 解释xvalue
 
