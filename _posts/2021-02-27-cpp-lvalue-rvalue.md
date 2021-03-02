@@ -1,6 +1,6 @@
 ---
 published: true
-title:  C++的左值和右值, xvalue
+title:  C++17的左值和右值
 layout: post
 author: RuiBing
 category: Programming
