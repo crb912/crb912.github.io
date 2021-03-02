@@ -9,6 +9,14 @@ category: Programming
 
 ---
 
+## 03-02
+
+不容易，终于写完了这篇[C++的左值和右值](http://ruibing.org/programming/2021/02/27/cpp-lvalue-rvalue.html)，几千字不到，写了好几天。写完也搞清楚了C++的很多东西，包括移动语义。明天继续读书。
+
+刚顺手在StackOverflow上面回答了一个关于C++的问题 [What expressions create xvalues?](https://stackoverflow.com/a/66439358/7360457) ，写得简单的英文，应该没有语言错误。
+
+---
+
 ## 03-01
 写了一点东西，解释了C++“具有身份”和“移动”的语义，分别这两篇是：
 
