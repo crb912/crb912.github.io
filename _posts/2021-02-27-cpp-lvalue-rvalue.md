@@ -18,7 +18,7 @@ category: Programming
 - [The deal with C++14 xvalues March 19, 2017](https://blog.jeaye.com/2017/03/19/xvalues)
 - [What expressions create xvalues?](https://stackoverflow.com/questions/11581903/what-expressions-create-xvalues)
 
-如果你想不劳而获窃取我最后的成果，欢迎你开始阅读。这绝不是把别人的文章拿来总结一下那么简单，里面有太多我自己的想法和思考。
+如果你想不劳而获窃取我最后的成果，欢迎你开始阅读。
 
 ---
 ## 目录
