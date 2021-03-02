@@ -12,7 +12,7 @@ category: work and life
 - [白玫瑰与红玫瑰](#red_rose_and_white_rose)  
 - [每天都写](#write_every_day)  
 - [ 朝花夕拾](#old_stories)   
--[不再使用社交软件](#quit_social_media)  
+- [不再使用社交软件](#quit_social_media)  
 - [喜欢追究事物的本源](#investigate_the_origin_of_things)  
 - [回家](#come_back_home)  
 
