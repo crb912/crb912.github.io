@@ -8,6 +8,31 @@ category: Programming
 每日的学习内容简记，方便复习和回顾
 
 ---
+## 03-04
+#### 一个有趣的知识：恐龙灭亡
+昨晚失眠的时候突然好奇恐龙怎么灭绝的，今天想起来了这茬，就Google了一下。大概是说在白垩纪(K)-古近纪(P)之间的时期(称为K-PG)，发现这个时期的地质中的钛含量异常高，而钛在小行星中比较常见。推断有发生小行星撞地球，造成了短期的生物大灭亡，75%的物种灭绝。我想说，人作为一个特殊的动物，有现在这样的文明，简直是一个奇迹。美丽的行星地球。而我们每个个体的一生, 又多渺小而微不足道。
+#### 显式地移动和拷贝
+If you want to be explicit about generating default implementations, you can:
+```cpp
+class Y {
+public:
+     Y(Sometype);
+     Y(const Y&) = default;   // I really do want the default copy constructor
+     Y(Y&&) = default;        // and the default move constructor
+     // ...
+};
+```
+
+**When a class has a pointer member, it is usually a good idea to be explicit about copy and move operations**. The reason is that a pointer may point to something that the class needs to `delete`, in which case the default memberwise copy would be wrong. Alternatively, it might point to something that the class must not `delete`. In either case, a reader of the code would like to know.
+
+简单翻译下：**当类有一个指针成员，最好显示地移动或者拷贝**。因为指针可能指向了类需要销毁(delete)的资源或者对象，默认的按成员拷贝的方式会出错。即便不需要delete, 阅读代码的人也该知道(就是说，也要显示的default)。很好理解，因为虽然进行了拷贝和移动，然而有的资源仍是处于共享的状态。
+
+####　拇指规则(rule of thumb)
+又称经验规则，rule of zero。accu这篇文章写得不错: [ENFORCING THE RULE OF ZERO](https://accu.org/journals/overload/22/120/alday_1896/) 。It states that if a class defines a destructor it should almost always define a *copy constructor* and a* copy assignment operator*.  这是个好习惯，应该定义每个C++类的时候都该保持这个习惯，虽然编译器不强制我这这么做。
+
+我有注意到一个英语的习惯表达，术语/词语的“发明”通常用“coined by sb”，不是什么invent之类的。
+
+
 
 ## 03-02
 
