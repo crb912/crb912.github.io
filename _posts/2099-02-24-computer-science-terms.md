@@ -35,7 +35,9 @@ In computer science, [locality of reference(wikipedia)](https://en.wikipedia.org
 
 ---
 
+## Low coupling <a name="low_coupling"></a>
 
+*Low coupling is often a sign of a well-structured computer system and a good design, and when combined with high cohesion, supports the general goals of high readability and maintainability.* Coupling and cohesion are terms which occur together very frequently. Coupling refers to the interdependencies between modules, while cohesion describes how related the functions within a single module are. Low cohesion implies that a given module performs tasks which are not very related to each other and hence can create problems as the module becomes large.
 
 
 
