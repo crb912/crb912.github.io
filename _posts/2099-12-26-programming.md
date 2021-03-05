@@ -46,6 +46,16 @@ see : [How do I start learning C++?](How do I start learning C++?)
 
 即便在线文档足够丰富，语言、库文档、示例代码都不容易阐述概念。我们需要书籍来弄清楚事物的本来的面目，而非只是关注技术细节。读书的目的是为了，“知其然，知其所以然”。
 
+## 如何学习C++? 我的学习方法   <a name="how_to_learn_cpp"></a>
+**Related Questions**:
+- [How do I start learning C++? ](https://isocpp.org/wiki/faq/how-to-learn-cpp#start-learning) 
+- [What is the best book to learn C++ from?](https://isocpp.org/wiki/faq/how-to-learn-cpp#best-book)
+
+关于C++的三个方面：合法性指南，道德性指南，代码示例指南。
+
+一些书是可选的，并不表示用这些书写得不好。比如《C++ Primer Plus》就能作为《A Tour of C++ 》的替代，并且它对没有编程基础的人更友好。
+
+此外，对于C++编程规范，直接看ioscpp官方网页就可以了：[C++ 核心准则](http://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines) . 正如它的引言提到的那样，在不同的代码库之间实现一个更规范的代码风格。代码规范是很重要的一件事，我在这里[Importance of coding style](http://ruibing.org/programming/2099/12/26/programming.html#Importance_of_coding_style)做过解释。
 
 ## C++不是一门很难的编程语言
 C++绝对不是很难，它只是有一些小小细节的需要程序员留意。比如：
