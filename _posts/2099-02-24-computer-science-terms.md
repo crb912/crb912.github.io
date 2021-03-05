@@ -1,6 +1,6 @@
 ---
 published: true
-title: 一些术语
+title: Some Terms(一些术语
 layout: post
 author: RuiBing
 category: programming
@@ -8,10 +8,16 @@ category: programming
 
 # Table of Contents(目录)
 
-2. [Locality](#Locality)
+- [Locality](#Locality)
+- [Single-responsibility principle](#srp)
 
 
+## Single-responsibility principle <a name="srp"></a>
+[The single-responsibility principle (SRP) ](https://en.wikipedia.org/wiki/Single-responsibility_principle)  is a computer-programming principle that states that every class in a computer program should have responsibility over a single part of that program's functionality, which it should encapsulate. All of that module, class or function's services should be narrowly aligned with that responsibility. --wikipedia
 
+Source: [C++：ENFORCING THE RULE OF ZERO](https://accu.org/journals/overload/22/120/alday_1896) 
+
+评论（comments）: wiki给了一个不错的示例，比如一个生成报表的程序：报表的内容是可变的，报表的格式也是可变。根据这个srp原则, 这两件不同事情有不同的责任，应当拆分到不同的模块或者类里面去。It would be a bad design to couple two things that change for different reasons at different times. 耦合(couple)两个事物不是一个好设计。
 
 ---
 

@@ -5,7 +5,8 @@ layout: post
 author: RuiBing
 category: Programming
 ---  
-每日的学习内容简记，方便复习和回顾
+学习内容简记，方便复习和回顾。不保证每天都写，随机，尽量不中断。     
+笔记中断的原因：要不是因为太忙没时间写，要不是有偷懒~     
 
 ---
 ## 03-04
@@ -28,7 +29,22 @@ public:
 简单翻译下：**当类有一个指针成员，最好显示地移动或者拷贝**。因为指针可能指向了类需要销毁(delete)的资源或者对象，默认的按成员拷贝的方式会出错。即便不需要delete, 阅读代码的人也该知道(就是说，也要显示的default)。很好理解，因为虽然进行了拷贝和移动，然而有的资源仍是处于共享的状态。
 
 ####　拇指规则(rule of thumb)
-又称经验规则，rule of zero。accu这篇文章写得不错: [ENFORCING THE RULE OF ZERO](https://accu.org/journals/overload/22/120/alday_1896/) 。It states that if a class defines a destructor it should almost always define a *copy constructor* and a* copy assignment operator*.  这是个好习惯，应该定义每个C++类的时候都该保持这个习惯，虽然编译器不强制我这这么做。
+又称经验规则，rule of zero。accu这篇文章写得不错: [ENFORCING THE RULE OF ZERO](https://accu.org/journals/overload/22/120/alday_1896/) 。It states that if a class defines a destructor it should almost always define a *copy constructor* and a* copy assignment operator*.  这是个好习惯，应该定义每个C++类的时候都该保持这个习惯，虽然编译器不强制我这这么做。这篇这个文章的那个Managed resources部分的List 2代码写得好秀，作者设计的这个类不允许拷贝，但允许移动。List３的代码开始没看懂，看完这篇[unique_ptr](https://xhy3054.github.io/cpp-unique-ptr/) 自定义deleter的写法也就懂了，主要是不熟悉这种写法。List3的deleter不是自定义的，下面还有自定义的写法:
+```cpp
+struct Widget{  };
+// ...
+auto deleter = []( Widget *p ) {
+    cout << "delete Widget!" << endl;
+    delete p;
+};
+unique_ptr<Widget, decltype(deleter)> ptr{ new Widget, deleter };
+```
+
+**rule of thumb的具体体现的意义：Polymorphic deletion / virtual functions**
+
+！！！明天再写，熬不住了，睡觉了
+
+[decltype (C++)](https://docs.microsoft.com/en-us/cpp/cpp/decltype-cpp?view=msvc-160) ，获取变量/函数/成员的类型或者表达式值类别，内括号会导致表达式求值。
 
 我有注意到一个英语的习惯表达，术语/词语的“发明”通常用“coined by sb”，不是什么invent之类的。
 
