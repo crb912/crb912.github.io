@@ -1,10 +1,14 @@
 ---
 published: true
-title: 关于软件和编程
+title: 关于编程
 layout: post
 author: Ruibing
 category: Programming
 ---  
+
+- [Importance of coding standard](#Importance_of_coding_style)
+- [过早优化不总是万恶之源](#optimization_not_evil)
+
 ## Good books
 只挑选一下被强烈推荐的书籍。
 

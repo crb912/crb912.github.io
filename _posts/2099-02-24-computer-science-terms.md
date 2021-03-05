@@ -10,6 +10,7 @@ category: programming
 
 - [Locality](#Locality)
 - [Single-responsibility principle](#srp)
+- [Low coupling](#low_coupling)
 
 
 ## Single-responsibility principle <a name="srp"></a>
