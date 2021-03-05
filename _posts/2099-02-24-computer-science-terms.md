@@ -1,6 +1,6 @@
 ---
 published: true
-title: Some Terms(一些术语
+title: Some Terms(一些术语)
 layout: post
 author: RuiBing
 category: programming
