@@ -36,6 +36,7 @@ category: personal
 备注：如果下面部分网页的链接你无法打开，那是你的网络问题，不是我的问题。在中国，互联网是一个大问题，就好像只要允许让别人自由上网，他们就会做出什么大逆不道的事情来，大人的思想还处于一种童稚状态；我只能对此谴责，但是无法改变这个现状。
 
 ## 目录
+- [1 编程学习](#)
 - [2 散文与随想](#essays)
 	- [2.1 编程相关](#programming)
 	- [2.2 随边写写](#Write_casually)
@@ -44,9 +45,14 @@ category: personal
 	- [3.2 我的收藏](#my_collection)
 	- [3.3 幽默](#humor)
 	- [3.4 我的日记](#my_rants)
-	- [3.5 ](#)
+	- [3.5 练习竖笛](#Recorder)
 	
 	- [](#)
+	
+## 1 编程学习
+我的知识储备，决定了我是一个学习者。只有在领域深耕数十年之后，也许才能窥见一些小小的奥秘。当下的十年，还是以学习为主，不宜骄傲自满。
+
+- [记录疑惑](https://snippets.cacher.io/snippet/964b518ab74ca51cb6d7)
 
 ## 2 散文与随想  <a name="essays"></a>
 > JL'homme n'est qu'un roseau, le plus faible de la nature; mais c'est un roseau pensant. 
