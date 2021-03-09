@@ -34,7 +34,10 @@ category: personal
 闲话不再说，后面是我的非技术文章。
 
 ## 目录
-- [3. 关于我](#abount_me)
+- [2 散文与随想](#essays)
+	- [2.1 编程相关](#programming)
+	- [2.2 随边写写](#)
+- [3 关于我](#abount_me)
 	- [3.1 我的计划](#my_plans)
 	- [3.2 我的收藏](#my_collection)
 	- [3.3 幽默](#humor)
@@ -42,6 +45,22 @@ category: personal
 	- [3.5 ](#)
 	
 	- [](#)
+
+## 2 散文与随想  <a name="essays"></a>
+> > JL'homme n'est qu'un roseau, le plus faible de la nature; mais c'est un roseau pensant. 
+--Métaphore imaginée par Blaise Pascal (1623-1662)
+
+帕斯卡写过一篇，“人是一根思想的芦苇”；笛卡尔也说过一句“我思故我在”。我觉得，起码要有自己的思想。追求有趣，我也讨厌呆板无趣的生活。
+
+想起王小波在一篇文章提到，国营农场里的种猪整天对着一台光秃秃的“母猪架子”传种，日子久了，它们也会发牢骚。那么说来，连猪都会发牢骚，何况是人呢？
+
+### 2.1 编程相关 <a name="programming"></a>
+
+- [程序员真的“文人相轻”吗？](https://snippets.cacher.io/snippet/27a79ba082a4a0777ffa)
+
+### 2.1 随便写写 <a name="Write_casually"></a>
+
+- [兴趣与有趣](https://snippets.cacher.io/snippet/c8b8f611f4554f473d04)
 
 
 
