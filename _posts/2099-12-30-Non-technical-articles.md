@@ -39,6 +39,7 @@ category: personal
 	- [3.2 我的收藏](#my_collection)
 	- [3.3 幽默](#humor)
 	- [3.4 我的日记](#my_rants)
+	- [3.5 ](#)
 	
 	- [](#)
 
@@ -71,8 +72,11 @@ category: personal
 
 [随机的日记](https://snippets.cacher.io/snippet/260dc7dbd4d67195000d) 
 
+### 3.5 练习竖笛 <a name="Recorder"></a>
 
+不会熟练，每周会抽3-5小时练习，就当是一个小娱乐活动了。
 
+[Recorder](https://snippets.cacher.io/snippet/aae0e03d330e761bdbb2)
 
 
 
