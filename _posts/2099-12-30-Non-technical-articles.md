@@ -49,22 +49,29 @@ category: personal
 	- [](#)
 
 ## 2 散文与随想  <a name="essays"></a>
-> > JL'homme n'est qu'un roseau, le plus faible de la nature; mais c'est un roseau pensant. 
+> JL'homme n'est qu'un roseau, le plus faible de la nature; mais c'est un roseau pensant. 
 --Métaphore imaginée par Blaise Pascal (1623-1662)
 
-帕斯卡写过一篇，“人是一根思想的芦苇”；笛卡尔也说过一句“我思故我在”。我觉得，起码要有自己的思想。追求有趣，我也讨厌呆板无趣的生活。
+帕斯卡写过一篇文章“人是一根思想的芦苇”；笛卡尔也说过一句“我思故我在”。我觉得，起码要有自己的思想。追求有趣，我也讨厌呆板无趣的生活。
 
 想起王小波在一篇文章提到，国营农场里的种猪整天对着一台光秃秃的“母猪架子”传种，日子久了，它们也会发牢骚。那么说来，连猪都会发牢骚，何况是人呢？
 
 ### 2.1 编程相关 <a name="programming"></a>
 
+- [不在使用社交软件](https://snippets.cacher.io/snippet/d98eeda9c90354963bf1)
 - [程序员真的“文人相轻”吗？](https://snippets.cacher.io/snippet/27a79ba082a4a0777ffa)
+- [喜欢追究事物的本源](https://snippets.cacher.io/snippet/9438152de095d6d18296)
 
 ### 2.1 随便写写 <a name="Write_casually"></a>
 
+写文章是孤独的，尤其是写文章的人。我写的心情和议论没人看；我写的编程文章，没朋友可以看懂。我知道，大多时候我都在自言自语。也许因为常年以来我整日的时间都花在电脑和桌子面前，而身边没有一个可以说话的人。我现在总是看书，每天都学习，也每天都写点什么。用这种方式，倾听各种写书的作者，也同这个世界说话聊天。尽管无人问津。
+
 - [兴趣与有趣](https://snippets.cacher.io/snippet/c8b8f611f4554f473d04)
+- [不要玫瑰](https://snippets.cacher.io/snippet/ba080649fcbc37a87679)
+- [回家](https://snippets.cacher.io/snippet/635bfa5bcbd7b583a9f9)
 - [不必沉默](https://snippets.cacher.io/snippet/38c8ca4629fd508fec0f)
 - [散文评论](https://snippets.cacher.io/snippet/01f4234aca8bc9d9ecdc)
+- [朝花夕拾](https://snippets.cacher.io/snippet/a8ab232c86375d43cef1)
 
 
 ## 3 关于我  <a name="about_me"></a>
