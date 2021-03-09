@@ -135,9 +135,11 @@ I collected a variety of items, including:
 
 .... 哈哈，太长了，不写了
 
-### 3.3 幽默
+### 3.3 幽默 <a name="humor"></a>
 
-我古怪的幽默感可能是不被人理解的，不妨碍我自娱自乐。
+我古怪的幽默感可能是不被人理解，不妨碍我自娱自乐。
+
+- [写给1224号小行星的情书](https://snippets.cacher.io/snippet/2e2814e54a5545717b54)
 
 
 
