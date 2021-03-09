@@ -38,6 +38,7 @@ category: personal
 	- [3.1 我的计划](#my_plans)
 	- [3.2 我的收藏](#my_collection)
 	- [3.3 幽默](#humor)
+	- [3.4 我的日记](#my_rants)
 	
 	- [](#)
 
@@ -142,7 +143,12 @@ I collected a variety of items, including:
 - [写给1224号小行星的情书](https://snippets.cacher.io/snippet/2e2814e54a5545717b54)
 
 
+### 3.4 我的日记 <a name="my_rants"></a>
 
+随机写的日记，属于我私人的领地。    
+有时写写自己的心情，倒倒垃圾, 发点生活的牢骚和咆哮，随机写。
+
+[随机的日记](https://snippets.cacher.io/snippet/260dc7dbd4d67195000d) 
 
 
 
