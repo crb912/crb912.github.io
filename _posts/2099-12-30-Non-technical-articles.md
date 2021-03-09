@@ -33,10 +33,12 @@ category: personal
 
 闲话不再说，后面是我的非技术文章。
 
+备注：如果下面部分网页的链接你无法打开，那是你的网络问题，不是我的问题。在中国，互联网是一个大问题，就好像只要允许让别人自由上网，他们就会做出什么大逆不道的事情来，大人的思想还处于一种童稚状态；我只能对此谴责，但是无法改变这个现状。
+
 ## 目录
 - [2 散文与随想](#essays)
 	- [2.1 编程相关](#programming)
-	- [2.2 随边写写](#)
+	- [2.2 随边写写](#Write_casually)
 - [3 关于我](#abount_me)
 	- [3.1 我的计划](#my_plans)
 	- [3.2 我的收藏](#my_collection)
@@ -61,7 +63,8 @@ category: personal
 ### 2.1 随便写写 <a name="Write_casually"></a>
 
 - [兴趣与有趣](https://snippets.cacher.io/snippet/c8b8f611f4554f473d04)
-
+- [不必沉默](https://snippets.cacher.io/snippet/38c8ca4629fd508fec0f)
+- [散文评论](https://snippets.cacher.io/snippet/01f4234aca8bc9d9ecdc)
 
 
 ## 3 关于我  <a name="about_me"></a>
