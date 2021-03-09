@@ -53,6 +53,7 @@ category: personal
 我的知识储备，决定了我是一个学习者。只有在领域深耕数十年之后，也许才能窥见一些小小的奥秘。当下的十年，还是以学习为主，不宜骄傲自满。
 
 - [记录疑惑](https://snippets.cacher.io/snippet/964b518ab74ca51cb6d7)
+- [如何写？](https://snippets.cacher.io/snippet/1f2510c692dddae89f13)
 
 ## 2 散文与随想  <a name="essays"></a>
 > JL'homme n'est qu'un roseau, le plus faible de la nature; mais c'est un roseau pensant. 
@@ -78,7 +79,7 @@ category: personal
 - [不必沉默](https://snippets.cacher.io/snippet/38c8ca4629fd508fec0f)
 - [散文评论](https://snippets.cacher.io/snippet/01f4234aca8bc9d9ecdc)
 - [朝花夕拾](https://snippets.cacher.io/snippet/a8ab232c86375d43cef1)
-
+- [理财的见解](https://snippets.cacher.io/snippet/ecb52265b5d6f81c68c6)
 
 ## 3 关于我  <a name="about_me"></a>
 ### 3.1 我的计划 <a name="my_plans"></a>
@@ -109,7 +110,7 @@ category: personal
 
 ### 3.5 练习竖笛 <a name="Recorder"></a>
 
-不会熟练，每周会抽3-5小时练习，就当是一个小娱乐活动了。
+不太熟练，每周会抽3-5小时练习，就当是一个小娱乐活动了。
 
 [Recorder](https://snippets.cacher.io/snippet/aae0e03d330e761bdbb2)
 
