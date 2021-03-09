@@ -1,6 +1,6 @@
 ---
 published: true
-title:  Non-technical articles (非技术类文章)
+title:  Non-technical Articles (非技术类文章)
 layout: post
 author: RuiBing
 category: personal 
@@ -36,7 +36,10 @@ category: personal
 备注：如果下面部分网页的链接你无法打开，那是你的网络问题，不是我的问题。在中国，互联网是一个大问题，就好像只要允许让别人自由上网，他们就会做出什么大逆不道的事情来，大人的思想还处于一种童稚状态；我只能对此谴责，但是无法改变这个现状。
 
 ## 目录
-- [1 编程学习](#)
+- [1 编程学习](#practice_programming)
+	- [1.1 计算科学](#computer_science)
+	- [1.2 编程语言](#programming_language)
+	- [1.3 笔记和心得](#notes)
 - [2 散文与随想](#essays)
 	- [2.1 编程相关](#programming)
 	- [2.2 随边写写](#Write_casually)
@@ -47,13 +50,27 @@ category: personal
 	- [3.4 我的日记](#my_rants)
 	- [3.5 练习竖笛](#Recorder)
 	
-	- [](#)
 	
-## 1 编程学习
+## 1 编程学习 <a name="practice_programming"></a>
 我的知识储备，决定了我是一个学习者。只有在领域深耕数十年之后，也许才能窥见一些小小的奥秘。当下的十年，还是以学习为主，不宜骄傲自满。
 
-- [记录疑惑](https://snippets.cacher.io/snippet/964b518ab74ca51cb6d7)
-- [如何写？](https://snippets.cacher.io/snippet/1f2510c692dddae89f13)
+### 1.1 计算科学 <a name="computer_science"></a>
+
+- [计算机科学一些术语](https://snippets.cacher.io/snippet/7e0b94f9a96e8a103181)
+
+#### 1.2 编程语言 <a name="programming_language"></a>
+
+- [修炼我的独孤九剑：C++](https://snippets.cacher.io/snippet/17bd7f37e8fa257cee1c)
+
+
+#### 1.3 笔记和心得  <a name="notes"></a>
+- [每日笔记](https://snippets.cacher.io/snippet/2fb291b3e4bda93f9c35) 并不保证每天都写，应该叫随机的日记更合理。
+- [编程之个人口味](https://snippets.cacher.io/snippet/2277985322af415e596d) 喜欢的与不喜欢的，以及一些小看法。
+- [如何写技术博客？](https://snippets.cacher.io/snippet/1f2510c692dddae89f13) 
+- [读书笔记](https://snippets.cacher.io/snippet/7e0b94f9a96e8a103181)
+- [书单](https://snippets.cacher.io/snippet/d9dc9c68a1613dd41569)
+- [记录我的疑惑](https://snippets.cacher.io/snippet/964b518ab74ca51cb6d7)
+
 
 ## 2 散文与随想  <a name="essays"></a>
 > JL'homme n'est qu'un roseau, le plus faible de la nature; mais c'est un roseau pensant. 
