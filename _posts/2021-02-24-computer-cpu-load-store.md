@@ -6,7 +6,6 @@ author: RuiBing
 category: Computer Science
 ---  
 
-# 理解CPU的Load和Store操作
 
 >我们能够面对问题。  
 我们会侦破这起悬案的。   
