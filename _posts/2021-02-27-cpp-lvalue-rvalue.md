@@ -6,9 +6,7 @@ author: RuiBing
 category: Programming
 ---  
 
-首先我承认自己是个小偷，我已经把别人的知识剽窃过来据为己有了。I confess~
-
-被我偷过的无辜“受害者”列表 (在此，我向他们的无私慷慨表示感谢):
+首先我承认自己是个小偷，我已经把别人的知识剽窃过来据为己有了。被我偷过的无辜“受害者”列表 (在此，我向他们的无私慷慨表示感谢):
 
 - [Lvalues and Rvalues (C++)](https://docs.microsoft.com/en-us/cpp/cpp/lvalues-and-rvalues-visual-cpp?view=msvc-160)
 - [Understanding the meaning of lvalues and rvalues in C++](https://www.internalpointers.com/post/understanding-meaning-lvalues-and-rvalues-c)
@@ -20,25 +18,32 @@ category: Programming
 
 如果你想不劳而获窃取我最后的成果，欢迎你开始阅读。
 
+## 摘要
+
+本篇主要是讲述C++11之后新的表达式值类别的概念，我会解释以下术语:
+`lvalue`, `ravlue`, `prvalue`, `xvalue`, `glvalue`; 并且我将会给出足够丰富的代码示例。
+
+我将先从`lvalue`和`rvalue`的历史起源开始说起，然后逐步过渡到C++11之后引入的新的值类别概念。如果您对它们的历史背景不感兴趣，或者您是没有耐心的读者，那么可直接跳转阅读:  [2 基本概念](#basic_concepts)。
+
 ---
 ## 目录
 
 [1 背景](#Background)
-- [1.1 在其它语言中的历史](#history_in_other)
-- [1.2 在C++中的发展](#dev_in_cpp)
+	- [1.1 在其它语言中的历史](#history_in_other)
+	- [1.2 在C++中的发展](#dev_in_cpp)
 [2 基本概念](#basic_concepts)
 [3 值分类示例](#examples)
-- [3.1 解释lvalue和prvalue](#lvalue_prvalue)
--- [3.1.1 赋值的左操作数需要lvalue](#lvalue)
--- [3.1.2 不可以去prvalue取址](#prvalue)
--- [3.1.3 更多的lvalue示例和左值引用](#more_examples)
-- [3.2 解释xvalue](#xvalue)
+	- [3.1 解释lvalue和prvalue](#lvalue_prvalue)
+	- [3.1.1 赋值的左操作数需要lvalue](#lvalue)
+	- [3.1.2 不可以去prvalue取址](#prvalue)
+	- [3.1.3 更多的lvalue示例和左值引用](#more_examples)
+	- [3.2 解释xvalue](#xvalue)
 
 
 ---
 
 ## 1 背景(Background) <a name="Background"></a>
-对历史背景不感兴趣或者没有耐心的读者，可直接跳转到下一部分: 2 基本概念
+
 
 ### 1.1 在其它语言中的历史 <a name="history_in_other"></a>
 术语"lvalue"(左值)和“rvalue”(右值)，最早是由Christopher Strachey为CPL(B语言的祖先)编程语言引入。在他1967年这篇颇具影响力的讲义: [Fundamental Concepts in Programming Languages](https://classes.cs.uoregon.edu/14S/cis607pl/Papers/fundamental-1967.pdf), 他首次提到了`L-values`和`R-values`(见p15)。
