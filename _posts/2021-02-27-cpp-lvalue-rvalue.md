@@ -289,9 +289,29 @@ void c_foo(const Widget& w){};    // Pass by const rvalue reference
 关于使用左值引用去得到别名，我不认为以这样的方式增加一个对象的别名具有显著的意义。可能在我们维护代码的时候有一些小小的帮助，尤其是对一个作用域比较广的全局变量，使用别名可以很好区分”新变动的代码“与”旧代码“之间的改动区别，容易识别代码的改动是基于哪个别名的。
 
 ### 3.2 解释xvalue  <a name="xvalue"></a>
-xvalue总是服务于C++的移动语义。在C++11之前，根本就没有xvalue的概念，就是因为引入移动语义导致了没办法解释新的C++表达式。
+
+An xvalue (an “eXpiring” value) also refers to an object, usually near the end of its lifetime (so that its resources may be moved, for example). An xvalue is the result of certain kinds of expressions involving rvalue references. [Example: The result of calling a function whose return type is an rvalue reference is an xvalue.]
+
+x表示即将过期。即便是C++官方的草案，它用的是'usually'和'the result of certain kinds of '的说法，官方也没办法把这个定义的十分清晰和准确。
+
+从我理解的角度: 只要一个对象生命周期即将结束，并且出现在表达式的右边(或者作为返回值)。就可以称这样的值为xvalue。
+比如:
+
+```
+class Person { // 类Person定义了一个人的：姓名，年龄，身高 ...}; 
+
+Person xiao_ming;
+xiao_ming = Person("小明"，15, 175); // 临时对象, xavlue
+```
+显然的，这个`Person("小明"，15, 175)`即将要过期了，他是符合定义的。它的资源被清除了，清除也算“may be moved”。 上面这个赋值语句涉及了两个操作：
+
+- 构造临时对象
+- copy assignment operator 。
+
+其中copy assignment operator的过程涉及到了左值引用，因此官方提到的“An xvalue is the result of certain kinds of expressions involving rvalue references.” 也是满足的。
 
 #### 移动语义中的xvalue
+其次移动语义也有xvalue。
 
 ```cpp
 void move_test(){

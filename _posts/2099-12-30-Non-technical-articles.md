@@ -92,6 +92,7 @@ category: personal
 
 写文章是孤独的，尤其是写文章的人。我写的心情和议论没人看；我写的编程文章，没朋友可以看懂。我知道，大多时候我都在自言自语。也许因为常年以来我整日的时间都花在电脑和桌子面前，而身边没有一个可以说话的人。我现在总是看书，每天都学习，也每天都写点什么。用这种方式，倾听各种写书的作者，也同这个世界说话聊天。尽管无人问津。
 
+- [未来人口的猜想](https://snippets.cacher.io/snippet/801e5fea4f560cd87666)  2020-03-12
 - [“比较式”教育和“教导式”教育](https://snippets.cacher.io/snippet/1aa94013a63ed3d9f274),  2020-02-15
 - [兴趣与有趣](https://snippets.cacher.io/snippet/c8b8f611f4554f473d04)
 - [不要玫瑰](https://snippets.cacher.io/snippet/ba080649fcbc37a87679)
