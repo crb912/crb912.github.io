@@ -147,3 +147,10 @@ move assginment:
 Fugure 4 Performance of move assingnment. No matter how many elements of the Vector, can by approximated by the equations: cycles = 1, 
 
 This's why we love move semantics. 更少的内存占用，更少的copy操作，lead to less CPU cycles.
+
+
+Code: https://snippets.cacher.io/snippet/325bb29928542aacfa34
+
+[C++ rvalue references and move semantics for beginners](https://www.internalpointers.com/post/c-rvalue-references-and-move-semantics-beginners) 
+
+[Common misconception with C++ move semantics](https://pagefault.blog/2018/03/01/common-misconception-with-cpp-move-semantics/)
