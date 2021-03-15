@@ -1,6 +1,8 @@
 title:  RuiBing, welcomes you to his home page.
-author: Eureka Bing(操瑞兵) [CC BY-NC-SA]()
+author: Eureka Bing(操瑞兵)
 email: crb1024@hotmail.com
+license: CC BY-NC-SA
+license_link: http://creativecommons.org/licenses/by-nc-sa/4.0/
 description: > # this means to ignore newlines until "show_excerpts:"
   Welcome, this blog is about programming, open source projects I develop, and rants I love to share from time to time.
   From the point of view of a programmer that loves to define himself a craftsman.
@@ -47,7 +49,6 @@ include: [".well-known", "_posts/2016-06-01-Raising-a-cat.md"]
 
 # Build settings
 theme: minima
-license: CC BY-NC-SA-4.0
 
 plugins:
  - jekyll-feed
