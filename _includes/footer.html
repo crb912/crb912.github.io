@@ -16,7 +16,7 @@
             <li><a class="u-email" href="mailto:{{ site.email }}">{{ site.email }}</a></li>
             {%- endif -%}
             {%- if site.license -%}
-            <li><a class="u-license" href="{ license_link }">{{ site.license }}</a></li>
+            <a class="u-license" href="{ {license_link }}">{{ site.license }}</a>
             {%- endif -%}
         </ul>
       </div>
