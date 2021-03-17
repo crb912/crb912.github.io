@@ -8,7 +8,7 @@ category: programming
 
 
 
-Many C++ beginners struggling with "move" semantics since C++11. Fortunately, there are a collection of online materials on move semantics (See: [Recommended materials](#Recommended)). However, few articles mention why we need move semantics and how it can significantly increase the performance of your applications. Let's begin this journey.
+Many C++ beginners struggling with "move" semantics since C++11. Fortunately, there are a collection of online materials on move semantics (See: [Recommended materials](#Recommended)). However, few articles mention why we need move semantics and how it can significantly increase the performance of your applications. Let's begin this journey directly.
 
 ## A Vector class without move semantics
 Here, We can define a variable of our new type `Vector`.  Note that my Vector not the one from the standard library! We call class Vector a container of `double`s.
@@ -140,7 +140,7 @@ Instead of an expensive copy operation you can use a cheap move operation. I wil
 
 ## The performance differences
 
-I use different  size of doubles(such as 1000,10000, 100000..) to measure the CPU cycles of `copy assignment` and `move assginment` respectively.  Figure 3 and Figure 4 show a plot of the number of clock cycles required by the two functions for a range values of Vector r.  
+I use different  size of doubles(such as 1000,10000, 100000..) to measure the CPU cycles of `copy assignment` and `move assginment` respectively.  Figure 3 and Figure 4 show a plot of the number of clock cycles required by the two functions for a range values of `Vector r`.  
 
 copy assignment:
 
@@ -150,9 +150,11 @@ copy assignment:
 Figure 3. **Performance of the copy assingnment**. The slope of the lines indicates the number of clock cycles per elements. (CPE)
 
 move assginment:
+
+
 ![move assignment](https://i.loli.net/2021/03/15/bThOG85ZEU2rASc.png  "github")
 
-Figure 4. **Performance of the move assingnment.** No matter how many elements of the Vector, can by approximated by the equations: cycles = 1, 
+Figure 4. **Performance of the move assingnment.** No matter how many elements of the Vector, CPU cycles can by approximated by the equations: cycles = 1, 
 
 This's why we love move semantics: less memory usage and fewer copy operations，thereby leading to less CPU cycles.
 
