@@ -134,10 +134,10 @@ category: personal
 
 ### 3.4 我的日记 <a name="my_rants"></a>
 
-随机写的日记，属于我私人的领地。    
+随机写的日记，属于我私人的领地。不建议点开，我的小隐私。    
 有时写写自己的心情，倒倒垃圾, 发点生活的牢骚和咆哮，随机写。
 
-[随机的日记](https://snippets.cacher.io/snippet/260dc7dbd4d67195000d) 
+[随机的日记](https://gist.github.com/crb912/f480aa1e5a47741e8da7b32db6c9e389) 
 
 ### 3.5 练习竖笛 <a name="Recorder"></a>
 
