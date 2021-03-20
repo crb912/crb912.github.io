@@ -50,6 +50,7 @@ category: personal
 	- [3.3 幽默](#humor)
 	- [3.4 我的日记](#my_rants)
 	- [3.5 练习竖笛](#Recorder)
+	- [3.6 分享](#Share)
 	
 	
 ## 1 编程学习 <a name="practice_programming"></a>
@@ -145,5 +146,9 @@ category: personal
 
 [Recorder](https://snippets.cacher.io/snippet/aae0e03d330e761bdbb2)
 
+### 3.6 分享 <a name="Share"></a>
 
+[在线资源分享](https://snippets.cacher.io/snippet/880841f916e81cd690e1)
+
+分享一些优质的学习资源和材料。
 
