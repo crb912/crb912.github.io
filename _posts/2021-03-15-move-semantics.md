@@ -3,7 +3,7 @@ published: true
 title:  Move semantics, simply
 layout: post
 author: RuiBing
-category: programming
+category: Programming
 ---  
 
 
