@@ -6,20 +6,22 @@ author: RuiBing
 category: Computer Science
 ---  
 
+x86-64 ISA
 
-## x86-64
+## x86-64 calling conventions
+passing arguments and return value: 
 
-### x86-64 calling conventions
-**passing arguments & return value**: 
+Up to **six integer or pointer arguments **are passed by registers **in the order**:  
 
-up to **six integer or pointer arguments **are passed by registers **in the order**: `rdi rsi rdx rcx r8 r9`
+`rdi rsi rdx rcx r8 r9`
   
 `rax` is used to return up to 64-bit values. 
 And `rdx` can be used to return up to 128-bit values.
 
 More or larger arguments and return values are passed through the `stack`.
 
-### code example
+## Code examples
+
 C code file mstore.c:
 
 ```c
