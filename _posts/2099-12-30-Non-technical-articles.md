@@ -85,9 +85,9 @@ category: personal
 
 
 ### 2.2 随便写写 <a name="Write_casually"></a>
-
+- [爱不是附庸](https://snippets.cacher.io/snippet/3bbb6459dfaaf85eb3b4) 2021-06-23
+- [行善的勇气](https://snippets.cacher.io/snippet/7561efabdac2df5867f1) 2021-06-23
 - [经济学人-文章评论](https://snippets.cacher.io/snippet/4900ade97959d7914ef3)
-- [新闻评论：合肥一母亲携子女三人跳楼](https://snippets.cacher.io/snippet/87c427a6931d92a98c7d) 2021-03-18
 - [越优秀，就越孤独](https://snippets.cacher.io/snippet/e9d281b41c63d747af2a) 2021-03-13
 - [未来人口的猜想](https://snippets.cacher.io/snippet/801e5fea4f560cd87666)  2021-03-12
 - [“比较式”教育和“教导式”教育](https://snippets.cacher.io/snippet/1aa94013a63ed3d9f274),  2021-02-15
