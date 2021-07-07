@@ -6,135 +6,53 @@ author: RuiBing
 category: personal 
 ---  
 
-**我把博客里非技术类文章集中此处，分门别类**。我不喜欢太过凌乱的东西，简单即优雅。其次，我不能把副业(写字，发牢骚)当成我的主要工作。
+我把与工作无关的文章集中此处。
 
-虽然说，我写的“技术”类文章和非技术类文章，都没什么人看。在写这些东西的时候，我就仿佛一个人在自言自语，感觉分外孤独。这不重要，重要的是能在这些“徒劳无功”的事情上得到些许快乐。
+我一直想拥有一个“没有人”的地方，保持孤独与安静。可是我不愿意去生活在僻静的深山老林里面，那么，唯一可以让我寻求的安静之所，也就是在网页上的这个静态博客了。小小的博客是我的精神家园，我在此处可以畅所欲言。
 
-在上面，我给“技术”加个了引号。因为我觉得自己只是在总结别人的工作，虽然也偶有写得不错的技术文章，但是归根结底谈不上真正的技术。那是别人发明的技术，我只是一个学习和总结的人，所以这个引号去不得。我只是一个小偷，偷学了别人的知识，不敢自诩为我的技术。
+没有添加评论系统，没有任何人的打扰。仅仅是我一个人人自言自语的地方，这里是我的灵魂和思想所构成的世界。心总是需要一个安放的所在！
 
-我对自己也有要求：尽量少写重复的东西，因为有些同行已经做的足够好了，我不必再重复劳动。除非我见解有独到之处，或者当我觉得别人写的都很烂--我需要写出更好的总结。**只要能做出与人不同的东西就算成功，这是我对工作的理想，亦是我人生的价值所在**。
 
-回到这篇文章的主题。我把我全部的非技术类文章划分成三个种类：
+###  “与工作无关”
 
-![class](https://i.loli.net/2021/03/10/8y6cIYBsFMQrRON.png  "https://github.com/crb912/crb912.github.io/blob/master/my_private/image/my/org.png?raw=true")
-
-分类的依据：
-
-**“编程学习”是谈论我在做什么；“散文和随想”是谈论我在想什么；“关于我”是谈论我是谁。** 我这三个分类很好的回答了人生的一个究极问题--[我们从何处来？我们是谁？我们向何处去？](https://baike.baidu.com/item/%E6%88%91%E4%BB%AC%E4%BB%8E%E4%BD%95%E5%A4%84%E6%9D%A5%EF%BC%9F%E6%88%91%E4%BB%AC%E6%98%AF%E8%B0%81%EF%BC%9F%E6%88%91%E4%BB%AC%E5%90%91%E4%BD%95%E5%A4%84%E5%8E%BB%EF%BC%9F) 。
-
-**备注**：如果部分网页的链接你无法打开，可能是你的“网络问题”，不是我的问题。在中国，互联网是一个大问题，就好像只要允许别人自由地使用互联网，他们就会做出什么大逆不道的事情来。总之，这社会的思想还处于一种童稚状态。鲁迅说：“中国青年...能做事的做事，能发声的发声”。我改变不了这个现状，做不了事，因此我只能在我的小博客里，发出微弱的声音抗议。
-
-## 目录
-- [1 编程学习](#practice_programming)
-	- [1.1 计算科学](#computer_science)
-	- [1.2 编程语言](#programming_language)
-	- [1.3 笔记和心得](#notes)
-- [2 散文与随想](#essays)
-	- [2.1 编程相关](#programming)
-	- [2.2 随边写写](#Write_casually)
-- [3 关于我](#abount_me)
-	- [3.1 我的计划](#my_plans)
-	- [3.2 我的收藏](#my_collection)
-	- [3.3 幽默](#humor)
-	- [3.4 我的日记](#my_rants)
-	- [3.5 练习竖笛](#Recorder)
-	- [3.6 分享](#Share)
-	
-	
-## 1 编程学习 <a name="practice_programming"></a>
-我的知识储备太少，决定了我只能是一个学习者。也许只有在一个领域深耕数十年之后，才能窥见其中一些小小的奥秘。当下的十年，我还是以学习为主，不宜骄傲自满，做一个谦卑的程序员。我有两个心愿：
-
-- **学会一门函数式编程语言是我长久以来的心愿！** 
-- 其次，我想要学习5-7门的编程语言，了解不同编程语言的设计哲学。
-
-这样的心愿与钱无关，如果是为了挣钱，学好1~2门编程语言就足够了。然而，我的人生不是为了钱活着，生活应该有更高的追求。**I don't want to survive, I want to live**. 知识如何海洋，如果我不亲自去探索，我就无法知道自己的一生可以走多远，也没办法见到远方迷人的小岛。借用紫霞仙子的一句话，这不是神经病，这是理想。
-
-### 1.1 计算科学 <a name="computer_science"></a>
-我写的是计算科学，不是拼写错误，因为计算机科学的本质是计算。只不过是让机器去计算，程序员的任务是让机器按照自己预期的方式执行计算。至于如何进行优雅的计算，这既有科学的方法，也有艺术的成分。
+虽说是与工作无关，无法避免会有一些“藕断丝连”“沾亲带故”的话题嘛。一些学习笔记没地方放，或者是一些个人口味的话题，就仍在这里了。也不全是垃圾~
 
 - [计算机科学一些术语](https://snippets.cacher.io/snippet/7e0b94f9a96e8a103181)
-
-#### 1.2 编程语言 <a name="programming_language"></a>
-
 - [修炼我的独孤九剑：C++](https://snippets.cacher.io/snippet/17bd7f37e8fa257cee1c)
-
-
-#### 1.3 笔记和心得  <a name="notes"></a>
-- [每日笔记](https://snippets.cacher.io/snippet/2fb291b3e4bda93f9c35) 并不保证每天都写，应该叫随机的日记更合理。
-- [编程之个人口味](https://snippets.cacher.io/snippet/2277985322af415e596d) 喜欢的与不喜欢的，以及一些小看法。
+- [编程之个人口味](https://snippets.cacher.io/snippet/2277985322af415e596d) 
 - [如何写技术博客？](https://snippets.cacher.io/snippet/1f2510c692dddae89f13) 
 - [读书笔记](https://snippets.cacher.io/snippet/7e0b94f9a96e8a103181)
 - [书单](https://snippets.cacher.io/snippet/d9dc9c68a1613dd41569)
 - [记录我的疑惑](https://snippets.cacher.io/snippet/964b518ab74ca51cb6d7)
+- [一点看心情写的笔记](https://snippets.cacher.io/snippet/2fb291b3e4bda93f9c35) 
 
 
-## 2 散文与随想  <a name="essays"></a>
-> JL'homme n'est qu'un roseau, le plus faible de la nature; mais c'est un roseau pensant. 
---Métaphore imaginée par Blaise Pascal (1623-1662)
 
-帕斯卡写过一篇文章“人是一根思想的芦苇”；笛卡尔也说过一句“我思故我在”。我觉得，人生在世，起码要有自己的思想。其次是追求有趣，我也讨厌呆板无趣的生活。想起王小波在一篇文章提到，国营农场里的一群种猪，整天对着一台光秃秃的“母猪架子”传种；日子久了，它们也会发牢骚。
+###   与工作无关
 
-这个部分，是我对生活和人生的看法。说好听点叫人生感悟，不好听的说法就是--发牢骚。既然连猪都会发牢骚，何况我是一个人呢，发发牢骚也未尝不可。
-
-### 2.1 编程相关 <a name="programming"></a>
-
-- [浪漫](https://snippets.cacher.io/snippet/6ade649a5c6ec4f6cbae) 2021-03-14
-- [不再使用社交软件](https://snippets.cacher.io/snippet/d98eeda9c90354963bf1)
-- [程序员真的“文人相轻”吗？](https://snippets.cacher.io/snippet/27a79ba082a4a0777ffa)
-- [喜欢追究事物的本源](https://snippets.cacher.io/snippet/9438152de095d6d18296)
-
-
-### 2.2 随便写写 <a name="Write_casually"></a>
-- [爱不是附庸](https://snippets.cacher.io/snippet/3bbb6459dfaaf85eb3b4) 2021-06-23
-- [行善的勇气](https://snippets.cacher.io/snippet/7561efabdac2df5867f1) 2021-06-23
-- [经济学人-文章评论](https://snippets.cacher.io/snippet/4900ade97959d7914ef3)
 - [越优秀，就越孤独](https://snippets.cacher.io/snippet/e9d281b41c63d747af2a) 2021-03-13
-- [未来人口的猜想](https://snippets.cacher.io/snippet/801e5fea4f560cd87666)  2021-03-12
+- [未来人口](https://snippets.cacher.io/snippet/801e5fea4f560cd87666)  2021-03-12
 - [“比较式”教育和“教导式”教育](https://snippets.cacher.io/snippet/1aa94013a63ed3d9f274),  2021-02-15
 - [兴趣与有趣](https://snippets.cacher.io/snippet/c8b8f611f4554f473d04)
 - [不要玫瑰](https://snippets.cacher.io/snippet/ba080649fcbc37a87679)
 - [回家](https://snippets.cacher.io/snippet/635bfa5bcbd7b583a9f9)
-- [不必沉默](https://snippets.cacher.io/snippet/38c8ca4629fd508fec0f)
 - [散文评论](https://snippets.cacher.io/snippet/01f4234aca8bc9d9ecdc)
-- [朝花夕拾](https://snippets.cacher.io/snippet/a8ab232c86375d43cef1)
 - [理财的见解](https://snippets.cacher.io/snippet/ecb52265b5d6f81c68c6)
+- [不再使用社交软件](https://snippets.cacher.io/snippet/d98eeda9c90354963bf1)
 
-## 3 关于我  <a name="about_me"></a>
-### 3.1 我的计划 <a name="my_plans"></a>
-[链接：我的计划](https://snippets.cacher.io/snippet/52bdcb4c2885b32ea967)  
+### 我的世界
 
-可能有时候更新不会及时，等月尾的时候再补上去也有可能。我喜欢按一批的方式处理工作，不一定会严格按计划去执行。计划提供了一个纲要和目标，对我行进的方向有指导的作用。
-
-### 3.2 我的收藏  <a name="my_collection"></a>
+- [一些小计划](https://snippets.cacher.io/snippet/52bdcb4c2885b32ea967)  
+- [我的收藏](https://snippets.cacher.io/snippet/fb39f8e57918f8326544)
 你知道，**生活中总有些东西会让你一见钟情**，所以有一个专门的名词叫收藏。
-
-从这个意义上，我想我就是一个收藏家，一名小小的收藏家。
-
-[我的收藏](https://snippets.cacher.io/snippet/fb39f8e57918f8326544)
-
-### 3.3 幽默 <a name="humor"></a>
-
-我古怪的幽默感可能是不被人理解，不妨碍我一个人自娱自乐。
-
-这些专辑暂时没有。
-
-
-### 3.4 我的日记 <a name="my_rants"></a>
-
-随机写的日记，属于我私人的领地。不建议点开，我的小隐私。    
-有时写写自己的心情，倒倒垃圾, 发点生活的牢骚和咆哮，随机写。
-
-[随机的日记](https://gist.github.com/crb912/f480aa1e5a47741e8da7b32db6c9e389) 
-
-### 3.5 练习竖笛 <a name="Recorder"></a>
-
-不太熟练，每周会抽3-5小时练习，就当是一个小娱乐活动了。
-
-[Recorder](https://snippets.cacher.io/snippet/aae0e03d330e761bdbb2)
-
-### 3.6 分享 <a name="Share"></a>
-
-[在线资源分享](https://snippets.cacher.io/snippet/880841f916e81cd690e1)
-
+- [随机的日记](https://gist.github.com/crb912/f480aa1e5a47741e8da7b32db6c9e389) 
+- [竖笛](https://snippets.cacher.io/snippet/aae0e03d330e761bdbb2) 
+偶尔会上传
+- [在线资源分享](https://snippets.cacher.io/snippet/880841f916e81cd690e1)
 分享一些优质的学习资源和材料。
 
+### 我的奢望
+我的奢望不全是都已被磨灭得一干二净了，还有一些残余的奢望在这里。
+
+1. 我想写书，尤其写技术类书籍。要增加自己的知识储备了，等我足够的创作欲望的时候，那就开始写吧。有没有人看不要紧，重要的是写得开心。
+2. 想拥有一个海边的木屋。因为等我烦透了，我要去那里“避难”。
