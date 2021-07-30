@@ -32,5 +32,6 @@ category: personal
 - [有趣的人](https://snippets.cacher.io/snippet/038302655a5614b9e2fe)
 - [有趣的言论](https://snippets.cacher.io/snippet/fc8b8df41fbd7c865bf3)
 - [不再使用社交软件](https://snippets.cacher.io/snippet/d98eeda9c90354963bf1)
+- [纸质书，电子书](https://snippets.cacher.io/snippet/dd3607f34d675811a421)
 
 
