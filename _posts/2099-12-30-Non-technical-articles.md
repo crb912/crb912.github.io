@@ -17,7 +17,7 @@ category: personal
 - [不再使用社交软件](https://snippets.cacher.io/snippet/d98eeda9c90354963bf1)
 
 ### 我的精神家园
-- [两种罕见的病](https://snippets.cacher.io/snippet/bd73b74955c8ca276973)
+
 - [纸质书，电子书](https://snippets.cacher.io/snippet/dd3607f34d675811a421)
 
 
