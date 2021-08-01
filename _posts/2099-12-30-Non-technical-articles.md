@@ -9,15 +9,23 @@ category: personal
 与工作无关的文章集中此处。
 
 ### 半个子爵
-卡尔维诺笔下的“半个子爵”，在小说的结尾最终走向了完整。而我决定放弃一切让自己完整的机会。我的宗旨是，向一切完整开战。
 
-- [只看四分之三](https://snippets.cacher.io/snippet/51bdbbe30014c9fec6bb)
+我的宗旨是，向一切完整开战。这是我立下的规矩：
+
+1. 不会看完一个作家的全部作品。
+2. 不会看完小说的全部，只看到四分之三就停止。
+
+我的生活方式：
+
+- [只做半个人](https://snippets.cacher.io/snippet/9ab20f5421ac8989170b)
 - [我和我的工作](https://snippets.cacher.io/snippet/b9410cc157eaee42ea18)
 - [不再使用社交软件](https://snippets.cacher.io/snippet/d98eeda9c90354963bf1)
 
-### 我的精神家园
+### 塔希提
 
+-[喜欢女人的缘由](https://snippets.cacher.io/snippet/dc6b0667f09fb38859a5)
+- [好男人，好女人](https://snippets.cacher.io/snippet/28e4cb284c07c7cca4d2)
 - [纸质书，电子书](https://snippets.cacher.io/snippet/dd3607f34d675811a421)
-
+- []()
 
 
