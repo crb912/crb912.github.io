@@ -23,10 +23,9 @@ category: personal
 - [不再使用社交软件](https://snippets.cacher.io/snippet/d98eeda9c90354963bf1)
 
 ### 塔希提
-
+- [消费的陷阱](https://snippets.cacher.io/snippet/00544a0280c0506d121e)
 - [喜欢女人的缘由](https://snippets.cacher.io/snippet/dc6b0667f09fb38859a5)
 - [好男人，好女人](https://snippets.cacher.io/snippet/28e4cb284c07c7cca4d2)
 - [纸质书，电子书](https://snippets.cacher.io/snippet/dd3607f34d675811a421)
-- []()
 
 
