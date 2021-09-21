@@ -18,8 +18,8 @@ category: personal
 
 我生活的方式是基于我的爱，爱是我最大的本能。为了让我的爱趋于完美，我有了我的心胸。心胸是我生活和做事的最低标准，不是人人都有这个标准。有了心胸之后，我的爱在生活中就不会迷失。如果什么事有悖于我的心胸，我就认为不值得一做；如果什么人有悖于我的心胸，我就觉得它不值得一交；如果什么生活有悖于我的心胸，我就觉得它不值一过。
 
+- [一封不能寄出的信](https://snippets.cacher.io/snippet/8c1b690264456cf5d2f1) 2021-09-20
 - [哲学的生活方式](https://snippets.cacher.io/snippet/268f0871f18f1b36604f)
-
 - [来自哪里，该去往何处？](https://snippets.cacher.io/snippet/409e9d1bc46f5c7ce9a0) 2021-09-16
 - [不再使用社交软件](https://snippets.cacher.io/snippet/d98eeda9c90354963bf1) 2021-02-24
 
