@@ -15,8 +15,8 @@ category: personal
 
 
 - [一封不能寄出的信](https://snippets.cacher.io/snippet/8c1b690264456cf5d2f1) 2021-09-21
-- [哲学的生活方式](https://snippets.cacher.io/snippet/268f0871f18f1b36604f)
+- [哲学的生活方式(持续更新)](https://snippets.cacher.io/snippet/268f0871f18f1b36604f)
 - [来自哪里，该去往何处？](https://snippets.cacher.io/snippet/409e9d1bc46f5c7ce9a0) 2021-09-16
-
+- [有趣的言论(摘录、持续更新)](https://snippets.cacher.io/snippet/fc8b8df41fbd7c865bf3)
 
 
