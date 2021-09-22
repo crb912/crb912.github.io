@@ -13,13 +13,11 @@ https://en.wikipedia.org/wiki/Strong_and_weak_typing
 引入错误的编辑： 
 https://en.wikipedia.org/w/index.php?title=Strong_and_weak_typing&diff=1013358561&oldid=994579975
 
-具体的错误表述为：
-
+具体的错误表述是：
+>
 "Note that in dynamically typed languages, values have types, not variables".
 
-这句话有严重的表述错误和误导倾向，因为值(values) 和 变量（variables）两者完全是不同的概念和实体，两者不可以混为一谈，这和语言是动态还是静态无关。
-
-这句话好像就是在说“中国人有头发，不是猫”，听的人很容易以为“西方人没头发”或者“西方人是猫”。在任何情况下中国人都不是猫，因此没必要把“风马牛不相及”的事物联系在一起。
+上述这句话有严重的表述错误和误导倾向，因为值(values) 和 变量（variables）两者完全是不同的概念和实体，两者不可以混为一谈，这和语言是动态还是静态无关。这句话好像就是在说“中国人有头发，不是猫”，听的人很容易以为“西方人没头发”或者“西方人是猫”。在任何情况下中国人都不是猫，因此没必要把“风马牛不相及”的事物联系在一起。
 
 我有两条表述：
 1. 不分静态类型语言和动态类型语言，值和变量都有类型。
