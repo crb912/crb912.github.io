@@ -1,6 +1,6 @@
 ---
 published: true
-title:  我生活的目的，我生活的方式
+title:  我生活的方式，我生活的目的
 layout: post
 author: RuiBing
 category: personal 
