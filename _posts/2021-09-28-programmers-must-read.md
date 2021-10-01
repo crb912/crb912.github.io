@@ -6,7 +6,7 @@ author: RuiBing
 category: essay
 ---
 
-孙中山先生根据“各人天赋的聪明才智”分三种人：先知先觉的发明家、后知后觉的宣传家、不知不觉的实践家。这篇文章里，我扮演了一个“宣传家”的角色，把一些具有精辟见解的文章推荐和分享在这里。这是一个不断改进的活文档。
+收藏的一些不错的文章，希望对你有所启发。不定期会更新。
 
 - [Knuth's Advice to Young People](https://note.youdao.com/ynoteshare/index.html?id=8e18c7402e0d7b26edf2aedb5ccd3c5a), by Donald Knuth, 2002. Knuth给年轻人的建议
 - [Interview with Donald Knuth](https://www.informit.com/articles/article.aspx?p=1193856), Apr 25, 2008. Knuth的采访
