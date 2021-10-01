@@ -1,6 +1,6 @@
 ---
 published: true
-title:  哲学的生活方式(不定期更新)
+title:  哲学的生活方式（updating）
 layout: post
 author: RuiBing
 category: essay
