@@ -121,9 +121,26 @@ int main(){
     std::cout << Year(2021) << ", Happy every day!" << std::endl;
 }
 ```
-
+### Automatic conversions for class.
+Implementing `int x =  Year(2021);`
 	
+```cpp
+#include<iostream>
 
+class Year{
+    int year;
+
+public:
+    Year(int i): year{i} {};
+    operator int(){ return year; }
+
+};
+
+int main(){
+    int x =  Year(2021);
+    std::cout << x << std::endl;
+}
+```
 
 
 
