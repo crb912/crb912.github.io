@@ -1,12 +1,12 @@
 ---
 published: true
-title:  值得一读的文章
+title:  值得一读的文章或论文
 layout: post
 author: RuiBing
 category: essay
 ---
 
-收藏的一些不错的文章，希望对你有所启发。不定期会更新。
+这些材料希望对你有所启发。不定期会更新。
 
 ## 谦逊的程序员
 
@@ -23,6 +23,12 @@ category: essay
 
 - [A Conversation with Bjarne Stroustrup](https://www.artima.com/intv/bjarne.html), by Bill Venners February 23, 2004. 与Bjarne Stroustrup的对话
 - [The Development of the C Language](https://www.bell-labs.com/usr/dmr/www/chist.html)
+- [Combining assembly code with C code](http://csapp.cs.cmu.edu/3e/waside/waside-embedded-asm.pdf), 学习汇编最好的入门文档。
+
+## 处理器
+
+- [Verilog implementation of a pipelined Y86-64 processor](http://csapp.cs.cmu.edu/3e/waside/waside-verilog.pdf)
+
 
 ## 人生
 
