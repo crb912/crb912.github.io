@@ -1,6 +1,6 @@
 ---
 published: true
-title:  值得一读的文章或论文
+title:  值得一读的文章
 layout: post
 author: RuiBing
 category: essay
@@ -10,6 +10,7 @@ category: essay
 
 ## 谦逊的程序员
 
+- [**Reflections on Software ResearchE**](http://www.jdl.ac.cn/turing/pdf/p758-ritchie.pdf), D. RITCHIE, 1984, 真正的大师。其见解发人深省，其言论美不胜收。
 - [Knuth's Advice to Young People](https://note.youdao.com/ynoteshare/index.html?id=8e18c7402e0d7b26edf2aedb5ccd3c5a), by Donald Knuth, 2002. Knuth给年轻人的建议
 - [Interview with Donald Knuth](https://www.informit.com/articles/article.aspx?p=1193856), Apr 25, 2008. Knuth的采访
 - [The Humble Programmer](https://www.cs.utexas.edu/~EWD/transcriptions/EWD03xx/EWD340.html), by Edsger W. Dijkstra, 1972. 谦逊的程序员（[中译版](https://www.ituring.com.cn/article/71467)）
