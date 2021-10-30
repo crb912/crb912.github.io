@@ -3,7 +3,7 @@ published: true
 title: HEIF文件格式解析
 layout: post
 author: Eureka912
-category: Popular science
+category: Technique
 ---  
   
 * 目录

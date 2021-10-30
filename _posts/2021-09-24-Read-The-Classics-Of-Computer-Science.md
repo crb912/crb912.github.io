@@ -3,7 +3,7 @@ published: true
 title:  读计算机科学的经典
 layout: post
 author: RuiBing
-category: CS
+category: Essay
 ---
 
 过去一直有一个声音，让我们去读经典，读《红楼梦》， 读巴尔扎克，读莎士比亚，读《荷马史诗》，读《论语》...

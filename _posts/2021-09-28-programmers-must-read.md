@@ -3,7 +3,7 @@ published: true
 title:  值得一读的文章
 layout: post
 author: RuiBing
-category: essay
+category: Essay
 ---
 
 这些材料希望对你有所启发。不定期会更新。

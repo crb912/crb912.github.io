@@ -3,7 +3,7 @@ published: true
 title: 线程与进程，并发与并行
 layout: post
 author: RuiBing
-category: Computer Science
+category: Science
 ---
 
 * 目录

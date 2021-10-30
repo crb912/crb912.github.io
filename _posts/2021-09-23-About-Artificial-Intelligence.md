@@ -3,7 +3,7 @@ published: true
 title:  技术不会淘汰人类--关于人工智能
 layout: post
 author: RuiBing
-category: essay
+category: Essay
 ---
 
 我前些日子在网上看到一种言论，“机器人、自动化、人工智能正在变得比人类更强大。在可预见的将来，技术最终将淘汰人类...”。

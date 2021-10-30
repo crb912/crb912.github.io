@@ -3,7 +3,7 @@ published: true
 title:  Learning Assembly Code
 layout: post
 author: RuiBing
-category: Computer Science
+category: Programming
 ---  
 
 x86-64 ISA

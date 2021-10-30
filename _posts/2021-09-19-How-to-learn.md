@@ -3,7 +3,7 @@ published: true
 title:  如何进行学习？
 layout: post
 author: RuiBing
-category: Methodology
+category: Technique
 ---  
 
 ## 知识的「认知范畴」

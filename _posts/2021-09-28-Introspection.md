@@ -3,7 +3,7 @@ published: false
 title:  自省
 layout: post
 author: RuiBing
-category: essay
+category: Essay
 ---
 >蘧伯玉使人于孔子，孔子与之坐而问焉。曰：“夫子何为?”对曰：“夫子欲寡其过而未能也。”
 

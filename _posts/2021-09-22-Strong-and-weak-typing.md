@@ -3,7 +3,7 @@ published: true
 title:  维基百科中关于类型强弱的错误
 layout: post
 author: RuiBing
-category: programming
+category: Programming
 ---  
 
 

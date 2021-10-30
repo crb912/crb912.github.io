@@ -3,7 +3,7 @@ published: true
 title:  警惕信息时代
 layout: post
 author: RuiBing
-category: essay
+category: Essay
 ---
 
 **人和动物最大的区别是制造工具和使用工具；但不是在工具中沉沦，忘掉了自己是谁**。

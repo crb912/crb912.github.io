@@ -1,9 +1,9 @@
 ---
 published: true
-title:  哲学的生活方式（updating）
+title:  人生的智慧（updating）
 layout: post
 author: RuiBing
-category: essay
+category: Essay
 ---
 
 哲学(Philosophy)一词的词源，它来自的古希腊语：φιλοσοφία, philosophia, 'love of wisdom'。翻译出来的含义是：爱智慧。这是它最初的含义，也是我认为的最通俗、最透彻的含义了。
