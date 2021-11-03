@@ -4,6 +4,7 @@ title:  读计算机科学的经典
 layout: post
 author: RuiBing
 category: Essay
+hide: true
 ---
 
 过去一直有一个声音，让我们去读经典，读《红楼梦》， 读巴尔扎克，读莎士比亚，读《荷马史诗》，读《论语》...
@@ -43,7 +44,7 @@ category: Essay
 
 #### 关于编译器
 Reddit上有关于讨论编译器书单的一个话题，[Recommendations for books on compilers](https://www.reddit.com/r/programming/comments/3tgryd/recommendations_for_books_on_compilers/)。其中sanxiyn评论到：
-GCC wiki recommends [a list of compiler books](https://gcc.gnu.org/wiki/ListOfCompilerBooks). 
+GCC wiki recommends [a list of compiler books](https://gcc.gnu.org/wiki/ListOfCompilerBooks).
 
 打开之后，我只选了一本： **Appel. Modern Compiler implementation in ML**
 
@@ -55,7 +56,7 @@ GCC wiki recommends [a list of compiler books](https://gcc.gnu.org/wiki/ListOfCo
 
 ### 关于我的兴趣
 
-**到现在我还不知道我的兴趣聚焦于哪个点，所以我尽可能了解更多，学习更多**。不过我知道我喜欢编程语言中有意思的概念，有意思的想法。**我想我的好奇心会帮助我找到最终的答案，让我的工作有一个核心的关注点。** 
+**到现在我还不知道我的兴趣聚焦于哪个点，所以我尽可能了解更多，学习更多**。不过我知道我喜欢编程语言中有意思的概念，有意思的想法。**我想我的好奇心会帮助我找到最终的答案，让我的工作有一个核心的关注点。**
 
 我对于计算机中一些个人口味的不喜欢是显而易见的，比如：计算机图形学，密码学，我对这些基本上没有兴趣。我在从前工作了解过关于RSA密钥的算法，只是为了满足老板的商业需要进行学习的。比如我对LSM的数据结构有兴趣，所以我觉得自己**关注的方向还是编程语言方向，关心数据结构和算法**。我对Knuth的CWEB编程语言很感兴趣，它将是我这段时间忙完之后第一件事情。
 

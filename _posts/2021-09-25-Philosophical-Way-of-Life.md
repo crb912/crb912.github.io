@@ -4,6 +4,7 @@ title:  人生的智慧（updating）
 layout: post
 author: RuiBing
 category: Essay
+hide: true
 ---
 
 标题我偷了叔本华的书名《人生的智慧》，这篇主要是记录我在生活中一些发现。我谈论的范围很广，可以说，这是我个人的哲学和思想。我很喜欢笛卡尔的一句话，“Cogito, ergo sum”(拉丁语)，翻译成中文的意思是“我在思想，所以有我”(或译为“我思故我在”)。
