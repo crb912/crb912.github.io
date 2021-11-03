@@ -3,7 +3,8 @@ published: true
 title:  我生活的方式，我生活的目的
 layout: post
 author: RuiBing
-category: Essay 
+category: Essay
+hide: true
 ---
 
 **我相信，一个人坚定地保持自己在某种程度上的不方便，不论是对他还是对别人，都是有益的**。

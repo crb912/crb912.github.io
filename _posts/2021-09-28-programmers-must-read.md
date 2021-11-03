@@ -4,7 +4,7 @@ title:  值得一读的文章
 layout: post
 author: RuiBing
 category: Essay
-hidden: true
+hide: true
 ---
 
 这些材料希望对你有所启发。不定期会更新。
@@ -34,8 +34,8 @@ hidden: true
 
 ## 人生
 
-- [工作与人生--王小波](http://www.bwsk.com/xd/w/wangxiaobo/qt/007.htm) 
-- [Einstein: The World As I See It](https://www.colonialtours.com/ebook/ebooks/Albert%20Einstein%20-%20The%20World%20as%20I%20See%20it.pdf)，中译: [我的世界观](https://www.sohu.com/a/201241908_176673). 
+- [工作与人生--王小波](http://www.bwsk.com/xd/w/wangxiaobo/qt/007.htm)
+- [Einstein: The World As I See It](https://www.colonialtours.com/ebook/ebooks/Albert%20Einstein%20-%20The%20World%20as%20I%20See%20it.pdf)，中译: [我的世界观](https://www.sohu.com/a/201241908_176673).
 - [Steve Jobs--Stay hungry, Stay foolish](https://news.stanford.edu/2005/06/14/jobs-061505/). 中译：[乔布斯：永不满足，我行我素](https://language.chinadaily.com.cn/2017-09/15/content_32036816.htm)。
 - [Passing --by Monty Oum, October 6th, 2012](https://web.archive.org/web/20121220013445/http://montyoum.net/archives/602)
 - [Self-Reliance, Ralph Waldo Emerson](https://www.emersoncentral.com/texts/essays-first-series/self-reliance). 中译版：[爱默生：论自立](https://www.douban.com/group/topic/85627257/)

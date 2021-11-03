@@ -1,9 +1,10 @@
 ---
-published: false
+published: true
 title:  自省
 layout: post
 author: RuiBing
 category: Essay
+hide: true
 ---
 >蘧伯玉使人于孔子，孔子与之坐而问焉。曰：“夫子何为?”对曰：“夫子欲寡其过而未能也。”
 
@@ -19,6 +20,6 @@ category: Essay
 
 感谢这个聪明、智慧、有趣的小老头~
 
-![图片来自 Vivian Cromwell](https://api.bbs.cvmart.net/uploads/images/202005/13/3/4icQocXzWq.gif?imageView2/2/w/1240/h/0) 
+![图片来自 Vivian Cromwell](https://api.bbs.cvmart.net/uploads/images/202005/13/3/4icQocXzWq.gif?imageView2/2/w/1240/h/0)
 
 2021-09-28
