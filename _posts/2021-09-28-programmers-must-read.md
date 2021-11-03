@@ -4,7 +4,7 @@ title:  值得一读的文章
 layout: post
 author: RuiBing
 category: Essay
-hidden:  true
+hidden: true
 ---
 
 这些材料希望对你有所启发。不定期会更新。
