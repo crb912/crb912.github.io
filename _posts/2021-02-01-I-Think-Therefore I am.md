@@ -10,9 +10,9 @@ top: true
 >Cogito, ergo sum  
 -- 1637, Discourse on the Method, René Descartes.    
 I think, therefore I am.  
-我想，所以我是 -- 笛卡尔
+我想，所以我是。 —— 笛卡尔
 
-这里是一个小抽屉，“藏”了我一些文章。大多数都具有个人色彩。我的世界观，我的信仰，我对一些问题的看法。
+这里是一个小抽屉，“藏”了我一些文章。大多数都具有个人色彩。
 
 ## 自我教导
 
