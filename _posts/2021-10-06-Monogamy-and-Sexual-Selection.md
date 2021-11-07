@@ -7,6 +7,8 @@ category: Interesting
 hide: true
 ---  
 
+我不打算结婚，但这些事情的确有趣。发生在动物身上，也同样发生在人类社会。
+
 ## 鸟类婚姻
 
 斯坦福大学有篇有趣的文章[Monogamy](Monogamy)，提到了:
@@ -31,9 +33,8 @@ hide: true
 
 https://huanqiukexue.com/a/qianyan/shengwu__yixue/2017/1208/27650.html
 
----
 
-我不打算结婚，但是这些事情的确有趣。发生在动物身上，也发生在人类社会。
+
 
 
 
