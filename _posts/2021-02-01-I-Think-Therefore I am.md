@@ -31,7 +31,7 @@ I think, therefore I am.
 
 ## 有趣
 
-- [鸟类婚姻和动物的性选择](http://ruibing.org/Interesting/2021/10/06/Monogamy-and-Sexual-Selection.html)
+- [鸟类婚姻和动物的性选择](http://ruibing.org/interesting/2021/10/06/Monogamy-and-Sexual-Selection.html)
 
 ## 不安静
 

@@ -4,6 +4,7 @@ title: 鸟类婚姻和动物的性选择
 layout: post
 author: Eureka Bing
 category: Interesting
+hide: true
 ---  
 
 我不打算结婚，但这些事情的确有趣。发生在动物身上，也同样发生在人类社会。
