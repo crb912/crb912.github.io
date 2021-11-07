@@ -24,6 +24,9 @@ I think, therefore I am.
 - [方法论：如何进行学习?](http://ruibing.org/essay/2021/09/19/How-to-Learning.html) 2021-09-19
 - [自省](http://ruibing.org/essay/2021/09/28/Introspection.html)，2021-09-28
 
+## 不务正业
+
+- [打印的讲究](http://ruibing.org/technique/2021/11/07/Print.html)
 
 ## 人生的智慧
 
