@@ -25,6 +25,14 @@ I think, therefore I am.
 - [自省](http://ruibing.org/essay/2021/09/28/Introspection.html)，2021-09-28
 
 
+## 人生的智慧
+
+- [以直报怨](http://ruibing.org/essay/2021/11/08/Tit-for-Tat.html)
+
+## 有趣
+
+- [鸟类婚姻和动物的性选择](http://ruibing.org/essay/2021/10/06/Monogamy-and-Sexual-Selection.html)
+
 ## 不安静
 
 一些感触或评论，或只是记录。
