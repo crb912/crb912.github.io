@@ -31,6 +31,7 @@ I think, therefore I am.
 ## 人生的智慧
 
 - [以直报怨](http://ruibing.org/essay/2021/11/08/Tit-for-Tat.html)
+- [谈谈股票](http://ruibing.org/essay/2021/11/09/Stock-Trading.html)
 
 ## 有趣
 
