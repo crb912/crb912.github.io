@@ -7,16 +7,17 @@ category: Essay
 top: true
 ---
 
->Cogito, ergo sum  
--- 1637, Discourse on the Method, René Descartes.    
-I think, therefore I am.  
-我想，所以我是。 —— 笛卡尔
 
-这里是一个小抽屉，“藏”了我一些文章。大多数都具有个人色彩。
+
+
+
+司汤达的墓碑上写着：“活过，爱过，写过”，对于他提到的这三件事，我是一件都没有做成呀。笛卡尔说：“Cogito, ergo sum”，翻译过来是：“我想，所以我是”（旧译“我思故我在”）。司汤达的目标，我怕是做不到了。对于别人的行业，我不感兴趣。对于笛卡尔的想法，和我的观点十分接近。我继续从事我自己的这一行：用一生的时间来培育我的理性，增进我对真理的认识。我认为我的生命中只有两件事是重要的，在思考和在运用计算机，我把我的理性用在这两个方面。离开思考，我什么都不是，和虫子没区别；离开计算机，我将感到无所事事。
+
+这里是一个小抽屉，“藏”了我一些文章。主要是关于我在思考什么，大多都具有个人色彩。不求它们能得到共识，只求它们在我的理性里是成立的。
 
 ## 自我教导
 
-训练我自己，思想。不断的思想，教导我自己，用正确的方式追寻真理。
+我的理性还不够，所以我在不断学习。训练我自己，思想，教导我自己，以求用正确的方式追寻真理。
 
 - [我生活的方式，我生活的目的](http://ruibing.org/essay/2021/09/23/the-Purpose-of-My-Life.html)
 - [读笛卡尔《谈谈方法》](http://ruibing.org/self-instruction/2021/11/05/Reading-Discourse-on-the-Method.html) 2021-11-05
@@ -30,8 +31,11 @@ I think, therefore I am.
 
 ## 人生的智慧
 
+- [从《两小儿辩日》看中西方文化](http://ruibing.org/essay/2021/11/10/Eastern-and-Western-Culture.html)
 - [以直报怨](http://ruibing.org/essay/2021/11/08/Tit-for-Tat.html)
 - [谈谈股票](http://ruibing.org/essay/2021/11/09/Stock-Trading.html)
+- [关于人工智能](http://ruibing.org/essay/2021/09/23/About-Artificial-Intelligence.html)
+- [警惕信息时代](http://ruibing.org/essay/2021/09/23/The-Web-Shatters-Focus.html)
 
 ## 有趣
 
@@ -44,5 +48,4 @@ I think, therefore I am.
 - [读过的好文章](http://ruibing.org/essay/2021/09/28/Good-Article.html)
 - [旧事与新事](http://ruibing.org/essay/2021/10/21/The-Old-New-Things.html), 2021-10-21
 - [人生的智慧](http://ruibing.org/essay/2021/09/25/Philosophical-Way-of-Life.html)
-- [警惕信息时代](http://ruibing.org/essay/2021/09/23/The-Web-Shatters-Focus.html), 2021-09-23
-- [关于人工智能](http://ruibing.org/essay/2021/09/23/About-Artificial-Intelligence.html), 2021-09-23
+
