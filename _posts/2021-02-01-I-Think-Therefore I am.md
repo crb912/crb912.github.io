@@ -31,6 +31,7 @@ top: true
 
 ## 人生的智慧
 
+- [《昆虫记》，童年，教育](https://ruibing.org/essay/2021/11/15/Fabre-Childhood-Education.html)
 - [从《两小儿辩日》看中西方文化](http://ruibing.org/essay/2021/11/10/Eastern-and-Western-Culture.html)
 - [以直报怨](http://ruibing.org/essay/2021/11/08/Tit-for-Tat.html)
 - [谈谈股票](http://ruibing.org/essay/2021/11/09/Stock-Trading.html)
