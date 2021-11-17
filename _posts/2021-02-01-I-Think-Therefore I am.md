@@ -45,6 +45,7 @@ top: true
 
 一些感触或评论，或只是记录一些。
 
+- [写给弟弟的书信](http://ruibing.org/essay/2021/11/17/to-Brother.html)
 - [读过的好文章](http://ruibing.org/essay/2021/09/28/Good-Article.html)
 - [旧事与新事](http://ruibing.org/essay/2021/10/21/The-Old-New-Things.html), 2021-10-21
 - [人生的智慧](http://ruibing.org/essay/2021/09/25/Philosophical-Way-of-Life.html)
