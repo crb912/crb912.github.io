@@ -23,9 +23,11 @@ top: true
 - [方法论：如何进行学习?](http://ruibing.org/essay/2021/09/19/How-to-Learning.html) 2021-09-19
 - [自省](http://ruibing.org/essay/2021/09/28/Introspection.html)，2021-09-28
 
-## 不务正业
+## 不务正业的“研究”
 
+- [英文的咬文嚼字](http://ruibing.org/essay/2021/11/21/to-Speak-Like-a-Book.html)
 - [打印的讲究](http://ruibing.org/technique/2021/11/07/Print.html)
+- [鸟类婚姻和动物的性选择](http://ruibing.org/interesting/2021/10/06/Monogamy-and-Sexual-Selection.html)
 
 ## 人生的智慧
 
@@ -36,10 +38,6 @@ top: true
 - [谈谈股票](http://ruibing.org/essay/2021/11/09/Stock-Trading.html)
 - [关于人工智能](http://ruibing.org/essay/2021/09/23/About-Artificial-Intelligence.html)
 - [警惕信息时代](http://ruibing.org/essay/2021/09/23/The-Web-Shatters-Focus.html)
-
-## 有趣
-
-- [鸟类婚姻和动物的性选择](http://ruibing.org/interesting/2021/10/06/Monogamy-and-Sexual-Selection.html)
 
 ## 不安静
 
@@ -54,4 +52,4 @@ top: true
 
 工作的榜样：「爱因斯坦，高德纳，法布尔」。我要努力工作，以他们为自己的榜样。
 
-理性思维： 「卡尔维诺、王小波、笛卡尔」。我学习他们的理性思维，训练我自己。一个的行动，没有深刻的理性思维指引，是很难有结果的。
+理性思维： 「卡尔维诺、王小波、笛卡尔」。我学习他们的理性思维，训练我自己。一个的行动，没有深刻的理性思维指引，是很难有结果的。其次，一个人倘若没有自己的精神世界，恐怕很难找到活在这个世界上的乐趣和幸福的支点。
