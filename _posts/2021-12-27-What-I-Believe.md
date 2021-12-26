@@ -2,7 +2,7 @@
 published: true
 title: 我的信仰
 layout: post
-author: Ray Cao
+author: Eureka Bing
 category: Essay
 ---
 
