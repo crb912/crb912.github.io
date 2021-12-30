@@ -1,6 +1,6 @@
 ---
 published: true
-title:  如何进行学习？
+title:  如何高效学习？
 layout: post
 author: RuiBing
 category: Essay
