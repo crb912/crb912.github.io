@@ -7,7 +7,7 @@ category: Essay
 hide: true
 ---  
 
-### 对软件研究的反思
+## 对软件研究的反思
 
 - 论文：Reflections on Software Research,Communications of the ACM 27,8,(1984)
 - 作者: Dennis Ritchie.
@@ -17,7 +17,9 @@ hide: true
 
 其中提到有意思的事情： 大型计算机公司很少有有趣的软件系统；他们被锁定在现有的世界中。比如IBM，近年来也几乎再没有产生任何东西。
 
-### 在Linux上选择合适的计时器中断频率
+---
+
+## 在Linux上选择合适的计时器中断频率
 
 - 论文：Choosing the Right Timer Interrupt Frequency on Linux, Skripsi Program Studi Sistem Informasi, 2010
 - 作者：Santosa, Mulyadi
@@ -31,7 +33,9 @@ hide: true
 
 论文结论是：“In general case, especially when in doubt, simply use HZ=250 for your kernel setting. It fits fairly nice for multimedia work, officeproductivity, gaming and other end-users workloads. This is also the default setting in latest Linux kernel releases and adopted by major distributions, so you won’t need to change anything.”
 
-### 一个程序执行时间测量问题
+---
+
+## 一个程序执行时间测量问题
 
 - 论文: A Problem of Program Execution Time Measurement
 - 作者: Hajdukovi Miroslav, Zorica Suvajdžin, Zark Zivanov, Edin Hodži
