@@ -4,19 +4,15 @@ title: About
 permalink: /about/
 ---
 
-Never grew up; never stopped growing.
 
-A Hacker.
+Never too old to learn.
 
-A programmer.
+Use my limited life to improve my productivity and pursue the development of my personal wisdom and rationality.
 
-A problem solver.
 
-我不是一个特别聪明和智商超群的人。
+终身学习。
 
-但是我确信我脑子里的“空白区域”还很多，它们还没有被充分利用。
+用有限的生命来提高自己的生产力，追求发展我个人的智慧和理性。
 
-以至于我可以用一生的时间让这些“空白区域”填满有趣的知识。 
-
-每天让自己进步一点点，活到老，就学到老。
+当我的生命终结的时候，我一定会想知道自己的一生可以走多远。我努力填补自己活着时候的时间，只为了最后的回忆时不空虚。
 
