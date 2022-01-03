@@ -9,7 +9,7 @@ hide: true
 
 ### 中断
 
-1.这篇论文[ A Problem of Program Execution Time Measurement](https://ruibing.org/essay/2021/02/01/Papers-Comment.html#20220103MeasureAppExeTime)论文讨论了程序执行时间测量的误差，误差的根源是因为无法保证测量的开头和结束时间点恰好就是中断的发生时间。在完美理想的情况下，除非中断是连续的，而非间接性的，它才能可能恰如其分的捕捉到事件的开头和结尾。但这就必然会导致程序永远不会被执行，所以这种连续中断的理想不应当成立的。另一方面，自然界似乎不存在真正完美连续的东西，即便是光也是由粒子构成的，这似乎又从哲学的角度否定了连续中断存在的可能性。
+1.这篇[ A Problem of Program Execution Time Measurement](https://ruibing.org/essay/2021/02/01/Papers-Comment.html#20220103MeasureAppExeTime)论文讨论了程序执行时间测量的误差，误差的根源是因为无法保证测量的开头和结束时间点恰好就是中断的发生时间。在完美理想的情况下，除非中断是连续的，而非间接性的，它才能可能恰如其分的捕捉到事件的开头和结尾。但这就必然会导致程序永远不会被执行，所以这种连续中断的理想不应当成立的。另一方面，自然界似乎不存在真正完美连续的东西，即便是光也是由粒子构成的，这似乎又从哲学的角度否定了连续中断存在的可能性。
 
 2.这篇论文[Choosing the Right Timer Interrupt Frequency on Linux](https://ruibing.org/essay/2021/02/01/Papers-Comment.html#20220103RightIF)则测试了各种不同的中断频率，以帮助我们选择最合适的频率。
 
@@ -19,7 +19,13 @@ hide: true
 
 ![interrupt](https://github.com/crb912/crb912.github.io/blob/master/my_private/image/20220104interrupt.png?raw=true)
 
-Timer三种模式：a.正常模式，保持自增。b.**CTC** (Clear Timer on Compare) Mode 比较成功时置零 c.**PWM**(脉宽调制)模式，利用比较匹配把整个Timer寄存器的数据划分成两段，两段分别使用不同电平，就由此产生了不同宽度的脉冲。
+Timer三种模式：a.正常模式，保持自增。b.**CTC** (Clear Timer on Compare) Mode 比较成功时置零 c.**PWM**(脉宽调制)模式，利用比较匹配把整个Timer寄存器的数据区间“切分”成两段，两段分别使用不同电平，就由此产生了不同宽度的脉冲。
 
 ![PWM](https://github.com/crb912/crb912.github.io/blob/master/my_private/image/20220104interrupt_PWM.png?raw=true)
+
+[CodeVisionAVR](http://www.hpinfotech.ro/index.html)可给AVR架构单片机芯片编程。
+
+4.CS:APP Beta节选章节 *Measuring Program Execution Time*，盗版Beta上的内容，正版上没有该章节。不知道作者为什么删掉了这么很棒的一个章节。**CPU在微观上以ns作为事件的时间尺度，而OS在宏观上以ms作为时间尺度。前者基于CPU的时钟自增，后者基于独立的timer**. 因此是两种不同的测量方法。由于上下文切换开销大，因此需消除。
+
+一些事件的时间消耗：视频播放，显卡的刷新每33ms；磁盘启动传输大约10ms；任务切换是5-20ms;操作系统管理事件在5千-2万的时钟周期。
 
