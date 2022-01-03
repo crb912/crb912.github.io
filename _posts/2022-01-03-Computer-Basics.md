@@ -19,5 +19,7 @@ hide: true
 
 ![interrupt](https://github.com/crb912/crb912.github.io/blob/master/my_private/image/20220104interrupt.png?raw=true)
 
-Timer三种模式：a.正常模式，保持自增。b.CTC (Clear Timer on Compare) Mode 比较成功时置零 c.PWM(脉宽调制)模式，利用比较匹配把整个Timer寄存器的数据划分成两段，两段分别使用不同电平，就由此产生了不同宽度的脉冲。
+Timer三种模式：a.正常模式，保持自增。b.**CTC** (Clear Timer on Compare) Mode 比较成功时置零 c.**PWM**(脉宽调制)模式，利用比较匹配把整个Timer寄存器的数据划分成两段，两段分别使用不同电平，就由此产生了不同宽度的脉冲。
+
+![PWM](https://github.com/crb912/crb912.github.io/blob/master/my_private/image/20220104interrupt_PWM.png?raw=true)
 
