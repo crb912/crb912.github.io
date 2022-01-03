@@ -21,7 +21,7 @@ hide: true
 
 ---
 
-## 在Linux上选择合适的计时器中断频率
+## 在Linux上选择合适的计时器中断频率 <a name="20220103RightIF"></a>
 
 - 论文：Choosing the Right Timer Interrupt Frequency on Linux
 - 作者：Mulyadi Santosa
@@ -37,7 +37,7 @@ hide: true
 
 ---
 
-## 一个程序执行时间测量问题
+## 一个程序执行时间测量问题  <a name="20220103MeasureAppExeTime"></a>
 
 - 论文: A Problem of Program Execution Time Measurement
 - 作者: Hajdukovi Miroslav, Zorica Suvajdžin, Zark Zivanov, Edin Hodži
