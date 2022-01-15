@@ -7,8 +7,6 @@ category: Essay
 hide: true
 ---  
 
-请允许我做一回“键盘侠”，主观带入个人情绪的评判别人的劳动成果。至于客观？留给下一次。
-
 ## 对软件研究的反思
 
 - 论文：Reflections on Software Research,Communications of the ACM 27,8,(1984)
@@ -31,7 +29,7 @@ hide: true
 
 中断过快会导致CPU性能损失，中断过慢会牺牲用户体验，需平衡两者来获得最大的CPU能力，如何选择合适的中断频率？文章的实验设计值得学习，它分别从CPU密集型程序、键盘输入、多媒体输入，多媒体输出、虚拟机，5个不同类型的软件进行测试时钟中断频率，结论有一定的说服力。其中最有趣的部分在于测定键盘输入的响应时间。事件如下：按键 -> 引起中断 -> 接受到 scan code -> 新数据进入终端驱动，唤醒等待的进程 -> 该进程接受到此次键击。要计算的时间差发生在内核接受到数据时和应用软件被唤醒，因此要从内核空间和用户空间分别捕捉。它的做法是：当键码被解释完全，内核空间下记录一次时间戳计数寄存器的TSC (Time Stamp Counter) number；当控制台程序收到键击时，再记录一次 TSC，不断重复多次。
 
-该论文提到的技巧：1. CPU密集程序用了三层嵌套循环对两随机数做除法。 2. 读取TSC寄存器，用到`rdtsc`汇编指令。3.接管内核的键击，修改`drivers/char/keyborad.c.orig`。
+该论文提到的技巧：1. CPU密集程序用了三层嵌套循环对两随机数做除法。 2. 读取TSC寄存器（可认为是一个高精度的时钟），用到`rdtsc`汇编指令。3.接管内核的键击，修改`drivers/char/keyborad.c.orig`。
 
 论文结论是：“In general case, especially when in doubt, simply use HZ=250 for your kernel setting. It fits fairly nice for multimedia work, officeproductivity, gaming and other end-users workloads. This is also the default setting in latest Linux kernel releases and adopted by major distributions, so you won’t need to change anything.”
 
