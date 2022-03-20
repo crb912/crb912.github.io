@@ -4,6 +4,7 @@ title: 编程建议
 layout: post
 author: Ray Cao
 category: Programming
+hide: false
 ---
 
 ### 基本类
