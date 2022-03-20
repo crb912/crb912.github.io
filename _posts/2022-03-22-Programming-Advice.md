@@ -2,14 +2,12 @@
 published: true
 title: 编程建议
 layout: post
-author: Eureka Bing
+author: Ray Cao
 category: Programming
 ---
 
-* 目录
-{:toc}
+### 基本类
 
-### 基本类型
 - 如果你的代码有太多cast，说明你已经搞砸了。
 - Use `dynamic_cast` where class hierarchy navigation is unavoidable; 类层次漫游行为不可避免时，使用它`dynamic_cast`。 如果果无法转换向目标类时，想要它报错，就用`dynamic_cast` 作用于引用类型；不希望报错就，就作用于指针类型。
 - Use `unique_ptr` or `shared_ptr` to avoid forgetting to delete objects created using new;
