@@ -6,6 +6,7 @@ author: RayCao
 category: Programming
 ---  
 
+
 ### 基本类
 
 - 如果你的代码有太多cast，说明你已经搞砸了。
@@ -19,7 +20,7 @@ category: Programming
 - Prefer concerete classes over class hierarchies for performance-critical components; 高性能组件尽可能用具体类
 - Make a function a member only if it needs direct access to the representation of a class; 仅当需要直接访问类的表示时，才使用成员函数。
 - Declare a member function that does not modify the state of its object `const`;
-- If a class is a container, give it an initializer-list constructor; 
-- An abstract class typically doesn’t need a constructor; 
+- If a class is a container, give it an initializer-list constructor;
+- An abstract class typically doesn’t need a constructor;
 - A class with a virtual function should have a virtual destructor;
 - 由于抽象类灵活的特性，在派生类的destructor函数要保证资源能被释放，这太重要了。
