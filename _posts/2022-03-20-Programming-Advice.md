@@ -10,7 +10,7 @@ category: Programming
 ### 基本类
 
 - 如果你的代码有太多cast，说明你已经搞砸了。
-- Use `dynamic_cast` where class hierarchy navigation is unavoidable; 类层次漫游行为不可避免时，使用它`dynamic_cast`。 如果果无法转换向目标类时，想要它报错，就用`dynamic_cast` 作用于引用类型；不希望报错就，就作用于指针类型。
+- Use `dynamic_cast` where class hierarchy navigation is unavoidable; 当类层次漫游行为不可避免时，使用动态强制转换。 如果无法转换向目标类时，想要它报错，就用`dynamic_cast` 作用于引用类型；不希望报错就，就作用于指针类型。
 - Use `unique_ptr` or `shared_ptr` to avoid forgetting to delete objects created using new;
 - new出来的裸指针，直接从函数返回是很危险的。最好用标准库的`unique_ptr`,例如`return unique_ptr<Shape>{new Circle{p,r}};`
 
