@@ -10,6 +10,7 @@ category: Investment
 
 - [巴菲特经典演讲：格雷厄姆和多德都市里的超级投资者](https://www.touzid.com/article/283)
 - [1998年巴菲特在佛罗里达大学商学院的演讲](https://www.163.com/dy/article/FTBE7PD10519BPB6.html)
+- [查理·芒格的智慧](https://ruibing.org/essay/2022/06/05/Charlie-Munger.html)
 
 ## 投资理念
 
