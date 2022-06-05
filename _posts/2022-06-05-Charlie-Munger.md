@@ -1,6 +1,6 @@
 ---
 published: true
-title:  查理·芒格的智慧
+title: 查理·芒格的智慧
 layout: post
 author: RayCao
 category: Investment
