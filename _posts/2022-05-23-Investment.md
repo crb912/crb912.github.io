@@ -4,6 +4,7 @@ title:  投资
 layout: post
 author: RayCao
 category: Investment
+hide: true
 ---  
 
 ## 投资好文
