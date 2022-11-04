@@ -8,12 +8,11 @@ category: Economy
 
 宏观经济现状
 
-- [PMI](http://data.10jqka.com.cn/macro/pmi/) 悲观，跌破荣枯线。
-- [CPI-PPI](http://data.10jqka.com.cn/macro/cpippi/) 乐观，向上
-- [消费者信心指数](http://data.10jqka.com.cn/macro/consumer/)  悲观，下行趋势
-- [外汇占款](http://data.10jqka.com.cn/macro/foreign/) 悲观，下行趋势
+- [PMI](http://data.10jqka.com.cn/macro/pmi/) 跌破荣枯线，悲观
+- [CPI-PPI](http://data.10jqka.com.cn/macro/cpippi/) 向上，乐观
+- [消费者信心指数](http://data.10jqka.com.cn/macro/consumer/)  下行趋势，悲观
 
-货币
+货币政策
 
 - [社融规模](http://value500.com/srzl.asp)  上行周期，乐观
 - [M1增速](https://legulegu.com/stockdata/m1m2-mom) 上行周期，乐观
@@ -21,13 +20,17 @@ category: Economy
 
 资本市场现状
 
-- [两融余额](http://value500.com/rzrj.asp) 乐观， 底部
-- [底部研究](https://legulegu.com/stockdata/equity-bond-spread)  乐观，底部
+- [美元/人民币](https://cn.investing.com/currencies/usd-cnh) 高位，下行趋势 ，中性
+- [外汇占款](http://data.10jqka.com.cn/macro/foreign/) 下行趋势，悲观
+- [两融余额](http://value500.com/rzrj.asp) 底部，乐观
+- [底部研究](https://legulegu.com/stockdata/equity-bond-spread)  底部，乐观
 
 ### 2022年度（周期底部）
 本月预测： 技术指标以及外资的情绪综合来看，本月度市场很可能会有反弹: 短线看多，中线看多。
 
 #### 2022.11
+
+今天外资买入接近120亿，是部分外资多头的信号。加息下个月进入尾声，美元对人民币的单边升值很快要反转了——预计最快是本月，最晚在下个月。外资这个时候抄底中国资产，买入既能赚到汇率差，又能捡到便宜的筹码。。但我认为这轮超跌的反弹行情不会比5、6月份的行情更好——即不会超出3424点，因为从基本面上，经济的悲观预期没有改变。从长期来说，这是A股底部的黄金区域。从中短期（今年，明年）来说，市场仍会以震荡行情为主。--20221104
 
 1. 昨夜美国ADP私营部门就业人数增加23.9万，好于预期的19.5万。受此消息影响，纳指期货盘前下跌。美联储加息75点落地，鹰派发言，加息放缓慢，但是可能会持续很长。滞胀无法避免。
 2. 疫情暂时没有实质的放开消息。
