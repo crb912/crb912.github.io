@@ -8,7 +8,7 @@ category: Essay
 
 ## 目录
 
-*
+* toc
 {:toc}
 
 ## 穷查理宝典
