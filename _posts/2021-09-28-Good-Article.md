@@ -42,4 +42,7 @@ hide: true
 - [Passing --by Monty Oum, October 6th, 2012](https://web.archive.org/web/20121220013445/http://montyoum.net/archives/602)。对工作一丝不苟的态度值得学习。
 - [Steve Jobs--Stay hungry, Stay foolish](https://news.stanford.edu/2005/06/14/jobs-061505/). 中译：[乔布斯：永不满足，我行我素](https://language.chinadaily.com.cn/2017-09/15/content_32036816.htm)。
 
+## 其他
 
+- [1986年华莱士对邓小平的采访](http://yyyyiiii.blogspot.com/2012/04/blog-post_10.html) ([英文](https://china.usc.edu/deng-xiaoping-interview-mike-wallace-60-minutes-sept-2-1986))
+- [李显文国庆讲话](https://www.channelnewsasia.com/singapore/prime-minister-lee-hsien-loong-national-day-rally-2022-english-full-speech-2891461)
