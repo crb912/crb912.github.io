@@ -7,8 +7,6 @@ category: Essay
 hide: true
 ---
 
-读过的好文章，年年一回味。
-
 ## 谦逊的程序员
 
 - [**Reflections on Software ResearchE**](http://www.jdl.ac.cn/turing/pdf/p758-ritchie.pdf), D. RITCHIE, 1984, 真正的大师。其见解发人深省，其言论美不胜收。
@@ -46,3 +44,5 @@ hide: true
 
 - [1986年华莱士对邓小平的采访](http://yyyyiiii.blogspot.com/2012/04/blog-post_10.html) ([英文](https://china.usc.edu/deng-xiaoping-interview-mike-wallace-60-minutes-sept-2-1986))
 - [李显文国庆讲话](https://www.channelnewsasia.com/singapore/prime-minister-lee-hsien-loong-national-day-rally-2022-english-full-speech-2891461)
+- [解构并还原李文亮](https://weibo.com/ttarticle/p/show?id=2309404492517025382560)
+- [Third Row Tesla Podcast – Elon Musk’s Story](https://elon-musk-interviews.com/2021/06/29/third-row-tesla-podcast-elon-musks-story-part-ii-english/)
