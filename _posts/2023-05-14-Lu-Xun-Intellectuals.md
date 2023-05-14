@@ -4,13 +4,14 @@ title: 鲁迅的《关于知识分子》
 layout: post
 author: RayCao
 category: Essay
+hide: true
 ---  
 
-鲁迅的原文链接: [关于知识阶级](http://www.ziyexing.com/luxun/luxun_zw_jwjsybb/luxun_zw_jwjsybb_46.htm)，[备份](https://web.archive.org/web/20230514065840/http://www.ziyexing.com/luxun/luxun_zw_jwjsybb/luxun_zw_jwjsybb_46.htm).
+原文链接: [关于知识阶级](http://www.ziyexing.com/luxun/luxun_zw_jwjsybb/luxun_zw_jwjsybb_46.htm)，[备份](https://web.archive.org/web/20230514065840/http://www.ziyexing.com/luxun/luxun_zw_jwjsybb/luxun_zw_jwjsybb_46.htm).
 
 鲁迅的这篇文章分析了知识阶级的缺点：
 
-1. 知识分子应该要“能替平民抱不平，把平民的痛苦告诉大众”。而不是享受了高贵的生活，就记不起从前一切的贫苦生活了。他不但不同情于平民或许还要压迫平民，以致变成了平民的敌人。
+1. 知识分子应该要“能替平民抱不平，把平民的痛苦告诉大众”。而不是享受了高贵的生活，就记不起从前一切的贫苦生活了。他不但不同情于平民或许还要压迫平民，以致变成了平民的敌人。鲁迅的这段话让我想起了马云的那句“996是福报”，在马云成功之前，他是平民；在他成功之后，他成了平民的敌人。
 
 2. 知识阶级总是空谈，分析有利有弊，而不采取任何行动。凡是做文章，总说“有利然而又有弊”，这最足以代表知识阶级的思想。其实无论什么都是有弊的，就是吃饭也是有弊的；它能滋养我们这方面是有利的，但是一方面使我们消化器官疲乏，那就不好而有弊了。鲁迅说，“假使做事要面面顾到，那就什么事都不能做了”。
 
