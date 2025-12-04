@@ -6,7 +6,7 @@ author: RuiBing
 category: Think
 ---
 
-维特根斯坦说，"Die Grenzen meiner Sprache bedeuten die Grenzen meiner Welt"，这句话是德文，把它翻译成英文是，The limits of my language define the limits of my world. 翻译成中文则是，“我的语言的界限定义了我世界的界限”，最简化的表达是：语言即世界，我采用了它作为标题。
+维特根斯坦说，"Die Grenzen meiner Sprache bedeuten die Grenzen meiner Welt"，这句话是德文，把它翻译成英文是，The limits of my language define the limits of my world. 翻译成中文则是，“我的语言的界限定义了我世界的界限”。“语言即世界”是它最简化的表达，我采用了它作为标题。
 
 我对此的理解是：人只能认识世界到的一部分，他无法理解到整个世界。准确的说，每个人都是井底之蛙，只是各自的井口直径各不相同。人对每件事件的认知决定了他所能理解世界的范围。世界是一切事实的总和，你能认识到多少事实，你的世界就会有多大。
 
