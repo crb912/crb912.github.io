@@ -166,6 +166,13 @@ Read 500 pages like this every day. That's how knowledge works. It builds up, li
 Buying at a fair price doesn’t generate alpha – it’s buying at an unreasonably low one that does. Thus, accessing a bargain requires cooperation from someone who’ll sell at a price that’s irrationally low。以公平价格买入不会产生超额收益，只有以不合理低价买入才会。获得便宜货需要有人以不合理低价卖给你。—— The Most Important Thing Illuminated
 
 asymmetric risk-reward
+
+#### d. 重大机遇必须抓住
+
+ Big opportunities in life have to be seized. We don't do very many things, but when we get the chance to do something that's right and big, we've got to do it. And even to do it on a small scale is almost as big a mistake as not doing it at all. I mean, you really got to grab them when they come because you're not going to get five hundred great opportunities. 人生中的重大机遇必须牢牢把握。我们不会做太多事，但当有机会去做一件既正确又重大的事时，我们必须全力以赴。即便只是小规模地去做这件事，也几乎和完全不做一样，是同样严重的错误。我的意思是，当机遇来临时，你真的必须果断抓住它们，因为你这辈子不会遇到五百个这样的重大机遇。—— 巴菲特
+ 
+ 
+
 ---
 
 ## 4.投资知识
@@ -193,7 +200,8 @@ Reporter: I mean, that's the greater fool theory（博傻理论）, that's what 
 #### 专注向前跑
 
 Q：如果庞然大物来围剿你的时候，你该怎么应对？
-张一鸣：反围剿最有效的方式，就是专注向前跑。不要停下来，不要分心，赶紧紧紧向前跑，专注向前跑。看起来好像不是一个巧妙的方法，很多时候最直接的方法就是最有效的。
+
+张一鸣：面对竞争其实一个高优先级的风险。反围剿最有效的方式，就是专注向前跑。不要停下来，不要分心，不要回头看一下后边，专注向前跑。不用想着拌人家一脚，就是专注向前跑。看起来好像不是一个巧妙的方法，很多时候最直接的方法就是最有效的。我们同期做有个公司做的是资讯，后来他又做读书去了，我们其实就一次都没有做。这个就是节省了我们很多精力和时间。
 
 #### 养殖业
 
