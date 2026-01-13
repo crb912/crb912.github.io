@@ -25,7 +25,7 @@ category: Think
 
 一张图片引起了我的触动。植物标识牌的金属圈，死死勒住了一株榆树的枝干。我想这颗树，多么像我们的社会的缩影。编户齐民，强权专制；强调循规蹈矩，服从和听话，结果无数的个体的人生轨迹走向了畸形。
 
-！[](https://github.com/crb912/crb912.github.io/blob/master/my_private/image/tree.png?raw=true){: width="300" }
+！[tree](https://github.com/crb912/crb912.github.io/blob/master/my_private/image/tree.png?raw=true){: width="300" }
 
 2026-01-13
 
