@@ -55,7 +55,7 @@ The Art of Being Happy
 ### 1. 超越自己，做最好的自己
 
 If you live each day as if it was your last, someday you'll most certainly be right. 
-如果你把每一天都当成最后一天来过，总有一天你会发现你是对的。记住自己随时会死，避免患得患失的陷阱，只剩下真正重要的东西。-- Steve Jobs. 大学演讲，2005年6月12日
+如果你把每一天都当成最后一天来过，总有一天你会发现你是对的。记住自己随时会死，避免患得患失的陷阱，只剩下真正重要的东西。-- Steve Jobs. 斯坦福演讲，2005年6月12日
 
 想好你希望自己的讣告写些什么，然后就去努力过上配得上那样的人生。--巴菲特的谢幕信
 
@@ -72,6 +72,8 @@ If you live each day as if it was your last, someday you'll most certainly be ri
 **生活可以宽广无限：**当你长大后，你往往会被告知世界就是这个样子，你的生命就是要在世界里过日子。尽量别太频繁地撞墙（别太频繁地碰壁/挑战规则），试着拥有一个美好的家庭生活、开心玩乐、存点钱。这是一种非常有限的生活。一旦你发现一个简单的事实，你的生命就会变得广阔得多——那就是，你周围一切你称之为‘生活’的东西，都是由和你一样聪明（甚至不如你聪明）的人创造出来的。你可以改变它，你可以影响它，你可以建造属于自己的东西，让别人使用。一旦你明白这一点，你就再也不会和以前一样了。 When you grow up, you tend to get told that the world is the way it is, and your life is just to live your life inside the world. Try not to bash into the walls too much, try to have a nice family life, have fun, save a little money. That's a very limited life. Life can be much broader once you discover one simple fact, and that is that everything around you that you call life was made up by people that were no smarter than you. And you can change it, you can influence it, you can build your own things that other people can use. Once you learn that, you'll never be the same again. -- Steve Jobs，1994，filmed interview, Santa Clara Valley Historical Association
 
 我给年轻人有一些择业的建议，就是**不降级，不投机，和优秀的人做有挑战的事**。很多年轻人在选择工作的时候会想，这公司可能刚刚融了5亿美金，那么我去这个公司。这些选择并不是出于他本身的兴趣爱好，也并不是出于这个挑战的难度，而是对出这个公司是有很多钱，这个公司是不是符合当下火热的概念。选择公司应该看到这家公司的是否具有延伸的成长能力，他能够用最少的钱获得企业的最快的增长。除了融了资，汇集了很多钱，是不是汇集了很多优秀的人。**我觉得到这个时代，中国的年轻人应该有这样的信心去尝试一些别人不敢尝试的事情。在择业的时候应该更看这个事情的挑战，如果有机会跟很优秀的人做很有挑战的事，那么我相信成长是最快的。** -- 张一鸣
+
+我觉得我大部分时间在自我修炼，顺便创造财富。我不抽烟，不喝酒，不喜欢汽车，也不打什么高尔夫球，游戏也不玩。我喜欢干两件事：一个是发呆，一个是学习。我的发呆并不是不想东西，我的发呆是以发呆的神态想东西。想各种有意思的东西，想各种可能性，想各种情况的极端条件。在极端条件下的结果，想各种组合。我觉得想象力也是扩展人的生命，扩展人的视野的一种方式。-- 张一鸣谈爱好
 
 ### 2. 追随内心和直觉
 
