@@ -151,7 +151,7 @@ People behave very peculiarly in terms of their reactions because they're human 
 
 ## 3. 投资者的自我修养
 
-#### a. 年轻人如何投资
+#### 年轻人如何投资
 
 Q：如果你30岁，没有赡养人，但有一份全职工作，无法全职投资，假设你能用其他储蓄覆盖18个月的开销，你会如何投资你的第一个一百万美元？提前感谢你尽可能具体地说明了资产类别和配置比例。
 
@@ -165,12 +165,17 @@ Q：如果你30岁，没有赡养人，但有一份全职工作，无法全职�
 
 [2008年伯克希尔·哈撒韦股东大会-Tim Ferriss](https://tim.blog/2008/06/11/061108-picking-warren-buffetts-brain-notes-from-a-novice)
 
-#### b. 每天阅读财报
+#### 资产负债表的重要性
+
+我花在研究资产负债表上的时间，比研究利润表的多得多。华尔街其实不太关注资产负债表，但我喜欢先看公司8到10年的资产负债表，再去看利润表，因为资产负债表上有些东西更难隐藏或操纵，比利润表难多了。
+I spend more time looking at balance sheets than I do income statements. And Wall Street really does't pay much attention to balance sheets over an eight or 10 year period before I even look at the income account, because there are cetain things that's harder to hide or play games with on the balance sheet. -- 2025年巴菲特股东大会
+
+#### 每天阅读财报
 
 我的工作就是阅读企业的全年报、阅读竞争对手的报告，这就是我大部分时间在做的事。每天读500页这样的东西。这就是知识的运作方式。它会积累起来，就像复利一样。你们所有人都能做到，但我保证你们中没多少人会去做。
 Read 500 pages like this every day. That's how knowledge works. It builds up, like compound interest. All of you can do it, but I guarantee not many of you will do it. --2000年巴菲特在哥伦比亚商学院（Columbia Business School）的投资课上，巴菲特对包括Todd Combs在内的学生们说。
 
-#### c. 便宜货——不对称的风险回报比
+#### 便宜货——不对称的风险回报比
 
 便宜货的价值在于价格被不合理地压低，从而提供异常优异的风险回报比，它们就是投资者的圣杯。——霍华德·马克斯 
 
@@ -178,10 +183,9 @@ Buying at a fair price doesn’t generate alpha – it’s buying at an unreason
 
 asymmetric risk-reward
 
-#### d. 重大机遇必须抓住
+#### 重大机遇必须抓住
 
  Big opportunities in life have to be seized. We don't do very many things, but when we get the chance to do something that's right and big, we've got to do it. And even to do it on a small scale is almost as big a mistake as not doing it at all. I mean, you really got to grab them when they come because you're not going to get five hundred great opportunities. 人生中的重大机遇必须牢牢把握。我们不会做太多事，但当有机会去做一件既正确又重大的事时，我们必须全力以赴。即便只是小规模地去做这件事，也几乎和完全不做一样，是同样严重的错误。我的意思是，当机遇来临时，你真的必须果断抓住它们，因为你这辈子不会遇到五百个这样的重大机遇。—— 巴菲特
- 
  
 
 ---
@@ -276,7 +280,7 @@ Q：如果庞然大物来围剿你的时候，你该怎么应对？
 
 中国这个体制里面，政府能做的事情是不受限制的。没有明文规定不能做的，它都能做。而老百姓能做的事情，只有明文规定你能做的事，你才能做，不然的话你是不能做。这个跟世界其他国家是倒过来的。—— 2012年，前摩根士丹利亚洲区首席经济学家，谢国忠
 
-“跟美国人、欧洲人和日本人比起来,中国人民可以说是最能干的民族,老百姓极少需要政府帮忙。欧美国家政府面临的那些困难,在中国根本就不存在。中国政府有这样的老百姓,堪称全世界最幸福的政府。但是中国也有中国的问题,跟世界其他地方正好相反。其他国家政府害怕人民要求太多,中国老百姓害怕政府拿得太多。” -- [谢国忠：实现中国经济繁荣不是什么难事](https://chinadigitaltimes.net/chinese/295955.html)
+“跟美国人、欧洲人和日本人比起来,中国人民可以说是最能干的民族,老百姓极少需要政府帮忙。欧美国家政府面临的那些困难,在中国根本就不存在。中国政府有这样的老百姓,堪称全世界最幸福的政府。但是中国也有中国的问题,跟世界其他地方正好相反。其他国家政府害怕人民要求太多,中国老百姓害怕政府拿得太多。” 只要人民的负担不十分过分,中国经济就会一片繁荣。过去几十年的改革开放,老百姓获得了一点点自决权,成就不可小视,如果中国政府可以退后一步,给人民更多的自主权,十五年之内,中国必将成长为世界第一大经济体。 -- [谢国忠：实现中国经济繁荣不是什么难事](https://chinadigitaltimes.net/chinese/295955.html)
 
 #### a2. 在中国做企业还需要做人
 

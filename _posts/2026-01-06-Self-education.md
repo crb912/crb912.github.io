@@ -46,7 +46,9 @@ The Art of Being Happy
 
 在古希腊，人最大的罪恶是在战争中砍倒橄榄树。在现代，知识分子最大的罪恶是建造关押自己的思想监狱。砍倒橄榄树是灭绝大地的丰饶，营造思想监狱则是灭绝思想的丰饶；我觉得后一种罪过更大——没了橄榄油，顶多不吃色拉；没有思想人就要死了。信仰是重要的，但要从属于理性。-- 王小波
 
-我也宁愿选择真实但不完美的知识，也不愿选择那种很可能错误的精确知识伪装。I confess that I prefer true but imperfect knowledge, even if it leaves much indetermined and unpredictable, to a pretence of exact knowledge that is likely to be false. -- 哈耶克，1974， 诺奖讲稿
+**我也宁愿选择真实但不完美的知识，也不愿选择那种很可能错误的精确知识伪装。** I confess that I prefer true but imperfect knowledge, even if it leaves much indetermined and unpredictable, to a pretence of exact knowledge that is likely to be false. -- 哈耶克，1974， 诺奖讲稿
+
+在我看来，宣扬一种利他主义的道德观似乎没什么用，因为它只会吸引那些本身就具有利他欲望的人。然而，宣扬理性则有所不同，因为无论我们的欲望是什么，理性大抵都能帮助我们去实现它们。一个人的理性程度，取决于其理智在多大程度上能够启发并控制其欲望。我坚信，由理智来掌控我们的行为，归根结底是最重要的事情，而且随着科学不断增加我们伤害彼此的手段，唯有这种理智的掌控，才能使社会生活继续存在。 教育、出版、政治、宗教——简言之，世界上所有强大的力量——目前都站在非理性的一边；它们掌握在那些奉承“民众君主”（King Demos）以便将其引入歧途的人手中。补救之道不在于任何英勇且剧烈的变革，而在于每个人自身的努力：去建立一种对于我们与邻居、与世界之关系的更加理智、更加均衡的看法。 我们必须仰赖日益普及的智识，来寻求解决当今世界苦难的良方。-- 罗素，[Sceptical Essays](https://archive.org/details/in.ernet.dli.2015.222966/page/n53/mode/2up), 1928，怀疑论集
 
 ## 人生目标
 
@@ -99,6 +101,8 @@ I was never really the best at anything. I wan't good at singing. I wasn't googd
 
 “In my whole life, I’ve never succeeded much in what I wasn’t interested in. So I don’t think you're going to succeed if what you’re doing all day doesn’t interest you." “在我的一生中，我从来没有在我不感兴趣的事情上取得太大的成功。所以，如果你整天做的事情不让你感兴趣，我认为你不会成功。— 查理芒格
 
+
+
 生命不息，折腾不止，这才是有意义的人生。 ——张一鸣
 
 ### 4. 有趣
@@ -132,6 +136,9 @@ I was never really the best at anything. I wan't good at singing. I wasn't googd
 我想要说两点，其一关乎智慧，其二关乎道德。有关智慧我想对他们说的是：不管你是在研究什么事物，还是在思考任何观点。只问你自己，事实是什么，以及这些事实所证实的真理是什么。永远不要让自己被自己所更愿意相信的，或者认为认为人们相信了，会对社会更加有益的东西所影响。只是单单的去审视，什么才是事实。这是我想说的关乎智慧的一点。我想对他们说的有关道德的一点，十分简单，我要说：爱是明智的，恨是愚蠢的。在这个日益紧密相连的世界，我们必须学会容忍彼此。我们必须学会接受这样一个事实：总会有人说出我们不想听的话，只有这样我们才有可能共同生存。而假如我们想要共存，而非共亡，我们就必须学会这种宽容和忍让。因为它们对于人类在这个星球上的存续，是至关重要的。-- 罗素，留给的世界的遗言
 
 世间最美好的东西，莫过于有几个头脑和心地都很正直的严正的朋友，他们之间相互了解，正如我们两人一样。 -- 爱因斯坦文集，卷1，七十岁生日时的心情
+
+随着工业主义的发展，经济和政治组织的规模必然会随之扩大；除非工业主义崩溃，否则这种扩张注定还会继续。地球正变得愈发拥挤，我们对邻里的依赖也变得愈发紧密。在这样的环境下， **除非我们学会——在所有不直接且明显关乎社群利益的事务上——不去干涉彼此，否则生活将无法忍受。我们必须学会尊重彼此的隐私，而不是将自己的道德标准强加于人。**清教徒总以为他的道德标准就是“唯一的”道德标准；他没有意识到，其他的时代、其他的国家，甚至他本国境内的其他群体，都有着与他不同的道德标准，而他人拥有这些标准的权利，与他拥有自己标准的权利同样正当。不幸的是，清教徒式的自我克制必然导致对权力的热爱，这使得清教徒比其他人更具执行力（更爱管事），也使得他人很难反抗他。让我们寄希望于更博大的教育和对人类更广泛的了解，能逐渐削弱那些过于“道德高尚”的主宰者们的热情。-- 罗素，[Sceptical Essays](https://archive.org/details/in.ernet.dli.2015.222966/page/n127/mode/2up), The Recrudescence of Puritanism 清教主义的复兴
+
 
 ### 2. 降低期望，不要自怜，诚实，一次做好
 
@@ -226,6 +233,8 @@ The only way I could get the people to like me a little bit was to get very rich
 
 我觉得，最重要的是做好自己。不去关心不能控制的因素，然后把自己的因素做到最好。很多时候，你的恐慌本身就是最大的问题。就是说，你自己的步伐乱了，你自己的决策乱了。我觉得自己做的最重要的事情就是认准方向，脚步不停。其他不能控制的事情，我觉得就不要去关心。--张一鸣
 
+由于人生短暂，一个人不可能精通多种科学；智慧越是深刻，其广度就越有限，因此不存在所谓的全才。-- 爱尔唯修，《论精神》，1807
+
 ### 12. 百折不挠的性格
 
 苹果推出Apple II那年秋季的时候，我意识到需要做些广告，因此在技术期刊和公司的广告中物色人选。英特尔的广告吸引了我的注意，于是我联系了英特尔公司，询问他们的广告代理商是谁。他们说是Regis Mckenna。我问什么是Regis Mckenna，他们说是一个人。因此我们去找Regis，第一次走进去时，他差点把我们赶出去。但最终还是接纳了我们作为客户，所以他很早就参与进来了。弗雷德大概两年后才加入的。
@@ -303,7 +312,7 @@ They are just a multiplier. Execution is worth millions.”（想法如果不执
 
 LOL职业选手deft： 人生在世，是不需要别人建议的。很多事你没有经历，就不会明白。
 
-## 人性
+## 人性与认知缺陷
 
 人们对小事的感觉敏锐和对大事的麻木不仁，这标志着一种奇怪的颠倒。--帕斯卡尔《思想录》，商务印书馆，p111
 
@@ -364,6 +373,23 @@ Do not let people think you do not belong. Because I promise you, once you sit a
 人都会依赖自己的知识和认知，并且反被一直被这种东西所束缚，还把这些称之为现实。不过，认知和现实都是暧昧的，基于这些认知的现实可能就是幻象。人们都活在自己的认知之中。 -- 火影忍者
 
 前诺基亚工程师分享的例子：我们进行了一场激烈的辩论，以取消物理键盘并全面使用触摸屏。US的工程师试图说服芬兰的工程师，这是一个更好的设计，具有更纤薄的外形和仅触摸屏。我们甚至在 iPod Touch 上演示了一些应用程序，并提供了一些概念体验。“如果触摸屏停止工作怎么办？”“它不适用于大拇指” “如果没有实体按钮，客户会感到不安全。” 最后，芬兰工程师给了我们数千个理由，为什么只有触摸屏不好。美国工程师很沮丧，因为他们可以看到墙上的文字。然后我们意识到，一家公司很难放弃其传统的拐杖。几乎从来没有。
+
+### “自己即世界中心”的认知偏差
+
+每个人都可以用这个故事来对照自己：在修道院里，一位修女目睹了助理修女和她的上级之间的争吵，她问她在会客室遇到的第一个人：“你知道塞西莉亚修女和特蕾莎修女刚才吵架了吗？你很惊讶吗？——天哪！你竟然真的不知道她们吵架的事？你从哪里来的？”我们或多或少都像这位修女一样：我们和我们的同伴所从事的事情，一定是所有人都应该从事的事情；我们所想、所信、所说的，一定是所有人都应该想、应该信、应该说的。
+
+一个生活在形形色色人群之中的朝臣，周围谈论的都是宫廷里的派系斗争与阴谋诡计，谈论谁谁谁得势上位、谁谁谁失宠落马；在他广泛的交际圈中，所见之人无一不或多或少地受这些相同话题的影响；那么，我要问，这个朝臣怎能不让自己相信：宫廷里的这些阴谋诡计，才是最值得深思的对象，才是最能普遍引起人类心灵兴趣的事物呢？他难道能想象，在他自家隔壁的店铺里，那些人既不认识他，也不认识他所谈论的那些宫廷人物吗？“那些作家的作品，”他说，“虽然有趣，但却肤浅，根本不值得研究。”
+
+为了清晰地展示每个人对自己职业的重视，我在此引用一本名为《夜莺论》（A Treatise on the Nightingale）的书籍序言中的几行字。作者写道：“我花了二十年时间创作这部作品。 **有识之士一贯主张，我们在这个世界上所能体味到的最伟大、最精致的快乐，莫过于意识到自己对社会有用；这是我们所有行动的目标。**如果不竭尽所能去促进人类的普遍福祉，似乎就是无知，不知人生来既是为了他人，也是为了自己。正是这些动机促使我向公众呈现这部《夜莺论》。” 几行之后，作者补充道：“正是这种对公共福利的热爱诱使我出版此书，它未曾让我忘记，写作应当坦诚且真挚。”
+
+朝臣们在谈论宫廷谈话时是如此投入，以至于他们甚至从未怀疑过，在他们的想象力之外，还存在着令他们如此热血沸腾的事物以外的东西。在某个阁楼的角落里，住着一位哲学家，在位哲学家眼中，那些野心家为了获得欧洲各种骑士勋章而进行的尔虞我诈，显得既幼稚又极其不理智，甚至还不如小学生为了偷一盒糖果而设下的计谋。在哲学家看来，这些野心家不过是些认为自己已经成年的孩子。一个朝臣绝无法想象世上竟然有人持有这种观点；如果他开始产生怀疑，他就会像那位勃固王（King of Pegu）一样——当国王询问一些威尼斯人他们君主的名字，而威尼斯人回答说他们不受国王统治时，国王觉得这个回答如此荒唐，以至于当场大笑不止。
+
+诚然，达官显贵们通常不会产生这种怀疑；他们每一个人都相信，自己在地球上占据着巨大且显赫的位置。 **他们想象世上只有一种思维方式，即应当成为人类衡量标准的思维方式，而这种方式正是他和他交往的人所共有的。** 如果他不时听到一些与己相悖的观点，他也只是在极远的地方隐约察觉，那些对象模糊不清，他会想象这些观点仅限于极少数愚蠢的凡人头脑中。在这方面，他就像那个中国地理学家一样愚蠢——这位地理学家出于对祖国的狂热喜爱，绘制了一幅几乎完全被中华帝国覆盖的世界地图，在地图的边缘只能勉强辨认出亚洲、非洲、欧洲和美洲。每一个人对他自己而言就是整个宇宙，而其他人几乎空无一物。
+
+我并非指所有身居高位的人都是如此：像图雷纳、黎塞留、卢森堡、拉罗什富科、雷茨以及许多其他人，他们并非都如此。这表明身居高位并非必然如此；我们应该理解，上述情况仅指那些墨守成规、固步自封的人。这些人正是公众理所当然地认为完全缺乏理智的人。我将以他们对优雅的谈吐和彬彬有礼的举止所表现出的荒谬而又自以为是的做作作为证据。我之所以选择这些做作的行为作为例子，是因为那些被世俗言辞所迷惑的年轻人常常把矫揉造作误认为是智慧和良好的判断力。
+
+-- [论精神](https://archive.org/details/delespritoressa01helvgoog/page/76/mode/2up), 爱尔维修，法国，1807年。
+
 
 ## 伦理与社会
 
@@ -451,6 +477,9 @@ Do not let people think you do not belong. Because I promise you, once you sit a
  
 一个富人得势的世界往往要比一个只有得势的人才能致富的世界要好得多。 A world in which the wealthy are powerful is still a much better world than one in which only the already powerful can acquire wealth. --《通往奴役之路》，1944年，哈耶克
 
+在朝鲜，你有的是100%的政府；而在韩国，大概只有40%的政府。它不是零，但韩国的生活水平至少高出10倍。没错。然后是东德对比西德。就汽车来说，西德有BMW、保时捷、奥迪、奔驰，而东德——地图上随便划的一条线——你能买到的唯一汽车是特拉邦特（Trabant），那东西基本上就是一台割草机外面套了个壳子。而且它极其不安全，买新车还要等20年。这只是一个有趣的例子：基本上是同一群人，却用了不同的“操作系统”。西德大概是50%政府，东德则是100%政府。
+显然，在这个现代时代， **我们还在争论哪种制度更好。我来告诉你哪种更好：不需要建墙把人关在里面的那种**。好吧，这就是判断标准。
+In North Korea, you've got a 100% government; and in South Korea, you've got probably 40% government. It's not zero, and yet you've got a standard of living that is probably 10x  higher in South Korea at least. Exactly. And then East vs West Germany. West Germany, you had just in terms of cars, I mean you had BMW, Porsche, Audi, Mercedes, and East Germany — which is a random line on a map — the only car you get was a Trabant, which is basically a lawn mower with a shell on it. And it was extremely unsafe, and there was a 20-year wait. That's just an interesting example of like basically same people, different operating system. Probably it was half-half government in West Germany and 100% government in East Germany. And it's obviously, so you have these amazingly modern era, this debate as to which system is better. I'll tell you which system is better: **The one that doesn't need to build the wall to keep people in.** Okay. That's how you can tell. -- Elon Musk
 
 ### 自由
 
@@ -543,6 +572,8 @@ Those who would give up essential Liberty, to purchase a little temporary Safety
 我觉得Macintosh是由一群人创造出来的，这群人认为科学和艺术之间并没有严格的界限。换句话说，如果你从一个稍微不同的角度来看，数学其实是一种 liberal art（博雅艺术/人文艺术）。为什么我们不能把排版艺术注入到电脑里呢？为什么电脑不能用英语和我们对话呢？现在回过头来看，五年之后，这似乎是一个很琐碎的观察。但在当时，这个观点带来的后果却是颠覆性的。为了把这个观点推向市场，我们打的那些仗可是非常激烈的。--  [乔布斯 1990](https://allaboutstevejobs.com/videos/misc/future_of_pc_1990)
 
 如果他装腔作势，只能暴露自己的空虚。滥竽充数，最终会被发现。冒充个性，无法掩饰平庸的头脑。《月亮与六便士》p187
+
+富人们嘲讽地说，才子常常出现在富人的门前，而富人却从不出现在才子的门前。诗人萨迪回答说：“这是因为才子懂得财富的价值，而富人却不懂知识的价值。况且，财富又怎会看重知识呢？有学问的人能够理解无知的价值，因为他小时候经历过；而无知的人却无法估量知识的价值，因为他从未接触过知识。” -- 爱尔维修 [论精神](https://archive.org/details/delespritoressa01helvgoog/page/n103/mode/2up?q=ignorant)
 
 **爱情**
 
@@ -644,15 +675,45 @@ My mom taught me English, and she doesn't speak English. That tells you somethin
 
 我感激所处的那个年代，在那个年代学生获得了空前的解放，不必学习那些后来注定要忘掉的无用知识。我很同情现在的学生，他们即便认识到他们是在浪费青春也无计可施。我至今坚持认为人们之所以强迫年轻人读书并以光明的前途诱惑他们仅仅是为了不让他们到街头闹事。 --王朔
 
-### 其他
+### 对教育的批评
 
 “我相信课本对于一个好老师而言，只是帮助教学的工具，而不是照本宣科的材料。”—《费曼手扎：不休止的鼓声》，致郭德夏尔（Richard Godshall），1966年3月
 
-认为任何父母能做的最好的事情就是成为一个好榜样。说教根本是白费唇舌。I think the best thing any parent can do is be a good example. Preaching doesn’t work worth a damn. -- 查理芒格，2020年日报年会
+我认为任何父母能做的最好的事情就是成为一个好榜样。说教根本是白费唇舌。I think the best thing any parent can do is be a good example. Preaching doesn’t work worth a damn. -- 查理芒格，2020年日报年会
+
+除了生理上的极个别缺陷外，所有人在出生时的智力潜能是完全平等的。所谓的“天才”和“庸才”，仅仅是因为后天所处的环境和收到的刺激不同。既然人天生智力平等，为什么现实中蠢人这么多？ 1. 利益集团的操纵：教会和暴君需要顺民，所以他们设计的教育系统旨在禁止质疑。2. 偏见的固化：教育往往不是在教人如何观察世界，而是在教人如何通过“有色眼镜”看世界。3. 思想的懒惰：错误的教育摧毁了人的好奇心。-- 爱尔维修，《论人》 
+
+人是环境的产物。生于淮南则为橘，生于淮北则为枳。
+
+教育、婚姻和宗教本质上都是创造性的，然而这三者都因占有欲望的入侵而遭到了损害。 **教育通常被当作维持现状的手段，通过灌输偏见来延续旧秩序**，而不是通过慷慨的情感示范和智力冒险的刺激，来创造自由的思想和高尚的视野。在婚姻中，本具有创造性的爱被具有占有欲的嫉妒心所束缚。宗教本应释放灵魂的创造性洞察力，但它通常更关心如何压制本能生活，以及如何打击思维的颠覆性。 **在所有这些方面，源于对财产地位不稳产生的‘恐惧’，已经取代了由创造力激发的‘希望’。掠夺他人的愿望在理论上被公认为是不好的；但害怕被掠夺的心理也好不到哪儿去**。然而，这两种动机共同主宰了90%的政治和私人生活。Education, marriage, and religion are essentially creative, yet all three have been vitiated by the intrusion of possessive motives. Education is usually treated as a means of prolonging the status quo by instilling prejudices, rather than of creating free thought and a noble outlook by the example of generous feeling and the stimulus of mental adventure. In marriage, love, which is creative, is kept in chains by jealousy, which is possessive. Religion, which should set free the creative vision of the spirit, is usually more concerned to repress the life of instinct and to combat the subversiveness of thought. In all these ways the fear that grows out of precarious possession has replaced the hope inspired by creative force. The wish to plunder others is recognized, in theory, to be bad; but the fear of being plundered is little better. Yet these two motives between them dominate nine-tenths of politics and private life. -- 伯特兰·罗素，《社会改造原理》（Principles of Social Reconstruction，又称 Why Men Fight: A method of abolishing the international duel），1916年
+
+教育、出版、政治、宗教——简言之，世界上所有强大的力量——目前都站在非理性的一边。-- 伯特兰·罗素, [怀疑论集](https://archive.org/details/in.ernet.dli.2015.222966/page/n127/mode/2up)，1924
+
+人生来无知，但不愚蠢，是教育让人愚蠢。（他成为愚蠢的人，甚至也不是不费力气就能做到的。要成为这样的人，并且能够熄灭他天生的智慧，就必须使用艺术和方法；教育必须不断给他灌输错误，让他积累越来越多的错误；他读得越多，他所形成的偏见就越多。）Men are born ignorant, not stupid; they are made stupid by education. -- 18世纪法国哲学家，爱尔维修 Helvétius《论人》，A Treatise on Man: His Intellectual Faculties and His Education 第三章， 转述于伯特兰·罗素《西方哲学史》，第三卷第二十一章，Currents of though in the 19th,十九世纪的思潮。
+
+就目前而言，我并非在寻求补救良方，而仅关乎于诊断问题。我们正面临一个看似矛盾的事实：教育已然成为智力和思想自由的主要障碍之一。 这主要是由于国家声称对教育拥有垄断权，但这绝非唯一的原因。
+For the present I am not in search of remedies, but am only concerned with diagnosis. **We are faced with the paradoxical fact that education has become one of the chief obstacles to intelligence and freedom of thought**. This is due primarily to the fact that the State claims a monopoly ; but that is by no means the sole cause. -- 伯特兰·罗素, [怀疑论集](https://archive.org/details/in.ernet.dli.2015.222966/page/n127/mode/2up)，1924, 第12章，自由思想和官方宣传 Free thought and offical propaganda.
+
+当前，人类的本能冲动与工业需求之间存在着剧烈的冲突。工业主义突如其来地改变了我们的物质与人文环境。我们的本能大概尚未改变，而且在使思维习惯适应这些变化了的环境方面，我们几乎乏善可陈。 **那些在书房里养海狸的愚蠢之人会发现，每当阴雨天气来临，海狸就会用书堆起大坝，因为它们过去生活在溪流之畔。我们对新环境的不适应程度与此不相上下。我们的教育仍在教导我们去崇尚那些在荷马时代具有生物学优势的品质，却全然不顾这些品质在今天既有害又荒谬。**每一次成功的政治运动，其本能的诉求点总是嫉妒、竞争或仇恨，绝非合作的需要。这根植于我们现行的政治手段中，并与前工业时代的习惯相契合。唯有通过刻意的努力，才能改变人类在这一方面的思维习惯。
+Unwise people who keep beavers in their libraries find that, when wet weather is coming, the beavers build dams out of books, because they used to live on the banks of streams. We are almost equally ill-adapted to our new surroundings.  -- 伯特兰·罗素, [怀疑论集](https://archive.org/details/in.ernet.dli.2015.222966/page/n127/mode/2up)，1924, 第十一章， 需要保持政治上的怀疑态度， Need for political scepticism
+
+
 
 **幸福和难堪都来自家庭**：
 我最近手机上我老刷到的一个沈巍，就是一个流浪汉，他谈各种各样的书，非常好的一个人。但是我发现有几个视频，他谈到他父母，有很多人说风凉话，原谅吧。他说我不能原谅，我非常非常理解他在说什么。就是父母在无心当中，或者是一个不那么懂得做父母的人，给小孩儿留下的创伤跟随一辈子完全不可能消除。这个小孩再懂事再好，再经历了种种风浪，小时候那一块（创伤）他永远会在心里面。所以，不知道多少男女伤害了他们的小孩，而且一辈子都不知道。最深的伤害其实就来自父母、兄弟、姐妹和孩子，一家人的伤害超过所有外界的伤害，我相信是这样。所以鲁迅说过一句话，家是我们的生所，也是我们的死地。只有我们生在家里面，没有家，我们不可能生出来。但是我们死也死在家里，每个人都是这样子。你所有最幸福的记忆和你最难堪的记忆，其实都来自家庭，就身边的几个人。只是很少有人会说出来，要说怎么办，就像我说的，放到小说和电影里面，这就是人为什么爱看小说和电影。太多经验你在平时是没有机会表达的，你也表达不好，你得交给那些情感敏锐和有才能的人，他会把你这种感觉说出来。-- 陈丹青，访谈。
 
+---
+
+一个东西方学校教育的视频对比：
+
+中国老师： 课前准备。准备书本，摆放整齐。准备十四班，到谁的兵？你的兵。谁的团？你的团。手放平，小眼睛，小耳朵，真机灵。十四、十四，胸怀大志，志愿勇敢，激昂奋斗。
+西方老师： I am somebody. I am somebody. I will lead for great. I am smart and kind. I am important. I deserve a great education. I'm sorry, I have places to go. I have people to impress. I have a world to change.
+
+![tree](https://github.com/crb912/crb912.github.io/blob/master/my_private/image/education.png?raw=true)
+
+**掌握足够的词汇量**
+
+掌握发音固然重要，但拥有丰富的词汇量在审美上也同样可取。如果一个人只掌握一千五百个单词，那么除了在简单的话题上，或者凭借极少的运气之外，他几乎无法准确或优美地表达自己。如今，大约一半的美国人花在教育上的时间与莎士比亚当年一样多，但他们的词汇量却只有莎士比亚的十分之一。然而，莎士比亚的作品对于他那个时代的普通民众来说必然是通俗易懂的，因为它们被用于那些必然会获得商业成功的戏剧中。现代观点认为，一个人应该掌握足够的词汇量。-- 伯特兰·罗素, 怀疑论集，p96，Behaviorism and values, 1924
 ---
 
 ## 我尊敬的人，我喜欢的人
