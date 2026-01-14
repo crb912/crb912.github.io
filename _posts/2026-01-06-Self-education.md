@@ -81,6 +81,8 @@ If you live each day as if it was your last, someday you'll most certainly be ri
 
 你的时间有限，别浪费在过别人的生活上。不要被教条所限制，那是在重复别人的生活。别让别人的闲言碎语，淹没了你内心的声音。最重要的是要有勇气追求你的内心和直觉。它们冥冥之中，已经知道你想成为什么样的人。其他一切都是次要的。做出伟大工作的唯一方法，就是热爱你所做的事。Your time is limited, so don’t waste it living someone else’s life. The only way to do great work is to love what you do. -- Steve Jobs 斯坦福大学演讲
 
+英伟达的成功根植于不可动摇的原则：“我们相信我们所相信的。”“我每天都在凭直觉检查我所做的假设，”他说，并补充说只有在必要时才会进行方向调整，而不会被外界压力所动摇。 He stressed that Nvidia’s success was rooted in unshakable principles: “We believe what we believe.” Every single day, I gut check the assumptions I made.
+
 ### 3. 热爱和追随兴趣
 
 一个人的爱好极其深邃，以致于他同别人有多少有点疏远，这也是件好事，因为，否则的话，就很难保持这种生活的乐趣。-- 爱因斯坦 《我还是以昔日的喜悦努力钻研问题》
@@ -92,6 +94,8 @@ If you live each day as if it was your last, someday you'll most certainly be ri
 I was never really the best at anything. I wan't good at singing. I wasn't googd at Abacus. I wasn't good at Kuman. But my parents still loved me and they didn't care. They were just like as long as we have a happy healthy girl and they wanted me to do sports so that I colud like get stronger pyhsically for fencing. It was always like an after school activity so there was no pressure. Fencing is the best sport in the world for me. 我从来都不是在任何事情上真正最出色的人。我唱歌不好。我算盘（Abacus）也不行。我也没在Kuman上表现出色。但我的父母依然爱我，他们并不在意这些。他们只是说，只要我们有一个快乐、健康的女孩就够了。他们希望我做运动，只是为了让我身体更强壮，好去练击剑。击剑对我来说一直只是课后活动，所以完全没有压力。击剑是世界上对我来说最好的运动。-- 奥运击剑选手
 
 有两样东西是金钱买不到的，**时间和爱**，这两样我一直很看重，查理也一样。所以我们才努力追求金钱，才能自由掌握自己的时间，按自己的意愿生活。我们过得很好，但可惜我们的时间有限，只要能省下我们的时间，做我们喜欢做的事，我们一定会这样做。**如果有人能有时间做自己喜欢的事，那就是最大的运气。**--巴菲特股东大会
+
+找到你热爱的事物很难，但爱上你所做的事情则更容易。一旦你因为极度渴望做好某事而爱上你所做的事情，就更容易把它做好并努力工作。It’s hard to find something that you love, but it’s easier to fall in love with what you’re doing. Once you fall in love with what you’re doing because you desperately want to do a good job at it, it’s easier to do it well and work hard. -- Jensen Huang
 
 “In my whole life, I’ve never succeeded much in what I wasn’t interested in. So I don’t think you're going to succeed if what you’re doing all day doesn’t interest you." “在我的一生中，我从来没有在我不感兴趣的事情上取得太大的成功。所以，如果你整天做的事情不让你感兴趣，我认为你不会成功。— 查理芒格
 
@@ -128,8 +132,6 @@ I was never really the best at anything. I wan't good at singing. I wasn't googd
 我想要说两点，其一关乎智慧，其二关乎道德。有关智慧我想对他们说的是：不管你是在研究什么事物，还是在思考任何观点。只问你自己，事实是什么，以及这些事实所证实的真理是什么。永远不要让自己被自己所更愿意相信的，或者认为认为人们相信了，会对社会更加有益的东西所影响。只是单单的去审视，什么才是事实。这是我想说的关乎智慧的一点。我想对他们说的有关道德的一点，十分简单，我要说：爱是明智的，恨是愚蠢的。在这个日益紧密相连的世界，我们必须学会容忍彼此。我们必须学会接受这样一个事实：总会有人说出我们不想听的话，只有这样我们才有可能共同生存。而假如我们想要共存，而非共亡，我们就必须学会这种宽容和忍让。因为它们对于人类在这个星球上的存续，是至关重要的。-- 罗素，留给的世界的遗言
 
 世间最美好的东西，莫过于有几个头脑和心地都很正直的严正的朋友，他们之间相互了解，正如我们两人一样。 -- 爱因斯坦文集，卷1，七十岁生日时的心情
-
-美国橄榄球评论员 Robert Griffin在直播途中接电话，妻子即将生产，立刻跑回家。同事也为他祝福。这次才是一个有人性和有爱心的社会。-- 2022年12月31日
 
 ### 2. 降低期望，不要自怜，诚实，一次做好
 
@@ -742,6 +744,10 @@ My mom taught me English, and she doesn't speak English. That tells you somethin
 为了这把椅子，他们可以分权，可以分封，可以重用文官，也可以打压武将，但所有制度设计的出发点都是如何不让别人抢走我的权力，而不是如何让这个朝代变得更好。史书站在帝王的视角写王朝兴衰，归因于昏君误国、奸臣当道、红颜祸水，可谁去问过百姓，你们过得好吗？你们有说话的权利吗？你们的苦难被记录了吗？
 历史的真相从不在金碧辉煌的宫殿里，也不在帝王的墓志铭上，它藏在百姓的血泪中，藏在被征发修长城的民夫的脚步里，藏在战乱中流离失所的母亲的哭声里，藏在科举落第的书生无奈的叹息里。文明进步不是换个皇帝、改个年号，而是从人治走向法治，从权力本位走向人民本位。怎样让权力服务于人，而不是奴役人？怎样让制度保障公平，而不是制造压迫？怎样让文明向前走，而不是原地打转？
 从历史的循环中觉醒，不再做被动的臣民，而是成为主动的公民。不再只关注谁坐龙椅，而是关心谁在过好日子。不再迷信明君救世，而是相信每一个普通人都能成为推动文明进步的一束光。
+
+****
+
+
 
 ## 经典好文
 
