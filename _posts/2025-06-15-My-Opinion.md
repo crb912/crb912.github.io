@@ -96,7 +96,18 @@ category: Think
 对采访者说：如果你不继续做下去，你会后悔的。听起来像是一个非常好的项目。
 我曾经是为成为牧师的神职人员而工作。他们不喜欢女孩嫁给牧师，我给我可爱的妻子惹了点麻烦，我们有过一个孩子。所以这让我们做出了决定，最终我被允许继续做牧师。
 给年轻人的建议： **去争取，以不伤害任何人的方式去争取**。 go for it.  Go for it in a way that harms nobody.
+
 ---
+
+**70岁奶奶的五个人生分享**：
+
+- 第一、别在担心过去，它已经过去了，你无能为力，过去不会伤害你，除非你一遍又一遍的重温；
+- 第二、不要担心未来，这是未来，它是未知的，它会一直在那里，担心只会偷走你的平静，活在此刻，因为那是你的力量所在；
+- 第三、在别人身上寻找幸福，人们可以加入你的生活，但他们无法完成你的人生，那是你的任务；
+- 第四、不要低估你的内在力量，给自己一些信任，那力量就是你自己，它现在还在你体内；
+- 第五、别在拿自己和别人比较了，比较是杀死你自信的最好方法，如果你没跟上进度，也并不意味着你落后了，和那些人那些事比起来，不代表你就落后了，你只是在一条不同的道路上，这也绝对没问题。
+
+[视频英文链接](https://v.douyin.com/zX9Md_pzxFQ/)
 
 
 ### 学会学习
@@ -177,11 +188,21 @@ category: Think
 
 ## 社会思考
 
+#### 群体性迷失
+
+现在我们举国上下都在讲发展，什么都在讲发展。其实我们闭上眼睛一想，所有的发展都是物质发展。现在我们已经陷入了一个群体的迷失，我们忘了社会的发展最根本的是人自身的发展。人要发展不好，没有什么事情做不好。人要发展不好，连人都不会做，这社会它永远没有幸福指数。-- 彭林，清华教授
+
 #### 有温度
 
 美国橄榄球评论员 Robert Griffin在直播途中接电话，妻子即将生产，立刻跑回家。同事也为他祝福。这次才是一个有人性和有爱心的社会。-- 2022年12月31日
 
 法国超市女员工41年退休，超市为她举办了退休仪式。从1983年入职到2024年，41年时光被写成纪念册。在中国，这种事几乎不可能发生，大家都太冷漠了。
+
+#### 罗翔谈境外妇女买卖到中国
+
+罗翔分享了一个案例，短短20年，中国从最大的妇女出口国，成了最大的妇女进口国。很多人的老婆是从境外买来的。[买卖国外女人构成拐卖妇女儿童罪吗？](https://v.douyin.com/0Ti2HH291Rk)
+
+人权具有普世性。（引用艾未来的一段话：不存在孤立的人权，人权具有普遍性和绝对性，如果你只关心局部，你的价值观是狭隘的，也是绝望的。）
 
 #### 哈耶克： 经济学变量不容易完全被了解和观测
 
@@ -368,6 +389,31 @@ A股部分：
 - 中远海控 3600亿（200常态x15 + 600=3060），当前2500亿。高估4600
 
 2025-06-13
+
+## 商业
+
+### 谈Steam在中国区的定价（本土化的思维）
+
+Before doing any PR or marketing, one thing is very important that you need to understand: **China is a highly, highly price-sensitive market and it is also part of Steam's lower price region.** So having a good price is almost crucial before any marketing or PR.
+
+So you can see here are some recommendations in terms of pricing based on the investment of your game. And you can see for a typical triple-A game, they say $59.99 or $69.99. If you do the direct conversion, that will be selling over 400 RMB. But you can see there's a bit of a drop—most of the games are still selling under 300 RMB. So there's a difference.
+
+And for indies, for example, if you have a card game, it is very normal to sell a game at $20. That's totally acceptable. But if you do the direct conversion again here, that would be 150 RMB. And at the same time, if you look at other successful games like Belatro or Slay the Spire, they are selling under 80 RMB, even under 100 RMB. So if your game is higher than the norm, people do tend to expect more from your product. And sometimes if you don't manage your pricing well, it may result in negative reviews because people will say, "Hey, I'm paying this much but you're not giving me what I'm hoping for." And yeah, that leads to some of the negative reviews.
+
+This is also a very interesting topic, but just a disclaimer: we're not talking about review bombing. That's an extreme case. We're just talking about general reviews here. So on average, actually, East Asian players like South Koreans and Chinese do tend to review their games more critically. It's a different mindset. It has a lot of cultural layers to it as well. But compared to the West—like, I know this is a generalization—but if you do something and you make some mistakes along the way, most likely you still get a pat on the shoulder, like, "Hey, we see what you're trying to do but there are some mistakes here and there. No problem. Good job." Right here in China, not so much. Of course, we can acknowledge that you did something well, but at the same time, we are a little bit less forgiving when it comes to the things that we have issues with.
+
+But it's also not true that Chinese people, Chinese players, just like to give bad reviews. If you check overwhelmingly positive games on Steam—over 90% positive—Chinese players more often than not give equally high scores or even higher scores. It's the games that are about 60 to 80% positive that really draw the difference, meaning good but not perfect. So for Western gamers, sometimes they're more forgiving. For Chinese players, if they see there are certain issues in the game, they are likely to still say, "Hey, I like the game but there are certain things I don't like," so maybe they'll leave a critical review. So just trying to add more insight about this topic.
+
+And I also want to briefly talk about Chinese players' gameplay habits. Again, this is a little bit of a generalization and some exaggeration, but Chinese players in general are very hardcore and very goal-oriented. It has a lot to do with how we grow up as well. Our educational system is absolutely ferocious. So it is almost like intrinsic motivation for us to tick certain boxes and reach certain goals.
+
+So compared to Western players, maybe they are more here for the journey, for the ride. We tend to be more like, "Hey, I wanna hit this goal. I wanna find the boss tonight and I wanna reach level 30 by 20 hours," things like that. So if your game has certain problems—like poor optimization at launch, players play your game and saves get corrupted, or you have bad bugs, or you have certain mechanics that stop players from progressing—Western gamers might be more relaxed about them, but Chinese players, in my experience, get more frustrated and maybe put off.
+
+So if you have this type of issue, you might also expect some kind of negative reviews. So sometimes it's important to consider the facts of why this is happening and be prepared. So in overall marketing strategy for this market, first of all, I always say: don't wait until your game is launching and think about China only as an afterthought. If your game is on Steam, on PlayStation Store, Chinese people can get your game. So might as well do it right.
+So don't wait until launch and be like, "Okay, I didn't do any playtests in this market, didn't talk to any influencers, didn't speak to any media." It will be too late. And sometimes, might as well do it right. And for this market, pricing is everything. You need to get your pricing strategy right, and once you do, you need to stick to your pricing. Making it lower or higher afterward may result in some kind of PR nightmare for you.
+
+So it's important to talk to local experts, influencers that actually play your genre, that know your competitors, and consult with them to find your sweet spot for your product. And now, not having a license isn't the end of the world. It doesn't stop you from selling the game here, doesn't stop you from doing marketing here. So please don't think that because of the strict regulations, you can only do standardized PR articles in China. No, there are many ways to do content marketing, and you can stay highly creative with influencer and media partnerships as well.
+
+So lastly, just please be flexible, open-minded. This is a very different market. You cannot mirror whatever was successful for you in the West, copy and paste it, and think it will be the same for this market. It is challenging. I know for a lot of devs, publishers, and also for us as service providers, we need to say, "We know this works very well in the States or in Japan, but here in China, things are different, and we think you should do this instead of that." Trust your partners and trust the process. I think China could be a very promising market for all the devs and publishers because we have so many passionate gamers. No matter how niche your game is, you will find your audience here. And thank you.
 
 ## 谋生
 
@@ -653,3 +699,15 @@ Linus and Linus about AI. Quote: “I mean it's clear it's clearly both right it
 关于人才淘汰机制，Jobs也说过类似的话，只能看着他们把事情砸杂，最终他们会找到正确的道路。 不进行末尾淘汰的前提是，他们本身就是优秀的人才，没必要再继续淘汰。如果招聘的员工能力不足，且不具有可塑造性，那应该淘汰。
 
 2026-01-13
+
+#### 杨振宁谈物理
+
+我一生最重要的工作其实不是宇称不守恒，是一个叫米尔斯跟我合写的，在1954年合写的一篇文章，叫做规范场论。为什么这个是最重要？因为这涵盖了最基本的物理学公式。我也可以用普通的语言稍微给你讲一下。
+
+基本物理学研究的是什么？是物质，就是世界是怎么回事？世界最后的结构是什么？我们知道所有的东西最后都是分子，分子再拆开就变成原子，原子再拆开里面有电子跟原子核，原子核再拆开有中子跟质子，所以讲物理最基本的问题就是整个世界最后结构那些结构那些 “砖头” 是什么？砖头就是基本粒子。
+
+所以两个问题需要解决，一个是最后这些砖头是什么？第二个是这些砖头怎么连在一起？这两件事情，所以可以说整个物理里头最基本的就是这两件事情，一个是基本粒子是什么？第二个是它们怎么粘在一起？怎么粘在一起？靠的是力量，这个力量最早物理学研究就是牛顿，他提出了万有引力，所以就使得地球绕着太阳转，月亮绕着地球转。
+
+可是万有引力只是这种力量的一种，还有别的力量，比如一个原子，它里头有电子，电子绕着原子核转，那个不是万有引力，是另外一种力，所以到了 20 世纪的时候，到了我做研究生的时候就知道有四种力量，万有引力是其中的一种，电子绕着原子核靠的是另外一种叫做电磁力，另外还有两种力量，所以一共有四种力量。
+
+问题就是问这四种力量它的基本结构是什么？牛顿写出了万有引力的基本结构，也许你们记得在念中学物理时学过，它的规律是跟距离的平方成反比。这种电力的规律在19世纪被研究清楚了，是麦克斯韦研究清楚的，光纤可以说对人类来说更重要，因为有了光纤以后才有今天的电磁波，所以现在的手提电话、网络都是要靠这个电磁波，电磁波就和电子绕着原子核的运动相关，这背后就是电磁力。这种力的结构被麦克斯韦写成了方程式，可是另外还有两种力，其中包括核力，它们的方程式是什么？这些方程式里头第一个基本的结构就是米尔斯跟我写出来的（即规范场论相关方程）。现在这已经是公认的结论，而且推导结果与很多非常复杂的实验结果都相符合。因为它涵盖的问题太广泛、太基本了，所以大家认为这项工作事实上是我最重要的工作。
