@@ -1,6 +1,6 @@
 ---
 published: true
-title: Learning value investing
+title: 投资
 layout: post
 author: RuiBing
 category: Investment
