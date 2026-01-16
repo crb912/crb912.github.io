@@ -4,7 +4,7 @@ title: 投资
 layout: post
 author: RuiBing
 category: Investment
-
+top: true
 ---
 
 * **目录**

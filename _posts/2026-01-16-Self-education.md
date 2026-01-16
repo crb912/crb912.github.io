@@ -4,7 +4,7 @@ title: 教育自己
 layout: post
 author: RuiBing
 category: life
-
+top: true
 ---
 
 The Art of Being Happy
