@@ -1,6 +1,6 @@
 ---
 published: true
-title: 教育自己，自我提升
+title: 教育自己
 layout: post
 author: RuiBing
 category: life

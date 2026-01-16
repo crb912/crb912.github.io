@@ -4,7 +4,6 @@ title: 语言即世界
 layout: post
 author: RuiBing
 category: Think
-hide: true
 ---
 
 维特根斯坦说，"Die Grenzen meiner Sprache bedeuten die Grenzen meiner Welt"，这句德文翻译成英文，“The limits of my language define the limits of my world”. 中文的意思则是，“我的语言的界限定义了我世界的界限”。我采用了这句话最简洁的表达，“语言即世界”，作为这系列博客的主题。
