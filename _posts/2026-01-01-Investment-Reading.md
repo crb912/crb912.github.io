@@ -239,9 +239,8 @@ Read 500 pages like this every day. That's how knowledge works. It builds up, li
 
 便宜货的价值在于价格被不合理地压低，从而提供异常优异的风险回报比，它们就是投资者的圣杯。——霍华德·马克斯 
 
-Buying at a fair price doesn’t generate alpha – it’s buying at an unreasonably low one that does. Thus, accessing a bargain requires cooperation from someone who’ll sell at a price that’s irrationally low。以公平价格买入不会产生超额收益，只有以不合理低价买入才会。获得便宜货需要有人以不合理低价卖给你。—— The Most Important Thing Illuminated
-
-asymmetric risk-reward
+以公平价格买入不会产生超额收益，只有以不合理低价买入才会。获得便宜货，需要有人以不合理低价卖给你。
+Buying at a fair price doesn’t generate alpha – it’s buying at an unreasonably low one that does. Thus, accessing a bargain requires cooperation from someone who’ll sell at a price that’s irrationally low。—— The Most Important Thing Illuminated, asymmetric risk-reward
 
 #### 重大机遇必须抓住 (敢于重仓)
 
