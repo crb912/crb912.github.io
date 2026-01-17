@@ -103,12 +103,6 @@ opportunity-driven. 不要与股票谈恋爱，这是依赖情况和机会驱动
 - 从估值的角度，核心在于公司增长速度，公司增长的天花板在哪里，能不能持续增长。--周受资
 - 我们买卖股票不是基于别人对股市走势的看法（我从来没有意见），而是基于我们对公司走势的看法。We don't buy and sell stocks based upon what other people think the stock market is going to do (I never have an opinion) but rather upon what we think the company is going to do.— Warren Buffett
 
-**重要押注**：
-
-- 市场并不总是有效，但想要长期战胜市场却是十分困难；分散投资只会令自己分身不暇，以适当的价格，在最好的投资上下重注，让复利带动我们的财富增长。(芒格)
-- 我这一辈子都在花时间做两件事情，一件事发现什么是有效的，然后坚决去执行，另一件事发现什么是无效的，然后坚决去避免。(芒格)
-- Find your edge. Don’t diversify. Repeat what works. （）
-
 **牛市高估自己的能力--风险**：
 当市场整体上涨时，许多投资者会误以为是自己的能力导致了资产增值，而忽略了市场整体环境的影响。巴菲特在1964年7月8日给合伙人的信中提到：“当池塘里的水（市场）上升时，鸭子也随之上升，当池塘里的水下降时，鸭子也就回到原处。我认为鸭子只应因自己的行为得到赞誉或指责，而河水的上升或下降是鸭子无法控制的。水的高度对巴菲特合伙基金的业绩也非常重要，然而，我们这些鸭子有时自己也会拍打拍打翅膀的。” 芒格也有类似的表述：“如果你是池塘里的一只鸭子，一场倾盆大雨使湖面上涨，你也跟着上升，但你会认为是自己升高了，而不是池塘水面上升了。”提醒投资者要正确看待市场环境与自身能力的关系。在牛市中，市场整体上涨，许多投资者的资产都会增值，但这并不一定意味着投资者具备高超的投资能力。相反，当市场环境逆转时，这些投资者的资产可能会迅速缩水。
 
@@ -252,6 +246,10 @@ asymmetric risk-reward
 #### 重大机遇必须抓住 (敢于重仓)
 
 人生中的重大机遇必须牢牢把握。我们不会做太多事，但当有机会去做一件既正确又重大的事时，我们必须全力以赴。即便只是小规模地去做这件事，也几乎和完全不做一样，是同样严重的错误。我的意思是，当机遇来临时，你真的必须果断抓住它们，因为你这辈子不会遇到五百个这样的重大机遇。Big opportunities in life have to be seized. We don't do very many things, but when we get the chance to do something that's right and big, we've got to do it. And even to do it on a small scale is almost as big a mistake as not doing it at all. I mean, you really got to grab them when they come because you're not going to get five hundred great opportunities. —— 巴菲特   [访谈视频](https://v.douyin.com/DENkFrE4WUA)
+
+- 市场并不总是有效，但想要长期战胜市场却是十分困难；分散投资只会令自己分身不暇，以适当的价格，在最好的投资上下重注，让复利带动我们的财富增长。(芒格)
+- 我这一辈子都在花时间做两件事情，一件事发现什么是有效的，然后坚决去执行，另一件事发现什么是无效的，然后坚决去避免。(芒格)
+- Find your edge. Don’t diversify. Repeat what works. 
  
 #### 技巧
 
