@@ -14,16 +14,16 @@ top: true
 
 ### 做人：把事情做对
 
-**大多数行为都是习惯成自然。常言道，习惯的枷锁开始的时候轻得难以察觉，到后来却重得无法摆脱。**我在生活中见过一些人，他们有的和我年纪差不多，有的比我年轻十几二十几岁，但是他们染上了一些坏习性，把自己毁了，改也改不掉，走到哪都招人烦。他们原来不是这样的，但是习惯成自然，积累到一定程度，根本改不了了。你们还年轻，想养成什么习惯、想形成什么品格，都可以，就看你自己怎么想了。[沃伦·巴菲特1998年佛罗里达大学演讲](https://www.bilibili.com/video/BV1uv411t7ao) 68岁
+**大多数行为都是习惯成自然。常言道，习惯的枷锁开始的时候轻得难以察觉，到后来却重得无法摆脱。**我在生活中见过一些人，他们有的和我年纪差不多，有的比我年轻十几二十几岁，但是他们染上了一些坏习性，把自己毁了，改也改不掉，走到哪都招人烦。他们原来不是这样的，但是习惯成自然，积累到一定程度，根本改不了了。你们还年轻，想养成什么习惯、想形成什么品格，都可以，就看你自己怎么想了。——[沃伦·巴菲特1998年佛罗里达大学演讲](https://www.bilibili.com/video/BV1uv411t7ao) 68岁
+
+往回看个几十年，你会看到很多很“聪明”的聪明人成就很小，原因可能在他们大概没把聪明放在做对的事情上。一般来讲，聪明人知道如何把事情做对，但有智慧指的是要做对的事情。有人说什么东西最重要，他说勤奋最重要，我说不是，我说是做对的事情。因为我说勤奋最重要，你会变得更勤奋吗？你不会，至少我不会。
+但是**你想着做对的事情，发现错了你赶紧改**。这一辈子累计30几年、40几年，你每一个决定都是基于10年20年以后，回过头来看，你会发现省好多力气。--段永平
+
+你只需要富有一次就足够了，你不需要做任何冒险的事情去赚取更多。如果你周围发生了非常愚蠢的事情，你不要跟风参与。你身边有人赚到了钱，但是他们借贷，或者他们正在参与真正的垃圾证券。他们在赌博未来能赚到更多的钱，你一定要远离这样的蠢事。它们迟早会反噬你的。
 
 巴菲特讲的一个例子非常生动。他说好和不好有时候你用平常心去看是显而易见的。如果它不显而易见，说明它还不够好。用姚明身高作为比喻：真正高的人，一眼就看出来。用平常心，用常识看待问题，他的差别是显著的。-- 黄峥，2018年左右的媒体专访
 
 在漫长的人生中，永远不要做这两件事。其一是永远不要自怜自哀，如果你的孩子死于癌症，也不要自怜。永远不要自我怜悯。其二是永远不要嫉妒。嫉妒是七宗罪中唯一没有任何乐趣的，选一个其他的罪吧。 --查理芒格
-
-往回看个几十年，你会看到很多很“聪明”的“聪明人成就很小，原因可能在他们大概没把聪明放在做对的事情上。一般来讲，聪明人知道如何把事情做对，但有智慧指的是要做对的事情。有人说什么东西最重要，他说勤奋最重要，我说不是，我说是做对的事情。因为我说勤奋最重要，你会变得更勤奋吗？你不会，至少我不会。
-但是**你想着做对的事情，发现错了你赶紧改**。这一辈子累计30几年、40几年，你每一个决定都是基于10年20年以后，回过头来看，你会发现省好多力气。--段永平
-
-你只需要富有一次就足够了，你不需要做任何冒险的事情去赚取更多。如果你周围发生了非常愚蠢的事情，你不要跟风参与。你身边有人赚到了钱，但是他们借贷，或者他们正在参与真正的垃圾证券。他们在赌博未来能赚到更多的钱，你一定要远离这样的蠢事。它们迟早会反噬你的。
 
 ### 持续学习和思考
 
@@ -63,10 +63,10 @@ top: true
 
 ## 2. 投资知识
 
-The best investment you can make is in yourself. The one thing they can’t take away from you is what you’ve got inside your own mind and body. If you’re 20 years old, you should be thinking about how to improve yourself every day. Because the returns on that investment compound over time — and no one can tax it or steal it.
-
 迄今为止，你所能做的最佳投资就是投资自己。如果你投资自己，没有人能把它从你身上夺走。
 我是说你只有一个想法，这个世界上只有一个人，你唯一的想法就是提升自己。你不能在50岁的时候才开始考虑投资自己。你知道最重要的是你交往的对象，你想与人交往比你更好的人，我的意思是基本上你会朝着你交往的人前进。
+
+The best investment you can make is in yourself. The one thing they can’t take away from you is what you’ve got inside your own mind and body. If you’re 20 years old, you should be thinking about how to improve yourself every day. Because the returns on that investment compound over time — and no one can tax it or steal it.
 
 ### 2.1 投资的本质
 
@@ -90,8 +90,6 @@ Don't 'fall in love' with an investment-- be situation-dependent and
 opportunity-driven. 不要与股票谈恋爱，这是依赖情况和机会驱动的投资。” - 查理·芒格（Charlie Munger）
 
 理解公司所创造出的价值极其重要，当价格和价值出现偏离时，就可以有选择性地增持，这些都是机会。--李录[李录:全球价值投资与时代到来](https://finance.sina.com.cn/roll/2025-01-02/doc-inecnynp0487245.shtml)
-
-
 
 **优质公司**: 找到并理解能够长期增长的公司是一件极其困难的事。这类公司具有长期持续地超越对手的竞争力，有很广阔的增长空间，而且具有优秀的资本回报率。所以，投资这类公司，财富增长的速度也会优于市场平均水平。 一旦你真正找到、理解了这样的公司，我通常建议不要轻易地丢掉这个筹码。--李录
 
@@ -155,17 +153,19 @@ opportunity-driven. 不要与股票谈恋爱，这是依赖情况和机会驱动
 
 #### a. 不安全的杠杆
 
-If you don't have leverage, you don't get in trouble. That's the only way a smart person can go broke, basically. **If you're smart, you don't need it; and if you're dumb, you shouldn't be using it.** 如果你没有杠杆，就不会遇到麻烦。基本上，聪明人破产的唯一途径就是利用杠杆。 如果你聪明，你就不需要杠杆；如果你愚蠢，你就不应该使用它。
+我学到的最惨痛一课：杠杆会把聪明人变成傻子。如果没用杠杆，基金虽会回撤，但绝不至于清盘。-- 查理芒格
+
+如果你没有杠杆，就不会遇到麻烦。基本上，聪明人破产的唯一途径就是利用杠杆。 如果你聪明，你就不需要杠杆；如果你愚蠢，你就不应该使用它。If you don't have leverage, you don't get in trouble. That's the only way a smart person can go broke, basically. **If you're smart, you don't need it; and if you're dumb, you shouldn't be using it.** 
+
+沃伦·巴菲特：人们会做他们认为合适的事情，你知道，因为这样做短期内会有回报。我的意思是，你可以利用杠杆。而这恰恰是聪明人破产的唯一途径。基本上，如果你欠了钱，你明天就还不起。如果你按时支付所有费用，并且做着明智的事情，最终你会变得非常富有。你可以做明智的事情，并利用杠杆。但如果在这个过程中你做错了一件事，它就可能让你血本无归，因为任何数乘以零都等于零。
+
+但当身边的人都成功做到了，你也会更有信心。这很像灰姑娘参加舞会。我的意思是，午夜时分，一切都会变成南瓜和老鼠。但随着夜幕降临，男士们越来越帅气，音乐越来越动听，气氛也越来越欢乐。你会想，我为什么要在12点45分离开？你知道，我会在12点差2分离开。但问题是墙上没有钟，每个人都以为自己会在12点差2分离开。
 
 What was appropriate people will do, you know, again, because it pays off for a while. I mean, you can use leverage. And it’s the only way a smart guy can go broke. Basically, if you owe money, you can’t pay tomorrow. If you just pay for everything and you do smart things, eventually you get very rich. You can do smart things and use leverage. And if you do one wrong thing along the way, it can wipe you out because **anything times zero is zero**.
 
 But it’s so reinforcing when the people around you are doing it successfully, you’re doing it successfully. And it’s a lot like Cinderella at the ball. I mean, at midnight everything’s going to turn to pumpkins and mice. But as the evening goes along, the guys look better all the time, the music sounds better, it’s more and more funny. You think, why the hell should I leave at a quarter of 12? You know, I’ll leave it two minutes to 12. But the trouble is there are no clocks on the wall and everybody thinks they’re going to leave at two minutes to 12.
 
-沃伦·巴菲特：人们会做他们认为合适的事情，你知道，因为这样做短期内会有回报。我的意思是，你可以利用杠杆。而这恰恰是聪明人破产的唯一途径。基本上，如果你欠了钱，你明天就还不起。如果你按时支付所有费用，并且做着明智的事情，最终你会变得非常富有。你可以做明智的事情，并利用杠杆。但如果在这个过程中你做错了一件事，它就可能让你血本无归，因为任何数乘以零都等于零。
-
-但当身边的人都成功做到了，你也会更有信心。这很像灰姑娘参加舞会。我的意思是，午夜时分，一切都会变成南瓜和老鼠。但随着夜幕降临，男士们越来越帅气，音乐越来越动听，气氛也越来越欢乐。你会想，我为什么要在12点45分离开？你知道，我会在12点差2分离开。但问题是墙上没有钟，每个人都以为自己会在12点差2分离开。 -- Charlie Rose采访巴菲特, Warren Buffett on America, Life and Money.
-
-我学到的最惨痛一课：杠杆会把聪明人变成傻子。如果没用杠杆，基金虽会回撤，但绝不至于清盘。-- 查理芒格
+ -- Charlie Rose采访巴菲特, Warren Buffett on America, Life and Money.
 
 **安全杠杆：**我们的保险业务持续提供无成本的资本，为众多其他机会提供资金。这项业务产生“浮存金”——不属于我们的资金，但我们可以为伯克希尔公司的利益进行投资。如果我们支付的损失和费用少于收取的保费，我们还会额外赚取承保利润，这意味着浮存金对我们来说几乎是无成本的。尽管我们偶尔会有承保损失，但我们现在已经连续九年实现承保利润，总计约 170 亿美元。在同样的九年里，我们的浮存金从410亿美元增加到目前的记录水平700亿美元。保险业务对我们非常有益。
 
@@ -403,14 +403,6 @@ A：对我自己，我觉得还是随着社会在变化。我觉得未来十年�
 但是不要像有的企业家，特别像个别民营企业家，老想着跟谁搞成利益共同体，老想弄成那种所谓铁哥们有钱财来往，这就有问题。（采访者）我听上去觉得还是蛮理想主义的。把握好是比较困难。那就是要看真本事了，要靠自己的商业模式了。我们中国是一个政府主导型经济，你没有办法说你不要政府，我自己发展，这是很难的。所以很多人说，我从来不跟政府打交道，这个话我觉得是虚伪的。 -- 王健林
 
 [视频链接](https://v.douyin.com/MeRoABvdj0o/)
-
-
-
-
-王健林认为企业家与政府相处的核心原则是什么？
-如何在商业活动中做到“亲近政府，远离政治”？
-政府主导型经济对企业发展有哪些影响？
-
 
 #### d. 产业政策扭曲价格信号
 
