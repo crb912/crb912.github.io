@@ -1,11 +1,10 @@
 ---
 published: true
-title: 投资
+title: 投资阅读
 layout: post
 author: RuiBing
 category: Investment
 top: false
-hide: true
 ---
 
 * **目录**
