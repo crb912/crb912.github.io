@@ -7,10 +7,13 @@ category: life
 top: true
 ---
 
-The Art of Being Happy
+Cogito, ergo sum --笛卡尔
 
-我只教那些可塑之人。如果有人已濒临顿悟的边缘，我可以推他一把；但要是这个人离顿悟还差得很远，我从来都没成功过。所以，想让蠢人摆脱愚蠢，我百分之百会失败。愚蠢是根深蒂固、难以根除的。因此，我的建议是：努力提升自己，并且坚持下去。一辈子都要不断尝试进步，这样你还有一半的机会。如果不这么做，你就毫无机会可言。 -- 查理・芒格, [访谈视频](https://v.douyin.com/qpRpnFfJb-A)
-I used to say: I could only teach what the other person almost knows. I can just two of them over the brink when he is hanging on the edge, but if the gus not within miles of even starting, I have never succeeded. So in removing idiocy I have 100% failing to tell. I never succeeded dumb as forever. so my council has always been to start trying to be better and keep doing. Keep trying to approve all your life, you got about half a change. If you don't do that, you got line no chance.
+笛卡尔这句话翻译过来是：“我想，所以我是”（旧译为“我思故我在”）。**我相信，思想几乎是一个人的全部**。笛卡尔在他的《谈谈方法》里继续写道：
+
+> **把我的一生用来培育我的理性，按照我所规定的那种方法尽全力增进我对真理的认识**。
+
+我希望自己可以成长为一个更聪明、更理性的人。如果人生可以不断进步，就会有无穷的幸福和快乐。
 
 ##  目录
 * 
@@ -60,6 +63,7 @@ I used to say: I could only teach what the other person almost knows. I can just
 ## 人生目标
 
 ### 1. 超越自己，做最好的自己
+The Art of Being Happy
 
 If you live each day as if it was your last, someday you'll most certainly be right. 
 如果你把每一天都当成最后一天来过，总有一天你会发现你是对的。记住自己随时会死，避免患得患失的陷阱，只剩下真正重要的东西。-- Steve Jobs. 斯坦福演讲，2005年6月12日
@@ -96,6 +100,9 @@ If you live each day as if it was your last, someday you'll most certainly be ri
 我觉得我大部分时间在自我修炼，顺便创造财富。我不抽烟，不喝酒，不喜欢汽车，也不打什么高尔夫球，游戏也不玩。我喜欢干两件事：一个是发呆，一个是学习。我的发呆并不是不想东西，我的发呆是以发呆的神态想东西。想各种有意思的东西，想各种可能性，想各种情况的极端条件。在极端条件下的结果，想各种组合。我觉得想象力也是扩展人的生命，扩展人的视野的一种方式。-- 张一鸣谈爱好
 
 第一，一个人要了解自己的能力跟兴趣所在。第二，要看清楚这个能力跟兴趣大的方向里面有很多小枝干，这里以后哪些是整个世界未来二十年要发展的，走到这个里面去。-- 杨振宁
+
+我只教那些可塑之人。如果有人已濒临顿悟的边缘，我可以推他一把；但要是这个人离顿悟还差得很远，我从来都没成功过。所以，想让蠢人摆脱愚蠢，我百分之百会失败。愚蠢是根深蒂固、难以根除的。因此，我的建议是：努力提升自己，并且坚持下去。一辈子都要不断尝试进步，这样你还有一半的机会。如果不这么做，你就毫无机会可言。 -- 查理・芒格, [访谈视频](https://v.douyin.com/qpRpnFfJb-A)
+I used to say: I could only teach what the other person almost knows. I can just two of them over the brink when he is hanging on the edge, but if the gus not within miles of even starting, I have never succeeded. So in removing idiocy I have 100% failing to tell. I never succeeded dumb as forever. so my council has always been to start trying to be better and keep doing. Keep trying to approve all your life, you got about half a change. If you don't do that, you got line no chance.
 
 ---
 
