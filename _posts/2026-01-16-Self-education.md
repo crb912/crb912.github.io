@@ -720,7 +720,12 @@ Those who would give up essential Liberty, to purchase a little temporary Safety
 
 人们永远也无法改变生活，什么样的生活都差不多，而我在这里的生活并不使我厌烦 -- 《局外人》
 
+
 我却向他解释说，我有一个天性，就是我生理上的需要常常干扰我的感情。-- 《局外人》
+
+"Where there's Marriage without Love, there will be Love without Marriage. " （若有无爱之婚姻，必有无婚姻之爱。）
+
+"No nation was ever ruined by trade." (从来没有国家因为贸易而衰落。)
 
 我从来都不喜欢凡事突如其来，措手不及。要是有什么事发生，我更喜欢有所准备，这就是为什么我只在白天睡一睡，而整个夜晚都耐心地等候着日光照上天窗。
 -- 加缪，局外人，柳鸣九译本，第二部
