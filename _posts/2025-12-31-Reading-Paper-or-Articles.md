@@ -12,7 +12,19 @@ hide: true
 
 ## 知识类
 
-### 对软件研究的反思
+- [**Reflections on Software ResearchE**](http://www.jdl.ac.cn/turing/pdf/p758-ritchie.pdf), D. RITCHIE, 1984, 真正的大师。其见解发人深省，其言论美不胜收。
+- [Knuth's Advice to Young People](https://note.youdao.com/ynoteshare/index.html?id=8e18c7402e0d7b26edf2aedb5ccd3c5a), by Donald Knuth, 2002. Knuth给年轻人的建议
+- [Interview with Donald Knuth](https://www.informit.com/articles/article.aspx?p=1193856), Apr 25, 2008. Knuth的采访
+- [The Humble Programmer](https://www.cs.utexas.edu/~EWD/transcriptions/EWD03xx/EWD340.html), by Edsger W. Dijkstra, 1972. 谦逊的程序员（[中译版](https://www.ituring.com.cn/article/71467)）
+- [How to Interview a Programmer](https://www.artima.com/articles/how-to-interview-a-programmer), by Bill Venners, February 24, 2003. 如何面试一个程序员
+- [Teach Yourself Programming in Ten Years](https://norvig.com/21-days.html), by Peter Norvig. 自学编程用十年
+- [The Magpie Developer](https://blog.codinghorror.com/the-magpie-developer/), by Coding Horror, Jan 06, 2008. 喜鹊开发者
+- [No Silver Bullet—Essence and Accidents of Software Engineering](http://worrydream.com/refs/Brooks-NoSilverBullet.pdf), by  Fred Brooks Jr, 1987. 没有灵丹妙药--软件工程的主要问题和次要问题
+- [A Conversation with Bjarne Stroustrup](https://www.artima.com/intv/bjarne.html), by Bill Venners February 23, 2004. 与Bjarne Stroustrup的对话
+- [The Development of the C Language](https://www.bell-labs.com/usr/dmr/www/chist.html)
+- [Combining assembly code with C code](http://csapp.cs.cmu.edu/3e/waside/waside-embedded-asm.pdf), 学习汇编最好的入门文档。
+
+### 论文：对软件研究的反思
 
 - 论文：Reflections on Software Research,Communications of the ACM 27,8,(1984)
 - 作者: Dennis Ritchie.
@@ -24,7 +36,7 @@ hide: true
 
 ---
 
-### 在Linux上选择合适的计时器中断频率 <a name="20220103RightIF"></a>
+### 论文：在Linux上选择合适的计时器中断频率 <a name="20220103RightIF"></a>
 
 - 论文：Choosing the Right Timer Interrupt Frequency on Linux
 - 作者：Mulyadi Santosa
@@ -40,7 +52,7 @@ hide: true
 
 ---
 
-### 一个程序执行时间测量问题  <a name="20220103MeasureAppExeTime"></a>
+### 论文：一个程序执行时间测量问题  <a name="20220103MeasureAppExeTime"></a>
 
 - 论文: A Problem of Program Execution Time Measurement
 - 作者: Hajdukovi Miroslav, Zorica Suvajdžin, Zark Zivanov, Edin Hodži
@@ -97,6 +109,16 @@ hide: true
 ---
 
 ## 投资类
+
+投资是天底下最简单的事情：把钱交给一个足够信得过的公司，等十年后再取出来得到收益。   
+一半人是输给了自己的耐心，另一半人则是缺乏眼光发现这样的公司。   
+所以这件简单的事几乎没什么人能取得成功，除了巴菲特和芒格那类耐心并且眼光敏锐的人。
+
+- [宏观经济和证券市场的一些看法](https://snippets.cacher.io/snippet/1f0bf3e81486d749f832)
+- [投资自己是最好的投资](https://snippets.cacher.io/snippet/bcde8bb5fde0301b371b)
+- [评亚当·斯密“看不见的手”](https://snippets.cacher.io/snippet/bb1b2530ec0890f628b3)
+- [消费与自由](https://snippets.cacher.io/snippet/51b6fe81de6d7c77a25d)
+
 
 ### 芒格
 

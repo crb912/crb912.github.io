@@ -3,7 +3,8 @@ published: true
 title:  理解CPU的Load和Store操作
 layout: post
 author: RuiBing
-category: Science
+category: art
+hide: true
 ---  
 
 

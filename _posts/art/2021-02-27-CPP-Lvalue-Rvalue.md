@@ -3,7 +3,8 @@ published: true
 title:  C++17的左值和右值
 layout: post
 author: RuiBing
-category: Programming
+category: art
+hide: true
 ---  
 
 首先我承认自己是个小偷，我已经把别人的知识剽窃过来据为己有了。被我偷过的无辜“受害者”列表 (在此，我向他们的无私慷慨表示感谢):
