@@ -14,25 +14,28 @@ top: true
 
 ## 编程的原则
 
-### “事不过三”原则
+### 1. 首要原则
 
-if you need more than 3 levels of indentation, you're screwed anyway, and should fix your program -- Linus Torvalds, [Linux kernel coding style](https://github.com/torvalds/linux/blob/master/Documentation/process/coding-style.rst).
-
-如果你需要超过3级的缩进，那么你已经把事情搞砸了。应该修复你的程序。
-
-多级指针：Linux Kernel源代码只有20多处 **两级指针，没有任何的***三级指针。
-
-### C++的编程习惯
-
-#### 1. 首要原则
 - Rules with no enforcement are unmanageable for large code bases. 没有强制执行的规则会导致大型代码库无法管理。
-- 牢记SRP(single responsibility principle)设计原则。比如函数要尽可能简单。
+- SRP 原则： single responsibility principle 设计原则。比如函数要尽可能简单。
+- “事不过三”： 如果你需要超过3级的缩进，那么你已经把事情搞砸了。应该修复你的程序。 if you need more than 3 levels of indentation, you're screwed anyway, and should fix your program -- Linus Torvalds, [Linux kernel coding style](https://github.com/torvalds/linux/blob/master/Documentation/process/coding-style.rst) 经检查，关于多级指针，Linux Kernel源代码只有20多处 **两级指针，没有任何的***三级指针。
 
-#### 2. 函数
+### 2. 基本类型或关键字
+
+- 避免裸的Union。因为Union可以规避C++的类型系统，导致不易察觉的bug，因此要避免这样使用。我们可以单独维护一个type field，使它成为一个tagged union；或者，使用C++标准库的variant。
+- 如果你的代码有太多cast，说明你已经搞砸了。
+- Use `dynamic_cast` where class hierarchy navigation is unavoidable; 当类层次漫游行为不可避免时，使用动态强制转换。 如果无法转换向目标类时，想要它报错，就用`dynamic_cast` 作用于引用类型；不希望报错，就作用于指针类型。
+- Use `unique_ptr` or `shared_ptr` to avoid forgetting to delete objects created using new;
+- new出来的裸指针，直接从函数返回是很危险的。最好用标准库的`unique_ptr`,例如`return unique_ptr<Shape>{new Circle{p,r}};`
+
+### 2. 函数
+
 - 尽量不要把bool值作为函数参数，而应该是使用枚举类。参见：[千万不要把 BOOL设计成函数参数](https://coolshell.cn/articles/5444.html)
 - 避免使用带有太多内置类型的函数，如: draw_line(int, int, int, int);  // obscure。这种代码不容易理解参数类型的含义。
 
-#### 3. 类
+### 3. 类
+
+C++: 
 
 - friend class有利于代码的模块化，它也可用于特定的成员函数。如Node和LinkedList::search()
 - 类的设计要合理，make sense, 起码要能从类的名字可推测它可能提供的操作。
@@ -50,11 +53,7 @@ if you need more than 3 levels of indentation, you're screwed anyway, and should
 
 #### 4.其他
 
-- 避免裸的Union。因为Union可以规避C++的类型系统，导致不易察觉的bug，因此要避免这样使用。我们可以单独维护一个type field，使它成为一个tagged union；或者，使用C++标准库的variant。
-- 如果你的代码有太多cast，说明你已经搞砸了。
-- Use `dynamic_cast` where class hierarchy navigation is unavoidable; 当类层次漫游行为不可避免时，使用动态强制转换。 如果无法转换向目标类时，想要它报错，就用`dynamic_cast` 作用于引用类型；不希望报错就，就作用于指针类型。
-- Use `unique_ptr` or `shared_ptr` to avoid forgetting to delete objects created using new;
-- new出来的裸指针，直接从函数返回是很危险的。最好用标准库的`unique_ptr`,例如`return unique_ptr<Shape>{new Circle{p,r}};`
+
 
 ## TODO-list
 
@@ -109,6 +108,39 @@ lists.
 
 我打算花两年的时间，把这些经典的论文和书籍看一遍，我要回到那个简单朴素的思想起点。
 
+### 一些论文
+[CSCI E-192](https://canvas.harvard.edu/courses/34992/assignments/syllabus) 课程提供了很好的参考，他们列出的Paper主要在这里：[master list.](https://canvas.harvard.edu/courses/34992/assignments/syllabus)
+
+我觉得其中每一篇的都值得一读，所以就不一一列举了。实在不喜欢的可以略读，但是也该能把握它的思想。
+
+### 一些书单
+
+来自Reddit，更多的讨论在链接这里: [Is there a list of the canonical introductory textbooks covering the major branches of computer science? ](https://np.reddit.com/r/compsci/comments/gprp0/is_there_a_list_of_the_canonical_introductory/c1pcqe5/)  
+我只关心我对其中感兴趣的书，人的一生时间有限，我不可以什么书都去读。不管它写的再好，如果我对其不感兴趣也是徒劳。
+
+- **SICP** (Structure and Interpretation of Computer Programs (Abelson & Sussman))
+- Formal Language: A Practical Introduction by Webber
+- Abstract and Concrete Categories: The Joy of Cats by Adamek et al
+- Fundamentals of Computer Graphics by Shirley and Marschner
+- Distributed Systems: Concepts and Design by Dollimore et al
+- **Introduction to Functional Programming using Haskell **by Bird and Wadler
+- **ML for the Working Programmer by Paulson**
+- **How to Design Programs**（Felleisen等人）
+-  **Concepts, Techniques, and Models of Computer Programming **(Van Roy & Haridi
+
+#### 关于编译器
+
+Reddit上有关于讨论编译器书单的一个话题，[Recommendations for books on compilers](https://www.reddit.com/r/programming/comments/3tgryd/recommendations_for_books_on_compilers/)。其中sanxiyn评论到：
+GCC wiki recommends [a list of compiler books](https://gcc.gnu.org/wiki/ListOfCompilerBooks).
+
+打开之后，我只选了一本： **Appel. Modern Compiler implementation in ML**
+
+
+关于编译器书籍的评论，我想 Vladimir N. Makarov的话语为我指明了学习和阅读的方向：
+> If you don't want to be compiler savvy but want to understand the compiler, I'd recommend Appel's, Cooper's, Morgan's book in the same priority.
+
+我现在还不清楚自己想不想精通编译器，所以先读这些基础的书，如果兴趣越多就读更多。
+
 
 ## 计算机基础
 
@@ -147,55 +179,64 @@ Timer三种模式：a.正常模式，保持自增。b.**CTC** (Clear Timer on Co
 
 ---
 
-### 一些论文
-[CSCI E-192](https://canvas.harvard.edu/courses/34992/assignments/syllabus) 课程提供了很好的参考，他们列出的Paper主要在这里：[master list.](https://canvas.harvard.edu/courses/34992/assignments/syllabus)
-
-我觉得其中每一篇的都值得一读，所以就不一一列举了。实在不喜欢的可以略读，但是也该能把握它的思想。
-
-### 一些书单
-
-来自Reddit，更多的讨论在链接这里: [Is there a list of the canonical introductory textbooks covering the major branches of computer science? ](https://np.reddit.com/r/compsci/comments/gprp0/is_there_a_list_of_the_canonical_introductory/c1pcqe5/)  
-我只关心我对其中感兴趣的书，人的一生时间有限，我不可以什么书都去读。不管它写的再好，如果我对其不感兴趣也是徒劳。
-
-- **SICP** (Structure and Interpretation of Computer Programs (Abelson & Sussman))
-- Formal Language: A Practical Introduction by Webber
-- Abstract and Concrete Categories: The Joy of Cats by Adamek et al
-- Fundamentals of Computer Graphics by Shirley and Marschner
-- Distributed Systems: Concepts and Design by Dollimore et al
-- **Introduction to Functional Programming using Haskell **by Bird and Wadler
-- **ML for the Working Programmer by Paulson**
-- **How to Design Programs**（Felleisen等人）
--  **Concepts, Techniques, and Models of Computer Programming **(Van Roy & Haridi
-
-#### 关于编译器
-
-Reddit上有关于讨论编译器书单的一个话题，[Recommendations for books on compilers](https://www.reddit.com/r/programming/comments/3tgryd/recommendations_for_books_on_compilers/)。其中sanxiyn评论到：
-GCC wiki recommends [a list of compiler books](https://gcc.gnu.org/wiki/ListOfCompilerBooks).
-
-打开之后，我只选了一本： **Appel. Modern Compiler implementation in ML**
 
 
-关于编译器书籍的评论，我想 Vladimir N. Makarov的话语为我指明了学习和阅读的方向：
-> If you don't want to be compiler savvy but want to understand the compiler, I'd recommend Appel's, Cooper's, Morgan's book in the same priority.
-
-我现在还不清楚自己想不想精通编译器，所以先读这些基础的书，如果兴趣越多就读更多。
-
-### 关于我的兴趣
-
-**到现在我还不知道我的兴趣聚焦于哪个点，所以我尽可能了解更多，学习更多**。不过我知道我喜欢编程语言中有意思的概念，有意思的想法。**我想我的好奇心会帮助我找到最终的答案，让我的工作有一个核心的关注点。**
-
-我对于计算机中一些个人口味的不喜欢是显而易见的，比如：计算机图形学，密码学，我对这些基本上没有兴趣。我在从前工作了解过关于RSA密钥的算法，只是为了满足老板的商业需要进行学习的。比如我对LSM的数据结构有兴趣，所以我觉得自己**关注的方向还是编程语言方向，关心数据结构和算法**。我对Knuth的CWEB编程语言很感兴趣，它将是我这段时间忙完之后第一件事情。
-
-### 关于编程语言工程实践的书
-
-我不太喜欢看这类书，比如一些人推荐《代码大全》，重构这类的书。因为正如我前面所说的观念： **美是一种共识**。
-
-只要追求美，最终就会够殊途同归。如果年轻时代码写的不够美，只是因为对美的理解不够深刻，只要保持这种追求，最终就会自己独立的找到。如果你觉得能找到一种和一些方法就能够写出美的代码，我觉得这是误解和想当然。只要有了自己对美的理解，自然就能做出美的东西，而不需要任何专注所谓的”技巧“。有个词语叫”洗心革面“，只要”洗了心“，人的面貌自然就新了，而不需要”革面“。不能做表面工作侧重形式，而是专注于内在。
 
 
 ## 从示例中学习编程
 
-pass
+### 类型容器 std::variant
+
+1. 它是 Union的升级版，是一个类型安全的联合体（Type-safe Union）。与传统的 union 不同，它知道自己当前存储的是哪种类型，并且会自动处理对象的构造和析构，是现代 C++ 处理“多选一”数据的标准方式。
+2. std::get读取数据，但需要判断类型。
+3. std::visit 配合 Overloaded ，模式匹配。
+
+基本用法:
+
+```cpp
+include <iostream>
+#include <variant>
+#include <string>
+
+int main() {
+    // 1. 定义一个可以存放 int 或 string 的变量
+    std::variant<int, std::string> v;
+
+    v = 42;             // 现在存储的是 int
+    v = "Hello Gemini"; // 现在存储的是 string，会自动处理内存
+
+    // 2. 读取数据 (使用 std::get)
+    try {
+        std::string s = std::get<std::string>(v);
+        std::cout << "Value: " << s << std::endl;
+    } catch (const std::bad_variant_access& e) {
+        std::cout << "类型错误: " << e.what() << std::endl;
+    }
+
+    return 0;
+}
+```
+
+优雅的用法：
+
+```
+#include <iostream>
+#include <variant>
+
+// 辅助工具：合并多个 lambda
+template<class... Ts> struct overloaded : Ts... { using Ts::operator()...; };
+template<class... Ts> overloaded(Ts...) -> overloaded<Ts...>;
+
+int main() {
+    std::variant<int, float, std::string> v = 3.14f;
+
+    std::visit(overloaded {
+        [](int i) { std::cout << "Integer: " << i << std::endl; },
+        [](float f) { std::cout << "Float: " << f << std::endl; },
+        [](const std::string& s) { std::cout << "String: " << s << std::endl; }
+    }, v);
+}
+```
 
 ---
 
@@ -237,6 +278,19 @@ pass
 2022-01-02
 
 ---
+
+### 关于我的兴趣
+
+**到现在我还不知道我的兴趣聚焦于哪个点，所以我尽可能了解更多，学习更多**。不过我知道我喜欢编程语言中有意思的概念，有意思的想法。**我想我的好奇心会帮助我找到最终的答案，让我的工作有一个核心的关注点。**
+
+我对于计算机中一些个人口味的不喜欢是显而易见的，比如：计算机图形学，密码学，我对这些基本上没有兴趣。我在从前工作了解过关于RSA密钥的算法，只是为了满足老板的商业需要进行学习的。比如我对LSM的数据结构有兴趣，所以我觉得自己**关注的方向还是编程语言方向，关心数据结构和算法**。我对Knuth的CWEB编程语言很感兴趣，它将是我这段时间忙完之后第一件事情。
+
+### 关于编程语言工程实践的书
+
+我不太喜欢看这类书，比如一些人推荐《代码大全》，重构这类的书。因为正如我前面所说的观念： **美是一种共识**。
+
+只要追求美，最终就会够殊途同归。如果年轻时代码写的不够美，只是因为对美的理解不够深刻，只要保持这种追求，最终就会自己独立的找到。如果你觉得能找到一种和一些方法就能够写出美的代码，我觉得这是误解和想当然。只要有了自己对美的理解，自然就能做出美的东西，而不需要任何专注所谓的”技巧“。有个词语叫”洗心革面“，只要”洗了心“，人的面貌自然就新了，而不需要”革面“。不能做表面工作侧重形式，而是专注于内在。
+
 
 ### 一个人应该学习几门编程语言?
 
