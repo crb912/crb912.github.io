@@ -4,9 +4,13 @@ title: 计算机编程
 layout: post
 author: RuiBing
 category: programming
+top: true
 ---
 
 作为艺术的计算机编程
+
+* **目录**
+{:toc}
 
 ## 编程的原则
 
