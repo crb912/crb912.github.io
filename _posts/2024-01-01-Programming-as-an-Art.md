@@ -20,7 +20,6 @@ if you need more than 3 levels of indentation, you're screwed anyway, and should
 
 ## C++的编程习惯
 
-
 ### 1. 首要原则
 - Rules with no enforcement are unmanageable for large code bases. 没有强制执行的规则会导致大型代码库无法管理。
 - 牢记SRP(single responsibility principle)设计原则。比如函数要尽可能简单。
@@ -36,10 +35,22 @@ if you need more than 3 levels of indentation, you're screwed anyway, and should
 - 能用const的地方一定要用const，这会把程序员的意图告诉别人。
 - 使用标准库，而不是模仿标准库。( mimics the standard library)
 - explicit关键字可以避免代码隐式转换。
+- Use concrete classes to represent simple concepts;
+- Prefer concerete classes over class hierarchies for performance-critical components; 高性能组件尽可能用具体类
+- Make a function a member only if it needs direct access to the representation of a class; 仅当需要直接访问类的表示时，才使用成员函数。
+- Declare a member function that does not modify the state of its object `const`;
+- If a class is a container, give it an initializer-list constructor;
+- An abstract class typically doesn’t need a constructor;
+- A class with a virtual function should have a virtual destructor;
+- 由于抽象类灵活的特性，在派生类的destructor函数要保证资源能被释放，这太重要了。
 
 ### 4.其他
 
 - 避免裸的Union。因为Union可以规避C++的类型系统，导致不易察觉的bug，因此要避免这样使用。我们可以单独维护一个type field，使它成为一个tagged union；或者，使用C++标准库的variant。
+- 如果你的代码有太多cast，说明你已经搞砸了。
+- Use `dynamic_cast` where class hierarchy navigation is unavoidable; 当类层次漫游行为不可避免时，使用动态强制转换。 如果无法转换向目标类时，想要它报错，就用`dynamic_cast` 作用于引用类型；不希望报错就，就作用于指针类型。
+- Use `unique_ptr` or `shared_ptr` to avoid forgetting to delete objects created using new;
+- new出来的裸指针，直接从函数返回是很危险的。最好用标准库的`unique_ptr`,例如`return unique_ptr<Shape>{new Circle{p,r}};`
 
 ## TODO-list
 
