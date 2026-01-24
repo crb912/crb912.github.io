@@ -12,7 +12,7 @@ top: true
 * **目录**
 {:toc}
 
-## 编程的原则
+## 编程原则
 
 ### 1. 首要原则
 
@@ -181,17 +181,239 @@ Timer三种模式：a.正常模式，保持自增。b.**CTC** (Clear Timer on Co
 
 
 
-
-
 ## 从示例中学习编程
+
+### 基础知识： Union
+
+1. Union的通常用法：节约空间，共享内存。2. 类型双关（type punning）或者说位的重解释（Bit Reinterpretation） 。
+
+在C++中，类型双关容易导致未定义行为，但在C语言中是由实现定义的。
+Union的缺陷，struct需要一个type字段维护类型；因此现代C++用`std::variant`，代码更简洁。
+
+```cpp
+struct Packet {
+    enum Type { INT, FLOAT, STRING } type;   // 必须要维护类型字段
+    
+    union {
+        int i;
+        float f;
+        char str[32];
+    } data;
+};
+
+void process(const Packet& p) {
+    switch (p.type) {
+        case Packet::INT:
+            std::cout << p.data.i << '\n';
+            break;
+        case Packet::FLOAT:
+            std::cout << p.data.f << '\n';
+            break;
+        case Packet::STRING:
+            std::cout << p.data.str << '\n';
+            break;
+    }
+}
+```
+
+2. 访问字节表示（用 char 数组）, 合法的
+
+```
+union ByteView {
+    float f;
+    uint32_t i;
+    unsigned char bytes[4];  // ✅ 合法访问方式
+};
+
+void print_bytes(float f) {
+    ByteView bv;
+    bv.f = f;
+    
+    for (int i = 0; i < 4; i++) {
+        printf("%02X ", bv.bytes[i]);
+    }
+}
+```
+
+3. 示例网络协议解析
+
+```cpp
+union IPAddress {
+    uint32_t addr;
+    uint8_t octets[4];
+};
+
+void print_ip(uint32_t ip) {
+    IPAddress addr;
+    addr.addr = ip;
+    
+    printf("%d.%d.%d.%d\n", 
+           addr.octets[0], addr.octets[1], 
+           addr.octets[2], addr.octets[3]);
+}
+```
+现代C++20, 优先考虑`std::bit_cast`, 或者用 `std::memcpy` （C++17）
+
+```cpp
+void print_ip(uint32_t ip) {
+    uint8_t octets[4];
+    std::memcpy(octets, &ip, 4);
+    
+    printf("%d.%d.%d.%d\n", 
+           octets[0], octets[1], octets[2], octets[3]);
+}
+```
+
+快速哈希（位混淆），位的重解释（Bit Reinterpretation）
+
+```cpp
+size_t hash_float(float f) {
+    return std::bit_cast<uint32_t>(f);  // C++20
+    // 或
+    uint32_t bits;
+    std::memcpy(&bits, &f, sizeof(f));
+    return bits;
+}
+```
+
+4. IEEE 754 浮点分析
+
+```cpp
+struct FloatParts {
+    uint32_t mantissa : 23;
+    uint32_t exponent : 8;
+    uint32_t sign : 1;
+};
+
+union FloatAnalyzer {
+    float f;
+    FloatParts parts;
+    uint32_t bits;
+};
+
+void analyze(float f) {
+    FloatAnalyzer fa;
+    fa.f = f;
+    
+    std::cout << "符号: " << fa.parts.sign << '\n';
+    std::cout << "指数: " << fa.parts.exponent << '\n';
+    std::cout << "尾数: " << fa.parts.mantissa << '\n';
+}
+```
+
+强制类型转换 `(uint32_t)f`会导致CPU会执行截断操作，但是位的重解释让内存数据原封不动。
+
+### why lambda?
+
+[] 的双重作用：
+- 告诉编译器"这是 lambda"
+- 指定捕获哪些外部变量
+
+```cpp
+[]() { return 42; }      // ✅ 不捕获任何变量
+[x]() { return x; }      // ✅ 捕获变量 x
+[&y]() { y++; }          // ✅ 按引用捕获 y
+[&]() { x++; y++; }      // ✅ 按引用捕获所有
+[=]() { return x + y; }  // ✅ 捕获所有外部变量
+[this]                   // 捕获当前对象,类成员函数中使用
+```
+
+为什么要用lambda，而不是手动定义函数？ 或者lambda相比手动定义函数，优点在哪里？
+
+作用1： 可以捕获外部变量
+
+```cpp
+int threshold = 10;
+int bonus = 5;
+
+auto check = [threshold, bonus](int value) {
+    return value > threshold ? value + bonus : value;
+};
+
+std::cout << check(15);  // 20
+std::cout << check(8);   // 8
+```
+
+作用2: 代码局部性，不必为了函数内部的代码单独在外部实现一个函数, 更好的模块化。
+
+下述代码，如果把lambda单独实现，就不得不定义一个int g_errorCount全局变量。
+```cpp
+void processData(std::vector<int>& data) {
+    int errorCount = 0;
+    
+    // 逻辑就在这里，一目了然
+    std::for_each(data.begin(), data.end(),
+        [&errorCount](int value) {
+            if (value < 0) {
+                errorCount++;
+                std::cout << "错误值: " << value << '\n';
+            }
+        }
+    );
+    
+    std::cout << "共 " << errorCount << " 个错误\n";
+}
+```
+
+作用3: 每次调用可以不同
+
+```
+auto makeMultiplier(int factor) {
+    return [factor](int x) { return x * factor; };  // 捕获不同的 factor
+}
+
+auto times2 = makeMultiplier(2);
+auto times5 = makeMultiplier(5);
+
+std::cout << times2(10);  // 20
+std::cout << times5(10);  // 50
+```
+
+作用4: 支持泛型，而手动函数需要借助模板。
+
+```
+// 泛型 lambda，适用于任何类型
+auto print = [](const auto& value) {
+    std::cout << value << '\n';
+};
+
+print(42);           // int
+print(3.14);         // double
+print("hello");      // const char*
+
+// 手动函数
+template<typename T>
+void print(const T& value) {
+    std::cout << value << '\n';
+}
+```
+作用5： 闭包（Closure）可以"记住"创建时的环境/状态，而手动函数做不到。
+```
+auto makeCounter() {
+    int count = 0;
+    
+    return [count]() mutable {  // 捕获 count
+        return ++count;
+    };
+}
+
+auto counter1 = makeCounter();
+auto counter2 = makeCounter();
+
+std::cout << counter1();  // 1
+std::cout << counter1();  // 2
+std::cout << counter2();  // 1  ← 独立的计数器
+
+```
+
 
 ### 类型容器 std::variant
 
 1. 它是 Union的升级版，是一个类型安全的联合体（Type-safe Union）。与传统的 union 不同，它知道自己当前存储的是哪种类型，并且会自动处理对象的构造和析构，是现代 C++ 处理“多选一”数据的标准方式。
-2. std::get读取数据，但需要判断类型。
-3. std::visit 配合 Overloaded ，模式匹配。
+2. std::get读取数据，但需要判断类型,如果类型不匹配会抛出异常。  holds_alternative需要用if手动检查。
+3. std::visit最优雅：  配合 Overloaded ，模式匹配。
 
-基本用法:
+基本用法 get+variant:
 
 ```cpp
 include <iostream>
@@ -217,15 +439,21 @@ int main() {
 }
 ```
 
-优雅的用法：
+优雅的用法，搭配Pack expansion operator。
+overloaded作用，简单说，就是对不同类型重载operator()的操作。
+把多个 lambda 合并成一个拥有多个重载 operator() 的对象，让 std::visit 能根据类型自动选择调用哪个 lambda。
+
+visit+variant+overloaded：
 
 ```
 #include <iostream>
 #include <variant>
 
 // 辅助工具：合并多个 lambda
-template<class... Ts> struct overloaded : Ts... { using Ts::operator()...; };
-template<class... Ts> overloaded(Ts...) -> overloaded<Ts...>;
+template<class... Ts>                                      // 声明 结构体模板
+struct overloaded : Ts... { using Ts::operator()...; };    // 定义 结构体
+template<class... Ts>                                      // 声明 推导指引
+overloaded(Ts...) -> overloaded<Ts...>;                    // 定义 推导指引
 
 int main() {
     std::variant<int, float, std::string> v = 3.14f;
@@ -234,7 +462,114 @@ int main() {
         [](int i) { std::cout << "Integer: " << i << std::endl; },
         [](float f) { std::cout << "Float: " << f << std::endl; },
         [](const std::string& s) { std::cout << "String: " << s << std::endl; }
-    }, v);
+    }, v);  // std::visit(访问者, variant对象);
+}
+```
+
+应用场景：
+
+1. 类型判断
+
+```
+std::variant<int, std::string, std::nullptr_t> data = getData();
+
+std::visit(overloaded {
+    [](int value) { 
+        std::cout << "收到数字: " << value << '\n'; 
+    },
+    [](const std::string& str) { 
+        std::cout << "收到字符串: " << str << '\n'; 
+    },
+    [](std::nullptr_t) { 
+        std::cout << "收到空值\n"; 
+    }
+}, data);
+```
+
+2. 状态机 (State Machines)
+在逻辑设计中，对象往往处于多个状态之一，每个状态携带的数据不同。传统的 struct 会导致内存浪费（所有字段并存），而 variant 能够优雅地表达这种互斥性。
+
+```
+struct Idle {};
+struct Connecting { std::string ip; };
+struct Connected { int session_id; };
+struct Disconnected { std::string reason; };
+
+using ConnectionState = std::variant<Idle, Connecting, Connected, Disconnected>;
+
+// 使用 std::visit 处理不同状态
+void handle_state(const ConnectionState& state) {
+    std::visit(overloaded {
+        [](const Idle&) { /* 显示初始界面 */ },
+        [](const Connecting& c) { std::cout << "Connecting to " << c.ip; },
+        [](const Connected& c) { std::cout << "Session: " << c.session_id; },
+        [](const Disconnected& d) { std::cerr << "Error: " << d.reason; }
+    }, state);
+}
+```
+
+3. 类型转换
+
+```
+std::variant<int, double, std::string> v = 42;
+
+std::string str = std::visit(overloaded {
+    [](int i) { return std::to_string(i); },
+    [](double d) { return std::to_string(d); },
+    [](const std::string& s) { return s; }
+}, v);
+```
+C语言可以用 union做类型转换，在C++中属于未定义行为。
+
+现代 C++支持 `std::bit_cast` 进行安全的位转换，memcpy。
+
+4. 静态多态，避免昂贵的“继承+虚函数”的开销。
+
+如果你有一组类型（如圆、方、长方形），虽然它们有共同行为，但你不想使用动态内存分配（new）和虚函数表（vtable）带来的开销，variant 是实现静态多态的利器。
+
+对比： 虚函数需要通过指针调用，可能有缓存缺失（Cache Miss）；variant 存储在`连续内存`中，配合 std::visit 性能极高。
+
+```cpp
+struct Circle { double radius; };
+struct Square { double side; };
+
+using Shape = std::variant<Circle, Square>;
+
+double get_area(const Shape& s) {
+    return std::visit(overloaded {
+        [](const Circle& c) { return 3.14 * c.radius * c.radius; },
+        [](const Square& q) { return q.side * q.side; }
+    }, s);
+}
+```
+
+4. 解析异构数据(如 JSON/配置文件)
+
+在处理 JSON 时，一个字段的值可能是 `int`、`string`、`bool` 或 `double`。variant 是描述这种“不确定但有限”类型的完美选择。
+
+```cpp
+using JsonValue = std::variant<std::nullptr_t, bool, int, double, std::string>;
+
+// 一个 key 对应一个 JsonValue
+std::map<std::string, JsonValue> config;   // 定义一个map类型
+config["port"] = 8080;
+config["server"] = "localhost";
+config["debug"] = true;
+```
+
+5. 健壮的错误处理 (替代错误码)
+
+在函数可能返回结果也可能返回错误时，传统的做法是返回 `-1` 或指针，但这往往不直观。variant 可以像函数式语言（如 Rust 的 Result）那样清晰地表达结果。
+
+```cpp
+struct Success { std::vector<uint8_t> data; };
+struct Error { int code; std::string message; };
+
+using FetchResult = std::variant<Success, Error>;
+
+FetchResult download_data() {
+    if (network_ok) return Success{...};
+    else return Error{404, "Not Found"};
 }
 ```
 
