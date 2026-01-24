@@ -141,6 +141,7 @@ GCC wiki recommends [a list of compiler books](https://gcc.gnu.org/wiki/ListOfCo
 
 我现在还不清楚自己想不想精通编译器，所以先读这些基础的书，如果兴趣越多就读更多。
 
+---
 
 ## 计算机基础
 
