@@ -1260,7 +1260,7 @@ FetchResult download_data() {
 
 ---
 
-#### volatile
+### volatile
 
 ```cpp
 int value = 10;
@@ -1297,7 +1297,73 @@ test():
 ```
 volatile 不保证原子性， 不保证内存顺序，不同步缓存。
 
+---
 
+### Qt6 示例
+
+```cpp
+#include <QApplication>
+#include <QWidget>
+#include <QPushButton>
+#include <QVBoxLayout>
+#include <QLabel>
+
+int main(int argc, char *argv[]) {
+    QApplication a(argc, argv);
+
+    // 1. 创建主窗口和布局
+    QWidget window;
+    window.setWindowTitle("Qt Signal Slot Example");
+    QVBoxLayout *layout = new QVBoxLayout(&window);
+
+    // 2. 创建显示文字的标签
+    QLabel *label = new QLabel("Waiting...");
+    label->setAlignment(Qt::AlignCenter); // 文字居中
+    layout->addWidget(label);
+
+    // 3. 创建按钮
+    QPushButton *btn1 = new QPushButton("Click Me1");
+    QPushButton *btn2 = new QPushButton("Click Me2");
+    layout->addWidget(btn1);
+    layout->addWidget(btn2);
+
+    // 4. 连接信号与槽 (使用 Lambda 表达式，C++ 开发者最爱的现代写法)
+    // 语法：connect(发信者, 信号, 接收者, 逻辑处理)
+    QObject::connect(btn1, &QPushButton::clicked, [label]() {
+        label->setText("点击1 ok");
+    });
+
+    QObject::connect(btn2, &QPushButton::clicked, [label]() {
+        label->setText("点击2 ok");
+    });
+
+    window.show();
+    return a.exec();
+}
+
+```
+
+
+依赖和编译
+
+
+```sh
+sudo apt install qt6-base-dev qt6-declarative-dev
+
+// 编译
+c++ /home/code/example/example.cpp -o example $(pkg-config --cflags --libs Qt6Widgets) -fPIC
+```
+
+Qt的核心概念：
+
+- Meta-Object Compiler , 提供反射，Qt 需要额外的元信息（信号、槽、属性等）
+- 所有 Qt 对象的基类。QObject宏， 启用 Qt 的元对象系统 ，支持信号与槽，支持属性系统。
+- Qt最强大的特性：信号与槽（Signals & Slots），对象间通信的优雅机制。
+
+```
+connect(sender, &Sender::signal,
+        receiver, &Receiver::slot);
+```
 ---
 
 ## 其他
@@ -1370,6 +1436,31 @@ GCC wiki recommends [a list of compiler books](https://gcc.gnu.org/wiki/ListOfCo
 > If you don't want to be compiler savvy but want to understand the compiler, I'd recommend Appel's, Cooper's, Morgan's book in the same priority.
 
 我现在还不清楚自己想不想精通编译器，所以先读这些基础的书，如果兴趣越多就读更多。
+
+---
+
+## 优质的编程材料
+
+### C++
+
+- [Stroustrup与Bill的对话--已归档](https://www.artima.com/intv/bjarne.html)
+- [Stroustrup与Pramod的对话](https://mappingthejourney.com/single-post/2017/07/29/interview-with-bjarne-stroustrup-creator-of-c/)
+- [Foundations of C++--已归档](https://www.stroustrup.com/ETAPS-corrected-draft.pdf)
+- [Abstraction and the C++ machine model](https://www.stroustrup.com/abstraction-and-machine.pdf)
+- [C++ Primer Plus](https://zhjwpku.com/assets/pdf/books/C++.Primer.Plus.6th.Edition.Oct.2011.pdf)
+
+### Golang
+
+- [Well-structured Logic: A Golang OOP Tutorial](https://www.toptal.com/go/golang-oop-tutorial)
+- [Why goroutines are not lightweight threads?](https://codeburst.io/why-goroutines-are-not-lightweight-threads-7c460c1f155f)
+
+### 其他
+
+- [Donald Knuth的书](https://github.com/manjunath5496/Donald-Knuth-Books/blob/master/README.md)
+- [Communications of ACM 杂志档案](https://cacm.acm.org/magazines)
+- [ACCU图书推荐(by rating)](https://www.accu.org/reviews/by_rating/)
+- [王小波和编程](https://91biji.com/social/leon/framebook/notes/note/9174/)
+
 
 
 ## 编程碎碎念

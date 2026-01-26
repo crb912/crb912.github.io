@@ -16,7 +16,7 @@ hide: true
 - [Knuth's Advice to Young People](https://note.youdao.com/ynoteshare/index.html?id=8e18c7402e0d7b26edf2aedb5ccd3c5a), by Donald Knuth, 2002. Knuth给年轻人的建议
 - [Interview with Donald Knuth](https://www.informit.com/articles/article.aspx?p=1193856), Apr 25, 2008. Knuth的采访
 - [The Humble Programmer](https://www.cs.utexas.edu/~EWD/transcriptions/EWD03xx/EWD340.html), by Edsger W. Dijkstra, 1972. 谦逊的程序员（[中译版](https://www.ituring.com.cn/article/71467)）
-- [How to Interview a Programmer](https://www.artima.com/articles/how-to-interview-a-programmer), by Bill Venners, February 24, 2003. 如何面试一个程序员
+
 - [Teach Yourself Programming in Ten Years](https://norvig.com/21-days.html), by Peter Norvig. 自学编程用十年
 - [The Magpie Developer](https://blog.codinghorror.com/the-magpie-developer/), by Coding Horror, Jan 06, 2008. 喜鹊开发者
 - [No Silver Bullet—Essence and Accidents of Software Engineering](http://worrydream.com/refs/Brooks-NoSilverBullet.pdf), by  Fred Brooks Jr, 1987. 没有灵丹妙药--软件工程的主要问题和次要问题
@@ -25,7 +25,17 @@ hide: true
 - [Combining assembly code with C code](http://csapp.cs.cmu.edu/3e/waside/waside-embedded-asm.pdf), 学习汇编最好的入门文档。
 - [处理器:Verilog implementation of a pipelined Y86-64 processor](http://csapp.cs.cmu.edu/3e/waside/waside-verilog.pdf)
 
+
+编程杂谈：
+
+- [How to Interview a Programmer](https://www.artima.com/articles/how-to-interview-a-programmer), by Bill Venners, February 24, 2003. 如何面试一个程序员
 - [Free Software Is Just Too Expensive](https://www.ghs.com/FreeSoftware.html)
+
+《软件工程的哲学原理》- Fred Brooks
+
+1. 模块化。既然人类的大脑无法一次性理解数百万行代码，工程哲学就要求模块化。软件不是“盖”出来的，而是“长”出来的。不要试图一开始就设计完美的架构，而要建立一个能够不断演化的系统。
+2. 软件工程是关于人的科学。代码是写给人看的，只是顺便给机器运行。
+3. **布鲁克斯法则 (Brooks' Law)**：向进度落后的项目中增加人手，只会让项目更落后。
 
 ## 人生
 

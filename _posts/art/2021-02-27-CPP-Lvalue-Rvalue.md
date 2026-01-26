@@ -201,6 +201,7 @@ setValue() = 3; // error!
 编译器会给出同样的错误，想蒙混过关，欺骗编译器，那是不可能的！
 
 下面这样写，完全就没有问题：
+
 ```cpp
 int my = 100;
 
@@ -295,6 +296,8 @@ void c_foo(const Widget& w){};    // Pass by const rvalue reference
 **wrap up**:
 关于使用左值引用去得到别名，我不认为以这样的方式增加一个对象的别名具有显著的意义。可能在我们维护代码的时候有一些小小的帮助，尤其是对一个作用域比较广的全局变量，使用别名可以很好区分”新变动的代码“与”旧代码“之间的改动区别，容易识别代码的改动是基于哪个别名的。
 
+---
+
 ### 3.2 解释xvalue  <a name="xvalue"></a>
 
 An xvalue (an “eXpiring” value) also refers to an object, usually near the end of its lifetime (so that its resources may be moved, for example). An xvalue is the result of certain kinds of expressions involving rvalue references. [Example: The result of calling a function whose return type is an rvalue reference is an xvalue.]
@@ -305,7 +308,7 @@ x表示即将过期。即便是C++官方的草案，它用的是'usually'和'the
 
 注意：一个表达式的值类别是由它的形式决定的，而不是由它所处的位置决定的。并非出现在`=`左边就是左，在右边就是右值。lvalue既可以在表达式左边被赋值，也可以在表达式右边用于赋值。xvalue 通常出现在表达式的右边，通过`std:move`右边被“偷”走资源； 但xvalue也可以出现在左边的场景是：通过强制类型转换（static_cast）将一个对象转为右值引用，然后访问其成员。
 
-#### value出现在左边
+#### xvalue出现在左边
 
 ```cpp
 #include <iostream>
