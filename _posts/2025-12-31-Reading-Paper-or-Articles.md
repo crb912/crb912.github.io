@@ -25,6 +25,8 @@ hide: true
 - [Combining assembly code with C code](http://csapp.cs.cmu.edu/3e/waside/waside-embedded-asm.pdf), 学习汇编最好的入门文档。
 - [处理器:Verilog implementation of a pipelined Y86-64 processor](http://csapp.cs.cmu.edu/3e/waside/waside-verilog.pdf)
 
+- [Free Software Is Just Too Expensive](https://www.ghs.com/FreeSoftware.html)
+
 ## 人生
 
 - [Einstein: The World As I See It](https://www.colonialtours.com/ebook/ebooks/Albert%20Einstein%20-%20The%20World%20as%20I%20See%20it.pdf)，中译: [我的世界观](https://www.sohu.com/a/201241908_176673)。伟大的人之所以伟大，在于他的思想。

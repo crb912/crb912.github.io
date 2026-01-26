@@ -53,7 +53,146 @@ C++:
 
 #### 4.其他
 
+---
 
+## 优雅的代码
+
+> Elegance is an attitude -- 瑞士手表品牌 浪琴（Longines）
+
+### 二级指针
+
+示例代码：单向链表中删除一个指定的节点， Linus的做法：[代码片段](https://external-preview.redd.it/_YjlXgAHs1jzF-w9V-FgfystXp4fIs5asEdG8KQAmco.png)
+Linus 的哲学是： **良好的代码应该能够发现并利用底层模式，从而使特殊情况消失，变为普通情况。**
+
+Linus这个代码很妙。我的详细解读：在内存中的一切实体，变量和对象， 都是有地址的，变量当然也包括指针。
+所以每个指针实际上有两个地址，第一个是所做指向的对象的地址（即指针的值），另一个则是指针自身的地址，而它自身的地址经常被忽略和遗忘了。
+当我们把另一个指针指向该指针的自身地址，那么我们就会得到一个二级指针： 指向指针的指针。
+
+我们为什么需要二级指针？
+- 需要一级指针在单步移动，通过比较一级指针的地址而不是比较它所指向的值。
+- 需要修改一级指针指向时。
+
+
+ indirect 是一个二级指针，当我们对它进行解引用的时候，我们就会得到一级指针，就这么简单
+
+
+```cpp
+#include <iostream>
+
+// 定义链表节点
+struct Node {
+    int data;
+    Node* next;
+    Node(int d) : data(d), next(nullptr) {}
+};
+
+// 全局头指针，方便演示
+Node* head = nullptr;
+
+// 辅助函数：向链表末尾添加数据
+void append(int data) {
+    if (!head) {
+        head = new Node(data);
+        return;
+    }
+    Node* temp = head;
+    while (temp->next) temp = temp->next;
+    temp->next = new Node(data);
+}
+
+// 辅助函数：打印链表
+void print_list() {
+    Node* temp = head;
+    while (temp) {
+        std::cout << temp->data << " -> ";
+        temp = temp->next;
+    }
+    std::cout << "NULL" << std::endl;
+}
+
+// 传统的写法 (Poor Taste) ---
+void remove_list_entry_poor(Node* entry) {
+    Node* prev = nullptr;
+    Node* walk = head;
+
+    // 寻找目标节点并记录前驱
+    while (walk != entry) {
+        prev = walk;
+        walk = walk->next;
+    }
+
+    // 必须处理“删除的是头节点”的特殊情况
+    if (!prev) {
+        head = entry->next; // 如果没有前驱，说明删除的是第一个
+    } else {
+        prev->next = entry->next; // 否则跳过当前节点
+    }
+    delete entry; // 释放内存
+}
+
+// Linus 推荐的写法 (Good Taste) ---
+void remove_list_entry_good(Node* entry) {
+    // indirect 指向的是“指向当前节点的指针”的地址
+    Node** indirect = &head;
+
+    // 只要当前指向的节点不是目标，就移动到下一个“指针的地址”
+    while ((*indirect) != entry) {
+        indirect = &((*indirect)->next);  // 多加了括号，更易读
+    }
+
+    // 核心：直接修改那个指向 entry 的指针，让它指向下一个
+    // 无论是 head 还是某个节点的 next，逻辑完全一致
+    *indirect = entry->next;
+    delete entry; // 释放内存
+}
+
+int main() {
+    // 初始化链表: 10 -> 20 -> 30 -> 40 -> NULL
+    append(10); append(20); append(30); append(40);
+    std::cout << "原始链表: "; print_list();
+
+    // 测试 1: 使用“Good Taste”方法删除中间节点 30
+    Node* to_remove = head->next->next; // 30
+    remove_list_entry_good(to_remove);
+    std::cout << "删除 30 后: "; print_list();
+
+    // 测试 2: 使用“Good Taste”方法删除头节点 10 (无特殊处理！)
+    remove_list_entry_good(head);
+    std::cout << "删除头节点后: "; print_list();
+
+    return 0;
+}
+```
+
+C++优先使用**指针的引用**， 而不是二级指针。
+
+```
+// ❌ 不推荐：二级指针
+void func(int** pp) {
+    *pp = new int(42);
+}
+
+int* p;
+func(&p);
+
+// ✅ 推荐：引用
+void func(int*& p) {
+    p = new int(42);
+}
+
+int* p;
+func(p);  // 更简洁
+
+```
+
+### 良好的编译习惯
+
+| 编译开关 | 作用 | 目的 |
+| :--- | :--- | :--- |
+| `-fno-exceptions` | **禁用异常处理** | 消除堆栈回溯带来的时间不确定性 |
+| `-fno-rtti` | **禁用运行时类型识别** | 减少二进制文件大小，消除运行时查表开销 |
+| `-O3` / `-Ofast` | **极致性能优化** | 利用编译器进行循环展开、指令对齐、向量化优化 |
+| `-Wall -Werror` | **警告即错误** | 强制执行最高标准的编码规范，消除潜在隐患 |
 
 ## TODO-list
 
@@ -92,54 +231,6 @@ lists.
 [BS12] B. Stroustrup: Foundations of C++, Texas A&M University.
 [BS03,Bill] A Conversation with Bjarne Stroustrup, https://www.artima.com/intv/bjarne.html
 
-## 读计算机科学的经典
-
-过去一直有一个声音，让我们去读经典，读《红楼梦》， 读巴尔扎克，读莎士比亚，读《荷马史诗》，读《论语》... **为什么要读经典**? 
-
-因为真正的美，从古至今都没有改变，改变的只是它表达美的形式和表现方式。就如,即便几千年过去了，我们仍然会觉得万里长城很美，秦兵马俑很美， 比萨斜塔很美，蒙娜丽莎很美，梵高的向日葵很美...美的事物，人们很容易得到共识。
-
-我把这样的想法也放在了编程领域，我们该去读计算机科学的经典。读计算机科学在早先创建的时候，那些先驱者的思想，以及后来不断出现的经典。
-
-为什么要做这件事情？因为一方面计算机的技术越来越纷繁和学科细化；另一方面，越来越多的人痴迷于科学技术产生的工具，甚至有些人痴迷于一种编程语言。正如Bjarne Stroustrup在[访谈](https://www.youtube.com/watch?v=NvWTnIoQZj4)中提到：
-
-> ”Nobody should call themselves a professional if they only knew one language.（没有人应该把自己视为一个专家，如果他们只知道一门编程语言）“
-
-由此，新一代的人们开始忽略了计算机科学的本质，忘掉了那些简单而朴素的真理。**只有去读经典，才能从这越来复杂和庞大的学科中，把握它最美、最精华的思想**。
-
-我打算花两年的时间，把这些经典的论文和书籍看一遍，我要回到那个简单朴素的思想起点。
-
-### 一些论文
-[CSCI E-192](https://canvas.harvard.edu/courses/34992/assignments/syllabus) 课程提供了很好的参考，他们列出的Paper主要在这里：[master list.](https://canvas.harvard.edu/courses/34992/assignments/syllabus)
-
-我觉得其中每一篇的都值得一读，所以就不一一列举了。实在不喜欢的可以略读，但是也该能把握它的思想。
-
-### 一些书单
-
-来自Reddit，更多的讨论在链接这里: [Is there a list of the canonical introductory textbooks covering the major branches of computer science? ](https://np.reddit.com/r/compsci/comments/gprp0/is_there_a_list_of_the_canonical_introductory/c1pcqe5/)  
-我只关心我对其中感兴趣的书，人的一生时间有限，我不可以什么书都去读。不管它写的再好，如果我对其不感兴趣也是徒劳。
-
-- **SICP** (Structure and Interpretation of Computer Programs (Abelson & Sussman))
-- Formal Language: A Practical Introduction by Webber
-- Abstract and Concrete Categories: The Joy of Cats by Adamek et al
-- Fundamentals of Computer Graphics by Shirley and Marschner
-- Distributed Systems: Concepts and Design by Dollimore et al
-- **Introduction to Functional Programming using Haskell **by Bird and Wadler
-- **ML for the Working Programmer by Paulson**
-- **How to Design Programs**（Felleisen等人）
--  **Concepts, Techniques, and Models of Computer Programming **(Van Roy & Haridi
-
-#### 关于编译器
-
-Reddit上有关于讨论编译器书单的一个话题，[Recommendations for books on compilers](https://www.reddit.com/r/programming/comments/3tgryd/recommendations_for_books_on_compilers/)。其中sanxiyn评论到：
-GCC wiki recommends [a list of compiler books](https://gcc.gnu.org/wiki/ListOfCompilerBooks).
-
-打开之后，我只选了一本： **Appel. Modern Compiler implementation in ML**
-
-
-关于编译器书籍的评论，我想 Vladimir N. Makarov的话语为我指明了学习和阅读的方向：
-> If you don't want to be compiler savvy but want to understand the compiler, I'd recommend Appel's, Cooper's, Morgan's book in the same priority.
-
-我现在还不清楚自己想不想精通编译器，所以先读这些基础的书，如果兴趣越多就读更多。
 
 ---
 
@@ -209,8 +300,144 @@ Timer三种模式：a.正常模式，保持自增。b.**CTC** (Clear Timer on Co
 所有教材在讲中断时，几乎都没有将硬件和软件两者很好的结合到一起。嵌入式开发则过分关心其电气特性，软件开发则又集中在其软件的抽象层。中断，它既工作在硬件层，又工作在软件层。如果只是关注其中一个特性，必定无法窥见她面纱之下的真实原貌。因此想要了解中断时，就必须要从这两个方面同时把握。从硬件方面，要知道这些硬件存在，这里[Timer Interrupt Sources](https://wiki.osdev.org/Timer_Interrupt_Sources)提到了各类的时钟，包括中断时钟PIT、HPET等，其中APIC和TSC是每个CPU都有一个，每个时钟又有不同的区别（Fixed Frequency IRQ，IRQ on terminal count）。从软件方面，理解中断带来的好处。就完成了它的学习。
 
 ---
+### 硬实时 vs 软实时
 
-### 多核并发的伪共享问题
+硬实时（Hard Real-Time）和软实时（Soft Real-Time）的区别不在于速度的“快慢”，而在于对确定性（Determinism）和后果（Consequences）**的要求。
+
+1. 对“截止时间”（Deadline）的容忍度
+
+这是两者最本质的区别。在实时系统中，一个任务不仅要计算正确，还要在规定时间内完成。
+
+- 硬实时：截止时间是绝对的。如果任务晚了一毫秒，就被视为系统故障（System Failure）。就像在 Stroustrup论文 [Abstraction and the C++ machine model](https://www.stroustrup.com/abstraction-and-machine.pdf) 中看到的船舶引擎控制，如果喷油指令晚了，可能会导致物理损坏。
+- 软实时：截止时间是期望的。如果任务偶尔晚了一点，系统性能会下降（比如视频掉帧），但系统依然可以继续运行，不会发生灾难。
+
+2. 典型应用场景对比
+
+| 特性 | **硬实时 (Hard Real-Time)** | **软实时 (Soft Real-Time)** |
+| :--- | :--- | :--- |
+| **违约后果** | **灾难性**（人员伤亡、昂贵设备损坏） | **体验下降**（不爽、卡顿、重试） |
+| **典型例子** | 汽车安全气囊、起搏器、**飞控系统** | 视频会议、在线游戏、自动贩卖机 |
+| **成功标准** | **100% 确定性**完成（零容忍） | 统计学上的**平均完成时间** |
+| **OS 调度** | **抢占式**、优先级严格固定 | 尽力而为 (**Best Effort**) |
+| **时间约束** | 截止时间（Deadline）是**硬指标** | 截止时间是**目标**，允许偶尔偏离 |
+
+3. 技术实现上的挑战
+
+硬实时的“禁区”。在硬实时编程中，你必须避开所有执行时间不确定的操作：
+
+- 动态内存分配：new 和 delete 可能会触发内存碎片整理，耗时无法预测。
+- 异常处理 (throw/catch)：正如你刚才引用的，堆栈回溯的时间取决于调用深度，难以预测。
+- 垃圾回收 (GC)：像 Java/Python 这种有自动 GC 的语言很难用于硬实时，因为你不知道 GC 什么时候会突然“停顿世界”。
+
+
+软实时的“宽容”：在软实时系统中，你可以使用 std::vector 的动态扩容，也可以偶尔处理异常。虽然这些会带来波动，但只要平均延迟（Latency）足够低，用户就不会察觉。
+
+4. 为什么 Stroustrup 对“确定性”（Predictability 可预测性）如此执着？
+
+Stroustrup 讨论 `dynamic_cast` 的优化（质数取模法）以及异常的可预测性，本质上都是为了把 C++ 推进硬实时领域。他希望 C++ 程序员能够写出：
+- 逻辑上正确的代码。
+- 时间上可预测的代码。
+
+如果 dynamic_cast 消耗的时间取决于继承树的深度，那么它就是“不确定”的，也就无法用于控制火星探测器的降落伞开启。Stroustrup 在论文里对异常处理（Exceptions）和动态分配（Memory Allocation）表现得如此谨慎——因为在船舶引擎或火星车（Mars Rover，论文第 1 页提到）这样的系统中，一次延迟就意味着整个物理系统的彻底终结。
+
+
+5. 性能建议： 禁用异常，禁用rtti
+
+- 空间开销：开启 RTTI 会增加可执行文件的大小（因为要存储类型字符串和继承关系表）。
+- 时间开销：dynamic_cast 比普通转换慢得多。
+- 现代做法：在很多高性能或嵌入式领域（如游戏引擎、底层驱动），开发者常通过编译器选项（如 -fno-rtti）彻底禁用 RTTI，转而使用手动定义的 enum 或模板技术（如 std::variant）来替代。
+
+在目前的硬实时工业界（如汽车自动驾驶、卫星控制），最主流的做法依然是禁用异常（使用编译选项 -fno-exceptions）。这正是 Stroustrup 在论文中提到的“传统错误处理策略”的现代化延续。
+
+---
+
+## 性能优化
+
+### 避免Cache miss的方法
+
+#### 1.数据局部性: 跳跃访问 → 顺序访问
+
+```cpp
+// ❌ 坏：跳跃访问
+for (int i = 0; i < N; i++) {
+    sum += arr[i * 1000];  // 可能每次都 miss
+}
+
+// ✅ 好：顺序访问
+for (int i = 0; i < N; i++) {
+    sum += arr[i];  // 利用预取
+}
+```
+
+#### 2. 数据结构重排（AoS → SoA）
+
+结构体放在数组 vs 数组放在结构体
+
+```cpp
+// ❌ Array of Structures (AoS)
+struct Point {
+    float x, y, z;
+    int id;
+    char name[32];
+};
+Point points[1000];
+
+// 只访问 x 坐标，但加载了整个结构
+for (int i = 0; i < 1000; i++) {
+    sum += points[i].x;  // 浪费缓存
+}
+
+// ✅ Structure of Arrays (SoA)
+struct Points {
+    float x[1000];
+    float y[1000];
+    float z[1000];
+    // ...
+};
+Points points;
+
+// 紧密排列，缓存友好
+for (int i = 0; i < 1000; i++) {
+    sum += points.x[i];  // 高效！
+}
+```
+
+#### 3. 预取（Prefetch）- SSE指令集
+
+```cpp
+#include <xmmintrin.h>
+
+for (int i = 0; i < N; i++) {
+    // 提前加载下一次迭代的数据,_MM_HINT_T0表示所有级别的缓存（L1, L2, L3）
+    _mm_prefetch(&arr[i + 8], _MM_HINT_T0); 
+    
+    process(arr[i]);
+}
+```
+
+典型用法：
+常用的场景是在遍历大型数组或链表时，在处理当前元素的同时，预取后面若干个元素。
+
+避坑：
+1. 不要过度预取：预取本身是一条指令，会消耗执行资源。如果数据已经在缓存中，预取指令就是纯粹的浪费。
+2. 找准“预取距离”：预取太晚，数据还没到 CPU 就已经运行到那行了；预取太早，数据可能会在被使用前就被踢出缓存。通常设置为未来 2-4 个缓存行（约 128-256 字节）的位置。
+3. 对齐要求：_mm_prefetch 对地址对齐没有强制要求（它不会触发页面错误或分段错误），即使传入非法地址，CPU 也会直接忽略该指令。
+4. 计算密集型 vs 内存密集型：如果你的循环已经是计算密集的（CPU 忙得不可开交），预取可能无法提升性能；它主要用于**内存受限（Memory-bound）**的场景。
+
+#### 4. 缓存对齐
+
+```cpp
+// ✅ 对齐到缓存行
+alignas(64) struct Data {
+    int value;
+};
+```
+
+#### 5. 分块处理（Blocking/Tiling）
+
+
+
+### 缓存对齐： 多核并发的伪共享问题
 
 现代 CPU 以缓存行（Cache Line）为单位加载数据：
 - 典型大小64 字节（也可能是 32、128 字节）
@@ -249,23 +476,23 @@ void thread2() {
 4. 线程2 修改 `counter2` → 线程1 的缓存行又失效
 5. **不停地缓存失效和重新加载** → 性能暴降
 
-无伪共享（Good）:
+无伪共享（Good）:   
 
 缓存行1（64字节）
-┌────────────────────────────────────────┐
-│ counter1 │    ... padding ...         │
-│  (4B)    │                            │
-└────────────────────────────────────────┘
-    ↑
-  线程1
+┌────────────────────────────────────────┐   
+│ counter1 │    ... padding ...         │   
+│  (4B)    │                            │   
+└────────────────────────────────────────┘    
+    ↑   
+  线程1    
 
 缓存行2（64字节）
-┌────────────────────────────────────────┐
-│ counter2 │    ... padding ...         │
-│  (4B)    │                            │
-└────────────────────────────────────────┘
+┌────────────────────────────────────────┐   
+│ counter2 │    ... padding ...         │  
+│  (4B)    │                            │  
+└────────────────────────────────────────┘    
     ↑
-  线程2
+  线程2  
   
 两个线程独立的缓存行，互不干扰！
 
@@ -387,7 +614,7 @@ struct GoodCounters {
 
 场景 2：生产者-消费者队列
 
-```
+```cpp
 template<typename T>
 class LockFreeQueue {
     // ✅ 头尾指针分别对齐，避免伪共享
@@ -399,7 +626,7 @@ class LockFreeQueue {
 ```
 场景 3：线程局部数据
 
-```
+```cpp
 struct ThreadLocalData {
     alignas(64) int processed_count;
     alignas(64) int error_count;
@@ -411,7 +638,8 @@ std::vector<ThreadLocalData> thread_data(num_threads);
 ```
 
 场景 3：线程局部数据
-```
+
+```cpp
 struct ThreadLocalData {
     alignas(64) int processed_count;
     alignas(64) int error_count;
@@ -422,7 +650,8 @@ std::vector<ThreadLocalData> thread_data(num_threads);
 ```
 
 场景 4：读写分离
-```
+
+```cpp
 struct ThreadLocalData {
     alignas(64) int processed_count;
     alignas(64) int error_count;
@@ -433,7 +662,210 @@ struct ThreadLocalData {
 std::vector<ThreadLocalData> thread_data(num_threads);
 ```
 
-## 从示例中学习编程
+### 数据性能： 数组 > 链表（内存池） > 链表（传统）
+
+```cpp
+class NodePool {
+    static constexpr size_t POOL_SIZE = 1000;
+    Node nodes[POOL_SIZE];
+    size_t next_index = 0;
+    
+public:
+    Node* allocate(int data) {
+        if (next_index >= POOL_SIZE) {
+            throw std::bad_alloc();
+        }
+        Node* node = &nodes[next_index++];
+        node->data = data;
+        node->next = nullptr;
+        return node;
+    }
+};
+
+// 使用内存池
+NodePool pool;
+Node* n1 = pool.allocate(1);  // 在 pool 中连续分配
+Node* n2 = pool.allocate(2);
+Node* n3 = pool.allocate(3);
+
+// 使用时仍然是链表的操作方式
+Node* head = pool.allocate(1);
+head->next = pool.allocate(2);
+head->next->next = pool.allocate(3)
+
+// 遍历仍然是链表方式
+Node* current = head;
+while (current != nullptr) {
+    std::cout << current->data;
+    current = current->next;  // ← 仍然用指针链接
+}
+```
+
+**效果**：
+
+```text
+Pool 内存（连续）：
+地址      内容
+------   --------
+0x2000   [1][next]
+0x2010   [2][next]
+0x2020   [3][next]
+
+访存更连续，缓存命中率提高！
+```
+
+内存池的核心思想：**用数组来存储链表节点，获得数组的内存连续性优势。**
+
+```cpp
+// 传统链表：每个节点单独 new，分散在堆上
+Node* n1 = new Node(1);  // 可能在 0x1000
+Node* n2 = new Node(2);  // 可能在 0x5A00
+Node* n3 = new Node(3);  // 可能在 0x2B00
+
+// 内存池：节点存储在连续的数组中
+Node nodes[1000];        // 连续内存：0x2000-0x5000
+Node* n1 = &nodes[0];    // 在 0x2000
+Node* n2 = &nodes[1];    // 在 0x2010（连续！）
+Node* n3 = &nodes[2];    // 在 0x2020（连续！）
+```
+
+内存池快 7 倍左右， 预取有效。
+
+---
+
+### 循环展开
+
+减少循环迭代的次数，并在每一次循环中多做几次重复的工作。
+
+普通循环
+
+```cpp
+for (int i = 0; i < 100; i++) {
+    box[i] = apple[i];
+}
+```
+
+循环展开（展开因子为 4）
+
+```cpp
+for (int i = 0; i < 100; i += 4) {
+    box[i] = apple[i];
+    box[i + 1] = apple[i + 1];
+    box[i + 2] = apple[i + 2];
+    box[i + 3] = apple[i + 3];
+}
+```
+
+1.循环展开的好处。在底层 CPU 执行时，循环展开能显著提升性能，原因有三：
+
+- 减少管理开销：减少了循环变量（如 i++）的自增次数，以及判断循环是否结束（如 i < 100）的比较跳转指令。
+- 提升“指令级并行”（ILP）： 现代 CPU 像流水线工厂。如果一次循环里只有一行代码，流水线还没跑起来就得等下一次循环。展开后，CPU 发现这 4 行搬苹果的代码互不干扰，可以同时启动 4 个“机械臂”一起搬。
+- 减少分支预测失败：CPU 总是预判你会继续循环。每多一次跳转，预判出错的概率就多一分。展开减少了跳转次数，也就让 CPU 跑得更顺。
+
+2.展开的“代价”（副作用）。虽然跑得快，但不是展开得越多越好：
+
+- 代码膨胀（Code Bloat）：二进制文件会变大。如果代码大到 CPU 的指令缓存（Instruction Cache）装不下了，反而会因为频繁去内存读取指令而导致严重掉速。
+- 寄存器压力：如果一次循环里处理的任务太多，CPU 的寄存器（最快的临时存储空间）不够用了，就得把数据写回较慢的内存，适得其反。
+
+3.谁来做这件事？
+
+- 编译器：这是最推荐的方式。像 GCC 或 Clang 编译器在 -O2 或 -O3 优化级别下，会自动根据你的 CPU 类型判断是否该展开。
+- 手动展开：在极端高性能需求下（如你 JSF++ 航天代码或 自动驾驶 FSD），程序员有时会手动展开，或者使用 `#pragma unroll`指令告诉编译器：“听我的，这里必须展开”。
+
+---
+
+### 内联（Inlining）
+
+把函数调用的指令，直接替换为函数体内的具体代码。
+
+1. 目的是消除函数调用的开销，省去了参数传递、保存寄存器、指令跳转和返回的时间。对于只有一两行代码的小函数，调用它的开销往往比执行它的时间还长。
+2. 触发进一步优化：内联后，原本分散在两个函数里的代码“连在了一起”。编译器现在能看到全局，可能会发现 a * a 里的 a 是常量 5，从而直接把结果预计算为 25（这叫常量折叠）。
+3. 对指令流水线友好：CPU 喜欢直线行驶。内联消除了“弯道”（跳转指令），让 CPU 的分支预测器跑得更稳，流水线更高效。
+
+内联的“代价”（副作用）：
+
+- 代码膨胀（Code Bloat）：如果一个很大的函数在 100 个地方被内联，你的程序体积会迅速爆炸。
+- 缓存失效率（Cache Miss）：如果二进制文件太大，超出了 CPU 的指令缓存（L1 i-Cache），CPU 就得从慢速的内存里读取指令，性能反而会断崖式下跌。
+
+程序员如何控制内联？
+
+- inline 关键字：这只是给编译器的一个“建议”。编译器很聪明，如果你建议内联一个 1000 行的复杂函数，它通常会拒绝。
+- 编译器自动优化：在 -O2 或 -O3 级别下，编译器会自动分析哪些函数值得内联（通常是那些逻辑简单、频繁调用的函数）。
+- 强制内联：在某些严苛场景下，程序员会使用 __attribute__((always_inline))（GCC/Clang）来命令编译器必须执行内联。
+
+
+
+
+### C++的缺陷与性能优化
+
+#### C++的机器模型的缺陷
+
+C++ 中没有任何东西可以方便地表达二级缓存（2nd level cache）、内存映射单元（memory-mapping unit）、ROM 或专用寄存器的概念。这些概念很难抽象（以有用且可移植的方式表达），但标准库组件正在努力表达这种困难的设施。
+
+**对二级缓存（L2 Cache / Cache Line）的表达**
+
+C++ 无法直接让你控制数据进出 L2 缓存，但它开始尝试让你表达 “缓存对齐” 以避免伪共享（False Sharing）。
+
+std::hardware_destructive_interference_size (C++17): 这是一个标准库常量，返回两个对象之间为了避免由于共享同一个缓存行（Cache Line）而导致性能下降所需的最小偏移量。
+
+std::hardware_constructive_interference_size (C++17): 返回一个缓存行的最大尺寸，建议将相关联的数据放在这个范围内，以提高 L1/L2 缓存的利用率。
+
+**对内存映射单元（MMU）与页面的表达**
+C++ 不会教你如何写一个 MMU 驱动，但它开始涉及内存页面的概念：
+
+std::pmr (Polymorphic Memory Resources): C++17 引入的自定义内存资源。你可以实现一个自定义的 memory_resource，专门处理内存映射（Memory-mapping）或大页内存（Huge Pages），从而间接与 MMU 的行为对齐。
+
+span 与内存连续性: 虽然不是直接操作页表，但标准库通过 std::span 等工具强化了对底层连续物理/虚拟内存段的抽象表达。
+
+**对专用寄存器与 ROM 的表达**
+这些通常是嵌入式开发的刚需，标准库主要通过类型系统来模拟这些特性：
+
+volatile 关键字： 虽然属于核心语言，但它是表达专用寄存器映射（Memory-mapped I/O）的基础，告诉编译器“这个值随时会变，不要做优化”。
+
+std::byte (C++17)： 明确区分“内存字节”和“字符”，在操作寄存器位（bit-flipping）时比 unsigned char 更安全且意图明确。
+
+const 与 constexpr： 这是表达 ROM 的主要手段。在嵌入式系统中，标记为 constexpr 的全局数据通常会被编译器直接放置在 ROM/Flash 中，而不是 RAM。
+
+**为什么这些设施很难抽象？**
+
+标准库委员会（WG21）在处理这些问题时面临三大挑战：
+
+- 多样性： 某些 DSP 或 NPU 的寄存器模型与通用 CPU 完全不同，很难写出一套通用的 API。
+- 不可移植性： L2 缓存的大小在移动端和服务器端天差地别，一旦在代码中硬编码，可移植性就毁了。
+- 零成本抽象原则： 任何标准库的包装都不能比手写的汇编或裸指针操作更慢。
+
+**标准库的最新努力：std::atomic 和内存模型**
+
+这是 C++ 表达硬件困难设施最成功的例子。
+
+内存顺序（Memory Ordering）： 通过 std::memory_order_acquire/release，C++ 成功地抽象了不同 CPU 架构（如 x86 的强内存序与 ARM 的弱内存序）在缓存一致性上的差异。
+
+---
+
+#### C++在硬实时系统的缺陷
+
+1.自由存储（new/delete）
+
+- Predictability，可预测性：分配所需的时间取决于可用空闲内存的大小，内存碎片化会导致性能随时间推移而下降。这意味着对于许多系统而言，自由存储无法使用，或者只能在启动时使用（不进行释放就不会产生碎片）。
+- Fragmentation  碎片化： 自由存储的大小是有限的，在分配和释放对象后可能会出现碎片化。在对象分配和释放后，可能会留下一些未使用的内存或空间。堆中这些未使用的空隙或空间被称为内存碎片化。由于这些空隙很小，这样的内存位置无法用来存储新对象，导致内存空间浪费，随着时间的推移，总的可用自由存储远小于初始可用的自由存储。
+
+问题不在于 new 本身，而在于 new 和 delete 一起使用，这会导致一系列的内存分配和释放。详细参见(强烈建议阅读): [Hard Real-Time and C++ Predictability](https://www.embeddedhow.com/post/hard-real-time-and-c-predictability)
+
+替代方案包括静态分配、栈分配和使用存储池。
+
+2.避免使用`dynamic_cast`
+
+尽量避免在性能敏感的代码中使用 dynamic_cast, 这是因为在标准的 C++ 实现中，当你执行 dynamic_cast<Target*>(ptr) 时，系统需要检查 ptr 指向的对象是否真的派生自 Target。编译器会生成代码去遍历“类继承树”（Inheritance Tree）。如果继承关系很深或存在多重继承，这种遍历非常耗时且运行时间不确定（不是常数时间）。在实时系统（如航天器、自动驾驶）中，这种不确定性是不可接受的。
+
+2005年Bjarne Stroustrup的解决方案(质数和取模)： [Fast dynamic casting](https://www.stroustrup.com/fast_dynamic_casting.pdf)
+
+2.禁用异常
+
+处理异常所需的时间取决于从异常抛出点到捕获点之间的距离（以函数调用次数衡量）以及在此过程中需要销毁的对象数量。如果没有合适的工具，很难预测这个时间，而目前还没有这样的工具。C++异常机制仍基于栈展开（stack unwinding），这在现代标准（如C++23）中未根本改变。处理时间非恒定，取决于运行时状态（如栈深度、析构器调用），在硬实时中仍不可预测（无法预先保证最坏情况时间）。标准未引入确定性保证。
+
+
+
+## 示例编程
 
 ### 基础知识： Union
 
@@ -609,7 +1041,7 @@ void processData(std::vector<int>& data) {
 
 作用3: 每次调用可以不同
 
-```
+```cpp
 auto makeMultiplier(int factor) {
     return [factor](int x) { return x * factor; };  // 捕获不同的 factor
 }
@@ -623,7 +1055,7 @@ std::cout << times5(10);  // 50
 
 作用4: 支持泛型，而手动函数需要借助模板。
 
-```
+```cpp
 // 泛型 lambda，适用于任何类型
 auto print = [](const auto& value) {
     std::cout << value << '\n';
@@ -640,7 +1072,8 @@ void print(const T& value) {
 }
 ```
 作用5： 闭包（Closure）可以"记住"创建时的环境/状态，而手动函数做不到。
-```
+
+```cpp
 auto makeCounter() {
     int count = 0;
     
@@ -697,7 +1130,7 @@ overloaded作用，简单说，就是对不同类型重载operator()的操作。
 
 visit+variant+overloaded：
 
-```
+```cpp
 #include <iostream>
 #include <variant>
 
@@ -827,48 +1260,121 @@ FetchResult download_data() {
 
 ---
 
+#### volatile
+
+```cpp
+int value = 10;
+
+int test() {
+    int a = value;
+    int b = value;
+    int c = value;
+    return a + b + c;
+}
+
+```
+
+无 volatile 的汇编（-O2）
+
+```asm
+test():
+    mov  eax, DWORD PTR value[rip]   ; 读取一次
+    lea  eax, [rax+rax*2]            ; eax = eax * 3（优化！）
+    ret
+```
+编译器优化：只读取内存一次, 计算 `value * 3`
+
+有 volatile 的汇编
+
+```asm
+test():
+    mov  eax, DWORD PTR value[rip]   ; 读取第一次
+    mov  edx, DWORD PTR value[rip]   ; 读取第二次
+    add  eax, edx
+    mov  edx, DWORD PTR value[rip]   ; 读取第三次
+    add  eax, edx
+    ret
+```
+volatile 不保证原子性， 不保证内存顺序，不同步缓存。
+
+
+---
+
+## 其他
+
+### JSF++ 标准与防御式编程
+
+SF++ 编码标准（全称：Joint Strike Fighter C++ Coding Standards）是目前嵌入式 C++ 领域最著名、最严苛的编码规范之一。它是专门为 F-35 闪电 II 战斗机（Joint Strike Fighter） 项目设计的，目的是确保其高达数百万行的任务关键型（Mission-Critical）代码具有极高的安全性、可靠性和可测试性。
+
+JSF++ 的核心理念是：如果一个特性可能导致不可预测的行为，那么直接禁用它。
+
+在 F-35 这种最高安全等级的航空航天项目中，Green Hills Software (GHS, [链接](https://www.ghs.com/products/compiler.html)) 的编译器是行业标准。DDC-I：这是另一个在航天领域非常著名的编译器供应商，专门提供满足实时性要求的 C++ 工具链。Stroustrup 在 2005 年论文中提到的，硬实时系统需要预测每一个时钟周期。
+
+- 禁用动态内存分配 (No Heap)。动态分配会导致内存碎片化和执行时间不确定。在战斗机飞行中，系统绝不能因为“内存垃圾回收”或“申请不到空间”而卡顿。
+- 异常处理的限制 (No Exceptions)
+- 禁用运行时类型识别 (No RTTI)
+- 确定性的递归 (No Unbounded Recursion)
+- 禁止 goto
+- 强制性注释：每一段代码必须有对应的需求编号，这种可追溯性是航天级开发的通用标准。
+- 静态分析：JSF++ 要求代码必须能通过静态分析工具（如 LDRA 或 PRQA）的自动化检查。这意味着你的代码不仅要能跑，还要长得“标准”。
+
+JSF++编码标准严格禁止在战斗机应用中使用的 C++代码库中使用异常和自由存储。由于自由存储的不确定性，标准库 std::string 和 std::vector、std::map 等容器应该被禁止，因为这些功能内部使用 new 和 delete，这使得它们同样不可预测。
+
+SF++ 后来深刻影响了后来的 MISRA C++ 标准（汽车行业标准）和 AUTOSAR。
+
+## 读计算机科学的经典
+
+过去一直有一个声音，让我们去读经典，读《红楼梦》， 读巴尔扎克，读莎士比亚，读《荷马史诗》，读《论语》... **为什么要读经典**? 
+
+因为真正的美，从古至今都没有改变，改变的只是它表达美的形式和表现方式。就如,即便几千年过去了，我们仍然会觉得万里长城很美，秦兵马俑很美， 比萨斜塔很美，蒙娜丽莎很美，梵高的向日葵很美...美的事物，人们很容易得到共识。
+
+我把这样的想法也放在了编程领域，我们该去读计算机科学的经典。读计算机科学在早先创建的时候，那些先驱者的思想，以及后来不断出现的经典。
+
+为什么要做这件事情？因为一方面计算机的技术越来越纷繁和学科细化；另一方面，越来越多的人痴迷于科学技术产生的工具，甚至有些人痴迷于一种编程语言。正如Bjarne Stroustrup在[访谈](https://www.youtube.com/watch?v=NvWTnIoQZj4)中提到：
+
+> ”Nobody should call themselves a professional if they only knew one language.（没有人应该把自己视为一个专家，如果他们只知道一门编程语言）“
+
+由此，新一代的人们开始忽略了计算机科学的本质，忘掉了那些简单而朴素的真理。**只有去读经典，才能从这越来复杂和庞大的学科中，把握它最美、最精华的思想**。
+
+我打算花两年的时间，把这些经典的论文和书籍看一遍，我要回到那个简单朴素的思想起点。
+
+### 一些论文
+[CSCI E-192](https://canvas.harvard.edu/courses/34992/assignments/syllabus) 课程提供了很好的参考，他们列出的Paper主要在这里：[master list.](https://canvas.harvard.edu/courses/34992/assignments/syllabus)
+
+我觉得其中每一篇的都值得一读，所以就不一一列举了。实在不喜欢的可以略读，但是也该能把握它的思想。
+
+### 一些书单
+
+来自Reddit，更多的讨论在链接这里: [Is there a list of the canonical introductory textbooks covering the major branches of computer science? ](https://np.reddit.com/r/compsci/comments/gprp0/is_there_a_list_of_the_canonical_introductory/c1pcqe5/)  
+我只关心我对其中感兴趣的书，人的一生时间有限，我不可以什么书都去读。不管它写的再好，如果我对其不感兴趣也是徒劳。
+
+- **SICP** (Structure and Interpretation of Computer Programs (Abelson & Sussman))
+- Formal Language: A Practical Introduction by Webber
+- Abstract and Concrete Categories: The Joy of Cats by Adamek et al
+- Fundamentals of Computer Graphics by Shirley and Marschner
+- Distributed Systems: Concepts and Design by Dollimore et al
+- **Introduction to Functional Programming using Haskell **by Bird and Wadler
+- **ML for the Working Programmer by Paulson**
+- **How to Design Programs**（Felleisen等人）
+-  **Concepts, Techniques, and Models of Computer Programming **(Van Roy & Haridi
+
+#### 关于编译器
+
+Reddit上有关于讨论编译器书单的一个话题，[Recommendations for books on compilers](https://www.reddit.com/r/programming/comments/3tgryd/recommendations_for_books_on_compilers/)。其中sanxiyn评论到：
+GCC wiki recommends [a list of compiler books](https://gcc.gnu.org/wiki/ListOfCompilerBooks).
+
+打开之后，我只选了一本： **Appel. Modern Compiler implementation in ML**
+
+
+关于编译器书籍的评论，我想 Vladimir N. Makarov的话语为我指明了学习和阅读的方向：
+> If you don't want to be compiler savvy but want to understand the compiler, I'd recommend Appel's, Cooper's, Morgan's book in the same priority.
+
+我现在还不清楚自己想不想精通编译器，所以先读这些基础的书，如果兴趣越多就读更多。
+
+
 ## 编程碎碎念
 
-### C++的缺陷
 
-1. C++ 中没有任何东西可以方便地表达二级缓存（2nd level cache）、内存映射单元（memory-mapping unit）、ROM 或专用寄存器的概念。这些概念很难抽象（以有用且可移植的方式表达），但标准库组件正在努力表达这种困难的设施。
-
-1. 对二级缓存（L2 Cache / Cache Line）的表达
-C++ 无法直接让你控制数据进出 L2 缓存，但它开始尝试让你表达 “缓存对齐” 以避免伪共享（False Sharing）。
-
-std::hardware_destructive_interference_size (C++17): 这是一个标准库常量，返回两个对象之间为了避免由于共享同一个缓存行（Cache Line）而导致性能下降所需的最小偏移量。
-
-std::hardware_constructive_interference_size (C++17): 返回一个缓存行的最大尺寸，建议将相关联的数据放在这个范围内，以提高 L1/L2 缓存的利用率。
-
-2. 对内存映射单元（MMU）与页面的表达
-C++ 不会教你如何写一个 MMU 驱动，但它开始涉及内存页面的概念：
-
-std::pmr (Polymorphic Memory Resources): C++17 引入的自定义内存资源。你可以实现一个自定义的 memory_resource，专门处理内存映射（Memory-mapping）或大页内存（Huge Pages），从而间接与 MMU 的行为对齐。
-
-span 与内存连续性: 虽然不是直接操作页表，但标准库通过 std::span 等工具强化了对底层连续物理/虚拟内存段的抽象表达。
-
-3. 对专用寄存器与 ROM 的表达
-这些通常是嵌入式开发的刚需，标准库主要通过类型系统来模拟这些特性：
-
-volatile 关键字： 虽然属于核心语言，但它是表达专用寄存器映射（Memory-mapped I/O）的基础，告诉编译器“这个值随时会变，不要做优化”。
-
-std::byte (C++17)： 明确区分“内存字节”和“字符”，在操作寄存器位（bit-flipping）时比 unsigned char 更安全且意图明确。
-
-const 与 constexpr： 这是表达 ROM 的主要手段。在嵌入式系统中，标记为 constexpr 的全局数据通常会被编译器直接放置在 ROM/Flash 中，而不是 RAM。
-
-4. 为什么这些设施很难抽象？
-标准库委员会（WG21）在处理这些问题时面临三大挑战：
-
-多样性： 某些 DSP 或 NPU 的寄存器模型与通用 CPU 完全不同，很难写出一套通用的 API。
-
-不可移植性： L2 缓存的大小在移动端和服务器端天差地别，一旦在代码中硬编码，可移植性就毁了。
-
-零成本抽象原则： 任何标准库的包装都不能比手写的汇编或裸指针操作更慢。
-
-5. 标准库的最新努力：std::atomic 和内存模型
-这是 C++ 表达硬件困难设施最成功的例子。
-
-内存顺序（Memory Ordering）： 通过 std::memory_order_acquire/release，C++ 成功地抽象了不同 CPU 架构（如 x86 的强内存序与 ARM 的弱内存序）在缓存一致性上的差异。
 
 
 ### 推特的开源算法
