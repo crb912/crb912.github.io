@@ -21,7 +21,7 @@ hide: true
 
 ## 摘要
 
-本篇主要是讲述C++11之后新的表达式值类别的概念，我会解释以下术语:
+本篇主要是讲述C++11之后新的表达式值类别（Value Category）的概念，我会解释以下术语:
 `lvalue`, `ravlue`, `prvalue`, `xvalue`, `glvalue`; 并且我将会给出足够丰富的代码示例。
 
 我文章的标题是不严谨的，因为我不仅仅解释了左值(`lvalue`)和右值(`ravlue`)，实际上我解释了五个所有的值类别。使用这样的标题仅处于旧的惯例。
@@ -80,6 +80,9 @@ C++规范对这两个术语的精确措辞很难，但是有助于解决一些�
 
 - [什么是具有身份](https://snippets.cacher.io/snippet/17bd7f37e8fa257cee1c#F0_MH--%E4%BB%80%E4%B9%88%E6%98%AF%E5%85%B7%E6%9C%89%E8%BA%AB%E4%BB%BD-has-identity)
 - [什么是可被移动--C++移动语义](https://snippets.cacher.io/snippet/17bd7f37e8fa257cee1c#F0_MH--%E4%BB%80%E4%B9%88%E6%98%AF%E5%8F%AF%E8%A2%AB%E7%A7%BB%E5%8A%A8)
+
+有内存地址的实体一定是符合`具有身份`，但`具有身份`却不一定有内存地址。因为位域（Bit-field）是 C++ 中极少数**“是左值但不能取地址”**的情况。（另一个例子是 register 变量，但在现代 C++ 中 register 关键字基本已失效）。
+
 
 #### 基于这两个属性，就有了三种不同的组合结果：
 
@@ -209,7 +212,7 @@ int& set_my_value()
  set_my_value() = 400; // OK
 ```
 
-可见，函数的返回值是不是lvalue取决于返回的对象是什么。如果该对象是纯右值prvalue，那么就不是lvalue；如果函数返回的是对象的引用，那么则是lvalue。
+可见，函数的返回值是不是lvalue, 具体取决于返回的对象是什么。如果该对象是纯右值prvalue或即将消亡的局部变量（xvalue），那么就不是lvalue；如果函数返回的是对象的引用（或者说左值引用，区别于右值引用），那么则是lvalue。
 
 #### 3.1.2 不可以对prvalue取址 <a name="prvalue"></a>
 
@@ -230,6 +233,7 @@ lvalue required as unary ‘&’ operand
 那么xvalue呢？　欲知后事如何，请看下文分解。
 
 #### 3.1.3 更多的lvalue示例和左值引用 <a name="more_examples"></a>
+
 左值表达式的示例包括变量名，包括const变量，数组元素，位字段，union和类成员等等...我不打算给出全部的示例, 我想下面的示例已经足够了吧。
 
 ```cpp
@@ -297,24 +301,38 @@ An xvalue (an “eXpiring” value) also refers to an object, usually near the e
 
 x表示即将过期。即便是C++官方的草案，它用的是'usually'和'the result of certain kinds of '的说法，官方也没办法把这个定义的十分清晰和准确。
 
-从我理解的角度: 只要一个对象生命周期即将结束，并且出现在表达式的右边(或者作为返回值)。就可以称这样的值为xvalue。
-比如:
+只要一个对象生命周期即将结束，并且出现在表达式的右边(或者作为返回值)。就可以称这样的值为xvalue。
 
+注意：一个表达式的值类别是由它的形式决定的，而不是由它所处的位置决定的。并非出现在`=`左边就是左，在右边就是右值。lvalue既可以在表达式左边被赋值，也可以在表达式右边用于赋值。xvalue 通常出现在表达式的右边，通过`std:move`右边被“偷”走资源； 但xvalue也可以出现在左边的场景是：通过强制类型转换（static_cast）将一个对象转为右值引用，然后访问其成员。
+
+#### value出现在左边
+
+```cpp
+#include <iostream>
+#include <string>
+
+struct MyStruct {
+    int data;
+};
+
+int main() {
+    MyStruct s{10};
+
+    // static_cast<MyStruct&&>(s) 是一个 xvalue
+    // 我们访问它的成员 data，这个成员表达式依然是一个 xvalue
+    // 然后我们尝试对这个 xvalue 进行赋值
+    static_cast<MyStruct&&>(s).data = 20; 
+
+    std::cout << s.data << std::endl; // 输出 20
+    return 0;
+}
 ```
-class Person { // 类Person定义了一个人的：姓名，年龄，身高 ...}; 
 
-Person xiao_ming;
-xiao_ming = Person("小明"，15, 175); // 临时对象, xavlue
-```
-显然的，这个`Person("小明"，15, 175)`即将要过期了，他是符合定义的。它的资源被清除了，清除也算“may be moved”。 上面这个赋值语句涉及了两个操作：
+在这个例子中，`static_cast<MyStruct&&>(s).data` 是一个 xvalue，它出现在了 = 的左边。
 
-- 构造临时对象
-- copy assignment operator 。
+#### xvalue出现在右边
 
-其中copy assignment operator的过程涉及到了左值引用，因此官方提到的“An xvalue is the result of certain kinds of expressions involving rvalue references.” 也是满足的。
-
-#### 移动语义中的xvalue
-其次移动语义也有xvalue。
+示例1: 移动语义
 
 ```cpp
 void move_test(){
@@ -329,16 +347,67 @@ void move_test(){
 运行结果：
 
 ```
-s=; &s=0x7ffceba87480  // s被清了
+s=; &s=0x7ffceba87480  // s的内存地址有效，但是值为空。
 m = I'm here!; &m=0x7ffceba874a0
 ```
 
-当`std::move`那条语句执行之后，**注意s的值就清空了**，但是它的内存地址还在。就是说未定义但状态有效。
+当`std::move`那条语句执行之后，**注意s的值就清空了**，但是它的内存地址还在。就是说未定义但状态有效。这个表达式中的`std::move(s)`是`xvalue`，因为`std::move`返回了一个右值引用。
 
- 这个表达式中的`std::move(s)`是`xvalue`，因为`std::move`返回了一个右值引用。每个xvalue都是glvalue，也是rvalue。
+示例2: 过期的临时对象
 
- 我们应该注意的是，不是所有的右值引用都是`xvalue`，比如这种：
+ ```
+class Person { // 类Person定义了一个人的：姓名，年龄，身高 ...}; 
+
+Person xiao_ming;
+xiao_ming = Person("小明"，15, 175); // 临时对象, xavlue
+```
+显然的，这个`Person("小明"，15, 175)`即将要过期了，他是符合定义的。它的资源被清除了，清除也算“may be moved”。 上面这个赋值语句涉及了两个操作：
+
+- 构造临时对象
+- copy assignment operator 。
+
+其中copy assignment operator的过程涉及到了左值引用，因此官方提到的“An xvalue is the result of certain kinds of expressions involving rvalue references.” 也是满足的。临时对象（xavlue）被拷贝赋值，通过左值引用的方式赋值给了左值（lvalue, xiao_ming）
+
+---
+
+## 4. 总结
+ 
+ C++的 **值类别（Value Category）**有三种：一种是纯左值lvalue，它有身份并且不可移动；一种是纯右值prvalue， 没有身份，但是可移动。还有一种即将消亡的值 xvalue (语句执行结束就消亡)，没有身份但是可移动。
+ 
+有个判断的口诀：`如果这个值有名字，它一定是左值； 如果没有名字，它才可能是右值（xvalue），也可能是prvalue。`
+ 
+我们应该注意的是，不是所有的右值引用的都是`xvalue`，比如这种：
 
  ```cpp
  int&& rr_i = 7;    // rr_i is lvalue
+ 
+ void func(std::string&& arg) {
+    // 这里的 arg 类型是右值引用（std::string&&）
+    // 但表达式 'arg' 本身是一个左值（lvalue）！
+    // 因为它有名字，你可以对它取地址。
+    
+    std::string other = arg;            // 调用拷贝构造函数（因为 arg 是左值）
+    std::string another = std::move(arg); // 调用移动构造函数（std::move 将左值强转回 xvalue）
+}
  ```
+ 
+没有名字的右值引用是 xvalue
+
+```cpp
+#include <utility>
+
+std::string&& get_ref(std::string& s) {
+    return std::move(s); 
+}
+
+int main() {
+    std::string name = "Gemini";
+    
+    // 表达式 'get_ref(name)' 是一个 xvalue
+    // 它没有名字，是一个即将过期的引用
+    std::string new_name = get_ref(name); 
+    
+    // 表达式 'std::move(name)' 也是一个 xvalue
+    // 它同样没有名字
+}
+```
