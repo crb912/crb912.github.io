@@ -12,7 +12,7 @@ top: true
 * **目录**
 {:toc}
 
-## 编程原则
+## P0. 编程原则
 
 ### 1. 首要原则
 
@@ -51,15 +51,28 @@ C++:
 - A class with a virtual function should have a virtual destructor;
 - 由于抽象类灵活的特性，在派生类的destructor函数要保证资源能被释放，这太重要了。
 
-#### 4.其他
+### 道德指南： 你可以做，但你不应该这样做。
+
+你总是可以写出符合编译器要求的代码，它在语言层面是合法的。但你不应该写出那种代码，因为它不符合道德要求。
+
+#### 1. 面向对象的滥用
+
+
+classes for separating interfaces from implementations。「类」用于从实现中分离接口。
+
+BS在和Bill Venners的访谈提到：“ **许多C++程序员陷入困境是因为对「面向对象」的滥用，他们认为 C++ 应该是一种非常高级的语言，并且一切都应该是面向对象的。**他们认为你应该通过创建一个类作为具有大量虚函数的类层次结构，用这一部分来完成所有工作。例如，这种思想反映在像Java这样的语言中，但很多东西不适合「类」的层次结构。整数(int)不应该是类层次结构的一部分，它不需要，把它放进类里面要开销的；而且很难优雅地做到这一点”[BS03,Bill]。就是说：
+
+1. 当你只是需要一个数据结构时，一定不要去把它设计成「类」。如果它真的是一个数据结构，那就让它成为一个数据结构。
+2. 你不应该计划一个层次结构，因为你不需要。仅当你确实需要一个层次结构时，再去使用继承。
+3. 你可以用大量独立的「具体类」来编程，比如你想要一个复数，那就写一个复数。不需要用带虚函数的「抽象类」。
 
 ---
 
-## 优雅的代码
+### 优雅的代码 -- 审美
 
 > Elegance is an attitude -- 瑞士手表品牌 浪琴（Longines）
 
-### 二级指针
+#### 二级指针
 
 示例代码：单向链表中删除一个指定的节点， Linus的做法：[代码片段](https://external-preview.redd.it/_YjlXgAHs1jzF-w9V-FgfystXp4fIs5asEdG8KQAmco.png)
 Linus 的哲学是： **良好的代码应该能够发现并利用底层模式，从而使特殊情况消失，变为普通情况。**
@@ -185,7 +198,7 @@ func(p);  // 更简洁
 
 ```
 
-### 良好的编译习惯
+#### C++ 硬实时系统编译
 
 | 编译开关 | 作用 | 目的 |
 | :--- | :--- | :--- |
@@ -194,47 +207,10 @@ func(p);  // 更简洁
 | `-O3` / `-Ofast` | **极致性能优化** | 利用编译器进行循环展开、指令对齐、向量化优化 |
 | `-Wall -Werror` | **警告即错误** | 强制执行最高标准的编码规范，消除潜在隐患 |
 
-## TODO-list
-
-Bjarne Stroustrup谈到，“C++是一门庞大的语言，许多人迷失在它的细节中。然而，写好C++你只需要掌握一些基本技巧，其余的确只是细节”[BS12]。他的这番话也为我的C++学习指明了方向： 专注于C++核心的编程技术，忽略各种繁杂的细节。不是说细节完全不重要，而是细节可以在编程时通过Google学会，不需要浪费大量的时间去掌握细枝末节。把时间用在重要的事情上，提高学习的效率。
-
-因此我从BS的论文、采访、书籍里面搜集到了他提到的一些C++技术，记录在下面，并且会对每条给出解释和说明。希望这些对其他C++学习也能有些帮助。注意的是，C++标准库vector,map,set,list等一系列容器里面已经应用了这些技术，如果你不能理解，可以尝试通过阅读标准库的源码来得到更多的领悟。
-
-- classes for separating interfaces from implementations.
-- constructors for establishing invariants, including acquiring resources,
-- destructors for releasing resources,
-- templates for parameterizing types and algorithms with types
-- mapping of source language features to user-defined code specifying their meaning, e.g. [] for
-- subscripting, the for-loop, new/delete for construction/destruction on the free store, and the {}
-lists.
-- use of half-open sequences, e.g. [begin():end()), to define for-loops and general algorithms.
-
-
-## 解释说明
-
-"classes for separating interfaces from implementations"。「类」用于从实现中分离接口。BS在和Bill Venners的访谈提到：“许多C++程序员陷入困境是因为对「面向对象」的滥用，他们认为 C++ 应该是一种非常高级的语言，并且一切都应该是面向对象的。他们认为你应该通过创建一个类作为具有大量虚函数的类层次结构，用这一部分来完成所有工作。例如，这种思想反映在像Java这样的语言中，但很多东西不适合「类」的层次结构。整数(int)不应该是类层次结构的一部分，它不需要，把它放进类里面要开销的；而且很难优雅地做到这一点”[BS03,Bill]。就是说：
-
-1. 当你只是需要一个数据结构时，一定不要去把它设计成「类」。如果它真的是一个数据结构，那就让它成为一个数据结构。
-2. 你不应该计划一个层次结构，因为你不需要。仅当你确实需要一个层次结构时，再去使用继承。
-3. 你可以用大量独立的「具体类」来编程，比如你想要一个复数，那就写一个复数。不需要用带虚函数的「抽象类」。
 
 ---
 
-“constructors for establishing invariants, including acquiring resources； destructors for releasing resources,
-
-这句话包含了两种技术：不变式，RAII。
-
-- 对于不变式，BS提到：“我的经验法则是，当且仅当您可以考虑建立类的不变量时，您才应该拥有一个具有接口和隐藏表示的真实类”[BS03,Bill]。不变式用来保证对象有效。比如，你有个Temperature(温度)类，它接受输入的浮点数用来初始化，但是你始终应该在构造函数里面检测温度是否是大于绝对零度(-273.15℃)，因为初始化的数字小于绝对零度时，那它必定是错误值，对象是无效的。虽然你完全也可以用成员函数实现这一检测，但不应该那样做，你应该总是在构造函数建议不变式。这样就可以完全避免实例了一个无效的对象。
-- RAII，资源申请即初始化。就是说，当你开始申请资源时，表明你正在初始化；反过来，当你在销毁对象时，你应该释放资源。RAII，它把对象的生命周期与资源申请/释放的时间点联系到一起。它看起来不能称为一个技术，无非是在构造函数中申请资源，在析构函数中释放资源。但如果不它单独用一个术语去“显式的”提醒程序员们有这么一个技术存在，那么很多程序员就可能会在各种成员函数中申请资源，因此会造成资源管理的灾难。RAII提醒每个C++程序员，你最好不要在非构造函数中new一个资源，应该总是在构造函数申请，在析构函数释放。如果一个总是能做到RAII，那他基本不可能会写出资源泄漏的代码。（注意：「资源」一词不仅仅是指free store自由存储这一内存资源，也包括了文件描述符、信号量、数据库锁等资源，一定要避免这些资源的泄漏）。
-
-
-[BS12] B. Stroustrup: Foundations of C++, Texas A&M University.
-[BS03,Bill] A Conversation with Bjarne Stroustrup, https://www.artima.com/intv/bjarne.html
-
-
----
-
-## 计算机基础
+## C1. 计算机基础
 
 ### Cache miss延迟的时钟周期
 
@@ -351,7 +327,8 @@ Stroustrup 讨论 `dynamic_cast` 的优化（质数取模法）以及异常的�
 
 ---
 
-## 性能优化
+
+## P3. 性能优化
 
 ### 避免Cache miss的方法
 
@@ -863,9 +840,62 @@ const 与 constexpr： 这是表达 ROM 的主要手段。在嵌入式系统中�
 
 处理异常所需的时间取决于从异常抛出点到捕获点之间的距离（以函数调用次数衡量）以及在此过程中需要销毁的对象数量。如果没有合适的工具，很难预测这个时间，而目前还没有这样的工具。C++异常机制仍基于栈展开（stack unwinding），这在现代标准（如C++23）中未根本改变。处理时间非恒定，取决于运行时状态（如栈深度、析构器调用），在硬实时中仍不可预测（无法预先保证最坏情况时间）。标准未引入确定性保证。
 
+---
+
+## T4. 喜欢的论文
+
+### 1. The Log-Structured Merge-Tree
+
+[The Log-Structured Merge-Tree (LSM-Tree)](https://www.cs.umb.edu/~poneil/lsmtree.pdf)
+
+核心设计思想： 延迟与批处理 (Defer and Batch)
+
+LSM-Tree 的核心优势在于它改变了传统 B-Tree 的写入方式。传统 B-Tree 在插入新记录时，通常需要进行随机磁盘 I/O 来定位并更新特定的叶子节点 。
+1. 延迟写入：LSM-Tree 不会立即将新数据写入其最终的磁盘位置，而是先将其存入内存中 。
+2. 批处理迁移：通过一种类似于“归并排序”的算法，将内存中的数据批量、级联地迁移到磁盘组件中。这种方式将随机写转化为顺序写，极大减少了磁盘磁臂的移动，性能提升可达一到两个数量级 。
+
+技术实现：
+- $C_0$ 组件 (Memory-resident)：完全驻留在内存中 。它不需要固定的 B-Tree 结构，可以使用如 AVL 树或 2-3 树等更高效的内存数据结构 。
+- $C_1, C_2, ..., C_k$ 组件 (Disk-resident)：驻留在磁盘上的树形结构 。每一层都比上一层更大 。
+- 优化顺序访问：磁盘组件的节点会被打包在连续的多页磁盘块（multi-page blocks）中，以实现高效的磁臂利用 。
 
 
-## 示例编程
+基于LSM Tree的数据库： 
+- 嵌入式键值存储引擎: 谷歌的LevelDB， Facebook的RocksDB
+- 分布式 NoSQL 数据库: HBase
+
+---
+
+## C5. 编程语言之C++
+
+
+Bjarne Stroustrup谈到，“C++是一门庞大的语言，许多人迷失在它的细节中。然而，写好C++你只需要掌握一些基本技巧，其余的确只是细节”[BS12]。他的这番话也为我的C++学习指明了方向： 专注于C++核心的编程技术，忽略各种繁杂的细节。不是说细节完全不重要，而是细节可以在编程时通过Google学会，不需要浪费大量的时间去掌握细枝末节。把时间用在重要的事情上，提高学习的效率。
+
+因此我从BS的论文、采访、书籍里面搜集到了他提到的一些C++技术，记录在下面，并且会对每条给出解释和说明。希望这些对其他C++学习也能有些帮助。注意的是，C++标准库vector,map,set,list等一系列容器里面已经应用了这些技术，如果你不能理解，可以尝试通过阅读标准库的源码来得到更多的领悟。
+
+- classes for separating interfaces from implementations.
+- constructors for establishing invariants, including acquiring resources,
+- destructors for releasing resources,
+- templates for parameterizing types and algorithms with types
+- mapping of source language features to user-defined code specifying their meaning, e.g. [] for
+- subscripting, the for-loop, new/delete for construction/destruction on the free store, and the {}
+lists.
+- use of half-open sequences, e.g. `[begin():end()]`, to define for-loops and general algorithms.
+
+---
+
+
+“constructors for establishing invariants, including acquiring resources； destructors for releasing resources,
+
+这句话包含了两种技术：不变式，RAII。
+
+- 对于不变式，BS提到：“我的经验法则是，当且仅当您可以考虑建立类的不变量时，您才应该拥有一个具有接口和隐藏表示的真实类”[BS03,Bill]。不变式用来保证对象有效。比如，你有个Temperature(温度)类，它接受输入的浮点数用来初始化，但是你始终应该在构造函数里面检测温度是否是大于绝对零度(-273.15℃)，因为初始化的数字小于绝对零度时，那它必定是错误值，对象是无效的。虽然你完全也可以用成员函数实现这一检测，但不应该那样做，你应该总是在构造函数建议不变式。这样就可以完全避免实例了一个无效的对象。
+- RAII，资源申请即初始化。就是说，当你开始申请资源时，表明你正在初始化；反过来，当你在销毁对象时，你应该释放资源。RAII，它把对象的生命周期与资源申请/释放的时间点联系到一起。它看起来不能称为一个技术，无非是在构造函数中申请资源，在析构函数中释放资源。但如果不它单独用一个术语去“显式的”提醒程序员们有这么一个技术存在，那么很多程序员就可能会在各种成员函数中申请资源，因此会造成资源管理的灾难。RAII提醒每个C++程序员，你最好不要在非构造函数中new一个资源，应该总是在构造函数申请，在析构函数释放。如果一个总是能做到RAII，那他基本不可能会写出资源泄漏的代码。（注意：「资源」一词不仅仅是指free store自由存储这一内存资源，也包括了文件描述符、信号量、数据库锁等资源，一定要避免这些资源的泄漏）。
+
+
+[BS12] B. Stroustrup: Foundations of C++, Texas A&M University.
+[BS03,Bill] A Conversation with Bjarne Stroustrup, https://www.artima.com/intv/bjarne.html
+
 
 ### 基础知识： Union
 
@@ -1366,7 +1396,605 @@ connect(sender, &Sender::signal,
 ```
 ---
 
+## G.6 编程语言之Go
+
+### 基础知识
+
+#### Golang的defer
+
+1. 是LIFO，后进先出，栈的数据结构。因此想要弄清defer的顺序，只需要弄清入栈的顺序。
+2. 函数返回前才开始调用，所以如果有参数或状态，defer掉用的是函数返回前的状态。
+3. 有个坑：如果defer执行的一个无传参的闭包，里面的参数是i的引用，也就是函数返回前的参数的状态。所以闭包要传参数，避免搞错了。
+
+
+#### uintptr vs unsafe.Pointer （指针）
+
+1. uintptr是整数类型，可以做算数的运算； 后者是指针类型，不能做算数运算。。  
+2. GC会忽略uitptr， gc会跟踪它指向的对象。
+3. 这两个类型可以相互转换。
+
+实际应用场景主要是Cgo交互的时候。
+
+#### golang 重载
+
+golang不支持重载，每个每次都必须要唯一. 替代的方式是：泛型和接口。
+
+
+#### init 函数的作用和执行时机？
+
+init() 在 main() 之前调用，函数的主要作用是初始化包级变量、执行一些预备工作或注册服务，在程序真正运行。
+注册驱动， 加载配置文件，初始化全局变量
+
+1. 每个包的 init() 只执行一次，即使被多个包导入。
+2. 在包被导入时执行（import 语句执行时就会触发）。
+3. 所有 init() 全部执行完后，才执行 main() 函数
+
+建议： 尽量少用 init()：因为执行顺序有时难以控制，容易引入隐藏 bug。
+
+#### const和iota
+
+1. const 约定一个常量，运行时不能修改； 修饰表达式，支持编译时计算的概念。
+2. const存储的常用，它们不占用运行时可写内存（如栈或堆），而是放在只读数据段（.rodata）或代码段（.text）中。程序运行时尝试修改会引发段错误（segmentation fault）或 panic。
+3. int、float、bool 数值常量，直接是立即数。不会有分配额外的内存。 字符串常量或者数组或结构体，.rodata 数据段里面。
+
+iota 是常量计数器，在 const 块中每新增一行其值自增 1。   跳过 0 值（常见做法）
+2. 不建议在非 const 上下文中使用 iota（编译错误）。iota 是 Go 中最优雅的枚举生成器，没有 enum 关键字，但用 const + iota 就能实现干净、可读的枚举。
+```
+const (
+    Sunday = iota     // 0
+    Monday            // 1
+    Tuesday           // 2
+    Wednesday         // 3
+    Thursday          // 4
+    Friday            // 5
+    Saturday          // 6
+)
+
+const (
+    _ = iota             // 0（丢弃，不使用）
+    KB uint64 = 1 << (10 * iota)  // 1 << 10 = 1024
+    MB                    // 1 << 20 = 1048576
+    GB                    // 1 << 30 = 1073741824
+    TB                    // 1 << 40 = 1099511627776
+)
+
+const (
+    FlagNone   = 0
+    FlagRead   = 1 << iota  // 1 << 1 = 2
+    FlagWrite               // 1 << 2 = 4
+    FlagExec                // 1 << 3 = 8
+    FlagDelete              // 1 << 4 = 16
+)
+```
+
+
+#### Go 传参是传值还是传引用？ 
+
+答案：全都是传值（Pass by Value）。Slice  Map Chan 但引用类型的值是引用，所以修改底层数据会影响原变量。
+
+
+#### make 和 new 的区别？
+
+1. new(T) 任意类型分配零值，内存并返回 *T 指针； make 仅用于 Slice、Map、Channel 的初始化，返回引用类型。
+2. new只分配内存， 只零值初始化（所有字段为零值）。   make会初始化
+3. new可以是任意类型
+
+```
+s := make([]int, 0)   
+s := make([]T, length, capacity)
+m := make(map[int]ValueType)
+ch := make(chan bool)
+```
+
+
+#### 如何实现结构体的“继承”？
+
+Go 语言中，没有传统的“继承”（inheritance）概念，也没有 class 关键字。Go 鼓励组合优于继承（composition over inheritance）的设计哲学。
+结构体嵌入（embedding），可以实现类似继承的效果。
+
+1. 基本嵌入（字段提升）
+```
+// 基类结构体（类似父类）
+type Animal struct {
+    Name string
+    Age  int
+}
+
+// 嵌入 Animal，实现类似“继承”
+type Dog struct {
+    Animal        // 匿名嵌入（值类型）
+    Breed  string // 自己的字段
+}
+
+
+dog := Dog{
+        Animal: Animal{Name: "Buddy", Age: 3},
+        Breed:  "Golden Retriever",
+    }
+```
+
+2.方法提升
+
+```
+func (a Animal) Speak() string {
+    return "Some sound"
+}
+
+func (d Dog) Speak() string { // 可以覆盖方法
+    return "Woof!"
+}
+```
+
+3. 指针嵌入（常见于需要修改嵌入对象时）   
+
+```
+type Person struct {
+    Name string
+}
+
+func (p *Person) SetName(name string) {
+    p.Name = name
+}
+
+type Employee struct {
+    *Person // 指针嵌入
+    ID      int
+}
+
+func main() {
+    emp := Employee{
+        Person: &Person{Name: "Alice"},
+        ID:     123,
+    }
+
+    emp.SetName("Bob") // 直接调用指针方法，修改嵌入对象
+    fmt.Println(emp.Name) // Bob
+}
+```
+
+
+####  Go 的强制类型转换语法？
+
+T(v)。Go 不支持隐式转换，即使是 int32 转 int64 也必须强转。
+
+#### 什么是空接口 interface{}？  更好的方式是泛型。
+
+答案：
+
+可以存储任意类型的值。Go 1.18 之后可以用 any 代替，any 是 interface{} 的类型别名 。
+1. interface{} 失去了类型信息。 需要做类型判断， 才能用。
+2. 运行时开销
+
+```
+type any = interface{}
+```
+
+泛型： 类似C++的模板，  零运行时开销（编译期单态化）
+
+```
+func AddGeneric[T int | float64](a, b T) T {
+    return a + b // 编译器知道 T 一定能相加，所以直接写 +
+}
+
+// 调用：
+AddGeneric(1, 2)       // 正常，T 自动推导为 int
+AddGeneric(1.5, 2.2)   // 正常，T 自动推导为 float64
+// AddGeneric(1, "hello") // ❌ 编译直接报错！连运行的机会都不给它
+```
+
+interface{} 是“运行时多态”，泛型是“编译时多态”。
+
+如果你在写容器、算法、工具库，优先考虑泛型；如果只是临时传递未知类型的数据（如配置解析），any 依然有用武之地。
+
+
+#### Slice的底层结构
+
+一个结构体，包含：指向底层数组的指针、长度（len）、容量（cap）。
+
+
+```golang
+type SliceHeader struct {
+    Data uintptr // 指向底层数组的指针
+    Len  int     // 当前长度
+    Cap  int     // 容量（从 Data 开始到底层数组末尾的元素个数）
+}
+```
+
+Data：指向底层数组（array）的起始地址。
+Len：当前 slice 包含的有效元素个数（0 <= len <= cap）。
+Cap：从 Data 开始到底层数组末尾的总容量（决定了还能追加多少元素而不重新分配）。
+
+```
+arr := [6]int{1, 2, 3, 4, 5, 6}
+s1 := arr[1:4] // [2,3,4], len=3, cap=5
+s2 := s1[1:3]  // [3,4],   len=2, cap=4
+// s1 和 s2 共享 arr 的内存
+```
+
+Slice 不是数组，而是对底层数组的一个视图（view）。
+多个 slice 可以共享同一个底层数组。
+修改一个 slice 的元素，可能影响其他共享底层数组的 slice。
+
+切片操作（slicing）不会重新生成slice。 Data 指向原数组偏移位置，Len=2, Cap=原Cap - 起始索引。
+
+#### Slice 扩容机制是怎样的？ append 
+
+`runtime/growslice` 代码的实现
+
+Go 1.18 以后：容量 < 256 时翻倍； > 256 时按 $(oldcap + 3*256) / 4 增长。
+
+
+扩容会有开销： 分配新数组，拷贝旧数据，更新 Data 指针
+
+#### Map 是线程安全的吗？
+
+答案：不是。并发读写会 panic。并发安全需使用 sync.Map 或加锁
+
+
+#### Map 的底层实现原理？ 桶（数组）+链表
+
+答案：基于哈希表（Hash Table），使用数组+链表结构，通过 Bucket（桶） 存储 kv 对。
+
+```
+type hmap struct {
+    count     int           // 元素个数（len(map)）
+    flags     uint8         // 状态标志（如是否正在写入）
+    B         uint8         // 桶的数量为 2^B（即 bucket 数量 = 1 << B）
+    noverflow uint16        // 溢出桶计数（近似）
+    hash0     uint32        // 哈希种子（用于防哈希碰撞攻击）
+    buckets   unsafe.Pointer // 指向主桶数组（[]bmap）
+    oldbuckets unsafe.Pointer // 扩容时指向旧桶（渐进式迁移用）
+    nevacuate uintptr        // 已迁移的桶索引（用于增量 rehash）
+    extra     *mapextra      // 可选字段（溢出桶等）
+}
+```
+bmap 结构体
+
+```
+type bmap struct {
+    topbits [8]uint8       // 高 8 位哈希值（用于快速比较）
+    keys    [8]KeyType     // 8 个 key
+    values  [8]ValueType   // 8 个 value
+    pad     [7]byte        // 对齐填充（实际没有，仅为示意）
+    overflow unsafe.Pointer // 指向溢出桶（当一个桶放不下时）
+}
+```
+
+ buckets 是指针，指向bmap结构的数组。 oldbuckets 指向上个bmap，
+ 
+ 每个桶，有8个键值对。
+ 
+ 固定桶大小（8 元素） → 平衡 cache 局部性与内存浪费；
+tophash 快速过滤 → 减少 key 比较次数；
+渐进式扩容 → 避免长时间停顿；
+运行时随机哈希种子 → 防止 Hash DoS；
+非并发安全 → 明确设计取舍，把控制权交给用户。
+
+#### Map 的哈希冲突如何解决？
+
+ “链地址法（Separate Chaining）” 结合 “桶内线性探测 + 溢出桶” 的混合策略来解决。这不是传统的“每个桶挂一个链表”，而是一种高度优化的、基于固定大小桶（bucket）的结构。
+ 
+#### 关于Channel 用法
+
+Go 的哲学是: **Don’t communicate by sharing memory; share memory by communicating.**
+
+| 操作 | 含义 |
+|------|------|
+| `ch <- true` | 发送：把 `true` 发送到通道 `ch` |
+| `value := <-ch` | 接收：从通道 `ch` 接收一个值，赋给 `value` |
+| `<-ch` | 只接收，不使用值（常用于同步） |
+
+chnnel 用于gorountine之间数据的接受和发送。
+
+发送和接收必须严格同步（一方阻塞直到另一方就绪）。
+
+发送和接收都是阻塞操作：
+- 发送方会等，直到有接收方准备好了；
+- 接收方会等，直到有发送方发来了数据。
+
+```
+package main
+
+import "fmt"
+
+func main() {
+    done := make(chan bool) // 创建一个 bool 类型的 channel
+
+    go func() {
+        fmt.Println("子任务开始...")
+        // 模拟一些工作
+        fmt.Println("子任务完成！")
+        done <- true // 通知主程序：我干完了！
+    }()
+
+    <-done // 主程序在这里等待，直到收到信号
+    fmt.Println("主程序继续执行")
+}
+```
+
+#### Channel 的底层结构？
+
+答案：一个循环队列（环形数组），以及发送等待队列和接收等待队列。
+
+- 缓冲区（buf）buf 指向一个环形队列（circular buffer）。
+-  等待队列（recvq / sendq）：当没有数据可读时，试图接收的 Goroutine 会被挂起并加入此队列。当缓冲区满或无缓冲 Channel 无人接收时，试图发送的 Goroutine 会被挂起并加入此队列。
+这些队列是 FIFO 双向链表（waitq 结构），保证公平性。
+- 所有对 Channel 的操作（send/receive/close）都受同一个 mutex 保护。
+-  closed 标志。关闭 Channel 后，closed = 1。 关闭后, **可读不可写**
+
+#### 无缓冲和有缓冲 Channel 的区别？
+
+答案：无缓冲是同步的（发送须等待接收）；有缓冲是异步的，直到缓冲区满才阻塞。
+
+#### 对一个已关闭的 Channel 进行读写会怎样？
+
+答案：读：读完剩余数据后返回零值；写：直接 panic；再次关闭：直接 panic。
+
+#### 如何优雅地关闭 Channel？
+
+答案：原则：由生产者关闭，或者使用 sync.Once 确保只关一次。
+
+#### select 语句的作用？
+答案：监听多个 Channel 操作，哪个就绪执行哪个。若都未就绪且有 default，则执行 default。
+
+#### 如何判断一个接口变量是否为 nil？
+
+答案：接口由 (type, value) 组成。只有当类型和值都为 nil 时，接口才等于 nil。
+
+iface == nil	仅当接口的类型和值都为 nil 时为真
+iface != nil	只要接口有类型信息（即使值是 nil 指针），就为真。
+
+#### 如何高效拼接字符串？
+
+尽量不要用加号，每次拼接都会创建新字符串，导致大量内存分配和拷贝。
+
+1. 使用 strings.Builder 或 bytes.Buffer，避免多次内存分配。
+2. 已经有一个字符串切片时，这是最简洁高效的方式：string.Join()
+3. 如果最终要写入 io.Writer（如文件、HTTP 响应），直接用 strings.Builder 的 WriteTo，避免转成字符串.
+
+```
+builder.Grow(1024) // 预分配 1KB
+```
+
+#### 什么是 Goroutine？它和线程的区别？
+
+Goroutine 是用户态轻量级线程。
+区别：栈大小（2KB 起步 vs 线程数 MB）、切换开销（用户态切换 vs 内核态切换）。
+
+
+#### GMP 模型？
+
+- G（Goroutine）：用户级轻量级协程。
+- M（Machine）：OS 线程（真正被 CPU 执行的实体）。
+- P（Processor）：逻辑处理器，包含 Goroutine 队列，M 必须绑定一个 P 才能运行 G。
+
+默认情况下，GOMAXPROCS = CPU 核心数（Go 1.5+），意味着 Go runtime 会启动多个 OS 线程（M），每个线程绑定一个 P，并行执行多个 Goroutine。
+
+P 负责连接 G 和 M，实现多核调度。
+
+#### 其他小问题
+
+结构体比较规则？  答案：只有当所有成员都可比较（如基本类型）时，结构体才可以用 == 比较。
+
+Golang 的逃逸分析（Escape Analysis）是什么？ 答案：编译器决定变量分配在栈上还是堆上。如果变量在函数外部被引用，则会逃逸到堆。
+
+#### 经典代码
+
+异步和生产者消费者模型： chanel, defer, goroutine
+
+```
+func producer(ch chan<- int) {
+    defer close(ch) // 发完数据后关闭
+    ch <- 1
+    ch <- 2
+}
+
+func main() {
+    ch := make(chan int)
+    go producer(ch)
+    for v := range ch { // 自动在 channel 关闭后退出循环
+        fmt.Println(v)
+    }
+}
+```
+
+### 进阶
+
+#### context.Context 处理并发控制和超时取消的核心机制。
+
+超时控制，然后传递元数据（Value）。
+
+```
+func main() {
+    // 创建一个 2 秒后自动过期的 Context
+    ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
+    defer cancel() // 别忘了释放资源
+
+    go doSomething(ctx)
+
+    // 等待结果
+    <-ctx.Done()
+    fmt.Println("主程序退出:", ctx.Err()) 
+}
+
+func doSomething(ctx context.Context) {
+    for {
+        select {
+        case <-ctx.Done(): // 收到“停止”信号
+            fmt.Println("协程：收到指令，停止工作")
+            return
+        default:
+            fmt.Println("协程：正在搬砖...")
+            time.Sleep(500 * time.Millisecond)
+        }
+    }
+}
+```
+
+- 不要把 Context 放在结构体里：它应该作为函数的第一个参数显式传递，通常起名为 ctx。
+- 不要传递 nil：如果你不知道传什么，传 context.TODO()。
+- 它是线程安全的：你可以在无数个协程里传递同一个 ctx，安全地监听它的信号。
+- 层级传递：当你基于一个父 ctx 创建子 ctx 时（比如 WithTimeout），如果父级被取消，所有的子级也会跟着被取消。
+
+## 技术工具： 喜鹊开发者
+
+[The Magpie Developer](https://blog.codinghorror.com/the-magpie-developer)
+
+### Kafka --  distributed event streaming platform 
+
+- 不是消息队列，Kafka 实现了消息队列的核心功能。
+- 更是分布式日志系统（Distributed Commit Log）
+
+传统 MQ 在消息被消费后通常会立即删除。而 Kafka 会把消息持久化到磁盘上，并且可以设置保留时间（比如保留 7 天）。
+回溯消费：因为消息是持久化存储的，你可以让消费者“倒带”，重新消费过去的数据。
+顺序性：它像记账本一样，严格按照进入的顺序追加记录。
+
+流处理平台：
+1. 发布与订阅：类似于消息队列。消息队列（Kafka）存在的意义就是解耦（Decoupling）。
+2. 存储：可以作为高可靠的分布式存储。
+3. 实时处理：配合 Kafka Streams 或 Flink，它可以直接对流动中的数据进行计算（比如统计过去 1 分钟内的推文热度）。
+
+核心概念：
+
+1. 生产者向 Topic 写数据，消费者从 Topic 读数据。
+2. 可指定 key，相同 key 的消息会落到同一 partition（保证顺序）。
+3.  Broker（代理节点），Kafka 集群中的一个服务器实例。
+
+```text
++-------------+     +-------------------+     +------------------+
+|             |     |                   |     |                  |
+|  Producer   |---->|    Kafka Topic    |---->|   Consumer Group |
+| (写入消息)  |     | (分区0,1,2...)    |     | (消费消息)       |
+|             |     |                   |     |                  |
++-------------+     +-------------------+     +------------------+
+                          ↑
+                      Broker 集群
+                    (多台服务器组成)
+```
+
+### HBase-- 高可靠性、高性能、面向列、可伸缩的分布式存储系统
+
+#### 优点：
+
+1. 强大的随机存储能力。 通常大数据系统（如 Hive）只适合做批处理（很慢），但 HBase 可以在几毫秒内从数亿行数据中查找到某一行。B 站、阿里、X (Twitter) 常用它来存储历史数据、用户画像或聊天记录。
+2. 稀疏性（Sparse）。在 MySQL 中，如果你定义了 100 列但只填了 1 列，剩下的 99 列也占空间。但在 HBase 中，空的列完全不占存储空间。这非常适合处理那种“属性非常多，但每个对象只有几个属性”的数据。
+3. 自动分片
+当你的数据表变得极其巨大时，HBase 会自动把表横向切分成很多份（称为 Region），分布到不同的服务器上。
+
+#### 底层原理
+
+HBase 的底层数据结构非常精妙，它并不是像传统数据库那样直接把数据写在磁盘的固定位置，而是采用了 LSM 树（Log-Structured Merge-tree） 架构。
+
+#### 应用示例
+
+应用示例，开发微信朋友圈：
+
+- MySQL：存储你的账号、密码、昵称（数据量小，要求高度一致）。
+- Kafka：当你发了一条朋友圈，这个动作先发到 Kafka。
+- HBase：存储千万级用户发过的无数条朋友圈内容。因为朋友圈数据是稀疏的（有人发图，有人发文字，有人带地点），且量级巨大。
+
+### 架构设计：Kafka + HBase
+
+1. Kafka (缓冲层)：用户每秒产生 100 万次点击，直接写数据库会把数据库冲垮。所以先扔进 Kafka。
+2. Flink/Go 程序 (处理层)：从 Kafka 读出数据，做简单的清洗或聚合。
+3. HBase (存储层)：把处理后的数据永久存入 HBase，供后续的后台系统查询。
+
+### Redis -- 数据库
+
+核心：Redis 将所有数据存储在 RAM（内存） 中。 
+特性： 
+- 支持5种数据类型： 字符串， 列表， 集合， 哈希， 位图
+- 定时对内存数据做快照存入磁盘
+
+Redis 是通过消耗昂贵的内存来换取极致的速度；而你之前研究的 LSM-Tree 则是通过聪明的算法设计，在廉价的磁盘上实现了接近内存的写入表现 。
+
+### Kratos 
+
+介绍：Kratos 是 B 站（Bilibili）开源的一套轻量级 Go 微服务框架。它最大的特点是**“面向接口编程”**，深度参考了 Google 内部的微服务设计哲学，大量使用了工程界最严谨的实践。
+
+核心：Kratos 使用Protobuf来定义接口（gRPC/HTTP）、生成代码以及进行高效的微服务间通信 。
+
+1. Protobuf 为中心：先定义 .proto 文件，再生成代码。接口协议、路由、甚至是错误码都在 Proto 里。
+2. 依赖注入 (Wire)：它不鼓励你手动在 main 函数里 new 各种对象，而是使用 Google 开源的 Wire 工具自动生成初始化代码。
+3. 标准 Context 传递： Kratos 强制每个层级都传递 context.Context，用于链路追踪和超时控制。
+
+
+### protobuf -- 相当于二进制版的json
+
+```text
+syntax = "proto3"; // 使用 proto3 语法
+
+package api.v1;
+option go_package = "helloworld/api/v1;v1";
+
+// 定义一个“消息”结构
+message User {
+  int32 id = 1;      // 这里的 1, 2, 3 是字段编号（核心，不可随便改）
+  string name = 2;
+  string email = 3;
+}
+
+// 定义一个“服务”（用于 Kratos 或 gRPC）
+service UserService {
+  rpc GetUser (UserRequest) returns (User);
+}
+
+message UserRequest {
+  int32 id = 1;
+}
+```
+
+使用 protoc 工具（或者 Kratos 封装好的 kratos proto client 命令）来创建go文件。
+
+生成的代码用法非常示例：
+
+```
+package main
+
+import (
+	"fmt"
+	"log"
+	"google.golang.org/protobuf/proto"
+	"your_project/api/v1" // 导入生成的 pb 包
+)
+
+func main() {
+	// 1. 创建并填充数据
+	u := &v1.User{
+		Id:    1001,
+		Name:  "Gemini",
+		Email: "ai@example.com",
+	}
+
+	// 2. 序列化：将结构体转为二进制（用于发给 Kafka 或 gRPC 调用）
+	data, err := proto.Marshal(u)
+	if err != nil {
+		log.Fatal("Marshaling error: ", err)
+	}
+    
+	// 此时 data 是非常紧凑的二进制字节流
+	fmt.Printf("二进制长度: %d 字节\n", len(data))
+
+	// 3. 反序列化：将二进制转回结构体
+	u2 := &v1.User{}
+	if err := proto.Unmarshal(data, u2); err != nil {
+		log.Fatal("Unmarshaling error: ", err)
+	}
+
+	fmt.Printf("解码后的用户名: %s\n", u2.GetName())
+}
+```
+
+### K8s
+
+
+
 ## 其他
+
+### “五分钟法则”（Five Minute Rule）
+
+Jim Gray 在 1987 年提出，旨在确定何时应该将数据保留在内存中以避免磁盘访问 。
+五分钟法则指出，如果一个页面的访问频率足够高（例如每 60 秒或更短时间被引用一次），那么购买内存来缓存该页面比支付磁盘 I/O 带来的系统成本更低 。
 
 ### JSF++ 标准与防御式编程
 
@@ -1409,6 +2037,10 @@ SF++ 后来深刻影响了后来的 MISRA C++ 标准（汽车行业标准）和 
 
 我觉得其中每一篇的都值得一读，所以就不一一列举了。实在不喜欢的可以略读，但是也该能把握它的思想。
 
+CPP: 
+
+[how to learn cpp](https://isocpp.org/wiki/faq/how-to-learn-cpp%5C)
+
 ### 一些书单
 
 来自Reddit，更多的讨论在链接这里: [Is there a list of the canonical introductory textbooks covering the major branches of computer science? ](https://np.reddit.com/r/compsci/comments/gprp0/is_there_a_list_of_the_canonical_introductory/c1pcqe5/)  
@@ -1439,6 +2071,11 @@ GCC wiki recommends [a list of compiler books](https://gcc.gnu.org/wiki/ListOfCo
 
 ---
 
+
+
+
+
+
 ## 优质的编程材料
 
 ### C++
@@ -1460,6 +2097,7 @@ GCC wiki recommends [a list of compiler books](https://gcc.gnu.org/wiki/ListOfCo
 - [Communications of ACM 杂志档案](https://cacm.acm.org/magazines)
 - [ACCU图书推荐(by rating)](https://www.accu.org/reviews/by_rating/)
 - [王小波和编程](https://91biji.com/social/leon/framebook/notes/note/9174/)
+
 
 
 
