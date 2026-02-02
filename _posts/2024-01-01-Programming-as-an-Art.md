@@ -1987,6 +1987,43 @@ func main() {
 
 ### K8s
 
+Kubernetes（K8s） = 自动化容器编排平台
+
+| K8s 概念 | 生活比喻 | 技术解释 |
+|---------|--------|--------|
+| Node（节点） | 一台物理/虚拟服务器 | 运行容器的机器（Worker Node） |
+| Pod | 一个“最小工作单元” | 一个或多个紧密耦合的容器（共享网络/存储）<br>✅ Pod 是 K8s 调度的最小单位 |
+| Deployment | “我要 3 个用户服务实例” | 声明 Pod 的期望数量、镜像版本、更新策略 |
+| Service | “给用户服务起个名字：user-svc” | 为 Pod 提供稳定 IP + DNS 名字 + 负载均衡 |
+| kubectl | 管家的对讲机 | 你和 K8s 集群通信的命令行工具 |
+
+重点：你几乎永远不会直接操作 Pod，而是通过 Deployment 管理它。
+
+#### K8s 如何实现“自动化”？
+ 
+场景：一个 Pod 挂了
+1. K8s 的 kubelet（每台 Node 上的代理）发现 Pod 死了
+2. Controller Manager（控制平面组件）对比“当前状态” vs “期望状态”（Deployment 说要 2 个）
+3. 自动创建一个新 Pod 补上
+4. Service 自动把流量导向新 Pod
+
+整个过程无需人工干预。
+
+作为开发者，只和 API Server 交互（通过 kubectl 或 YAML）。
+
+#### Kubernetes 的核心架构，Control Plane 和 Worker Node 各包含哪些关键组件？
+
+Control Plane（控制平面）：
+- kube-apiserver：集群的唯一入口，所有操作都通过它。
+- etcd：分布式键值存储，保存集群所有状态。
+- kube-scheduler：负责将 Pod 调度到合适的 Node。
+- kube-controller-manager：运行各种控制器（如 Deployment、Node 控制器）。
+- cloud-controller-manager（云厂商相关）。
+
+Worker Node（工作节点）：
+- kubelet：管理本机 Pod 和容器。
+- kube-proxy：实现 Service 网络代理和负载均衡。
+- 容器运行时（如 containerd、Docker）。
 
 
 ## 其他
