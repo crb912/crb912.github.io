@@ -2151,7 +2151,7 @@ void fct()
 {
     Vector<double> constants {1, 1.618, 3.14, 2.99e8};
     Vector<string> designers {"Strachey", "Richards", "Ritchie"};
-    Vector<pair<string, jthread>> vp{{"producer", prd}, {"consumer", cons}};
+    Vector<pair<string, jthread>> vp{ {"producer", prd}, {"consumer", cons} };
 }
 ```
 
