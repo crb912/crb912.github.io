@@ -1539,7 +1539,7 @@ GCC wiki recommends [a list of compiler books](https://gcc.gnu.org/wiki/ListOfCo
 
 ---
 
-## C5. 编程语言之C++
+## C5. 编程语言之 C++
 
 
 Bjarne Stroustrup谈到，“C++是一门庞大的语言，许多人迷失在它的细节中。然而，写好C++你只需要掌握一些基本技巧，其余的确只是细节”[BS12]。他的这番话也为我的C++学习指明了方向： 专注于C++核心的编程技术，忽略各种繁杂的细节。不是说细节完全不重要，而是细节可以在编程时通过Google学会，不需要浪费大量的时间去掌握细枝末节。把时间用在重要的事情上，提高学习的效率。
@@ -2085,13 +2085,13 @@ C++之所以会变，其中一个原因，也是它当初设计成“可以改�
 　- 现实世界的进步：开发者如何抓住那些必要的变化？
 现在面临两个问题：我们想要发展，但也需要稳定性。许多组织要求代码必须能够运行数十年。我们有些代码是在 20 世纪 80 年代、90 年代写出来的，至今仍在运行。这一点至关重要。我们曾多次尝试简化语言，但从未成功。开发者和用户都不希望他们的代码出现问题，所以我们需要稳定性。我们同时还需要发展，需要从现实世界的问题中汲取灵感，并解决问题，而不是将其变成一种脱离实际的学术演练。
 
-[!image](https://pic4.zhimg.com/v2-35723c2b1f0d41dbee0da8034659053d_1440w.jpg)
+![image](https://pic4.zhimg.com/v2-35723c2b1f0d41dbee0da8034659053d_1440w.jpg)
 
 这里我们看到一张 C++ 历年发展历程的图表，展示了用户数量、以及他们最初接触 C++ 时所体验到的各种功能。需要指出，统计用户数量非常困难；这图只是我的估计，后来有人说我大错特错。实际上，有机构统计出有1630万用户，这意味着我的估计偏差了大约 2.5 倍。这个偏差算是好的。
 
 那些新东西不是当代 C++ 的全部。如果你去看网上那些文章和 YouTube 里的视频等等，会看到人们对着最新、最炫酷的东西大谈特谈，但那并非全貌。我们拥有的语言是一个整体，各个特性相互支持、相互补充。我们既会沿用几十年来一直在使用的传统方法，也会采用新技术，它们完美契合，这一点至关重要。**C++ 的真正目的在于编写优秀的代码。**
 
-[!image](https://pic3.zhimg.com/v2-6cfde8a22b8d01bee08ef6ef1699b4e0_1440w.jpg)
+![image](https://pic3.zhimg.com/v2-6cfde8a22b8d01bee08ef6ef1699b4e0_1440w.jpg)
 
 让我坚持下去的动力，也是我认为的关键所在，是编程语言的价值在于它的应用范围和质量。这里我们列举了一些具体应用。比如，用于制作电影和动画的软件。还有一个服务器集群，里面运行着许多复杂的大型程序。甚至还有咖啡机也在用 C++ 编程。我喜欢咖啡，我的办公桌上就有一台咖啡机。
 
@@ -2133,9 +2133,9 @@ C++之所以会变，其中一个原因，也是它当初设计成“可以改�
 
 提升抽象层次
 
-[!image](https://pic2.zhimg.com/v2-9f2e6682b7b0aab9e2efb7cebfa916c3_1440w.jpg)
+![image](https://pic2.zhimg.com/v2-9f2e6682b7b0aab9e2efb7cebfa916c3_1440w.jpg)
 
-```
+```cpp
 template<typename T>
 class Vector { // vector of elements of type T
 public:
@@ -2329,7 +2329,7 @@ connect(sender, &Sender::signal,
 ```
 ---
 
-## G.6 编程语言之Go
+## G.6 编程语言之 Golang
 
 ### 基础知识
 
@@ -2741,7 +2741,7 @@ func main() {
     }
 }
 ```
-### 设计模式
+### 最佳实践
 
 #### 1. 对象池模式（Object Pool Pattern）
 
@@ -2793,7 +2793,57 @@ func process(data []byte) string {
 }
 ```
 
+#### 2. 面向接口编程
 
+1. 接口由使用者定义（The consumer defines the interface）
+
+
+2.接口要小（Small interfaces）
+
+一个接口只做一件事（Single Responsibility 原则）
+
+> “The bigger the interface, the weaker the abstraction.” — Rob Pike
+
+```go
+type Reader interface {
+    Read(p []byte) (n int, err error)
+}
+
+type Writer interface {
+    Write(p []byte) (n int, err error)
+}
+
+type Closer interface {
+    Close() error
+}
+```
+
+3. 组合使用（接口组合）：
+
+```golang
+type ReadWriter interface {
+    Reader
+    Writer
+}
+
+type ReadWriteCloser interface {
+    Reader
+    Writer
+    Closer
+}
+```
+
+| 原则 | 说明 |
+|------|------|
+| 小而专注 | 1 个接口 ≈ 1 个方法 |
+| 使用者定义 | 谁用谁定义，不是实现者 |
+| 隐式实现 | 不需要 `implements` 关键字 |
+| 组合优于继承 | 用嵌入组合接口 |
+| 为测试而设计 | 小接口 = 易 mock |
+| 不要过度设计 | 没有第二实现？先别定义接口！ |
+
+最后忠告（来自 Go 团队）：“**Accept interfaces, return concrete types.**”
+（函数参数用接口，返回值用具体类型 —— 当合理时）
 
 ### 其他
 
