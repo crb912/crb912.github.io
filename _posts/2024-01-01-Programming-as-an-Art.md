@@ -2151,8 +2151,8 @@ void fct()
 {
     Vector<double> constants {1, 1.618, 3.14, 2.99e8};
     Vector<string> designers {"Strachey", "Richards", "Ritchie"};
-    // ...
     Vector<pair<string, jthread>> vp{{"producer", prd}, {"consumer", cons}};
+}
 ```
 
 我举一个最简单、最传统的例子：一个vector。从最底层开始，首先需要有指针 elem和一个整数 s，用来表示元素的数量，C 风格代码就是这么写的。但是，我们希望提升到更高的抽象层次，使用必须正确初始化的类型。此外，还需要一个析构函数，在退出作用域时正确地清理资源。
