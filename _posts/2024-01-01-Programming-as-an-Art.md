@@ -208,6 +208,12 @@ func(p);  // 更简洁
 | `-Wall -Werror` | **警告即错误** | 强制执行最高标准的编码规范，消除潜在隐患 |
 
 
+### Golang 代码规范
+
+- 优先考虑复用对象，而不是用make重新分配内存。
+- 尽量预分配切片的容量，用空间换时间，避免运行时扩容。
+- 理解值类型和指针的权衡
+
 ---
 
 ## C1. 计算机基础
@@ -275,7 +281,12 @@ Timer三种模式：a.正常模式，保持自增。b.**CTC** (Clear Timer on Co
 
 所有教材在讲中断时，几乎都没有将硬件和软件两者很好的结合到一起。嵌入式开发则过分关心其电气特性，软件开发则又集中在其软件的抽象层。中断，它既工作在硬件层，又工作在软件层。如果只是关注其中一个特性，必定无法窥见她面纱之下的真实原貌。因此想要了解中断时，就必须要从这两个方面同时把握。从硬件方面，要知道这些硬件存在，这里[Timer Interrupt Sources](https://wiki.osdev.org/Timer_Interrupt_Sources)提到了各类的时钟，包括中断时钟PIT、HPET等，其中APIC和TSC是每个CPU都有一个，每个时钟又有不同的区别（Fixed Frequency IRQ，IRQ on terminal count）。从软件方面，理解中断带来的好处。就完成了它的学习。
 
+[microsoft: Interrupt Time](https://docs.microsoft.com/en-us/windows/win32/sysinfo/interrupt-time)中断时间仅100纳秒，这个应该不是操作系统调度的Timer Interrupts。因为windows是闭源的，因此无法知道更多。[这里](https://kb.vmware.com/s/article/1005802)有人提到Window是64HZ或100HZ，那么应该是合理的值了。而Linux系统通常是250HZ(4ms)，[Philip的回答](https://unix.stackexchange.com/a/549912)提到了Jiffies值历史上先是100HZ(10ms),后来又改成了1000HZ(1ms)。
+
+2021-10-07
+
 ---
+
 ### 硬实时 vs 软实时
 
 硬实时（Hard Real-Time）和软实时（Soft Real-Time）的区别不在于速度的“快慢”，而在于对确定性（Determinism）和后果（Consequences）**的要求。
@@ -770,6 +781,588 @@ for (int i = 0; i < 100; i += 4) {
 - 编译器自动优化：在 -O2 或 -O3 级别下，编译器会自动分析哪些函数值得内联（通常是那些逻辑简单、频繁调用的函数）。
 - 强制内联：在某些严苛场景下，程序员会使用 __attribute__((always_inline))（GCC/Clang）来命令编译器必须执行内联。
 
+### Golang的性能优化
+
+#### 原则：先测量，后优化
+
+- [Diagnostics - Go Doc](https://go.dev/doc/diagnostics)
+- [Profiling Go Programs - Go Blog](https://go.dev/blog/pprof)
+
+在 Golang 中，性能调优通常遵循 **“先测量，后优化”** 的原则, 找到程序瓶颈。过度优化（Premature Optimization）是万恶之源。作为一名 C++ 背景的开发者，Go 很多调优技巧实际上是在**“对抗”垃圾回收（GC）和内存分配器的开销**。
+
+- runtime/pprof: Go 标准库内置的杀手锏。通过 net/http/pprof 可以实时查看 CPU 耗时、内存分配（Heap）和协程（Goroutine）状态。性能分析工具分析 Go 程序的复杂性和成本，例如内存使用情况和频繁调用的函数，以识别 Go 程序中成本高昂的部分。
+- Debugging： Delve， Go 程序的全面且可靠的调试器。
+- Benchmark: 编写基准测试，使用 go test -bench . -benchmem 查看单次操作耗时和内存分配次数。
+
+某些诊断工具可能会相互干扰。例如，精确的内存分析会扭曲 CPU 分析，goroutine 阻塞分析会影响调度器跟踪。单独使用工具以获取更精确的信息。
+
+- 别的分析器： 在 Linux 上，可以使用 perf 工具来分析 Go 程序。 Perf 可以分析并展开 cgo/SWIG 代码和内核，因此它对于了解原生/内核性能瓶颈很有用。在 macOS 上，可以使用 Instruments 套件来分析 Go 程序。
+- 分析我生产服务：你可能需要定期分析你的生产服务。特别是在一个有多个单个进程副本的系统中，定期随机选择一个副本是一个安全的选项。
+- 可视化分析数据： Go 工具使用 go tool pprof 提供文本、图形和 callgrind 分析数据的可视化。图形形式： weblist 形式， Flame graphs
+
+**记住：先写清晰正确的代码，用 profiler 找到真正的瓶颈，然后才针对性优化！**
+
+#### 目标： 减少 GC压力 和 内存分配
+
+Go 的性能瓶颈往往不在 CPU，而是在内存分配导致的 GC 压力。
+
+原因：
+
+1. 频繁分配内存： make 会在堆（Heap）上请求内存。如果 nodes 很大，这会发生数百万次。
+2. GC 回收的压力： 每次循环结束，这些局部切片就变成了垃圾。Go 的垃圾回收器（GC）必须跟踪、扫描并清理这些成千上万的小对象，导致大量的 CPU 时间被浪费在回收内存上，而不是运行业务逻辑。
+
+#### 检查清单和实践建议
+
+编写高性能 Go 代码时，问自己：
+
+- [ ] 这个对象能复用吗？ 而不是每次新建。
+- [ ] 这个切片能预分配容量吗？
+- [ ] 能用数组/切片代替 map 吗？
+- [ ] 能用值类型代替指针吗？
+- [ ] 这个 getter 方法必要吗？
+- [ ] 数据结构能更紧凑吗？
+- [ ] 能减少间接访问吗？
+- [ ] 这段代码是热路径吗？（经常执行）
+- [ ] 逃逸分析显示有哪些变量逃逸了？
+- [ ] 能用值类型代替指针吗？
+- [ ] 能用 sync.Pool 吗？
+- [ ] 优化后性能提升了多少？（用基准测试验证）
+
+复用、清空，而不是重新分配内存。
+
+1. 关注 make 的位置： 永远问自己，这个 make 能不能挪到for循环的外面？
+2. 切片清空和复用，而不是重分配内存。可以使用 slice[:0] 来清空内容，但这保留了底层的 Capacity (容量)，从而避免了重新分配内存。
+3. 考虑 Sync.Pool： 如果你的函数会被多个 Goroutine 并发调用，且需要复用大型结构体或缓冲区，sync.Pool 是进阶必备工具。
+
+初级：
+
+1. 先写正确的代码，再优化
+2. 使用 go test -bench 进行基准测试
+3. 使用 pprof 找到真正的性能瓶颈
+4. 一次优化一个点，对比结果
+
+中级：
+
+- 养成预分配切片容量的习惯
+- 在合适的地方使用对象池
+- 理解值类型和指针的权衡
+- 学习使用 escape analysis 工具
+
+#### 优化案例:
+
+
+[](https://go.dev/blog/pprof)的示例代码 FindLoops （不好的代码）
+
+```go
+func FindLoops(cfgraph *CFG, lsgraph *LSG) {
+	if cfgraph.Start == nil {
+		return
+	}
+
+	size := cfgraph.NumNodes()
+
+	nonBackPreds := make([]map[int]bool, size)
+	backPreds := make([][]int, size)
+
+	number := make(map[*BasicBlock]int)
+	header := make([]int, size, size)
+	types := make([]int, size, size)
+	last := make([]int, size, size)
+	nodes := make([]*UnionFindNode, size, size)
+
+    // Bad: 每一轮循环都重新分配内存
+	for i := 0; i < size; i++ {
+		nodes[i] = new(UnionFindNode)
+	}
+    // ...
+}
+```
+
+在原始代码， 由于基准测试调用 FindLoops 50次，这些累积起来会形成大量垃圾，因此需要垃圾收集器进行大量工作。拥有垃圾回收语言并不意味着可以忽视内存分配问题。在这种情况下，一个简单的解决方案是引入缓存，以便在可能的情况下，每次调用 FindLoops 时都能重用前一次调用的存储空间。
+
+**Pre-allocation & Reuse（预分配与复用）** 优化方案1：
+
+```go
+// 全局的cache结构 （bad engineering practice， 并发不安全）
+var cache struct {
+    size int
+    nonBackPreds [][]int
+    backPreds [][]int
+    number []int
+    header []int
+    types []int
+    last []int
+    nodes []*UnionFindNode
+}
+
+
+if cache.size < size {
+    cache.size = size
+    cache.nonBackPreds = make([][]int, size)
+    cache.backPreds = make([][]int, size)
+    cache.number = make([]int, size)
+    cache.header = make([]int, size)
+    cache.types = make([]int, size)
+    cache.last = make([]int, size)
+    cache.nodes = make([]*UnionFindNode, size)
+    for i := range cache.nodes {
+        cache.nodes[i] = new(UnionFindNode)
+    }
+}
+
+nonBackPreds := cache.nonBackPreds[:size]
+for i := range nonBackPreds {
+    nonBackPreds[i] = nonBackPreds[i][:0]
+}
+backPreds := cache.backPreds[:size]
+for i := range nonBackPreds {
+    backPreds[i] = backPreds[i][:0]
+}
+number := cache.number[:size]
+header := cache.header[:size]
+types := cache.types[:size]
+last := cache.last[:size]
+nodes := cache.nodes[:size]
+
+```
+
+在 Russ Cox (rsc) 的这个[代码提交](https://github.com/rsc/benchgraffiti/commit/2d41d6d16286b8146a3f697dd4074deac60d12a4)中，优化的核心思想是：
+
+1. 提升作用域，避免重新内存分配。与其在循环里反复创建和销毁，不如全局的方式创建，然后在循环里重复使用。
+2. 使用 slice[:0] 来清空内容，但这保留了底层的 Capacity (容量)，从而避免了重新分配内存。
+
+**Pre-allocation & Reuse（预分配与复用）** 最终优化方案：
+
+最终的 Go 程序将使用一个单独的 LoopFinder 实例来跟踪这段内存，从而恢复并发使用的可能性
+
+#### 数据结构： 切片替代Map集合, 提升缓存局部性
+
+程序员的需求： 想要一个支持高性能遍历的、无重复的集合，应该用切片。
+
+**切片替代集合（不需要map的值）** 
+
+```go
+// havlak1.go 中的做法, Bad
+type SimpleLoop struct {
+    basicBlocks map[*BasicBlock]bool  // map 开销大
+    Children    map[*SimpleLoop]bool
+    // ...
+}
+
+func (loop *SimpleLoop) AddNode(bb *BasicBlock) {
+    loop.basicBlocks[bb] = true
+}
+
+// havlak6.go 中的做法, Good
+type Loop struct {
+    Block  []*Block  // 切片比 map 更高效
+    Child  []*Loop
+    Parent *Loop
+    Head   *Block
+    // ...
+}
+
+// 直接添加到切片
+l.Block = append(l.Block, w.Block)
+
+```
+
+痛点： Go 的 Map 是哈希表。即使 Key 是整数，每次查找也需要计算哈希、桶扫描。而且 Map 的内存是分散的，对 CPU 缓存（Cache）非常不友好。
+
+优化：
+
+2. Map vs Slice：当不需要快速查找时，切片比 map 更高效。 
+3. 缓存友好：切片在内存中连续存储，缓存命中率更高
+4. 减少堆分配：map 涉及更多的堆分配和指针跳转
+
+“去重 + 高频遍历”：双结构维护（keys []T + set map[T]struct{}）
+
+```go
+
+type UniqueList[T comparable] struct {
+    keys []T                 // 用于高效遍历（保持插入顺序）
+    set  map[T]struct{}     // 用于 O(1) 去重
+}
+
+func NewUniqueList[T comparable]() *UniqueList[T] {
+    return &UniqueList[T]{
+        keys: make([]T, 0),
+        set:  make(map[T]struct{}),
+    }
+}
+
+// Add 添加元素（自动去重）
+func (ul *UniqueList[T]) Add(item T) {
+    if _, exists := ul.set[item]; !exists {
+        ul.set[item] = struct{}{}
+        ul.keys = append(ul.keys, item)
+    }
+}
+
+// Contains 快速检查是否存在
+func (ul *UniqueList[T]) Contains(item T) bool {
+    _, exists := ul.set[item]
+    return exists
+}
+
+// Range 高效遍历（缓存友好！）
+func (ul *UniqueList[T]) Range(fn func(T)) {
+    for _, item := range ul.keys {
+        fn(item)
+    }
+}
+
+// Len 返回元素个数
+func (ul *UniqueList[T]) Len() int {
+    return len(ul.keys)
+}
+
+```
+
+
+#### 数据结构： 切片+索引，替代key连续整数的Map，消除哈希计算
+
+如果你的 Key 是连续整数，永远优先使用 Slice 而不是 Map。
+Slice 的 O(1) 随机访问通过简单的指针偏移完成，且内存分布是连续的，对 CPU 缓存极其友好。
+
+```
+number := make(map[*BasicBlock]int)  // map 需要哈希计算， Bad
+
+func DFS(currentNode *BasicBlock, nodes []*UnionFindNode, 
+         number map[*BasicBlock]int, last []int, current int) int {
+    number[currentNode] = current
+    // ...
+    for _, target := range currentNode.OutEdges {
+        if number[target] == unvisited {
+            lastid = DFS(target, nodes, number, last, lastid+1)
+        }
+    }
+}
+
+// 好的做法
+
+type LoopFinder struct {
+    LoopBlock []LoopBlock   // 注意：这是一个 **切片（slice）**，不是 map！
+    DepthFirst []*LoopBlock
+}
+
+type LoopBlock struct {
+    Block *Block
+    First int
+    Last  int
+    // ...
+}
+
+type Block struct {
+	Name int
+	In   []*Block
+	Out  []*Block
+}
+
+func (f *LoopFinder) Search(b *Block) {
+    lb := &f.LoopBlock[b.Name]  // b.Name是整数ID，数组索引，O(1) 且无哈希
+    f.DepthFirst = append(f.DepthFirst, lb)
+    lb.First = len(f.DepthFirst)
+    
+    for _, out := range b.Out {
+        if f.LoopBlock[out.Name].First == Unvisited {
+            f.Search(out)
+        }
+    }
+    lb.Last = len(f.DepthFirst)
+}
+
+```
+这种优化能成立，依赖两个关键假设：
+
+1. 基本块 ID 是连续整数（0 ～ N-1）→ 可以直接用作数组索引
+2. 总块数已知且固定 可预先分配 make([]LoopBlock, N)（无需动态扩容）
+
+
+#### 消除不必要的内存分配： make一次完成内存分配，多次复用
+
+需要某个对象，不要每次都重新分配，重新初始化已有对象。
+
+```go
+// havlak1.go - 每次都分配新对象, Bad
+func FindLoops(cfgraph *CFG, lsgraph *LSG) {
+    size := cfgraph.NumNodes()
+    
+    // 每次都重新分配这些数据结构
+    nonBackPreds := make([]map[int]bool, size)
+    backPreds := make([][]int, size)
+    number := make(map[*BasicBlock]int)
+    header := make([]int, size, size)
+    types := make([]int, size, size)
+    last := make([]int, size, size)
+    nodes := make([]*UnionFindNode, size, size)
+    
+    for i := 0; i < size; i++ {
+        nodes[i] = new(UnionFindNode)  // 每次创建新对象
+    }
+    
+    for i, bb := range cfgraph.Blocks {
+        nonBackPreds[i] = make(map[int]bool)  // 每次创建新 map
+    }
+}
+
+//  havlak6.go - 复用已分配的内存, Bad
+type LoopFinder struct {
+    LoopBlock  []LoopBlock      // 可复用的块数组
+    DepthFirst []*LoopBlock     // 可复用的指针切片
+    Pool       []*LoopBlock     // 可复用的工作池
+}
+
+func (lb *LoopBlock) Init(b *Block) {
+	lb.Block = b
+	lb.Loop = nil
+	lb.First = Unvisited
+	lb.Last = Unvisited
+	lb.Header = nil
+	lb.Type = bbNonHeader
+	lb.BackPred = lb.BackPred[:0]
+	lb.NonBackPred = lb.NonBackPred[:0]
+	lb.Union = lb
+}
+
+func (f *LoopFinder) FindLoops(g *CFG, lsg *LoopGraph) {
+    size := len(g.Block)
+    
+    // 复用现有容量，避免重新分配
+    if size <= cap(f.LoopBlock) {
+        f.LoopBlock = f.LoopBlock[:size]
+        f.DepthFirst = f.DepthFirst[:0]
+    } else {
+        f.LoopBlock = make([]LoopBlock, size)
+        f.DepthFirst = make([]*LoopBlock, 0, size)
+    }
+    
+    // 重新初始化已有对象，而不是创建新对象
+    for i := range f.LoopBlock {
+        f.LoopBlock[i].Init(g.Block[i])
+    }
+}
+```
+
+- 对象池模式：将 LoopFinder 设计为可复用的结构体
+- 切片复用：通过 slice[:0] 清空切片但保留底层数组
+- 容量检查：if size <= cap(...) 判断是否需要重新分配
+- 就地初始化：用 Init() 方法重置对象状态，而不是创建新对象
+
+```go
+// ❌ havlak1.go - 每次创建新的循环图
+func main() {
+    for i := 0; i < 50; i++ {
+        FindHavlakLoops(cfgraph, NewLSG())  // 每次创建新 LSG， Bad
+    }
+}
+
+func (lsg *LSG) NewLoop() *SimpleLoop {
+    loop := new(SimpleLoop)
+    loop.basicBlocks = make(map[*BasicBlock]bool)  // 新 map
+    loop.Children = make(map[*SimpleLoop]bool)     // 新 map
+    // ...
+    return loop
+}
+
+// ✅ havlak6.go - 清空并复用循环图
+func main() {
+    lsg := new(LoopGraph)
+    
+    for i := 0; i < 50; i++ {
+        if *reuseLoopGraph {
+            lsg.Clear()  // 清空而不是丢弃
+            f.FindLoops(g, lsg)
+        } else {
+            f.FindLoops(g, new(LoopGraph))
+        }
+    }
+}
+
+func (g *LoopGraph) Clear() {
+    g.Root.Child = g.Root.Child[:0]  // 清空但保留容量
+    g.Loop = g.Loop[:0]              // 清空但保留容量
+}
+
+func (g *LoopGraph) NewLoop(lcap int) *Loop {
+    // 检查是否有缓存的循环可以复用
+    if n := len(g.Loop); n < cap(g.Loop) && g.Loop[:n+1][n] != nil {
+        g.Loop = g.Loop[:n+1]
+        l := g.Loop[n]
+        // 重置已有对象的状态
+        l.Block = l.Block[:0]
+        l.Child = l.Child[:0]
+        l.Parent = nil
+        l.Head = nil
+        l.IsRoot = false
+        l.IsReducible = false
+        l.Nesting = 0
+        l.Depth = 0
+        return l
+    }
+    
+    // 只有在必要时才创建新对象
+    loopCounter++
+    l := &Loop{Counter: loopCounter}
+    g.Loop = append(g.Loop, l)
+    l.Block = make([]*Block, 0, lcap)
+    return l
+}
+```
+
+- 智能对象复用：检查 cap(g.Loop) 来判断是否有预分配的对象
+- 部分重置：只重置需要清空的字段
+- 延迟分配：只在真正需要时才分配新对象
+- 预分配容量：make([]*Block, 0, lcap) 预留容量减少后续扩容。空间换时间。
+
+#### 使用对象池
+
+```go
+type Buffer struct {
+	data []byte
+}
+
+var bufferPool = sync.Pool{
+    // 
+	New: func() interface{} {
+		return &Buffer{
+			data: make([]byte, 0, 1024),
+		}
+	},
+}
+
+// ❌ 每次都创建新 buffer
+func processWithoutPool(input []byte) []byte {
+	buf := &Buffer{data: make([]byte, 0, len(input))} // 逃逸
+	buf.data = append(buf.data, input...)
+	// 处理 buf.data
+	return buf.data
+}
+
+// ✅ 使用对象池
+func processWithPool(input []byte) []byte {
+    // 从池中“借”对象（Get）, 如果池中有空闲对象,返回它; 如果池为空,New 创建新对象
+	buf := bufferPool.Get().(*Buffer)
+    // 用完“归还”到池（Put）
+	defer bufferPool.Put(buf)
+
+	buf.data = buf.data[:0] // 清空但保留容量
+	buf.data = append(buf.data, input...)
+	// 处理 buf.data
+
+	// 注意：返回的数据需要拷贝，因为 buffer 会被放回池中
+	result := make([]byte, len(buf.data))
+	copy(result, buf.data)
+	return result
+}
+
+```
+
+#### 结构体内联与紧凑设计
+
+```go
+// ❌ havlak1.go - 分离的数据结构, 需要多个独立的数据结构
+nonBackPreds := make([]map[int]bool, size)
+backPreds := make([][]int, size)
+nodes := make([]*UnionFindNode, size)
+
+type UnionFindNode struct {
+    parent    *UnionFindNode  // 指针，额外间接访问
+    bb        *BasicBlock
+    loop      *SimpleLoop
+    dfsNumber int
+}
+
+// ✅ havlak6.go - 紧凑的结构体
+type LoopBlock struct {
+    Block       *Block
+    Loop        *Loop
+    First       int
+    Last        int
+    Header      *LoopBlock
+    Type        LoopType
+    BackPred    []*LoopBlock  // 切片直接内联
+    NonBackPred []*LoopBlock
+    Union       *LoopBlock
+}
+
+// 所有数据在一个数组中
+f.LoopBlock = make([]LoopBlock, size)
+```
+
+- 值类型数组：[]LoopBlock 而非 []*LoopBlock，减少指针跳转
+- 字段合并：把相关数据合并到一个结构体
+- 内存布局：连续的内存布局提升缓存性能
+
+#### 切片的容量预分配和复用
+
+```go
+// ❌ havlak1.go - 未预分配容量
+var nodePool []*UnionFindNode  // 容量为 0，会多次扩容
+
+for _, pred := range w.BackPred {
+    // ...
+    nodePool = append(nodePool, pred.Find())  // 可能触发扩容
+}
+
+// ✅ havlak6.go - 预分配+复用
+pool := f.Pool[:0]  // 复用已有容量
+
+for _, pred := range w.BackPred {
+    // ...
+    pool = append(pool, pred.Find())
+}
+
+f.Pool = pool  // 保存供下次复用
+
+```
+
+- 容量复用：[:0] 清空但保留容量
+- 减少扩容：预分配避免多次内存重新分配
+- 状态保存：把工作切片保存在结构体中
+
+#### 消除不必要的函数调用, 直接访问字段
+
+```
+// ❌ havlak1.go - 值拷贝
+func (bb *BasicBlock) NumPred() int {
+    return len(bb.InEdges)
+}
+
+func (bb *BasicBlock) NumSucc() int {
+    return len(bb.OutEdges)
+}
+
+// havlak6.go - 去除不必要的方法, 直接访问字段
+len(b.In)
+len(b.Out)
+```
+
+- 简单字段访问：不需要为简单的字段包装 getter
+- 减少函数调用开销：直接访问更高效
+- Go 惯例：Go 推荐直接访问公开字段
+
+预分配内存： 对于可变容量的数据结构，在初始化 Slice 或 Map 时，**如果预知容量，应提供容量信息**，避免多次重新分配内存和复制元素。例如：
+- 切片 make([]T, 0, capacity), 
+- Map： make(map[K]V, hint)。
+
+
+#### 其他
+
+- 减少变量逃逸： 尽量将变量限制在栈上，避免对象逃逸到堆上，从而降低 GC 压力。
+- 使用空结构体： 使用 struct{} 作为占位符不占用内存，常用于实现高效的 Set，如 map[string]struct{}。
+
+2. 字符串处理。使用 strings.Builder 拼接大量字符串，避免 + 拼接带来的频繁内存分配。
+
+3. 并发与锁优化原子操作： 使用 sync/atomic 包代替简单的 sync.Mutex 锁，以获得指令级的性能提升。
+
+4.数据结构优化：结构体内存对齐， 按照字段字节大小由大到小排序合理设计结构体布局，可减少内存占用。
+
+5.工具与方法论
+
+- pprof： 使用 net/http/pprof 分析 CPU、内存占用情况，定位热点函数，关注 gcBgMarkWorker 等 GC 相关的 CPU 消耗。
+- 火焰图： 直观定位函数调用栈中的性能瓶颈。
+- 压测先行： 针对热点逻辑编写 Benchmark 用例，确保优化有效
 
 
 
@@ -842,9 +1435,9 @@ const 与 constexpr： 这是表达 ROM 的主要手段。在嵌入式系统中�
 
 ---
 
-## T4. 喜欢的论文
+## T4. 论文与算法
 
-### 1. The Log-Structured Merge-Tree
+### The Log-Structured Merge-Tree
 
 [The Log-Structured Merge-Tree (LSM-Tree)](https://www.cs.umb.edu/~poneil/lsmtree.pdf)
 
@@ -863,6 +1456,86 @@ LSM-Tree 的核心优势在于它改变了传统 B-Tree 的写入方式。传统
 基于LSM Tree的数据库： 
 - 嵌入式键值存储引擎: 谷歌的LevelDB， Facebook的RocksDB
 - 分布式 NoSQL 数据库: HBase
+
+
+---
+
+### 文章或PDF归档
+
+C++
+
+- [Stroustrup与Bill的对话--已归档](https://www.artima.com/intv/bjarne.html)
+- [Stroustrup与Pramod的对话](https://mappingthejourney.com/single-post/2017/07/29/interview-with-bjarne-stroustrup-creator-of-c/)
+- [Foundations of C++--已归档](https://www.stroustrup.com/ETAPS-corrected-draft.pdf)
+- [Abstraction and the C++ machine model](https://www.stroustrup.com/abstraction-and-machine.pdf)
+- [C++ Primer Plus](https://zhjwpku.com/assets/pdf/books/C++.Primer.Plus.6th.Edition.Oct.2011.pdf)
+
+
+[CSCI E-192](https://canvas.harvard.edu/courses/34992/assignments/syllabus) 课程提供了很好的参考，他们列出的Paper主要在这里：[master list.](https://canvas.harvard.edu/courses/34992/assignments/syllabus)
+
+我觉得其中每一篇的都值得一读，所以就不一一列举了。实在不喜欢的可以略读，但是也该能把握它的思想。
+CPP: 
+
+[how to learn cpp](https://isocpp.org/wiki/faq/how-to-learn-cpp%5C)
+
+Golang
+
+- [Well-structured Logic: A Golang OOP Tutorial](https://www.toptal.com/go/golang-oop-tutorial)
+- [Why goroutines are not lightweight threads?](https://codeburst.io/why-goroutines-are-not-lightweight-threads-7c460c1f155f)
+
+其他
+
+- [Donald Knuth的书](https://github.com/manjunath5496/Donald-Knuth-Books/blob/master/README.md)
+- [Communications of ACM 杂志档案](https://cacm.acm.org/magazines)
+- [ACCU图书推荐(by rating)](https://www.accu.org/reviews/by_rating/)
+- [王小波和编程](https://91biji.com/social/leon/framebook/notes/note/9174/)
+
+关于编译器
+
+Reddit上有关于讨论编译器书单的一个话题，[Recommendations for books on compilers](https://www.reddit.com/r/programming/comments/3tgryd/recommendations_for_books_on_compilers/)。其中sanxiyn评论到：
+GCC wiki recommends [a list of compiler books](https://gcc.gnu.org/wiki/ListOfCompilerBooks).
+
+打开之后，我只选了一本： **Appel. Modern Compiler implementation in ML**
+
+
+关于编译器书籍的评论，我想 Vladimir N. Makarov的话语为我指明了学习和阅读的方向：
+> If you don't want to be compiler savvy but want to understand the compiler, I'd recommend Appel's, Cooper's, Morgan's book in the same priority.
+
+我现在还不清楚自己想不想精通编译器，所以先读这些基础的书，如果兴趣越多就读更多。
+
+
+### 读计算机科学的经典-打好基础
+
+过去一直有一个声音，让我们去读经典，读《红楼梦》， 读巴尔扎克，读莎士比亚，读《荷马史诗》，读《论语》... **为什么要读经典**? 
+
+因为真正的美，从古至今都没有改变，改变的只是它表达美的形式和表现方式。就如,即便几千年过去了，我们仍然会觉得万里长城很美，秦兵马俑很美， 比萨斜塔很美，蒙娜丽莎很美，梵高的向日葵很美...美的事物，人们很容易得到共识。
+
+我把这样的想法也放在了编程领域，我们该去读计算机科学的经典。读计算机科学在早先创建的时候，那些先驱者的思想，以及后来不断出现的经典。
+
+为什么要做这件事情？因为一方面计算机的技术越来越纷繁和学科细化；另一方面，越来越多的人痴迷于科学技术产生的工具，甚至有些人痴迷于一种编程语言。正如Bjarne Stroustrup在[访谈](https://www.youtube.com/watch?v=NvWTnIoQZj4)中提到：
+
+> ”Nobody should call themselves a professional if they only knew one language.（没有人应该把自己视为一个专家，如果他们只知道一门编程语言）“
+
+由此，新一代的人们开始忽略了计算机科学的本质，忘掉了那些简单而朴素的真理。**只有去读经典，才能从这越来复杂和庞大的学科中，把握它最美、最精华的思想**。
+
+我打算花两年的时间，把这些经典的论文和书籍看一遍，我要回到那个简单朴素的思想起点。
+
+
+
+### 一些书单
+
+来自Reddit，更多的讨论在链接这里: [Is there a list of the canonical introductory textbooks covering the major branches of computer science? ](https://np.reddit.com/r/compsci/comments/gprp0/is_there_a_list_of_the_canonical_introductory/c1pcqe5/)  
+我只关心我对其中感兴趣的书，人的一生时间有限，我不可以什么书都去读。不管它写的再好，如果我对其不感兴趣也是徒劳。
+
+- **SICP** (Structure and Interpretation of Computer Programs (Abelson & Sussman))
+- Formal Language: A Practical Introduction by Webber
+- Abstract and Concrete Categories: The Joy of Cats by Adamek et al
+- Fundamentals of Computer Graphics by Shirley and Marschner
+- Distributed Systems: Concepts and Design by Dollimore et al
+- **Introduction to Functional Programming using Haskell **by Bird and Wadler
+- **ML for the Working Programmer by Paulson**
+- **How to Design Programs**（Felleisen等人）
+-  **Concepts, Techniques, and Models of Computer Programming **(Van Roy & Haridi
 
 ---
 
@@ -883,7 +1556,6 @@ lists.
 - use of half-open sequences, e.g. `[begin():end()]`, to define for-loops and general algorithms.
 
 ---
-
 
 “constructors for establishing invariants, including acquiring resources； destructors for releasing resources,
 
@@ -1016,6 +1688,15 @@ void analyze(float f) {
 ```
 
 强制类型转换 `(uint32_t)f`会导致CPU会执行截断操作，但是位的重解释让内存数据原封不动。
+
+### 21世纪的C++
+
+### C++的危机
+
+- 第一，安全性指的不仅仅是内存安全。
+- 第二，语言之间的互操作性需求往往会被忽视。
+- 第三，语言切换的成本通常会被低估。
+
 
 ### why lambda?
 
@@ -1327,6 +2008,258 @@ test():
 ```
 volatile 不保证原子性， 不保证内存顺序，不同步缓存。
 
+### C++创始人 Bjarne Stroustrup 2025年底中国行内容实录
+
+之所以做这个演讲，原因在于，我注意到很多人还在用上世纪八九十年代的方式写C++代码。这让我感到很难过，在当今我们明明可以写出更好的代码。我今天将介绍一下现代的 C++，同时也会将其视为一个整体：不仅是那些最新的特性，而是几十年来不断创造和改进的成果。
+
+好的设计始于问题：
+
+- 我想构建一个分布式 Unix 系统。在 1979 年，没有一个编程语言能满足我的所有需要。
+- 我需要高效的硬件操作，就像 C。
+- 还需要管理复杂性的抽象能力：就像 Simula，一个灵活的“强”静态类型系统。
+
+所有好的解决方案基本上都始于一个好问题——而且是一个难题。
+
+**C++ 的诞生源于我来到 Bell 实验室，那时候觉得我必须得搞些大事**，因为当时的 Bell 实验室确实是一个很棒的地方。我决定要搞一个分布式 Unix 系统。要是成功了，我们就能提前十年坐拥 Unix 集群。但当然，这种工作我一个人干不了。
+
+首先发现的问题之一是，当时没有任何一种编程语言能够满足我构建分布式 Unix 系统的所有需求。第一，这种语言必须有处理底层事务的能力，例如设备驱动程序、进程调度器、内存管理器等等；同时，它还得必须具备高级特性，以便我们能够摆脱对硬件的依赖，从而拥有像包含进程和通信模块这样的高级特性；既然系统是分布式的，这些都必须被抽象化，你就不能依赖共享内存和指针之类的东西。总而言之，我意识到我需要这样的一个东西。
+
+核心理念：在代码中直接表达思想。例子：
+ - 数学：tensor, polynomial
+ - 工程：Matrix, Fourier transform
+ - 图形学：Shading, gnome, path
+ - 生物学：DNA string, protein
+ - 电信：Buffer, channel
+ - 航空航天：Electric motor, route
+ - 汽车：vehicle, car, pedestrian
+ - 金融：instrument, transaction
+ - 计算机科学：map, task, image, file, edge
+　- ...
+ - 还得让其易于接受
+ - 唯一的限制就是你的想象力
+ - 注：大多数优秀的软件都是“润物细无声”的（most good software is invisible）
+
+当时我在 Bell 实验室，处理硬件的底层语言自然是 C 语言。我之前有过面向对象编程的经验，也熟悉通过 Simula的静态类型系统来管理复杂性。我也正是这样写的。**该项目的核心思想是将硬件的抽象层次提升到更适合人类理解的程度。每个领域都有一些基本概念，我们希望能直接用代码来表达它们。**我不想自己当编译器，把那些高层次的概念记在脑子里、写在白板上，然后再去写底层代码。我希望高层次的想法能够直接用代码表达出来。这大致就是这里面的关键理念。
+
+仅仅做到这一点还不够。你必须以一种潜在用户能够接受的方式来实现它。我年轻那会儿做研究员的时候，电脑配置并不高，所以我必须得在如今看来性能极其低下、运行缓慢的机器上跑程序。多年来，这对我很有帮助，因为不同电脑之间的差异很大。
+
+优秀的设计，基于合理的原则：
+
+- 灵活的静态类型系统
+　- 可扩展性（Extensibility）
+　- 零开销（Zero overhead）
+　- 显式类型转换尽可能少（Minimial explicit type conversion）
+- 资源管理
+　- 防止泄露（No leaks）
+- 错误处理
+　- 提供保证（Guarantees）
+- 灵活的并发支持
+　- 不局限于一种风格（No one style）
+
+当代 C++ 能比以往所有早期 C++ 更好地实现这些目标。
+
+我们需要阐明一些原则。首先得有灵活的静态类型系统；所谓灵活，是指它可以表示各种各样的事物，而不局限于计算机科学的某个特定领域。为了降低成本，它必须具有可扩展性。我希望尽可能减少显式的类型转换、强制类型转换等等，这些操作在 C 代码中随处可见，但 Simula 中没那么多。我不希望出现内存泄漏。我希望资源管理能够有效维护现有资源。错误处理必须提供保证，并支持灵活的并发性。这就是我今天演讲的主题。
+
+
+好的工具随需求而演进：
+
+- 为什么要演进？
+　- 世界在变化
+　- 面对的问题也在变化
+　- 我们自己亦在变化
+- 优秀的工程依赖于反馈和演进
+　- 例如，泛型编程 (Generic programming)，编译期时计算 (Compile-time programming) ，模块 (Modules）。
+- “要是有人宣称自己有完美的编程语言，他要么是传销要么蠢，或者二者皆是。(Someone who claims to have a perfect programming language is either a salesman or a fool, or both.)”（—— Bjarne Stroustrup, 1980s onward)
+- “就算是我也能设计一个更好看的语言。(Even I could design a prettier language.)”（—— Bjarne Stroustrup, 1980s onward)
+
+一个问题是，为什么一门编程语言需要改变？
+
+C++之所以会变，其中一个原因，也是它当初设计成“可以改变”的原因，显然是因为我当时没办法设计出理想的编程语言。我的团队规模有限。除此之外，我也认为不可能有一种编程语言完美适用于所有人、所有情况。所以，我们必须跟上世界的变化，跟上写代码方式的变化，并与之保持同步。
+
+此外，优秀的工程设计依赖于反馈和改进。也就是说，**我们尽最大努力构建一个系统，然后观察运行情况——观察哪些有效，哪些无效，然后进行改进；这正是所有工程领域共通的基本工作方式**。在设计时，既知未来会发生某些事情，就必须将未来可能发生的事情纳入考量。你会有一个总体的方向，知道自己想要实现什么，也明白将来一定可以做得更好。所以不能把改进的道路给堵住。某些语言经过精心设计，旨在阻止你从事任何计划外的操作；而 C++ 的设计哲学恰恰相反——它被精心设计成能够适应新的挑战。
+
+稳定性与演进
+
+- 稳定性 (Stability)：过去能用的现在依然能用 (what used to work well, still works well)
+　- 演进 (Evolution)：我们如今往往能做得更好 (usually, we can do even better today)
+　- 现实世界的进步：开发者如何抓住那些必要的变化？
+现在面临两个问题：我们想要发展，但也需要稳定性。许多组织要求代码必须能够运行数十年。我们有些代码是在 20 世纪 80 年代、90 年代写出来的，至今仍在运行。这一点至关重要。我们曾多次尝试简化语言，但从未成功。开发者和用户都不希望他们的代码出现问题，所以我们需要稳定性。我们同时还需要发展，需要从现实世界的问题中汲取灵感，并解决问题，而不是将其变成一种脱离实际的学术演练。
+
+[!image](https://pic4.zhimg.com/v2-35723c2b1f0d41dbee0da8034659053d_1440w.jpg)
+
+这里我们看到一张 C++ 历年发展历程的图表，展示了用户数量、以及他们最初接触 C++ 时所体验到的各种功能。需要指出，统计用户数量非常困难；这图只是我的估计，后来有人说我大错特错。实际上，有机构统计出有1630万用户，这意味着我的估计偏差了大约 2.5 倍。这个偏差算是好的。
+
+那些新东西不是当代 C++ 的全部。如果你去看网上那些文章和 YouTube 里的视频等等，会看到人们对着最新、最炫酷的东西大谈特谈，但那并非全貌。我们拥有的语言是一个整体，各个特性相互支持、相互补充。我们既会沿用几十年来一直在使用的传统方法，也会采用新技术，它们完美契合，这一点至关重要。**C++ 的真正目的在于编写优秀的代码。**
+
+[!image](https://pic3.zhimg.com/v2-6cfde8a22b8d01bee08ef6ef1699b4e0_1440w.jpg)
+
+让我坚持下去的动力，也是我认为的关键所在，是编程语言的价值在于它的应用范围和质量。这里我们列举了一些具体应用。比如，用于制作电影和动画的软件。还有一个服务器集群，里面运行着许多复杂的大型程序。甚至还有咖啡机也在用 C++ 编程。我喜欢咖啡，我的办公桌上就有一台咖啡机。
+
+我不参与语言之争，因为很多语言的实现里就是大量用 C++ 的，所以还是别在这里挑起语言之争了。
+
+我的背景是分布式系统。我觉得分布式系统的应用才是最有趣的。重要的是我们能做什么，而不是具体的细节。在这里，我重点关注：
+
+- 资源管理 (Resource management)
+　- 包括控制生命周期和错误处理
+- 泛型编程 (Generic programming)
+　- 包括 concepts
+- 模块 (Modules)
+　- 包括去除预处理器
+- 指南及其施行
+　- 如何保证写出“21 世纪的 C++”？
+
+#### 21 世纪的 C++：演进、挑战与 AI
+
+我说过会研究资源管理和泛型编程的问题。然后，我想到一个难题：在一个充斥着遗留代码、且程序员们接受的训练早已过时的世界里，我们该如何真正使用这些新特性？我们如何在这门语言上迈出前进的一步？**我们该如何编写出真正属于 21 世纪的 C++，而不是 20 世纪的 C++**？
+
+资源管理
+- 资源是你必须获取并随后释放（归还）的东西
+　- 显式或隐式
+　- 例子：内存，字符串，锁，文件句柄 (file handles)，sockets，线程句柄 (thread handles)，事务 (transactions)，着色器 (shaders)，...
+- 防止资源泄露
+　- 避免手动释放
+　- 代码里不要有 free、delete，或者是类似的资源释放
+- 每个资源都由一个句柄表示
+　- 为获取和释放负责 (Responsible for access and release)
+　- 代码里不要有 malloc、new，或者是类似的资源获取
+- **每个资源句柄都根植于一个作用域中**
+　- 句柄可以从一个作用域移动到另一个
+
+我们从资源管理开始。这实际上是在 C++ 开发的最初两周就开始考虑的问题，因为我之前从事操作系统和机器架构方面的工作，深知我们不能泄漏资源。如果资源泄漏了，各种糟糕的事情就会发生。比如，如果你在为太空探测器编程，无论泄漏何种资源（比如一块内存），其结果就是探测器失效，你便没法派宇航员去火星或其他地方。
+
+资源指的是任何需要获取、随后释放的东西。释放操作需隐式进行，因为我们可能会忘记释放资源，抑或是错误地释放两次。我们不想遇到这种麻烦，而且从很久之前就理应避免这么写。但不知为何，人们仍然会写出需要显式释放的代码。不要这样做。如果你写出显式释放的代码，那么代码很可能存在问题。 **不要直接写 free、delete 以及类似的操作，所有这些都必须隐式进行。**
+
+我们实现的方式是用一个句柄 (handle) 来代表资源，这个句柄控制着对资源的访问。资源通常是程序的一部分，例如操作系统、内存管理器、内存池管理器、文档管理器等等。句柄负责资源的获取和删除，并提供使用该资源所需的正确操作。
+
+提升抽象层次
+
+[!image](https://pic2.zhimg.com/v2-9f2e6682b7b0aab9e2efb7cebfa916c3_1440w.jpg)
+
+```
+template<typename T>
+class Vector { // vector of elements of type T
+public:
+    Vector(std::initializer_list<T>); // acquire memory; initialize elements – constructor
+    ~Vector(); // destroy elements; release memory – destructor
+    // ...
+private:
+    T* elem; // pointer to elements
+    int s; // number of elements
+};
+
+void fct()
+{
+    Vector<double> constants {1, 1.618, 3.14, 2.99e8};
+    Vector<string> designers {"Strachey", "Richards", "Ritchie"};
+    // ...
+    Vector<pair<string, jthread>> vp{{"producer", prd}, {"consumer", cons}};
+```
+
+我举一个最简单、最传统的例子：一个vector。从最底层开始，首先需要有指针 elem和一个整数 s，用来表示元素的数量，C 风格代码就是这么写的。但是，我们希望提升到更高的抽象层次，使用必须正确初始化的类型。此外，还需要一个析构函数，在退出作用域时正确地清理资源。
+
+于是，我们可以在这里写出 Vector<double>，它包含一些浮点常数；也可以写出Vector<string>，包含一些字符串。以及这里最后还有一个刻意设计的、有些复杂的嵌套抽象 Vector<pair<string, thread>>， 我用它来表示生产者-消费者模型 (producer-consumer pair)。
+
+我们曾经在网上举办过一个比赛，主题是C++中最酷的特性是什么，一位叫 Roger Orr 的人回答是：
+
+```
+}
+```
+你看，就是在大括号这里，所有神奇的事情都发生了。先是vp的析构函数被调用，然后是 designers和constants；并且这个过程是递归的，当vp的析构函数被调用时，它会调用pair函数的析构，pair又会调用 string的析构和线程析构函数，以此类推。这样我们就简化了原本可能很复杂的部分，现在看起来非常简单。
+
+我们每个资源句柄都是类似这样的东西，一个向量就是一个资源句柄。
+
+生存周期控制 (Control of lifetime)
+
+- 对简单且高效的资源管理是必要的
+　- 构造 (Construction)
+　　- Before first use establish the invariant (if any)
+　　- 构造函数 Constructor
+　- 析构 (Destruction)
+　　- After last use establish the resource (if any)
+　　- 析构函数 Destructor
+　- 复制 (Copy)
+　　- Copy: a=b implies a==b (regular types)
+　　- 复制构造函数 copy constructor X(const X&)
+　　- 复制赋值 copy assignment X::operator=(const X&)
+　- 移动 (Move)
+　　- 在作用域之间移动资源
+　　 - 移动构造函数 move constructor X(X&&)
+　　- 移动赋值 move assignment X::operator=(X&&)
+
+我们可以控制对象的生命周期，这非常重要。我们可以控制对象的构造、销毁、复制，以及将对象的句柄从一个作用域移动到另一个作用域的能力，所以我们拥有完全的控制权。这正是许多现代 C++ 的关键所在。
+
+我来展示一些现代 C++ 的例子。有些人认为“你必须阅读所有包含各种复杂内容的代码”，我选择这个例子就是为了颠覆这种固有观念。首先是引进标准库 (import std)。我们稍后会讲到模块 (Modules) 这个东西。随之用标准库的东西写出一个包含字符串和整数的哈希表。
+
+我到底想做什么呢？这个来自我的朋友 Afred Aho，他是 AWK文本处理工具的设计者之一，如果你对编译器和编译相关的东西感兴趣，他应该很出名，因为他写过一本关于编译器的教科书（指龙书）；他给了我 `!a[$0]++`这个命令行，可能不是每个人都理解：这个代码读取文件中每一行，寻找只出现过一次的行，然后将其输出。他问我“要是你该怎么做？”于是我就（用 C++）实现了一样的功能：把文件中每一行放到line变量里，然后把line放到一个unordered_map里，如果是第一次见到它，则将之输出。
+
+输出按行去重的代码示例：
+
+```cpp
+// the AWK program (!a[$0]++) relies on implicit I/O and loops
+
+import std;
+using namespace std;
+
+int main()  // print unique lines from input
+{
+    unordered_map<string, int> m; // hash table
+    for (string line; getline(cin, line);)
+        if (m[line]++ == 0)
+            cout << line << '\n';
+}
+```
+
+这是一个相当简洁明了的程序，但重要的东西不在表面。这段代码没有内存分配和释放，没有涉及size，没有错误处理，没有显式类型转换，没有指针，也没有用预处理器。所以，如果你之前觉得 C++ 只是 C 的一个变体的话，现在就应该明白并非如此。
+
+这个程序效率很高，但我们可以做得更好。这种演示程序的写法，实际工作中几乎不会这么做。
+
+更可能的做法是创建一个函数，用于收集所有输入信息，然后将其存储在一个vector<string>中，以便我们可以对其进行操作，例如排序、搜索等等。这里，我们只是用它来输出不重复的行。函数名叫做collect_lines，它接受一个输入字符串，并返回一个vector<string>。这里我只需要一个set， 无需进行任何计数，set本身就知道如何只包含唯一一个值。我们调用getlines ，插入line ，然后把set转换成vector并返回。
+
+输出按行去重的代码示例2:
+
+[!imgae](https://pica.zhimg.com/v2-9b0986683ae8dfb51710b2a503e5578c_1440w.jpg)
+
+```cpp
+import std;
+using namespace std;
+
+vector<string> collect_lines(istream& is) // collect unique lines from input
+{
+    unordered_set<string> s; // hash table
+    for(string line; getline(is, line);) 
+        s.insert(line);
+    return vector{from_range, s}; // copy set elements into a vector
+}
+
+auto lines = collect_lines(cin);
+for (auto& s: lines)
+    cout << s << '\n';
+
+```
+
+
+
+
+
+
+
+
+
+谢谢大家。C++不是为了追求潮流而设计的，而是为了解决实际问题。四十年来，它的核心原则从未改变： **零开销抽象**。我们既要提供高效的硬件操作能力，又要通过强类型系统管理复杂性。
+
+针对“C++是否过时”的提问：
+
+“有些人认为C++太复杂，或者认为AI会取代程序员。我不同意。
+- 关于复杂性： 软件生态过于注重‘便利性’和‘速度’，导致核心原则被削弱。C++的复杂性源于现实世界的复杂性，我们不能为了简单而牺牲性能。
+- 关于AI： 即使利用AI编写代码，解决问题仍然是人类的工作。AI只是工具，它可能会助长‘无意识编码’，重复过去的错误模式（如原始指针）。真正的挑战不是语言本身，而是开发者的思维方式。优秀的开发者应该定义问题并构建模型，而不仅仅是写代码。”
+
+未来的 C++（C++26 及以后）核心目标是
+
+并发与并行： 这是提升性能的关键。我们将引入更高效的线程管理、无锁编程工具和任务调度器，让并行计算更简单。
+安全性： 我们正在引入‘准则检查配置文件’（Profiles），在编译期自动检测内存泄漏和越界访问。C++必须在保持高性能的同时，获得内存安全。
+新特性： 我们正在研究静态反射（Static Reflection）和模式匹配（Pattern Matching）。这能让代码更简洁、更具表达力，且没有运行时开销。
+AI与底层： C++将在AI的底层计算（如张量操作、GPU协同）中扮演核心角色。”
+
 ---
 
 ### Qt6 示例
@@ -1631,7 +2564,7 @@ Go 1.18 以后：容量 < 256 时翻倍； > 256 时按 $(oldcap + 3*256) / 4 �
 答案：不是。并发读写会 panic。并发安全需使用 sync.Map 或加锁
 
 
-#### Map 的底层实现原理？ 桶（数组）+链表
+#### Map 的底层实现原理？哈希表 + 桶（数组）
 
 答案：基于哈希表（Hash Table），使用数组+链表结构，通过 Bucket（桶） 存储 kv 对。
 
@@ -1669,6 +2602,17 @@ tophash 快速过滤 → 减少 key 比较次数；
 渐进式扩容 → 避免长时间停顿；
 运行时随机哈希种子 → 防止 Hash DoS；
 非并发安全 → 明确设计取舍，把控制权交给用户。
+
+- ✅ 同一个桶内的 8 个 key 是连续的
+- ❌ 跨桶的 key 不连续
+- ❌ 整体上 key 是“随机打散”的，无法保证遍历时内存地址连续
+
+缓存局部性如何？
+- 时间局部性（Temporal Locality）：✅ 较好（热点数据会被频繁访问）
+- 空间局部性（Spatial Locality）：❌ 较差
+-- CPU 缓存行（Cache Line，通常 64 字节）加载时，希望附近数据也被用到
+-- 但 map 的 key 分散在各处，一次缓存加载可能只用到 1 个 key
+-- 遍历 map 时，CPU 缓存命中率低 → 性能不如 slice/array
 
 #### Map 的哈希冲突如何解决？
 
@@ -1797,8 +2741,61 @@ func main() {
     }
 }
 ```
+### 设计模式
 
-### 进阶
+#### 1. 对象池模式（Object Pool Pattern）
+
+🎯 为什么需要对象池？
+有些对象的创建/销毁成本很高，例如：
+- 数据库连接（建立 TCP + 认证）
+- 线程（操作系统资源）
+- 大型结构体或带缓冲区的对象（如 bytes.Buffer、网络包解析器）
+- 图形渲染中的纹理、粒子
+
+如果每次用完就丢弃，下次再新建，会导致：
+- 频繁 GC（垃圾回收）
+- 系统调用开销大
+- 内存碎片
+
+```mermaid
+graph LR
+    A[客户端需要对象] --> B{池中有空闲对象?}
+    B -- 有 --> C[从池中取出一个]
+    B -- 无 --> D[创建新对象]
+    C --> E[使用对象]
+    D --> E
+    E --> F[用完后归还到池]
+    F --> G[重置对象状态]
+    G --> H[等待下次被借出]
+```
+
+Go 中的经典例子：sync.Pool， 复用 bytes.Buffer
+
+```go
+var bufferPool = sync.Pool{
+    New: func() interface{} {
+        return new(bytes.Buffer)
+    },
+}
+
+func process(data []byte) string {
+    // 1. 借对象
+    buf := bufferPool.Get().(*bytes.Buffer)
+    buf.Reset() // 重要：清空旧数据！
+
+    // 2. 使用
+    buf.Write(data)
+    result := buf.String()
+
+    // 3. 归还
+    bufferPool.Put(buf)
+    return result
+}
+```
+
+
+
+### 其他
 
 #### context.Context 处理并发控制和超时取消的核心机制。
 
@@ -1836,9 +2833,72 @@ func doSomething(ctx context.Context) {
 - 它是线程安全的：你可以在无数个协程里传递同一个 ctx，安全地监听它的信号。
 - 层级传递：当你基于一个父 ctx 创建子 ctx 时（比如 WithTimeout），如果父级被取消，所有的子级也会跟着被取消。
 
+
+
 ## 技术工具： 喜鹊开发者
 
 [The Magpie Developer](https://blog.codinghorror.com/the-magpie-developer)
+
+### 数据库之 Redis
+
+核心：Redis 将所有数据存储在 RAM（内存） 中。 
+特性： 
+- 支持5种数据类型： 字符串， 列表， 集合， 哈希， 位图
+- 定时对内存数据做快照存入磁盘
+
+Redis 是通过消耗昂贵的内存来换取极致的速度；而 LSM-Tree 则是通过聪明的算法设计，在廉价的磁盘上实现了接近内存的写入表现 。
+
+**缓存雪崩**： 
+
+极短的时间内，由于大量的缓存同时失效（过期）或缓存服务（Redis）宕机，导致原本应该由缓存处理的请求全部涌向后端数据库。
+
+诱因： 
+
+1. 大规模 Key 集中过期：为大量数据设置了相同的 TTL（生存时间），导致它们在同一秒失效。
+2. Redis 实例宕机：缓存层彻底失效，所有流量直接穿透到 DB。
+
+应对策略
+
+A. 事前预防：
+
+1. 防止 Key 集中失效 ， TTL = Default_TTL + Random_Offset
+2. 热点数据永不过期。对于极高频访问的数据（如配置、大促首页数据），不设置过期时间，或者由后台逻辑异步更新。
+3. 使用 Redis Sentinel（哨兵模式） 或 Redis Cluster（集群模式），避免单点故障导致整个缓存层崩溃。
+4. 数据预热： 在系统上线或流量高峰到来前，手动将热点数据加载到 Redis 中，并错开过期时间。
+
+B. 事中保护：防止数据库被压垮
+
+- 服务熔断与限流： 使用 Sentinel 或 Hystrix 等工具。当检测到数据库压力过载时，直接返回错误或默认降级数据，牺牲部分体验保住系统。
+- 加锁排队（互斥锁）： 当缓存失效时，只允许一个请求去查询数据库并回写缓存，其他请求等待。
+
+Golang 实现示例： 利用 sync.Mutex 或 singleflight 包。
+C++ 实现示例： 利用 std::mutex 或分布式锁。
+
+C. 事后容灾：快速恢复
+多级缓存架构： 使用 本地缓存（如 Go 的 FreeCache 或 C++ 的内存 Map） + Redis 的二级缓存模式。即使 Redis 挂了，本地缓存也能抵挡一阵。
+
+---
+
+### 数据库之HBase-- 高可靠、高性能的列式分布式存储系统
+
+**优点**：
+
+1. 强大的随机存储能力。 通常大数据系统（如 Hive）只适合做批处理（很慢），但 HBase 可以在几毫秒内从数亿行数据中查找到某一行。B 站、阿里、X (Twitter) 常用它来存储历史数据、用户画像或聊天记录。
+2. 稀疏性（Sparse）。在 MySQL 中，如果你定义了 100 列但只填了 1 列，剩下的 99 列也占空间。但在 HBase 中，空的列完全不占存储空间。这非常适合处理那种“属性非常多，但每个对象只有几个属性”的数据。
+3. 自动分片
+当你的数据表变得极其巨大时，HBase 会自动把表横向切分成很多份（称为 Region），分布到不同的服务器上。
+
+**底层原理**
+
+HBase 的底层数据结构非常精妙，它并不是像传统数据库那样直接把数据写在磁盘的固定位置，而是采用了 LSM 树（Log-Structured Merge-tree） 架构。
+
+**应用示例**
+
+应用示例，开发微信朋友圈：
+
+- MySQL：存储你的账号、密码、昵称（数据量小，要求高度一致）。
+- Kafka：当你发了一条朋友圈，这个动作先发到 Kafka。
+- HBase：存储千万级用户发过的无数条朋友圈内容。因为朋友圈数据是稀疏的（有人发图，有人发文字，有人带地点），且量级巨大。
 
 ### Kafka --  distributed event streaming platform 
 
@@ -1872,26 +2932,6 @@ func doSomething(ctx context.Context) {
                     (多台服务器组成)
 ```
 
-### HBase-- 高可靠性、高性能、面向列、可伸缩的分布式存储系统
-
-#### 优点：
-
-1. 强大的随机存储能力。 通常大数据系统（如 Hive）只适合做批处理（很慢），但 HBase 可以在几毫秒内从数亿行数据中查找到某一行。B 站、阿里、X (Twitter) 常用它来存储历史数据、用户画像或聊天记录。
-2. 稀疏性（Sparse）。在 MySQL 中，如果你定义了 100 列但只填了 1 列，剩下的 99 列也占空间。但在 HBase 中，空的列完全不占存储空间。这非常适合处理那种“属性非常多，但每个对象只有几个属性”的数据。
-3. 自动分片
-当你的数据表变得极其巨大时，HBase 会自动把表横向切分成很多份（称为 Region），分布到不同的服务器上。
-
-#### 底层原理
-
-HBase 的底层数据结构非常精妙，它并不是像传统数据库那样直接把数据写在磁盘的固定位置，而是采用了 LSM 树（Log-Structured Merge-tree） 架构。
-
-#### 应用示例
-
-应用示例，开发微信朋友圈：
-
-- MySQL：存储你的账号、密码、昵称（数据量小，要求高度一致）。
-- Kafka：当你发了一条朋友圈，这个动作先发到 Kafka。
-- HBase：存储千万级用户发过的无数条朋友圈内容。因为朋友圈数据是稀疏的（有人发图，有人发文字，有人带地点），且量级巨大。
 
 ### 架构设计：Kafka + HBase
 
@@ -1899,14 +2939,6 @@ HBase 的底层数据结构非常精妙，它并不是像传统数据库那样�
 2. Flink/Go 程序 (处理层)：从 Kafka 读出数据，做简单的清洗或聚合。
 3. HBase (存储层)：把处理后的数据永久存入 HBase，供后续的后台系统查询。
 
-### Redis -- 数据库
-
-核心：Redis 将所有数据存储在 RAM（内存） 中。 
-特性： 
-- 支持5种数据类型： 字符串， 列表， 集合， 哈希， 位图
-- 定时对内存数据做快照存入磁盘
-
-Redis 是通过消耗昂贵的内存来换取极致的速度；而你之前研究的 LSM-Tree 则是通过聪明的算法设计，在廉价的磁盘上实现了接近内存的写入表现 。
 
 ### Kratos 
 
@@ -2025,6 +3057,9 @@ Worker Node（工作节点）：
 - kube-proxy：实现 Service 网络代理和负载均衡。
 - 容器运行时（如 containerd、Docker）。
 
+### Restful API
+
+
 
 ## 其他
 
@@ -2053,93 +3088,9 @@ JSF++编码标准严格禁止在战斗机应用中使用的 C++代码库中使�
 
 SF++ 后来深刻影响了后来的 MISRA C++ 标准（汽车行业标准）和 AUTOSAR。
 
-## 读计算机科学的经典
-
-过去一直有一个声音，让我们去读经典，读《红楼梦》， 读巴尔扎克，读莎士比亚，读《荷马史诗》，读《论语》... **为什么要读经典**? 
-
-因为真正的美，从古至今都没有改变，改变的只是它表达美的形式和表现方式。就如,即便几千年过去了，我们仍然会觉得万里长城很美，秦兵马俑很美， 比萨斜塔很美，蒙娜丽莎很美，梵高的向日葵很美...美的事物，人们很容易得到共识。
-
-我把这样的想法也放在了编程领域，我们该去读计算机科学的经典。读计算机科学在早先创建的时候，那些先驱者的思想，以及后来不断出现的经典。
-
-为什么要做这件事情？因为一方面计算机的技术越来越纷繁和学科细化；另一方面，越来越多的人痴迷于科学技术产生的工具，甚至有些人痴迷于一种编程语言。正如Bjarne Stroustrup在[访谈](https://www.youtube.com/watch?v=NvWTnIoQZj4)中提到：
-
-> ”Nobody should call themselves a professional if they only knew one language.（没有人应该把自己视为一个专家，如果他们只知道一门编程语言）“
-
-由此，新一代的人们开始忽略了计算机科学的本质，忘掉了那些简单而朴素的真理。**只有去读经典，才能从这越来复杂和庞大的学科中，把握它最美、最精华的思想**。
-
-我打算花两年的时间，把这些经典的论文和书籍看一遍，我要回到那个简单朴素的思想起点。
-
-### 一些论文
-[CSCI E-192](https://canvas.harvard.edu/courses/34992/assignments/syllabus) 课程提供了很好的参考，他们列出的Paper主要在这里：[master list.](https://canvas.harvard.edu/courses/34992/assignments/syllabus)
-
-我觉得其中每一篇的都值得一读，所以就不一一列举了。实在不喜欢的可以略读，但是也该能把握它的思想。
-
-CPP: 
-
-[how to learn cpp](https://isocpp.org/wiki/faq/how-to-learn-cpp%5C)
-
-### 一些书单
-
-来自Reddit，更多的讨论在链接这里: [Is there a list of the canonical introductory textbooks covering the major branches of computer science? ](https://np.reddit.com/r/compsci/comments/gprp0/is_there_a_list_of_the_canonical_introductory/c1pcqe5/)  
-我只关心我对其中感兴趣的书，人的一生时间有限，我不可以什么书都去读。不管它写的再好，如果我对其不感兴趣也是徒劳。
-
-- **SICP** (Structure and Interpretation of Computer Programs (Abelson & Sussman))
-- Formal Language: A Practical Introduction by Webber
-- Abstract and Concrete Categories: The Joy of Cats by Adamek et al
-- Fundamentals of Computer Graphics by Shirley and Marschner
-- Distributed Systems: Concepts and Design by Dollimore et al
-- **Introduction to Functional Programming using Haskell **by Bird and Wadler
-- **ML for the Working Programmer by Paulson**
-- **How to Design Programs**（Felleisen等人）
--  **Concepts, Techniques, and Models of Computer Programming **(Van Roy & Haridi
-
-#### 关于编译器
-
-Reddit上有关于讨论编译器书单的一个话题，[Recommendations for books on compilers](https://www.reddit.com/r/programming/comments/3tgryd/recommendations_for_books_on_compilers/)。其中sanxiyn评论到：
-GCC wiki recommends [a list of compiler books](https://gcc.gnu.org/wiki/ListOfCompilerBooks).
-
-打开之后，我只选了一本： **Appel. Modern Compiler implementation in ML**
-
-
-关于编译器书籍的评论，我想 Vladimir N. Makarov的话语为我指明了学习和阅读的方向：
-> If you don't want to be compiler savvy but want to understand the compiler, I'd recommend Appel's, Cooper's, Morgan's book in the same priority.
-
-我现在还不清楚自己想不想精通编译器，所以先读这些基础的书，如果兴趣越多就读更多。
-
 ---
 
-
-
-
-
-
-## 优质的编程材料
-
-### C++
-
-- [Stroustrup与Bill的对话--已归档](https://www.artima.com/intv/bjarne.html)
-- [Stroustrup与Pramod的对话](https://mappingthejourney.com/single-post/2017/07/29/interview-with-bjarne-stroustrup-creator-of-c/)
-- [Foundations of C++--已归档](https://www.stroustrup.com/ETAPS-corrected-draft.pdf)
-- [Abstraction and the C++ machine model](https://www.stroustrup.com/abstraction-and-machine.pdf)
-- [C++ Primer Plus](https://zhjwpku.com/assets/pdf/books/C++.Primer.Plus.6th.Edition.Oct.2011.pdf)
-
-### Golang
-
-- [Well-structured Logic: A Golang OOP Tutorial](https://www.toptal.com/go/golang-oop-tutorial)
-- [Why goroutines are not lightweight threads?](https://codeburst.io/why-goroutines-are-not-lightweight-threads-7c460c1f155f)
-
-### 其他
-
-- [Donald Knuth的书](https://github.com/manjunath5496/Donald-Knuth-Books/blob/master/README.md)
-- [Communications of ACM 杂志档案](https://cacm.acm.org/magazines)
-- [ACCU图书推荐(by rating)](https://www.accu.org/reviews/by_rating/)
-- [王小波和编程](https://91biji.com/social/leon/framebook/notes/note/9174/)
-
-
-
-
-## 编程碎碎念
-
+## 编程杂谈
 
 
 
@@ -2207,18 +3158,6 @@ Bjarne Stroustrup(Interview):
 
 ---
 
-### 评论英特尔的ControlFlag开源库，以及AI。
-
-[AI 帮代码找 Bug，英特尔开源机器编程工具 ControlFlag](https://m.ithome.com/html/582002.htm)
-
-如果一个程序员对自己写的代码都没了自信，还要指望AI找出Bug，这几乎是一种智商上的羞辱。要是堕落到这种境地，还写什么代码，不如早点回家种地。这个库只是英特尔的员工无聊开发出来的娱乐玩具，如果真有程序员当了真，那就有点可笑了。
-
-二十一世纪的谎言之一就是AI。人脑绝不是任何机器、集成电路和算法能模拟出来的。“人工”永远不会有“智能”，这纯粹是一个哲学问题，而不是一个技术问题。要真是到了哪天，我们的程序需要AI去写，我们的书籍需要AI创作，我们的电影动画需要AI去设计，那么，人类离灭亡就不远了。
-
-2021-10-22
-
----
-
 ### 评网页设计
 
 对于网页设计，最好的设计就是没有其它任何无用的设计。
@@ -2259,11 +3198,6 @@ R语言的特点很明显: 数据类型足够丰富，但数据的操作很笨�
 
 2021-10-11
 
-### Window 时钟中断   <a name="20211007WinIF"></a>
-
-[microsoft: Interrupt Time](https://docs.microsoft.com/en-us/windows/win32/sysinfo/interrupt-time)中断时间仅100纳秒，这个应该不是操作系统调度的Timer Interrupts。因为windows是闭源的，因此无法知道更多。[这里](https://kb.vmware.com/s/article/1005802)有人提到Window是64HZ或100HZ，那么应该是合理的值了。而Linux系统通常是250HZ(4ms)，[Philip的回答](https://unix.stackexchange.com/a/549912)提到了Jiffies值历史上先是100HZ(10ms),后来又改成了1000HZ(1ms)。
-
-2021-10-07
 
 ### 穿孔纸带很酷！
 
@@ -2279,6 +3213,9 @@ R语言的特点很明显: 数据类型足够丰富，但数据的操作很笨�
 
 ### 过早优化不总是万恶之源
 
-Donald Knuth博士曾说过,"premature optimization is the root of all evil"(翻译: 过早优化是万恶之源). 这句话成了很多程序员写出糟糕代码的借口, 并且他们从来不试图优化自己的代码. 但是Knuth博士这句话的下半句很少有人知道: " Yet we should not pass up our opportunities in that critical 3%"(而对于影响性能关键的 3%代码，我们则不能放弃优化的机会). 我在工作中就遇到过这样的事情, 在尝试修改少量的核心的代码, 其程序性能提升1~3倍. 如果放弃这样的优化机会, 将是很大的损失.
+Donald Knuth博士曾说过,"premature optimization is the root of all evil"(翻译: 过早优化是万恶之源). 这句话成了很多程序员写出糟糕代码的借口, 并且他们从来不试图优化自己的代码. 但是Knuth博士这句话的下半句很少有人知道: " Yet we should not pass up our opportunities in that critical 3%"(而对于影响性能关键的 3%代码，我们则不能放弃优化的机会). 
 
+我在工作中就遇到过这样的事情, 在尝试修改少量的核心的代码, 其程序性能提升1~3倍. 如果放弃这样的优化机会, 将是很大的损失.
+
+2021-09
 
