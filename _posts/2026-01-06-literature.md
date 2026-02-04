@@ -1,6 +1,6 @@
 ---
 published: true
-title: 文学
+title: 小说与故事
 layout: post
 author: RuiBing
 category: literature

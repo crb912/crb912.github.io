@@ -762,6 +762,8 @@ for (int i = 0; i < 100; i += 4) {
 
 ---
 
+
+
 ### 内联（Inlining）
 
 把函数调用的指令，直接替换为函数体内的具体代码。
@@ -781,12 +783,14 @@ for (int i = 0; i < 100; i += 4) {
 - 编译器自动优化：在 -O2 或 -O3 级别下，编译器会自动分析哪些函数值得内联（通常是那些逻辑简单、频繁调用的函数）。
 - 强制内联：在某些严苛场景下，程序员会使用 __attribute__((always_inline))（GCC/Clang）来命令编译器必须执行内联。
 
+--- 
+
 ### Golang的性能优化
 
 #### 原则：先测量，后优化
 
 - [Diagnostics - Go Doc](https://go.dev/doc/diagnostics)
-- [Profiling Go Programs - Go Blog](https://go.dev/blog/pprof)
+- [Profiling Go Programs - Go Blog](https://go.dev/blog/pprof) （展示如何具体的Profiling）
 
 在 Golang 中，性能调优通常遵循 **“先测量，后优化”** 的原则, 找到程序瓶颈。过度优化（Premature Optimization）是万恶之源。作为一名 C++ 背景的开发者，Go 很多调优技巧实际上是在**“对抗”垃圾回收（GC）和内存分配器的开销**。
 
@@ -801,6 +805,29 @@ for (int i = 0; i < 100; i += 4) {
 - 可视化分析数据： Go 工具使用 go tool pprof 提供文本、图形和 callgrind 分析数据的可视化。图形形式： weblist 形式， Flame graphs
 
 **记住：先写清晰正确的代码，用 profiler 找到真正的瓶颈，然后才针对性优化！**
+
+性能测试命令:
+
+```bash
+# CPU 性能分析
+go run havlak6.go -cpuprofile=cpu.prof
+
+# 内存分析
+go run havlak6.go -memprofile=mem.prof
+
+# 查看分析结果
+go tool pprof cpu.prof
+go tool pprof mem.prof
+```
+
+逃逸分析:
+
+```bash
+# 查看哪些变量逃逸到堆
+go build -gcflags="-m" havlak6.go
+```
+
+当Go程序员注意内部循环生成的垃圾数量时，Go的性能可以与同等优化的C++程序相媲美。
 
 #### 目标： 减少 GC压力 和 内存分配
 
@@ -2161,7 +2188,7 @@ void fct()
 
 我们曾经在网上举办过一个比赛，主题是C++中最酷的特性是什么，一位叫 Roger Orr 的人回答是：
 
-```
+```text
 }
 ```
 你看，就是在大括号这里，所有神奇的事情都发生了。先是vp的析构函数被调用，然后是 designers和constants；并且这个过程是递归的，当vp的析构函数被调用时，它会调用pair函数的析构，pair又会调用 string的析构和线程析构函数，以此类推。这样我们就简化了原本可能很复杂的部分，现在看起来非常简单。
@@ -2190,12 +2217,11 @@ void fct()
 
 我来展示一些现代 C++ 的例子。有些人认为“你必须阅读所有包含各种复杂内容的代码”，我选择这个例子就是为了颠覆这种固有观念。首先是引进标准库 (import std)。我们稍后会讲到模块 (Modules) 这个东西。随之用标准库的东西写出一个包含字符串和整数的哈希表。
 
-我到底想做什么呢？这个来自我的朋友 Afred Aho，他是 AWK文本处理工具的设计者之一，如果你对编译器和编译相关的东西感兴趣，他应该很出名，因为他写过一本关于编译器的教科书（指龙书）；他给了我 `!a[$0]++`这个命令行，可能不是每个人都理解：这个代码读取文件中每一行，寻找只出现过一次的行，然后将其输出。他问我“要是你该怎么做？”于是我就（用 C++）实现了一样的功能：把文件中每一行放到line变量里，然后把line放到一个unordered_map里，如果是第一次见到它，则将之输出。
-
-输出按行去重的代码示例：
+我到底想做什么呢？这个来自我的朋友 Afred Aho，他是 AWK文本处理工具的设计者之一，如果你对编译器和编译相关的东西感兴趣，他应该很出名，因为他写过一本关于编译器的教科书（指龙书）；他给了我 `!a[$0]++`这个命令行，可能不是每个人都理解：这个代码读取文件中每一行，寻找只出现过一次的行，然后将其输出。他问我“要是你该怎么做？”于是我就（用 C++）实现了一样的功能, 代码示例：
 
 ```cpp
 // the AWK program (!a[$0]++) relies on implicit I/O and loops
+// 思路： 用unordered_map给字符串计数。
 
 import std;
 using namespace std;
@@ -2209,6 +2235,7 @@ int main()  // print unique lines from input
 }
 ```
 
+把文件中每一行放到line变量里，然后把line放到一个unordered_map里，如果是第一次见到它，则将之输出。
 这是一个相当简洁明了的程序，但重要的东西不在表面。这段代码没有内存分配和释放，没有涉及size，没有错误处理，没有显式类型转换，没有指针，也没有用预处理器。所以，如果你之前觉得 C++ 只是 C 的一个变体的话，现在就应该明白并非如此。
 
 这个程序效率很高，但我们可以做得更好。这种演示程序的写法，实际工作中几乎不会这么做。
@@ -2741,6 +2768,8 @@ func main() {
     }
 }
 ```
+---
+
 ### 最佳实践
 
 #### 1. 对象池模式（Object Pool Pattern）
@@ -2793,6 +2822,8 @@ func process(data []byte) string {
 }
 ```
 
+---
+
 #### 2. 面向接口编程
 
 1. 接口由使用者定义（The consumer defines the interface）
@@ -2844,6 +2875,8 @@ type ReadWriteCloser interface {
 
 最后忠告（来自 Go 团队）：“**Accept interfaces, return concrete types.**”
 （函数参数用接口，返回值用具体类型 —— 当合理时）
+
+---
 
 ### 其他
 
