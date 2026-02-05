@@ -2402,7 +2402,7 @@ struct X {
 constexpr auto Xd = get_layout<X>();
 ```
 
-- 现在 Xd 就是一个 data_member_descriptor，其值为 {{"a", 0, 1}, {"b", 4, 4}, {"c", 8, 24}}
+- 现在 Xd 就是一个 data_member_descriptor，其值为 `{{"a", 0, 1}, {"b", 4, 4}, {"c", 8, 24}}`
 - 这里的字符串字面量就是 string_view 中的内容。
 
 我们可以尝试调用以下这个函数。为演示简洁起见，我使用了一个简单的结构体，它包含一个 char 、一个int和一个 string 成员。当我请求获取其布局时，便会得到类似这样的输出：{{"a", 0, 1}, {"b", 4, 4}, {"c", 8, 24}}。
