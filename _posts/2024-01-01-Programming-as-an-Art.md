@@ -55,6 +55,16 @@ C++:
 
 你总是可以写出符合编译器要求的代码，它在语言层面是合法的。但你不应该写出那种代码，因为它不符合道德要求。
 
+现代 C++开发者永远不应该做的事情：
+
+- 永远不要将原始指针用作资源句柄。那样你将违反我所说的所有原则。永远不要通过单个原始指针传递一组元素，比如指向数组的指针。你不知道有多少个元素。你无法进行良好的范围检查。如果你传递一个 vector，它知道有多少个元素，它知道有哪些类型。
+- 我几乎不再使用类型转换了，顺便说一句，这是泛型编程的内容。如果你不使用类型转换，你将无法避免很多类型错误。
+- 传统上，你从函数中获取大量内容的方式是将某些内容放在自由存储区，动态存储区，然后传递一个指针出来，然后你必须记得稍后删除它。如今你只需将一个 vector 移出即可。这通常是无成本的。
+- 优先用import 而不是 include， 使用概念比不使用它们更容易
+
+参考： 
+- [Interview: Bjarne Stroustrup on 21st century C++](https://www.devclass.com/development/2025/05/09/interview-bjarne-stroustrup-on-21st-century-c-ai-risks-and-why-the-language-is-hard-to-replace/1625839)
+
 #### 1. 面向对象的滥用
 
 
@@ -1462,7 +1472,7 @@ const 与 constexpr： 这是表达 ROM 的主要手段。在嵌入式系统中�
 
 ---
 
-## T4. 论文与算法
+## T4. 论文、访谈或演讲
 
 ### The Log-Structured Merge-Tree
 
@@ -1486,6 +1496,1209 @@ LSM-Tree 的核心优势在于它改变了传统 B-Tree 的写入方式。传统
 
 
 ---
+
+### C++之父2025中国：现代 C++ 的跨世纪演进
+
+#### C++的演化
+
+之所以做这个演讲，原因在于， **我注意到很多人还在用上世纪八九十年代的方式写C++代码，这让我感到很难过，在当今我们明明可以写出更好的代码**。我今天将介绍一下现代的 C++，同时也会将其视为一个整体：不仅是那些最新的特性，而是几十年来不断创造和改进的成果。
+
+好的设计始于问题：
+
+- 我想构建一个分布式 Unix 系统。在 1979 年，没有一个编程语言能满足我的所有需要。
+- 我需要高效的硬件操作，就像 C。
+- 还需要管理复杂性的抽象能力：就像 Simula，一个灵活的“强”静态类型系统。
+
+所有好的解决方案基本上都始于一个好问题——而且是一个难题。
+
+**C++ 的诞生源于我来到 Bell 实验室，那时候觉得我必须得搞些大事**，因为当时的 Bell 实验室确实是一个很棒的地方。我决定要搞一个分布式 Unix 系统。要是成功了，我们就能提前十年坐拥 Unix 集群。但当然，这种工作我一个人干不了。
+
+首先发现的问题之一是，当时没有任何一种编程语言能够满足我构建分布式 Unix 系统的所有需求。第一，这种语言必须有处理底层事务的能力，例如设备驱动程序、进程调度器、内存管理器等等；同时，它还得必须具备高级特性，以便我们能够摆脱对硬件的依赖，从而拥有像包含进程和通信模块这样的高级特性；既然系统是分布式的，这些都必须被抽象化，你就不能依赖共享内存和指针之类的东西。总而言之，我意识到我需要这样的一个东西。
+
+核心理念：在代码中直接表达思想。例子：
+ - 数学：tensor, polynomial
+ - 工程：Matrix, Fourier transform
+ - 图形学：Shading, gnome, path
+ - 生物学：DNA string, protein
+ - 电信：Buffer, channel
+ - 航空航天：Electric motor, route
+ - 汽车：vehicle, car, pedestrian
+ - 金融：instrument, transaction
+ - 计算机科学：map, task, image, file, edge
+　- ...
+ - 还得让其易于接受
+ - 唯一的限制就是你的想象力
+ - 注：大多数优秀的软件都是“润物细无声”的（most good software is invisible）
+
+当时我在 Bell 实验室，处理硬件的底层语言自然是 C 语言。我之前有过面向对象编程的经验，也熟悉通过 Simula的静态类型系统来管理复杂性。我也正是这样写的。**该项目的核心思想是将硬件的抽象层次提升到更适合人类理解的程度。每个领域都有一些基本概念，我们希望能直接用代码来表达它们。**我不想自己当编译器，把那些高层次的概念记在脑子里、写在白板上，然后再去写底层代码。我希望高层次的想法能够直接用代码表达出来。这大致就是这里面的关键理念。
+
+仅仅做到这一点还不够。你必须以一种潜在用户能够接受的方式来实现它。我年轻那会儿做研究员的时候，电脑配置并不高，所以我必须得在如今看来性能极其低下、运行缓慢的机器上跑程序。多年来，这对我很有帮助，因为不同电脑之间的差异很大。
+
+优秀的设计，基于合理的原则：
+
+- 灵活的静态类型系统
+　- 可扩展性（Extensibility）
+　- 零开销（Zero overhead）
+　- 显式类型转换尽可能少（Minimial explicit type conversion）
+- 资源管理
+　- 防止泄露（No leaks）
+- 错误处理
+　- 提供保证（Guarantees）
+- 灵活的并发支持
+　- 不局限于一种风格（No one style）
+
+当代 C++ 能比以往所有早期 C++ 更好地实现这些目标。
+
+我们需要阐明一些原则。首先得有灵活的静态类型系统；所谓灵活，是指它可以表示各种各样的事物，而不局限于计算机科学的某个特定领域。为了降低成本，它必须具有可扩展性。我希望尽可能减少显式的类型转换、强制类型转换等等，这些操作在 C 代码中随处可见，但 Simula 中没那么多。我不希望出现内存泄漏。我希望资源管理能够有效维护现有资源。错误处理必须提供保证，并支持灵活的并发性。这就是我今天演讲的主题。
+
+
+好的工具随需求而演进：
+
+- 为什么要演进？
+　- 世界在变化
+　- 面对的问题也在变化
+　- 我们自己亦在变化
+- 优秀的工程依赖于反馈和演进
+　- 例如，泛型编程 (Generic programming)，编译期时计算 (Compile-time programming) ，模块 (Modules）。
+- “要是有人宣称自己有完美的编程语言，他要么是传销要么蠢，或者二者皆是。(Someone who claims to have a perfect programming language is either a salesman or a fool, or both.)”（—— Bjarne Stroustrup, 1980s onward)
+- “就算是我也能设计一个更好看的语言。(Even I could design a prettier language.)”（—— Bjarne Stroustrup, 1980s onward)
+
+一个问题是，为什么一门编程语言需要改变？
+
+C++之所以会变，其中一个原因，也是它当初设计成“可以改变”的原因，显然是因为我当时没办法设计出理想的编程语言。我的团队规模有限。除此之外，我也认为不可能有一种编程语言完美适用于所有人、所有情况。所以，我们必须跟上世界的变化，跟上写代码方式的变化，并与之保持同步。
+
+此外，优秀的工程设计依赖于反馈和改进。也就是说，**我们尽最大努力构建一个系统，然后观察运行情况——观察哪些有效，哪些无效，然后进行改进；这正是所有工程领域共通的基本工作方式**。在设计时，既知未来会发生某些事情，就必须将未来可能发生的事情纳入考量。你会有一个总体的方向，知道自己想要实现什么，也明白将来一定可以做得更好。所以不能把改进的道路给堵住。某些语言经过精心设计，旨在阻止你从事任何计划外的操作；而 C++ 的设计哲学恰恰相反——它被精心设计成能够适应新的挑战。
+
+稳定性与演进
+
+- 稳定性 (Stability)：过去能用的现在依然能用 (what used to work well, still works well)
+　- 演进 (Evolution)：我们如今往往能做得更好 (usually, we can do even better today)
+　- 现实世界的进步：开发者如何抓住那些必要的变化？
+现在面临两个问题：我们想要发展，但也需要稳定性。许多组织要求代码必须能够运行数十年。我们有些代码是在 20 世纪 80 年代、90 年代写出来的，至今仍在运行。这一点至关重要。我们曾多次尝试简化语言，但从未成功。开发者和用户都不希望他们的代码出现问题，所以我们需要稳定性。我们同时还需要发展，需要从现实世界的问题中汲取灵感，并解决问题，而不是将其变成一种脱离实际的学术演练。
+
+![image](https://pic4.zhimg.com/v2-35723c2b1f0d41dbee0da8034659053d_1440w.jpg)
+
+这里我们看到一张 C++ 历年发展历程的图表，展示了用户数量、以及他们最初接触 C++ 时所体验到的各种功能。需要指出，统计用户数量非常困难；这图只是我的估计，后来有人说我大错特错。实际上，有机构统计出有1630万用户，这意味着我的估计偏差了大约 2.5 倍。这个偏差算是好的。
+
+那些新东西不是当代 C++ 的全部。如果你去看网上那些文章和 YouTube 里的视频等等，会看到人们对着最新、最炫酷的东西大谈特谈，但那并非全貌。我们拥有的语言是一个整体，各个特性相互支持、相互补充。我们既会沿用几十年来一直在使用的传统方法，也会采用新技术，它们完美契合，这一点至关重要。**C++ 的真正目的在于编写优秀的代码。**
+
+![image](https://pic3.zhimg.com/v2-6cfde8a22b8d01bee08ef6ef1699b4e0_1440w.jpg)
+
+**让我坚持下去的动力，也是我认为的关键所在，是编程语言的价值在于它的应用范围和质量。**这里我们列举了一些具体应用。比如，用于制作电影和动画的软件。还有一个服务器集群，里面运行着许多复杂的大型程序。甚至还有咖啡机也在用 C++ 编程。我喜欢咖啡，我的办公桌上就有一台咖啡机。
+
+我不参与语言之争，因为很多语言的实现里就是大量用 C++ 的，所以还是别在这里挑起语言之争了。
+
+我的背景是分布式系统。我觉得分布式系统的应用才是最有趣的。重要的是我们能做什么，而不是具体的细节。在这里，我重点关注：
+
+- 资源管理 (Resource management)
+　- 包括控制生命周期和错误处理
+- 泛型编程 (Generic programming)
+　- 包括 concepts
+- 模块 (Modules)
+　- 包括去除预处理器
+- 指南及其施行
+　- 如何保证写出“21 世纪的 C++”？
+
+#### 如何编写 21 世纪的 C++代码
+
+我说过会研究资源管理和泛型编程的问题。然后，我想到一个难题：在一个充斥着遗留代码、且程序员们接受的训练早已过时的世界里，我们该如何真正使用这些新特性？我们如何在这门语言上迈出前进的一步？**我们该如何编写出真正属于 21 世纪的 C++，而不是 20 世纪的 C++**？
+
+#### 资源管理：C++ 的基石
+
+- 资源是你必须获取并随后释放（归还）的东西
+　- 显式或隐式
+　- 例子：内存，字符串，锁，文件句柄 (file handles)，sockets，线程句柄 (thread handles)，事务 (transactions)，着色器 (shaders)，...
+- 防止资源泄露
+　- 避免手动释放
+　- 代码里不要有 free、delete，或者是类似的资源释放
+- 每个资源都由一个句柄表示
+　- 为获取和释放负责 (Responsible for access and release)
+　- 代码里不要有 malloc、new，或者是类似的资源获取
+- **每个资源句柄都根植于一个作用域中**
+　- 句柄可以从一个作用域移动到另一个
+
+我们从资源管理开始。这实际上是在 C++ 开发的最初两周就开始考虑的问题，因为我之前从事操作系统和机器架构方面的工作，深知我们不能泄漏资源。如果资源泄漏了，各种糟糕的事情就会发生。比如，如果你在为太空探测器编程，无论泄漏何种资源（比如一块内存），其结果就是探测器失效，你便没法派宇航员去火星或其他地方。
+
+资源指的是任何需要获取、随后释放的东西。释放操作需隐式进行，因为我们可能会忘记释放资源，抑或是错误地释放两次。我们不想遇到这种麻烦，而且从很久之前就理应避免这么写。但不知为何，人们仍然会写出需要显式释放的代码。不要这样做。如果你写出显式释放的代码，那么代码很可能存在问题。 **不要直接写 free、delete 以及类似的操作，所有这些都必须隐式进行。**
+
+我们实现的方式是用一个句柄 (handle) 来代表资源，这个句柄控制着对资源的访问。资源通常是程序的一部分，例如操作系统、内存管理器、内存池管理器、文档管理器等等。句柄负责资源的获取和删除，并提供使用该资源所需的正确操作。
+
+> 提升抽象层次
+
+![image](https://pic2.zhimg.com/v2-9f2e6682b7b0aab9e2efb7cebfa916c3_1440w.jpg)
+
+```cpp
+template<typename T>
+class Vector { // vector of elements of type T
+public:
+    Vector(std::initializer_list<T>); // acquire memory; initialize elements – constructor
+    ~Vector(); // destroy elements; release memory – destructor
+    // ...
+private:
+    T* elem; // pointer to elements
+    int s; // number of elements
+};
+
+void fct()
+{
+    Vector<double> constants {1, 1.618, 3.14, 2.99e8};
+    Vector<string> designers {"Strachey", "Richards", "Ritchie"};
+    Vector<pair<string, jthread>> vp{ {"producer", prd}, {"consumer", cons} };
+}
+```
+
+我举一个最简单、最传统的例子：一个vector。从最底层开始，首先需要有指针 elem和一个整数 s，用来表示元素的数量，C 风格代码就是这么写的。但是，我们希望提升到更高的抽象层次，使用必须正确初始化的类型。此外，还需要一个析构函数，在退出作用域时正确地清理资源。
+
+于是，我们可以在这里写出 Vector<double>，它包含一些浮点常数；也可以写出Vector<string>，包含一些字符串。以及这里最后还有一个刻意设计的、有些复杂的嵌套抽象 Vector<pair<string, thread>>， 我用它来表示生产者-消费者模型 (producer-consumer pair)。
+
+我们曾经在网上举办过一个比赛，主题是C++中最酷的特性是什么，一位叫 Roger Orr 的人回答是：
+
+```text
+}
+```
+你看，就是在大括号这里，所有神奇的事情都发生了。先是vp的析构函数被调用，然后是 designers和constants；并且这个过程是递归的，当vp的析构函数被调用时，它会调用pair函数的析构，pair又会调用 string的析构和线程析构函数，以此类推。这样我们就简化了原本可能很复杂的部分，现在看起来非常简单。
+
+我们每个资源句柄都是类似这样的东西，一个vector就是一个资源句柄。我们可以控制对象的生命周期，这非常重要。我们可以控制对象的构造、销毁、复制，以及将对象的句柄从一个作用域移动到另一个作用域的能力，所以我们拥有完全的控制权。这正是许多现代 C++ 的关键所在。
+
+我们每个资源句柄都是类似这样的东西，一个向量就是一个资源句柄。
+
+**生存周期控制 (Control of lifetime)**
+
+- 对简单且高效的资源管理是必要的
+　- 构造 (Construction)
+　　- Before first use establish the invariant (if any)
+　　- 构造函数 Constructor
+　- 析构 (Destruction)
+　　- After last use establish the resource (if any)
+　　- 析构函数 Destructor
+　- 复制 (Copy)
+　　- Copy: a=b implies a==b (regular types)
+　　- 复制构造函数 copy constructor X(const X&)
+　　- 复制赋值 copy assignment X::operator=(const X&)
+　- 移动 (Move)
+　　- 在作用域之间移动资源
+　　 - 移动构造函数 move constructor X(X&&)
+　　- 移动赋值 move assignment X::operator=(X&&)
+
+#### 现代C++的代码示例：提升抽象层次
+
+我来展示一些现代 C++ 的例子。有些人认为“你必须阅读所有包含各种复杂内容的代码”，我选择这个例子就是为了颠覆这种固有观念。首先是引进标准库 (import std)。我们稍后会讲到模块 (Modules) 这个东西。随之用标准库的东西写出一个包含字符串和整数的哈希表。
+
+我到底想做什么呢？这个来自我的朋友 Afred Aho，他是 AWK文本处理工具的设计者之一，如果你对编译器和编译相关的东西感兴趣，他应该很出名，因为他写过一本关于编译器的教科书（指龙书）；他给了我 `!a[$0]++`这个命令行，可能不是每个人都理解：这个代码读取文件中每一行，寻找只出现过一次的行，然后将其输出。他问我“要是你该怎么做？”于是我就（用 C++）实现了一样的功能, 
+
+**按行去重的代码示例 1（C风格：面向过程）**：
+
+```cpp
+// the AWK program (!a[$0]++) relies on implicit I/O and loops
+// 思路： 直接遍历，用unordered_map给字符串计数, 判断是否重复。
+
+import std;
+using namespace std;
+
+int main()  // print unique lines from input
+{
+    unordered_map<string, int> m; // hash table
+    for (string line; getline(cin, line);)
+        if (m[line]++ == 0)
+            cout << line << '\n';
+}
+```
+
+把文件中每一行放到line变量里，然后把line放到一个unordered_map里，如果是第一次见到它，则将之输出。
+这是一个相当简洁明了的程序，但重要的东西不在表面。这段代码没有内存分配和释放，没有涉及size，没有错误处理，没有显式类型转换，没有指针，也没有用预处理器。所以，如果你之前觉得 C++ 只是 C 的一个变体的话，现在就应该明白并非如此。
+
+这个程序效率很高，但我们可以做得更好。这种演示程序的写法，实际工作中几乎不会这么做。
+
+更可能的做法是创建一个函数，用于收集所有输入信息，然后将其存储在一个vector<string>中，以便我们可以对其进行操作，例如排序、搜索等等。这里，我们只是用它来输出不重复的行。函数名叫做collect_lines，它接受一个输入字符串，并返回一个vector<string>。这里我只需要一个set， 无需进行任何计数，set本身就知道如何只包含唯一一个值。我们调用getlines ，插入line ，然后把set转换成vector并返回。
+
+**按行去重的代码示例 2 （C++风格：无需计数，单独函数，消除拷贝）**:
+
+[!imgae](https://pica.zhimg.com/v2-9b0986683ae8dfb51710b2a503e5578c_1440w.jpg)
+
+```cpp
+// 思路： 定义单独的功能函数，收集收入到set，转换成vector并返回.
+
+import std; // 需要编译器开启 C++20/23 Modules 支持
+using namespace std;
+
+vector<string> collect_lines(istream& is)    // collect unique lines from input
+{
+    unordered_set<string> s; 
+    for(string line; getline(is, line);) 
+        s.insert(line);
+    
+    // C++23: std::from_range 标签构造函数， 告诉编译器，右边的参数是一个range
+    return vector<string>(from_range, s); 
+}
+
+int main() {
+    // 编译器通常会使用 NRVO (Named Return Value Optimization) 直接在目标位置构造对象，完全消除拷贝。
+    // 即使编译器没有优化，也会触发 移动构造函数 (Move Constructor)，仅仅交换指针的所有权，代价极低。
+    auto lines = collect_lines(cin); 
+
+    for (const auto& s: lines) // 建议加上 const，避免不必要的修改
+        cout << s << '\n';
+        
+    return 0;
+}
+```
+
+你可能会认为这里存在vector的拷贝，但实际没有，这里只是将函数作用域内构造的对象移动给lines；实际上，程序会直接在外面构造lines对象 ，根本没有开销。这是是零开销的抽象 (Zero-overhead abstraction)。我在 1983 年就将这种优化构建到 C++ 中，而现代 C++ 能保证在许多情况下可以进行移动。
+
+最后有了lines，我们将其输出。这段代码不是 C 风格的，这很重要。现在的代码已经相当高效，但仍然可以做得更好。例如，为什么不直接从 istream_view中构建unordered_set？
+
+输出按行去重 #3
+-使用 vector的移动构造函数
+　- 相比操作 new、指针和delete，既快又简单
+- 更优解：直接在 lines中构造 vector（1983 年就有了）
+　- 拷贝消除 (copy elision)
+
+**按行去重的代码示例 3（直接构造：面向对象）**:
+
+```cpp
+// 输入input，直接构造set，然后拷贝构造
+struct Line: string {};
+istream& operator>>(istream& is, Line& ln) { return getline(is, ln); } 
+
+vector<string> collect_lines(istream& is) // collect unique lines from input
+{
+    // 直接构造，而不是缺省的空构造，再修改。
+    // 思维方式的转变： 从 "手写算法控制数据流动" 变成了 "构建数据流水线 (Pipeline) 并直接实例化"。
+    unordered_set<string> s {from_range, istream_view<Line>{is}}; // construct the set directly from input
+    return vector {from_range, s};
+}
+
+auto lines = collect_lines(cin);
+```
+
+将输入字符串按行读取，直接放入set，然后返回vector。不错，只有一个问题：标准库没有Line类型。正如字符串string作为读取单词的抽象，我希望有Line作为一行内容的抽象，解决方案是Line就是能一整行读进来的字符串。这很容易做到，下面就是一种方案：Line就是能一整行读进来的字符串。
+
+注：传统的面向对象编程
+- 不要痴迷于只使用新特性
+- 许多旧的特性仍然必不可少，并且往往是完成其擅长任务的最佳选择。
+
+关键在于，这是经典的面向对象编程。我们的新代码以 Simula 的形式进行面向对象编程。我把它放在这里是为了说明传统方法仍然非常有价值，就像现在一样。
+
+有人说 C++ 是一种面向对象的编程语言。它确实是一种对面向对象编程支持很好的语言，但这并非全部。我这里也展示到了很多泛型编程，如set、map和vector。但它仍是面向对象的，就像输入和 I/O 操作一样。当然，还可以进一步优化。虽然还有一些字符串复制操作，但我时间有限，就不赘述了。
+
+#### 调优：“洋葱原则”
+
+“对某些代码来说，调优是必要的，”Stroustrup 转入了性能优化的话题。“但我们都听过 ‘避免过早优化’ 这个建议。重要的是要在优化前后都进行性能测量，同时在设计接口时就要考虑优化空间。”
+
+调优 (Tuning)
+- 对某些代码必不可少
+- “避免过早优化 (do not optimize prematurely)”
+- 永远在优化前后进行测量 (Always measure before and after optimization)
+- 若有需要，设计接口以允许优化 (Design interfaces to allow optimization if needed)
+- well defined
+- type rich
+- with enough information to enable checking and optimization
+- 复杂度管理 (Complexity management)
+- Make simple things simple!
+- 抽象层次 (Layers of abstraction)
+- 剥开得越多，流的泪就越多（The more layers you peel off, the more you cry）
+
+我会指出依然可以做些什么。如果我们想做得更高效，可以“剥掉”一层抽象。我们有一些定义良好的接口，允许我们以任何喜欢的方式实现。要是还想要更高的性能，可以再下降一个层次，在更低的抽象层次编写代码。要是还不够就再下降一层。还不够的化，可以一直深入到硬件。我们甚至可以为那些对性能要求很高的抽象层提供专门的硬件。这实际上是许多最重要的 C++ 应用的关键。人们会编写很底层的代码，这些代码被良好的接口隐藏起来，例如他们会用这种方式使用 FPGA 或 GPU，但代码看起来仍然像普通代码，我们可以理解并操作。这非常有用。
+
+我称此为“洋葱原理 (onion principle)”。原因很简单，就像剥洋葱一样，你会忍不住流泪。剥开得越多，流的泪就越多。同样， **在实现抽象层次较低的事物时，也就是一层层剥去抽象层，你需要编写更多的代码，犯错的机会也就更多。你犯的错越多，流的泪也就越多。**这就是“洋葱原理”，一种处理抽象问题的方法。
+
+资源与错误 (Resources and errors)
+- 总而言之
+　- 不要泄露资源 (Don't leak a resource)
+　- 不要让资源处于无效状态 (Don't leave a resource in an invalid resource)
+- 当一个错误发生时
+　- 在退出函数之前：
+　　- 把访问过的每个对象都置于有效状态 (Put every object accessed into a valid state)
+　　- 释放该函数拥有的每个对象 (Release every object that the function owns)
+　　- 如果每个资源都有句柄，这很容易做到；如果没有，那就基本上不可能了。
+
+---
+
+#### 错误处理
+
+我们还需要处理错误。在实际的程序中，在现实规模下，我们必须处理错误。而且我们不应该留下资源，也不能让对象处于错误状态。要是犯了错误，需要退出当前程序，我们必须确保“离开后所有仍然存活的对象都处于良好状态”。否则，之后我们会还遇到错误，情况会变得更糟。在退出函数之前，请将每个对象访问都置于有效状态，释放该函数拥有的所有对象，然后将问题留给其他程序处理。
+
+```cpp
+void f(int n, int x)
+{
+    Gadget g{n}; // a Gadget may hold resources, e.g., memory, locks and file handles
+    Gadget* pg = new Gadget{n}; // explicit new: don't!
+    // ...
+    if (x<100) throw std::runtime_error("Weird!"); // leak *pg; g not leaked.
+    if (x<200) return;                             // leak *pg; g not leaked.
+    // ...
+}
+```
+
+这里有一个正确操作以及错误操作的例子。这里的 Gadget g 是一个局部变量，它需要一些资源 —— 这里无需具体说明它需要哪些资源，它是可析构的，能把这些资源清理掉。这里还有一种方法 —— 遗憾的是它并不少见，人们直接用 new创建对象，并赋值给指针；我看到很多人写这样的代码，因为他们在 Java、C# 等语言里就是这么干的。但是，在后面的代码里，我们必须记住手动销毁 pg ，而 g 则会被自动销毁，不用管 g拥有什么资源，如果有的话；它可能拥有很多资源，可能有一个文件句柄，可能占用了大量内存，而所有这些都会在这里被清理掉。如果我们抛出异常，它也会被清理掉；如果只是使用 return语句，它也会照样被清理掉。然而，所有这些情况下，我们都必须记住 delete pg。经验表明，我们经常忘记这件事情，导致错误的发生，然后不得不处理它，然后仍然会犯错。
+
+所以， **经验法则是：不要直接使用 new (no naked new)。new 应该放在资源句柄中。**所有类型的资源都应该如此。如果你不想用标准的内存管理器，你也可以定制一个，不过这些都是资源句柄。不要让它们出现在你的应用程序代码里。 **要是你在应用程序代码中使用了new操作，我便怀疑你的代码中有 bug：因为你必须记住 new的释放。要是我看到delete操作，我照样会怀疑是否存在 bug：你是否在所有地方都执行了删除操作？你是否重复删除了某些内容？**这更糟糕！我们不希望发生这种情况。
+
+有哪些方式来报告错误呢？基本上有两种。一种是返回一个需要被检测到的返回码 (return code)，用来判断是否存在错误、或是任务是否完成；另一种是抛出异常 (exceptions)。如果你预测到错误的发生，或者你认为这种情况比较常见，那就返回一个错误码，使之得到立即处理。这是用于文件句柄这类任务的。
+
+然而，有很多错误无法在本地处理，这时候就用异常。举个例子，用远程文件系统，请求通过网络传输；网络错误虽然罕见且难以处理，但也不是每次获取资源时都会遇到的，人们往往会忘记进行相关测试。有时，程序是在文件系统出现之前编写的，网络是中间环节， **所以程序并不知道这些错误的存在，因此需要异常来处理这种情况**。我们会用异常处理构造函数、运算符以及几乎所有无法准确预测的情况。这种方法实际上非常高效。目前的实现中，有些速度很慢，而一些效率更高的异常处理正在开发中，用于小型嵌入式系统。
+
+```cpp
+void fct(jthread& prod, string name)
+{
+    ifstream in {name};
+    if (!in) { /* ... */ } // possible failure expected
+    // ...
+    vector<double> constants { 1, 1.618, 3.14, 2.99e8 };           // memory exhaustion possible
+    vector<string> designers {"Strachey", "Richards", "Ritchie"};  // nested construction
+    // ...
+    jthread cons { receiver };
+    pair<string, jthread&> pipeline[] = {{"producer", prod}, {"consumer", cons}};
+    // ...
+}
+```
+
+来看一个例子。这里，我有一个示例函数，它接收一些参数，然后打开一个文件。显然，我可以预料到这个文件可能没有被打开——也许是拼错了文件名，也许是传入的文件名本身就有问题，此时无法进行读写操作。另一方面，内存耗尽的情况虽然罕见，但也并非不可能。比如这里，我把三位语言设计者的名字加上首字母添加到了代码中。你会把错误处理语句和 if 语句放在这里吗？首先，这种错误很少发生。其次，代码会变得非常丑。 **如果你要写这样的代码，并且需要测试所有可能出现的错误，代码就会变得一团乱麻，要写的代码量至少会增加三到四倍，因而也会产生更多的错误。这应该是异常处理的用武之地。**而 ifstream这里是异常处理不适用的地方，因为应该在本地处理掉：你明确知道错误可能发生。
+
+顺便一提，这里提到了异常处理的新实现，它们速度很快，非常适合小型系统。这是 [CppCon 204大会 - Khalil Estell](https://www.youtube.com/watch?v=bY2FlayomlE) 演讲的一个精彩视频；如果你使用 Clang 或 GCC 的话，可以下载这个实现，用它代替默认实现。
+
+总结一下，要管理资源，不要泄露。为此，我们需要能够将对象句柄从一个作用域转移到另一个作用域。我们需要控制对象的创建、销毁和复制。我们需要能够系统地处理错误。
+
+---
+
+#### 泛型编程
+
+话题步入到泛型编程。今天在 C++ 中使用的泛型编程源于 Alex Stepanov 的工作，他利用各种机制实现了零开销。这让我们能够编写出更简短、更易读的代码，同时，它也是整个 C++ 标准库的基石。无论是容器、并发原语、内存管理、I/O、字符串处理，还是正则表达式等等，都广泛运用了我即将介绍的泛型编程技术。
+
+```cpp
+void sort(Sortable_range auto& r);
+
+vector <string> vs;
+// ... fill vs ...
+sort(vs);
+
+array<int, 128> ai;
+// ... fill ai ...
+sort(ai);
+
+list<int> lsti;
+// ... fill lsti ...
+sort(lsti);   // error: a list doesn't offer a random access
+```
+
+那么，我们究竟想用它做什么呢？举个例子，我希望能够对任何“满足可排序条件的元素序列”（或者说范围）进行排序。为此，我们首先需要定义什么是 Sortable_range。但在现阶段，可以先简单地理解为：一个 Sortable_range需要满足一系列“约束（constraints）”，规定了排序操作所必需的条件。现在可以取一个字符串向量，填充一些合适的内容，然后对其进行排序，编译器会处理剩下的部分；我们可以对一个包含 128 个整数的array做同样的排序；我们可以尝试对一个list<int>进行排序，但这就行不通了：原因在于，标准规定你得先是一个 random_access_range，也就是可随机访问的元素序列，才可以排序，并且其中的元素本身得是可以相互比较的。
+
+现代泛型编程带来的一个关键区别是，如今你可以精确地定义 Sortable_ranges这个 concept。这意味着，对类型条件的检查可以恰好发生在函数调用的地方，从而提供更清晰的错误信息。
+
+同样重要的是，我们希望尽可能多地让编译器掌握信息，这样就不必在代码中重复写出来。如果我们不得不手动明确指定所有细节，不仅繁琐，也增加了犯错的机会。因此，在上面的例子中，容器的类型是编译器已知的，无需再额外说明；容器中元素的类型也是已知的；甚至元素的数量也是已知的。默认情况下，排序使用“小于”（<）操作进行比较，而random_access_range这个 concept 会确保该操作确实存在。这套机制让我们非常接近泛型编程的理想目标。
+
+我当初设计对泛型编程的支持、亦即后来的模板 (templates) 时，初衷是要满足三个条件：首先，它必须能够完成超出我想象的功能；其次，我希望它是零成本抽象，否则人们就会转而去编写底层代码；最后，我希望有像刚才展示过那样的良好接口。但我发现这三个条件无法同时满足。我走遍世界各地与专家交流，他们也无法同时做到这三个条件。我们实际上花了 20 年时间才找到解决这个问题的方法。但在此期间，我们已经实现了前两个条件：通用性和零开销。
+
+```cpp
+template<typename Random_access_iterator, typename Compare = std::less>
+void sort (Random_access_iterator fist, Random_access_iterator last, Compare = Compare{})
+{ ... }
+
+vector<string> v = {"CPL", "BCPL", "C", "C++"};
+
+sort(begin(v), end(v));                           // sort the vector
+sort(begin(v), begin(v)+size(v)/2);               // sort the first half of the vector
+sort(begin(v), end(v), greater<string>());        // sort strings in accenting order 
+
+int a[] = {3, 1, 4, 2, 6, 9, 0, -1};
+
+sort(begin(a), end(a)); // sort the array
+sort(begin(a), end(a), [](int x, int y){ return abs(x)<abs(y); }); // sort absolute value
+```
+
+这个例子是传统的 C++98 模板。我接收一个first和一个last，它们必须是相同类型，称为 Random_access_iterator，然后还有一个比较函数。我们可以实现展示出来的所有这些有趣的事情，唯一的问题是我们实际上没有说明要求什么。这里只是用了一个“名为 Random_access_iterator 的类型”，而它没有指明 Random_access_iterator 是什么，也没有说明它必须是一个“能随机访问的迭代器”。所以这违反了语言的基本设计规则。
+
+尽管如此，这套机制在实践中被证明极其有用，它构成了标准库的基石，支撑了无数高级应用，无论是简单还是复杂的场景都能胜任，并且保持了出色的运行效率。
+
+我特别不喜欢“排序vector的开头，逗号，vector的结尾”这种写法；我想说“排序vector”。尽管它非常、非常成功，规模非常大，在数十亿行代码，数百万个程序中都用到，但我们需要做得更好。
+
+#### 概念
+
+Concepts for specifying constraints
+- A concept is a compile-time predicate
+-- A function run at compile time yielding a Boolean
+-- Ofeen built from other concepts
+- Specify the requirements for `sort()`
+
+First try:
+
+```cpp
+template<typename R>
+concept Sortable_range = 
+    random_access_range<R>         // has begin()/end(), ++, [], +, ...
+    && sortable<iterator_t<R>>;    // can compare and swap elements
+
+void sort(Sortable_range auto& r);
+```
+
+这里是对 Sortable_range的规范定义。这正是我期望排序函数所接受的参数应当满足的约束。这基本上是一个编译期函数。它的语法看起来或许有些特别，但含义非常明确：它说，如果类型 R 是 random_access_range 并且其迭代器是可排序 （sortable）的，那么 R 就是 Sortable_range。直截了当。我们没有使用函数通常的圆括号，而是使用尖括号来表示参数，但这确实是一个接收类型 R 的编译期函数。
+
+定义了之后，我便能够说自己希望sort接收一个那样的Sortable_range。顺便说下，random_access_range和 sortable在标准中已有定义，所以你不必自己定义；就像其他函数一样，我们通常不会编写所有函数，基础的东西都在库里。你上次编写平方根函数是什么时候？对我来说是 40 多年前，因为它在库里，自从我学生时代学会如何写后，就再没写过。这里的 concept 也是如此——concept 就是编译期函数，可以接收类型参数。
+
+概念 Concepts
+- 刚才那个简单的 Sortable_range对于基础库而言还不够通用。
+　- 我们还需要明确一个比较准则。
+- concept 可以接受多个参数
+　- 它们不仅仅是“类型的类型”
+- 标准库里的算法和 concept 非常通用，
+　- 通常带有许多参数和重载
+
+```cpp
+template<typename R, typename Compare = ranges::less>
+concept Sortable_range = 
+    random_access_range<R>                  // has begin()/end(), ++, [], +, ...
+    && sortable<iterator_t<R>, Compare>;    // compare elements using Compare
+
+template<Sortable_range R, typename Compare = ranges::less>
+void sort(R& r, Compare cmp = {})
+```
+
+自此，我就可以定义标准库中常见的排序函数了。它稍微复杂一些：接受一个 Sortable_range，以及一个比较函数 Compare，该比较函数可以用来对通过迭代器访问的内容进行排序。所以，如果 R 是一个Sortable_range，那么它就是一个“可排序的范围”。同时它是一个 random_access_range，你可以使用比较函数 Compare进行排序。注意，这实际上是一个非常普通的函数，它接受两个参数。而且通常情况下，你确实需要用到两个参数。这不是类型定义之类的东西，它是一个函数。我们可以写出通用的代码。
+
+```cpp
+vector v = {1, 5, 2, 8, -1};
+
+sort(v);                      // sort using <
+sort(v, ranges::greater{});   // sort using >
+
+list lst = {1, 5, 2, 8, -1};
+sort(lst);                    // error: a list isn't a Sortable_range - no random access
+```
+
+好了，现在可以写出这样的代码了。如果我有一个 vector，我可以对其进行排序，也可以反向排序。但如果我对一个list执行相同的操作，会立即失败。此时，程序会给出一个还算合理的错误信息，不会延后到模板实例化等。写过 C++ 的人都知道，以前的错误信息简直糟糕透顶，因为编译器根本不知道我们想做什么，无法给出相应的错误信息；直到模板实例化时，它才能够将信息整合起来。所以我们这才可以做得更好。
+
+使用 - 但是接受一对迭代器的传统 sort()怎么办？
+- 基于概念的重载
+
+```cpp
+template<typename Iter, typename Compare = ranges::less>
+concept Sortable_iterator =
+    random_access_iterator<Iter>  // has begin()/end(), ++, [], +, ...
+    && sortable<Iter, Compare>;   // compare elements using Compare
+ 
+template<Sortable_iterator Iter, typename Compare = ranges:less>
+void sort(Iter first, Iter last, Compare cmp = {});
+
+vector v = {1, 5, 2, 8, -1};
+sort(v.begin(), v.end()); // traditional
+sort(v);                  // more directly expressed
+```
+
+当然，我之前说过稳定性很重要。在设计好功能之后，当然也要确保旧的排序方式仍然有效，而它们确实如此。这里定义了一个 Sortable_iterator，它是一个 random_access_iterator ，并且能进行排序（sortable）。我可以定义接受两个迭代器的sort函数，并且明确地指定它必须接受迭代器 Iter作为参数，而不仅仅是简单地把它们的名字写作 Iterator。现在我既可以用旧的方式对vector进行排序，也可以用新的方式排序。这两种排序方式的选择取决于函数重载，非常简单。
+
+
+概念 Concepts
+- 我们一直都有“concepts ”这一思想。例如：
+　- C built-in types: arithmetic and floating (from 1972 or so)
+　- STL concepts: iterators, sequences, and containers (since the early 1990s)
+　- Mathematical concepts: monad, group, ring, and field (from a couple of centuries)
+　- Graph concepts: edge, vertex, graph and DAG (since 1736)
+- 除非程序员脑海中对涉及的“concepts ”有清晰的认知，否则任何泛型程序都无法工作
+　- What is relatively new is that we can define them to be used in code.
+- C++ concepts 是可以接受类型实参的编译期函数（谓词）
+　- Simple
+　- General
+
+实际上，我们一直都有“concept”，只是以前无法表达出来；比如在 C 语言中，内置类型既有算数类型(Arithmetic types)，也有浮点类型。Dennis Ritchie 早在 70 年代就说过这一点。STL 也一直支持迭代序列和容器，自从 Alex Stepanov 定义出来就一直如此。现在我们称之为 sequences 或 ranges，但这只是技术层面的差异。数学中也有很多“concept”，例如代数里的那些，以及图操作、图中的概念：如图的顶点，我们已经用了几百年了。唯一的新变化是，我们现在可以用代码来表达它们，编译器也能理解它们。没有它们，你就只能依赖文档标准，而编译器不会读文档，大多数程序也不会。concepts 就是编译期函数，总体上是个很简单的东西。我们有必要学习如何使用它。我注意到，人们需要一段时间才能适应“现在可以对类型参数编写函数”这一事实。
+
+概念通常由其它概念构建而成 (Concepts are often built out of other concepts)
+
+```cpp
+template<typename R, typename Pred = ranges::less>
+concept Forward_sortable_range =
+    ranges::forward_range<R>                   // has begin(), end(), ++, ...
+    && sortable<ranges::iterator_t<R>,Pred>;   // compare elements using Pred
+```
+
+构建 concept 时，我们通常会基于其它 concept 进行构建。这里的例子是Forward_sortable_range，它由 forward_range 和可用 Pred的排序的对象构成。forward_range和sortable都是标准库中有的。
+
+- requires运算符是一种底层机制，用于检查构造是否为有效的C++。
+- 它对于表达底层要求至关重要，但在高层级代码中最好避免使用，在那些地方使用已有名称的概念（它们往往由 requires构建而来）更易于理解和维护。
+
+```cpp
+template<typename T, typename U = T>
+concept equality_comparable = requires（T a, U b) { // use patterns
+    {a == b}-> Boolean;
+    {a != b}-> Boolean;
+    {b == a}-> Boolean;
+    {b != a}-> Boolean;
+}
+```
+
+有时，我们必须深入底层，使用语言的基本特性。如上是 equality_comparable 的定义。有两种类型：T 和 U，我们可以比较 T 和 U 类型的对象，前提是代码里这些操作合法且返回布尔值。这些操作被称为使用模式 (use patterns)，它们简单易懂地告诉你能对该类型的变量做什么，从而指定要求。这说起来容易做起来难，但确实很有效，人们已经用了有一段时间了。
+
+使用模式 (use patterns)
+- 在模板中，concept 明确了能够对其参数进行的操作 (Concepts specify what a template must be able to do with its arguments)
+　- 而不是说模板参数“必须是什么”（Not exactly what an argument type must be.）
+- 例如，在 requires (X a, Y b) { a+b; }中，a+b 可以由下面各种方式实现
+　- X operator+(X, Y); // if a is an X and b is a Y
+　- X X::operator+(const Y&); // if a is an X and b is of a class derived from Y
+　- Y operator+(const X&, const Y&); // if an X can be implicitly constructed from a Y and a Y can be implicitly constructed from a X
+　- Y operator+(Y, X&); // if a Y can be implicitly constructed from a X and b is an X
+　- ... 还有很多 ...
+- 这很重要
+　- Handles mixed-code arithmetic
+　- Handles implicit conversions
+　- Interface stability (as the definition of + changes)
+
+这么写的原因是，我们想明确说明“允许做的行为”。从泛型编程的角度来看，我们希望了解“如何处理这些值”，而非具体实现方式。运算符的实现方式多种多样。例如，这里展示了如何用不同的方法实现 X 和 Y 的加法运算。实现方式有很多种，在程序的生命周期内，加法运算的实现方式可能会发生变化，通常是为其更加通用，能够处理更广泛的数据类型。这使得写泛型代码变得非常容易，因为我们不必总是关注运算的具体实现。这还意味着处理混合的运算，例如之前的 T 和 U，或者这里的 X 和 Y，它们不必是同一类型。此外，它还支持隐式转换。这意味着，如果有人更改了加法运算的实现，我们无需修改程序代码，只需重新编译即可。这保证了接口的稳定性。
+
+概念的益处 Benefits of concepts
+- 支持好的设计
+　- 就像类 (class) 那样
+- 可读性，可维护性
+　- 过度使用无约束的类型 (auto和typename是问题的来源）
+- 大幅改进错误信息
+- 重载
+　- 像函数一样，但更简单
+
+concept 有巨大的影响。我们在编程语言中获得适当类型并产生 concept。它支持好的设计，就像类 (class) 做的那样；它提供了可靠性、可维护性；你可能首先注意到的是它大幅改进了错误信息，并且按我们期望的方式处理重载。
+
+#### 模块
+
+```text
+模块 (Modules)
+- 顺序依赖 (Order dependence)：
+#include "a.h"
+#include "b.h"
+　可能调换顺序后又不一样的行为
+#include "b.h"
+#include "a.h"
+- #include纯粹是文本包含
+- 这表明
+　- #includeis transitive
+　- much repeated compilation
+　- subtle bugs
+
+- 模块化 (Modularity)
+import a
+import b
+　调换顺序后行为完全一样
+import b
+import a
+- import 不是传递的
+- 这表明编译工作只需执行一次
+```
+
+现在讨论另一个现代化设施：模块 (Modules)。模块有很多好处，其中之一是我们现在可以像处理其他代码一样处理模板，只需将其放入模块即可。
+
+我们真正想要的是“模块化 (Modularity)”。C 语言“假装”有了模块化，C++ 现在也在假装，但#include并不是真正的模块化。#include A后跟#include B可能产生与#include A不同的结果，因为这些包含文件中的内容可能实际依赖于另一个。编译器必须一遍又一遍地查看以检查依赖关系。#include是文本包含，而问题是包含是可“传递”的。所以当我包含 A 时，A 可能包含 D、E、F，而 F 可能包含更多，依此类推。你会得到大量可能根本不知道的声明。当我包含 A 时，我原本只想使用 A ，但实际上我获得了 A 包含 D、E、F的一切内容。这会带来大量需要编译的东西。
+
+借助模块，我们终于能够在 C++ 中实现真正的模块化。如果 import A 和 B，我可以按任意顺序进行，不会影响结果。此外，import不是可传递的；你只获得从模块显式 export的内容，而不会看到模块实现所需的细节。
+
+模块 (Modules)
+- 提升代码质量：实现真正的模块化（特别是避免宏的污染）
+　- 更快的编译速度（不是一星半点，是好几倍）
+　- 与模板、类和函数采用相同的源码组织结构
+
+```cpp
+export module map_printer; // we are defining a module
+
+import iostream;
+import containers; // Imports are not transitive
+using namespace std;
+
+export                    // this template is the only entity exported
+template<Sequence S>
+void print_map(const S& m) {
+    for (const auto& [key, val] : m)   // access key and value
+        cout << key << "->" << val << '\n';
+}
+```
+
+这里有一个简单的例子。我写了个 map_printer模块，它理应包含实现这个 map_printer所需的很多东西，不过为了简洁，这个 map_printer设计得很简单。本质上它是一个模板，使用了各种组件，其中一些细节你并不需要关心。而最终，从这个模块唯一导出的，只有一个函数。
+
+模块本质上包含两部分：一是表示模块代码结构的图（graph），二是一张导出声明的哈希表。这看起来很直观：你声明一组要导出的接口，而编译器则会预先处理好这些接口背后的代码表示。你无需回到源代码去反复解析字符和 token，这些工作早已完成了。
+
+我们曾经为此思考了很长时间。实际上，就连最初设计#include机制的人也明白，模块是更优越的方案。只是受限于当时的环境和技术，我们没法实现它。如今，在已有数十亿行 C++ 代码的生态中，要正确无误地引入模块并处理好所有细节是非常困难的，例如，我们要允许模块与传统的#include共存，并逐步迁移。我们做到了，但耗费了漫长的努力。
+
+标准库模块化 (Module std)
+- 模块 std包含了完整的 std命名空间
+
+![开销](https://pic1.zhimg.com/v2-ab6c12d6c777c0968d0960374f72aff6_1440w.jpg)
+
+引用： [open-std.org](reference: https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2021/p2412r0.pdf)
+
+每当有新技术出现时，总会有人质疑其开销。人们总倾向于认为新东西太昂贵或太慢。为了回应这一点，我进行了一个小实验。我想要一个名为 std的模块，期包含整个std命名空间——基本上就是整个C++标准库。随之我测试了两个版本的“Hello, World!”程序：一个使用传统的 #include <iostream>，另一个使用新的 import std;。前者编译用时略低于一秒（0.87s），对小程序来说尚可；而后者，尽管导入了整个标准库（信息量至少是前者的十倍），其编译用时却只有前者的十分之一（0.08s）。也就是说，我以十分之一的编译时间成本，获得了十倍的信息量。这个结果非常好。
+
+更重要的是，在实际项目中，如果你在多个.cpp文件中重复#include同一个头文件，编译器需要反复解析和处理其内容；而模块的预编译特性意味着，这些重复性工作被极大地消除了。在这个实验中，我可以说获得了百倍的编译速度提升。能对一项已有 50 年历史的技术实现百倍改进，是非常罕见的。通常来说，即便是 10% 的提升都已属不易。
+
+这个实验也直接促成了std标准模块的诞生。它现在已经是语言标准的一部分，我自己就经常用它。
+
+模块 —— 不仅仅用于标准库
+- 25 倍性能提升
+　- 不过不要期望所有情况都像这样
+　- Daniela Engert: [视频Contemporary C++ in Action - CppCon 2022（已整理）](https://www.youtube.com/watch?v=yUIFdL3D0Vk)
+
+![模块](https://pic1.zhimg.com/v2-0df6467d8cb2ff97b76e704be894b14a_1440w.jpg)
+
+这是来自德国嵌入式系统开发的例子。Daniela Engert 三年前做了这个实验——话说回来模块实际上不是新东西，我们几年前就能跑了。实验是这样的：在传统方式下，我们需要 #include 该嵌入式系统的设备支持头文件；这个头文件经过预处理后会展开成非常庞大的代码量，达 50 万行之巨。就算你没见类似情况，这也可能比你想象的更为常见。编译器表现其实不差，处理这 50 万行展开后的代码大约需要 1.5 秒，速度已经很快了。然而，当改用模块import 相同的功能时，编译时间降至约 0.062 秒。这是在早期较旧的编译器和模块实现上得到的结果，即便如此，她依然获得了超过 25 倍的加速。当然，我们并不能指望每次使用模块都能带来 25 倍乃至 100 倍的提升。根据我的经验，一个合理的期望值是编译时间能加快大约 7 到 10 倍。即便如此，这也意味着对于一个原本需要一小时构建的大型项目，现在可能只需要 5 到 10 分钟。这是一个质的区别——我个人的咖啡消耗量都减少了，因为不再需要长时间等编译完成。我强烈推荐大家试一下。
+
+另外，我想推荐 Daniela Engert 在 CppCon2022 (整理在本博客)的演讲，你可以在YouTube上找到。她展示了如何运用模块以及其它现代 C++ 特性来构建真实的系统，内容既深入又全面，既有例子也有原理阐述。我建议各位去看看，它能让你对我今天所讲内容的高级形态有一个更具体的认识。准备好，这可能会震撼到你。
+
+新特性重要吗？
+- 经过基本测试后，我已经很多年没见过资源泄漏了
+- 我曾经重新设计了一个 1990 年代的东西，以提升可靠性
+　- 那可不是个玩具，那玩意已经投入生产 20 多年了
+　- 关键要领：简化！
+　- 新设计不小心提升了 100 倍速度！
+- 我没有使用超出本次演讲内容的更高级的东西
+　- 在生产代码中
+　- 实验中受到的限制较少
+- 这些技术使用非常广泛
+　- 资源管理
+　- 错误处理
+　- 泛型编程
+
+我所展示的这些设施，如今在主流编译器上均已实现，完全可以投入使用。而且，我已经很多年没有看到资源泄漏或内存损坏的问题了，这些现象几近消失。有一次我希望取代 一个 1990 年代的设计，以获得更高的可靠性、更少的错误。其核心无非是遵循像资源管理这样的基本原则，并无他物。仅仅是这些原则，而意外的是，它还带来了 100 倍的性能提升。之所以说意外，因为这原本并非需求之一。只是在我简化代码之后，它让编译器和优化器更容易生成高效的代码。我对实现团队展示的效果感到非常惊讶，完全没意料到。你真该看看他们向我展示性能数据时我的反应，我下巴都惊掉了。
+
+所有这些我展示过的技术——资源管理、错误处理和泛型编程——在今天的C++中都是立即可用的。它们已经被应用于各种领域：从金融行业的大型低延迟交易系统，到数据中心服务器农场，再到真实的农业自动化系统，以及汽车控制系统等等，我都亲眼见过实际应用。
+
+#### 并发
+
+并发 Concurrency
+- 为了效率
+　- 因而有很多不同风格
+　- 许多优化技巧
+- 广泛的支持
+　- 线程和锁
+　- 共享
+　- 并行算法
+　- Cooperative cancellation
+　- Futures
+　- 协程 (Coroutines)
+　- ...
+- 这是一个重要话题，需要一个专门的讲座来详细讨论
+
+我本想花些时间谈谈并发 (Concurrency)，因为现代软件系统中并发无处不在。但时间实在有限，要完整阐述可能需要一个小时甚至一天。不过我可以简要说明以下，现代 C++ 已经提供了丰富的并发支持：线程和锁、并行算法（parallel algorithms）、协作取消（cooperative cancellation）。C++26 中还有更多常见的并发功能，它提供了一套更通用、更高效的抽象。虽然 C++26 是明年的标准，但它已经在 Facebook 和 NVIDIA 等公司的生产环境中投入使用。所以，你们很多人用的程序中很可能已经用到了它。
+
+#### 不要被困在 20 世纪
+
+- 现代编程方式的优势适用于大多数场景
+- 升级代码很难
+　- 但可以极其有益
+　- 可以循序渐进完成
+- 新代码无需延续过时的范式
+- 怎么做？
+　- Avoiding sub-optimal techniques is difficult
+　- Old code
+　- Old habits
+
+例子：不要对指针使用下标
+- 而是使用包含足够信息的抽象层进行范围检查。
+　- 需要运行时支持。
+- "Make simple things simple."
+　- simpler than "old style"
+　- shorter
+　- At least fast
+
+代码示例：  指针衰退（Pointer Decay）和手动管理内存长度，这极易导致缓冲区溢出（Buffer Overflow）。
+
+```cpp
+/* Common Style */
+void f(int* p, int n);
+
+int a[100];
+// ...
+f(a, 100);  // OK? depends on the meaning of n
+f(a, 1000); // likely disaster
+```
+
+这里有个非常经典的操作数据的方式。你有一个指针p和一个说明元素数量的整数n。现在我可以传递一个指向数组的指针a以及数组的元素数量。只要函数f真的知道n是元素数量，一切安好；但在第二列那里，我手滑了一下，写成了 f(a, 1000)。就算f里有范围的越界检查，它也无法捕获所有错误：因为根本没有 1000 个元素，只有 100 个。
+
+核心方案：使用 C++20 std::span
+std::span 是一个轻量级的、不拥有所有权的视图对象。它内部只包含两个东西：指针 + 长度。它能自动从数组、std::vector 或 std::array 中推导长度，从而消除了手动传递大小的错误。
+```
+/* Better*/
+void f(span<int> s);
+
+int a[100];
+f(span<int>{a});    // verbose
+f(a);
+f({a, 1000});       // checkable 
+```
+
+为解决这类问题，C++ 提供了名为span的设施：一个span对象本质上封装了一个指针和元素数量。现在，我可以将函数f的参数声明为接受一个span。在调用时，只需将数组a转换为span传递进去即可。它能正确工作，因为span会携带信息，表明它指向一个包含 100 个整数的数组。非常好。
+
+与大多数基于模板的泛型编程一样，编译器已经知晓数组a的元素类型是int，且其大小为 100。因此，使用span不仅能让你写出更简洁的代码，也大幅提升了安全性。虽然理论上仍可能通过特殊语法人为制造错误，但我们当然不必那样做；更重要的是，此类易错代码在代码审查或静态分析工具面前会变得非常显眼。在实践中，我们大多会采用更简洁、更安全的span写法。
+
+此外，span本身定义了一个范围（range），这意味着我们可以直接对其调用sort等算法，或使用基于范围的 for 循环 (range-based for loop)。我们将抽象级别从容易出错的底层提升到了一个新的层次。
+
+span 的概念并不新鲜。我曾与 Dennis Ritchie 讨论过它。Dennis Ritchie 曾试图将其纳入 C 标准，但他的建议没被采纳。顺便说一下，他称此为“胖指针 (fat pointer)”，而我称之为 span。这源于我一直在制定的一套指导原则，现在这套原则已被纳入标准。关于这点，我们暂且先谈到这里。
+
+指南与其施行 (Guidelines and enforcement)
+- 我们无法改变语言
+　- 但可以改变它的使用方式
+　- 稳定性/兼容性是主要特性
+　- 逐步采纳新功能和技术至关重要
+- 指南
+　- 个别规则可遵守可不遵守 (Individual rules can be used or not)
+　- 不完全强制 (Enforcement is incomplete)
+　- Available now: The C++ Core Guidelines
+- Profiles
+　- 强制施行的连贯指南规则集 (Enforced coherent sets of guidelines rules)
+　- Being worked on in WG21 and elsewhere - not yet available
+　- 解决技术债务 (Addresses technical debt)
+　- Address safety and simplicity concerns
+　- Help focus education
+
+关键在于，我们无法完全摒弃旧的编程方式。毕竟，全球有数十亿行现存代码和数百万程序员，他们不可能接受自己的代码被破坏。大约每两周，我就会收到这样的请求：“C++ 太复杂了，你得简化下它。”是的，C++ 确实复杂——这既是其作为一门历史悠久语言的特征，也是其作为通用语言所不可避免的。然而还有人说：“干嘛要简化？务必加上这两个新特性，我真的很需要它们。”你看，他们既希望语言更简单，又要求加入更多功能。这本身就很困难，尽管通过巧妙的泛化设计没准能部分实现。“哦还有，无论如何，千万别破坏我现有的代码。我可有一百万行，你动不得。”
+
+你看， **人们的请求包含三个相互矛盾的目标（简化语言、增加特性、向后兼容）**。我们无法同时满足三者。我的结论是：你不可能通过直接改变语言本身——我们已经尝试过多次，结果都行不通。真正的出路在于改变我们使用语言的方式，而这需要清晰的使用指南 (Guideline)。
+
+目前已经有了一些指南，例如“使用span，而非f(指针, 计数)”这样的规则。我们拥有许多更优秀的抽象：vector、string、线程、智能指针等等。我们可以倡导大家使用这些更现代的特性，因为它们更好、更快、更安全、写起来也更简单。但现实是，人们往往并不遵循这些指南。原因很多：他们太忙而无暇学习，要学的东西太多，或者他们的编译器还没更新。
+
+因此，我们需要的是指南的“强制执行机制”，这也就是所谓的“Profiles”。目前，我们已有一些可用的指南。我个人正在研究并推荐的是《C++ 核心指南 (C++ Core Guidelines)》，你可以在 GitHub 上找到。
+
+#### C++ 核心指南
+
+[C++ 核心指南 (C++ Core Guidelines)](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines)
+
+这份指南是 C++ 现代实践的核心基础，我见过它的中文译本。其中部分规则已经能够在微软的静态分析工具、Clang-Tidy 以及 JetBrains 的 C++ 分析器中得到检查与执行。虽然这算是一种支持，但我更希望将其规范化，即通过“Profiles”的形式将其纳入语言标准，从而能够系统地强制执行一套连贯的代码规则。
+
+超集的子集 (Subset of superset)
+- To make progress
+　- Do something new and stop doing something old.
+- Simple subsetting doesn't work
+　- We need the low level/tricky/close-to-the-hardware/error-prone/expert-only features
+　- To implement higher-level facilities efficiently
+　- Many low-level features can be used well
+- Extend language with a few abstracions
+　- Use the standard library
+　- Add a tiny library (the GSL)
+　　- No new language features
+　　- Messy/dangerous/low-level features can be used to implement the GSL
+　- Then subset
+- We want "C++ on steroids"
+　- Simple , safe, flexible, and fast
+　- Not a neutered subset
+
+这背后的思路是一种“先取超集，再取子集”的哲学。我们不能简单地对语言进行子集化处理，因为如果直接移除那些最危险、最底层的语言设施，我们将无法实现所需的高级抽象，也无法编写特定的底层程序。这也解释了：为什么许多高级语言在需要时，会通过unsafe 块或直接调用 C/C++ 等其它语言来实现关键部分。
+
+我们采取的方法是，首先用一组精心设计的高级抽象来扩展语言，往往体现为各种库。有 STL 中的vector、sort等等各种东西；也有 GSL (Guidelines Support Library)—— C++ Core Guidelines 提供的指南支持库。当这些抽象足够完善并广泛可用后，开发者便不再需要频繁地直接使用那些原始的底层特性。此时，我们便可以在特定的、要求安全性的场景中对语言进行子集化，有选择地禁用那些危险且容易出错的角落。这就是我们的想法：“先取超集，再取子集”。
+
+核心规则 Core rules
+- 有些人不适用全部规则
+　- 至少一开始如此
+　- 常用逐步采纳的方法 (Gradual adoption is very common)
+- 有些人需要额外规则
+　- 为特定需求
+- 我们一开始聚焦于那些核心规则
+　- 我们希望最终每个人都能从中受益。
+- 核心中的核心
+　- 无未初始化的变量 (No uninitialized variables)
+　- 无范围越界或者违规使用 nullptr (No range or nullptr violations)
+　- 无泄露 (No leaks)
+　- 无悬垂指针 (No dangling pointers)
+　- 无指针造成的的类型违规 (No type violation through pointers)
+　- 无失效 (No invalidation)
+
+我希望在标准中看到的是：有“Profiles”能够消除未初始化的变量、消除范围越界和违规使用空指针、消除资源泄漏、消除悬垂指针 (Dangling pointers)、消除指针造成的类型违规 (type violation)，等等问题。我现在不深入讨论，因为时间不够，但我们能做到。所有这些都已经过实验验证。在 C++ Core Guidelines 中已经部分实现，但尚未纳入标准。这是我在未来工作中要做的，但这并非科幻。
+
+建议纳入标准的初始 profiles 集合 The initial set of profiles suggested for the standard
+- 算法 (Algorithms) - all ranges, no dereferences of end()
+- 算术 (Arithmetic) - catch overflow and underflow, catch implicit narrowing conversions
+- 类型转换 (Casting) - ban them， 全部禁用
+- 并发 (Concurrency) - eliminate deadlocks and data races (hard)
+- 初始化 (Initialization) - every object initialized
+- 失效 (Invalidation) - no access through invalidated pointer (incl. dangling pointers)
+- 指针 (Pointers) - no subscripting of built-in pointers (use span, vector, string, etc.)
+- 范围 (Ranges) 范围 - range errors caught
+- RAll - every resource owned by a handle
+- 类型 (Type) initialization, range casting, invalidation, pointers
+- 联合体 (Union) - no unions (use variant, etc.) 禁止使用 union（应使用 variant 等）；
+
+每一项都没有进入 C++26一个巨大的错误 ☹ 实现工作正在进行中
+
+我们想要的是广泛的保证：算法、算术、类型转换、并发、指针和范围验证，所有这些都可以提供。并且，应该仅在人们请求时才强制执行。这就是 profiles 的理念。例如，我希望所有资源都由资源句柄处理。或者我希望保证每个对象都被初始化。我正在为此努力，并已提议它进标准。不幸的是，它没进入 C++26，我认为这是一个悲剧和重大失误。但我已经概述了如何解决这些问题，以及我期望未来能够解决之。
+
+#### C++模型
+
+C++模型 The C++ model
+- 静态类型系统 Static type system
+- 值语义和引用语义 Value and reference semantics
+- 对内置类型和用户定义类型提供同等支持 Equal support for built-in types and user-defined types
+- 灵活且高效的泛型编程 Flexible and efficient generic programming
+- 编译期编程 Compile-time programming
+- 系统且通用的资源管理 Systematic and general resource management (RAll)
+- 高效的面向对象编程 Efficient object-oriented programming
+- 直接使用机器和操作系统资源 Direct use of machine and operating system resources
+- 通过库支持并发 Concurrency support through libraries (supported by intrinsics)
+- 最终消除c预处理器 Eventually eliminate the C preprocessor
+
+我总结一下当代C++的模型。我们有一个静态类型系统，对内置类型和用户定义类型给予同等支持。我们有值语义和引用语义。基本上，我们希望值类型在初始化、销毁、拷贝等方面行为正确，但使用指针、引用等来实现它们。我们希望系统化和通用的资源管理。我们支持面向对象编程，也支持泛型编程。虽然我没深入细节，但你可以实际上在编译时做很多很多事情，我们也支持代码的编译期执行，声明函数使其如此，这种函数非常接近纯函数 (pure function)，因其无法使用编译时不可用的东西。一如既往，我们希望能够直接使用机器和操作系统资源——因为这是 C++，我们仍然可以做真正高效的事情，利用硬件中的特定设施。并发支持通过库来实现，我们可以支持多种并发模型；我的经验是，并非每个人都希望并发只有一个样，现代系统中有如此多的并发。我们可以摆脱 C 预处理器，它是复杂性和 bug 的来源。而且，你在今天的例子里没有看到任何宏，这是因为我几乎不再使用，除非必须使用开源代码。
+
+#### 简要介绍 C++23-26 的部分新特性
+
+- C++23 - cppreference.com
+　- <expected>
+　- <flat_map>、<flat_set>
+　- <generator>
+　- <mdspan>、<spanstream>
+　- <print>
+- C++26 - cppreference.com
+　- <contracts>
+　- <hazard_pointer>、<rcu>
+　- <inplace_vector>
+　- <linalg>
+　- <simd>
+
+C++23 已经可用一段时间了，虽然还没有 100% 在所有地方实现，但已接近。有一系列设施：生成器 (Generator) 让协程 (coroutines) 更有用。print让你不必显式使用<<，并且直接处理 Unicode 字符。如果你要为了效率进行无锁编程，可以去 cppreference 看下 hazard pointers 和 RCU。此外还有线性代数和 SIMD 支持。这些都是好东西，明年就会得到了。投票正在进行中。
+
+静态反射的泛型编程 GP with Static Reflection (C++26)
+- 一个简单的例子：为类成员生成包含名字、偏移和大小的描述符 (descriptor)
+- 若能做到这点，我们可以在得到一大堆运行时支持
+　- 生成 I/O 操作
+　- 从不同格式序列化/反序列化
+　- 其它语言调用 C++，或者反过来
+
+#### 静态反射
+
+```cpp
+struct data_member_descriptor
+{
+    string_view name;
+    size_t offset;
+    size_t size;
+};
+
+template<typename S>
+consteval auto get_layout()
+{
+    constexpr auto members = meta::nonstatic_data_members_of(^^S);
+    array<data_member_descriptor, members.size()> layout;
+    for(int i = 0; i < members.size(); ++i)
+    {
+        layout[i] = {
+            meta::identifier_of(members[i]), // member name
+            meta::offset_of(members[i]),
+            meta::size_of(members[i])
+        };
+    }
+    return layout; // returns an array<data_member_descriptor, members.size()>
+}
+```
+
+这里展示一个从明年标准中能得到的例子：静态反射 (Static Reflection)。 **静态反射本质上是一种能够让程序在编译时向编译器查询类型信息的机制**。你们已经看到，泛型编程在很大程度上依赖于编译器所知晓的类型信息。而静态反射提供了一个更基础层面的设施，使你能够获取编译器所掌握的、关于类型的全部结构化信息。
+
+假设我想获取一个结构体或类的成员描述符 data_member_descriptor。对于该类的每一个非静态数据成员，我都希望获得一个包含其名称、在内存布局中的偏移量以及大小的描述符。这是我曾在构建多个系统时迫切需要的功能，而通常你不得不通过添加标记或要求用户以特定方式提供这些信息，整个过程往往非常繁琐。
+
+需指出的是，我在此展示的语法和功能尚未成为正式标准，预计将在下一版（即 C++26）中引入。但是，你此刻就可以在 Compiler Explorer（也常被称为“Godbolt”）上找到三个在线可用的实验性的实现，它们几乎能够完成未来标准所规划的全部功能，包括我将要展示的一切。所以，这并非科幻，而是近在眼前的未来。
+
+核心的语法非常有趣：关键在于那个“双帽操作符” ^^。将^^置于一个类型名之前时，它便能够从编译器那里提取出关于该类型的反射信息。我是在说：编译器，请给我类型S的所有非静态数据成员的列表。如果S是一个结构体或类，这便能生效。随后，我就能利用这些信息来写一些非常普通的代码：例如，生成一个包含所有成员描述符的数组。由于这些成员信息直接来自编译器，编译器知道其确切数量，因此我也就知道了数组的大小，并能轻松地遍历它。对每个成员，我向编译器查询其标识符名称、偏移量和大小；随后，我便能构建并返回完整的布局信息。这再次体现了移动语义如何使得高效、低成本地传递这类信息变得简单——不同的语言特性正在相互支撑，协同工作。
+
+这种新颖而强大的能力被封装在一个普通的函数内部，其使用方式与任何其他函数别无二致。这简直是​​送给库开发者的礼物。它虽然用途广泛、不受限制，但其主要目的是为了支撑更强大的库的开发。
+
+静态反射的实例代码 Use of static reflection
+- 反射的结果就是普通的 C++ 数据（如数组），并非黑盒
+
+```cpp
+struct X {
+    char a;
+    int b;
+    string c;
+};
+
+constexpr auto Xd = get_layout<X>();
+```
+
+- 现在 Xd 就是一个 data_member_descriptor，其值为 {{"a", 0, 1}, {"b", 4, 4}, {"c", 8, 24}}
+- 这里的字符串字面量就是 string_view 中的内容。
+
+我们可以尝试调用以下这个函数。为演示简洁起见，我使用了一个简单的结构体，它包含一个 char 、一个int和一个 string 成员。当我请求获取其布局时，便会得到类似这样的输出：{{"a", 0, 1}, {"b", 4, 4}, {"c", 8, 24}}。
+
+这可以用于各种各样的用途，包括生成接口、与其他语言相互调用等等。你可以访问 cppreference.com 网站查阅相关信息，搜索“反射”（Reflection），会找到很多相关信息和例子。
+
+所以 C++ 的设计初衷就是为了不断发展，而且它至今仍在不断发展。它正在为解决实际问题提供支持。比如这个例子就是一个实际存在的问题。我亲眼见过人们在很多大型项目中都需要这样的结构体信息。
+
+作为结束，我们最后回到这里：编程语言的价值在于其应用范围和质量。我们正在努力接近这个目标。我们正尽力地接近理想状态。
+
+要达到完美还需要很多时间、很多年，而完美只是暂时的。
+
+### 回答问题：C++过时与AI
+
+Bjarne Stroustrup：
+“谢谢大家。C++不是为了追求潮流而设计的，而是为了解决实际问题。四十年来，它的核心原则从未改变：零开销抽象。我们既要提供高效的硬件操作能力，又要通过强类型系统管理复杂性。”
+
+（针对“C++是否过时”的提问）“有些人认为C++太复杂，或者认为AI会取代程序员。我不同意。
+关于复杂性： 软件生态过于注重‘便利性’和‘速度’，导致核心原则被削弱。C++的复杂性源于现实世界的复杂性，我们不能为了简单而牺牲性能。
+关于AI： 即使利用AI编写代码，解决问题仍然是人类的工作。AI只是工具，它可能会助长‘无意识编码’，重复过去的错误模式（如原始指针）。真正的挑战不是语言本身，而是开发者的思维方式。优秀的开发者应该定义问题并构建模型，而不仅仅是写代码。”
+
+未来的 C++（C++26 及以后）
+“我们正在为C++26及更远的未来做规划，核心目标是：
+- 并发与并行： 这是提升性能的关键。我们将引入更高效的线程管理、无锁编程工具和任务调度器，让并行计算更简单。
+- 安全性： 我们正在引入‘准则检查配置文件’（Profiles），在编译期自动检测内存泄漏和越界访问。C++必须在保持高性能的同时，获得内存安全。
+- 新特性： 我们正在研究静态反射（Static Reflection）和模式匹配（Pattern Matching）。这能让代码更简洁、更具表达力，且没有运行时开销。
+- AI与底层： C++将在AI的底层计算（如张量操作、GPU协同）中扮演核心角色。”
+
+问答环节精华（Q&A）
+
+Q1（来自现场师生）：C++ 如何应对 Rust 等新语言的挑战？
+“A: 我们不害怕竞争。C++的优势在于生态和兼容性。我们有数十亿行高质量的遗留代码，这些是无法推倒重写的。我们的任务不是重写过去，而是如何在现有基础上逐步优化。就像翻新房子，不用推倒，而是逐间升级。”
+
+Q2：对于 C++ 开发者，有什么建议？
+“A: 不要只做‘搬运工’。你需要理解你写的每一行代码背后的硬件原理（Cache、内存）。
+深耕领域知识： 无论是在金融、游戏还是嵌入式领域，领域知识（Domain Knowledge） 比单纯的语法知识更重要。
+拥抱现代 C++： 请忘掉 20 年前的 C++ 风格。使用 RAII、智能指针、概念（Concepts）和模块（Modules）。如果你还在用裸指针和宏，那你其实是在写 C 语言，而不是现代 C++。”
+
+Q3：如何看待数学在编程中的作用？
+“A: 程序员在数学上付出的努力，永远也不会白费。在C++20中引入的‘概念（Concepts）’，就是数学逻辑在类型系统中的应用。它让模板编程有了接口约束，这不仅提升了错误提示的友好度，也提升了性能。”
+
+“C++ 的价值体现在应用程序的质量之中。在这个 AI 重构一切的时代，C++ 依然是构建可靠基础设施的基石。它不仅是一门语言，更是一种用高效代码构建美好世界的技术追求。
+对于每一位开发者，我的建议是：不要害怕底层，不要停止思考。 只有理解了问题的本质，你才能写出伟大的代码。”
+
+---
+
+### Interview: Bjarne Stroustrup on 21st century C++, AI risks
+
+[Interview: Bjarne Stroustrup on 21st century C++, AI risks, and why the language is hard to replace](https://www.devclass.com/development/2025/05/09/interview-bjarne-stroustrup-on-21st-century-c-ai-risks-and-why-the-language-is-hard-to-replace/1625839) C++之父 Bjarne Stroustrup 接受 DevClass 采访，讨论了如何编写现代 C++、试图取代该语言的问题、AI 风险，以及为什么拥有多个编译器（实现略有不同）实际上是件好事。
+
+![Bjarne Stroustrup 在 Qt World Summit 的舞台上](https://image.devclass.com/117718.webp?imageId=117718&width=1412&height=918&format=webp)
+
+如何强制以现代风格编写 C++？Stroustrup 告诉我们这是一个问题。“你实际上无法在大段代码中遵循指南。我们需要支持。我正在研究由我称为配置文件（profiles）的东西来强制执行的指南，它们表明，我希望这一系列保证得到满足，然后就会被强制执行。”
+
+他说，试图从语言本身中移除“危险、复杂的东西”是没有未来的，即使“人们一直要求更简单的 C++版本。”他告诉我们，问题在于“像指针、数组和类型转换这样的危险、复杂的东西，是我们实现良好抽象所必需的……你可以做的是，你可以在抽象的实现之外移除它们。例如， **operator new 和 operator delete 就不应该出现在应用代码中。**”
+
+他是否担心 AI 对 C++编程的影响？ “是的，我确实有严重的担忧。我不是说它不会带来帮助，但它确实有引导人们走向过去大家一直做的事情的倾向。这不是一个好的发展方向。此外，我担心人们会失去发现问题的能力，因为他们已经习惯了有人为他们完成这些工作，”他说。
+
+另一个趋势是新语言的涌现，其中一些基于 C++，例如谷歌的 Carbon 项目。这些语言有未来吗？“如果你专注于某个小领域，设计出比 C++更好的东西很容易，但 C++的一个优势是它能在非常多样化的领域工作，”斯特劳 strup 说。另一个问题是“如果这些语言中任何一种成功，它们必须能够与 C++、Python 等交互。如果我们不注意，我们不会得到像 C++这样过于庞大的单一语言，而是会得到 10 种都不足够且每一种都拼命试图与其他语言互操作的语言。”
+
+“知道你速度适中的方式之一是，一半的人抱怨你太慢，另一半人抱怨你太快，”斯特劳斯特鲁普说。“是的，我希望能比标准委员会快一点。标准委员会非常庞大，里面的人关心很多事情，这会拖慢进度……但可能更多 C++开发者觉得它进展太快了，”他告诉我们。
+
+### C++之父2024中国： 重新认识 C++
+
+12 月 5 日，美国国家工程院、ACM、IEEE 院士、C++ 之父 Bjarne Stroustrup 在「2024 全球 C++ 及系统软件技术大会」上发表了题为《重新认识 C++：跨世纪的现代演进》的演讲。屏幕上，演示文稿的第一页就令人印象深刻：“C++ 几乎可以实现我们所期望的一切！（C++ can be almost all we want to be）”
+
+从构建操作系统到开发高性能游戏引擎，从支持人工智能框架到驱动航天器控制系统，C++ 一直是系统级软件开发的首选语言。然而，这位编程语言大师并不是在炫耀 C++ 的强大，而是要指出一个关键问题：“正因为它如此强大，我们更要谨慎选择正确的使用方式。就像 goto 语句——它无所不能，所以我们几乎从来不用它。同样的，虽然用 20 世纪 80 年代的方式写 C++ 也能完成任务，但这显然不是最佳选择。我们需要明确自己的真正需求，避免重蹈覆辙。”
+
+Stroustrup 指出了一个常见的认知误区： **人们往往把“熟悉”等同于“简单”**。对很多开发者来说，见过千百遍的代码写法看起来简单，而新的特性和方法则显得复杂。
+
+“我们必须努力避免这种思维定式，否则就会永远停留在 20 世纪。”他强调道，“今天，我想谈谈我所认为的当代 C++、现代 C++ 的基础是什么。我认为，当代的编程方式能让代码变得更简单、更安全、更高效，远胜于任何旧版本的 C++。
+
+![image](https://inews.gtimg.com/om_bt/Orex9d08ywa8HjKFAqNVz78UvPvhXai-zAVX6MjxrFafgAA/641)
+
+谈到 C++ 的发展历程，Stroustrup 指出：“一些关键特性和技术已有多年历史，比如带构造函数和析构函数的类、异常处理机制、模板、std::vector……等等。另一些则是较新的发展，如 constexpr 函数和 consteval 函数、lambda 表达式、模块、概念、std::shared_ptr……等等。关键在于将这些特性作为一个整体来运用。”
+
+“不要盲目使用所有新特性，也不要局限于仅使用新特性，”他强调道，“如果想了解最新特性和未来发展方向的更多细节，可以参考相关的技术讨论视频。我更关注的是如何将语言作为一个整体来开发好的软件。因为最终编程语言的价值体现在其应用程序的质量之中。”
+
+“这就是 C++ 的基石：构造函数（constructor）和析构函数（destructor），”Stroustrup 说道，“如果需要获取任何资源，那是构造函数的工作；如果需要归还资源，那是析构函数的工作。这里我们将抽象层次从机器级的指针和大小提升到了更高的层次。我们把它包装成一个类型，这个类型行为正确，有赋值操作，有访问函数，并且能正确清理。”
+
+他特别指出了资源管理机制的递归性：“string 拥有一些字符，这里的 pair 拥有一个 string 和一个 jthread。jthread 拥有对操作系统线程的引用。这些都是递归进行的。神奇之处在于最后的闭合花括号——那里是所有东西都被隐式而可靠地清理的地方。”
+
+为了做好资源管理，Stroustrup 强调了对生存期的控制：
+
+- 构造：首次使用前建立对象的不变量（如果有的话）；
+- 析构：最后使用后释放所有资源（如果有的话）；
+- 拷贝：a = b 意味着 a == b，且它们是独立的对象；
+- 移动：在作用域间转移资源所有权；
+
+“这些机制让我们能够开发出更安全、更可靠的代码，”他总结道，“因为资源管理不再依赖于程序员的记忆力，而是由语言机制自动保证。”
+
+#### 协程：状态保持！
+
+“说到协程（coroutine），这其实是个有趣的故事，”Stroustrup 回忆道，“在 C++ 发展的最初十年，协程是我们的一个重要优势。但后来一些公司因为它不适合他们的机器架构而反对，结果我们失去了这个特性。现在，我们终于把它找回来了。”
+
+协程的特点是能在多次调用之间保持其状态。Stroustrup 用一个生成斐波那契数列的例子来说明：
+
+```cpp
+
+generator<int> fibonacci()  // 生成 0,1,1,2,3,5,8,13 ...
+{
+    int a = 0;  // 初始值
+    int b = 1;
+    while (true) {
+        int next = a + b;
+        co_yield a;  // 返回当前斐波那契数
+        a = b;       // 更新状态
+        b = next;
+    }
+}
+
+for (auto v: fibonacci())
+    cout << v << '\n';
+```
+
+“这里的妙处在于状态的保持，”他解释道，“我们有计算的状态——a、b 和 next——它就这样不断地计算下一个斐波那契数。协程已经被嵌入到迭代器系统中，所以我们可以用简单的 for 循环来获取数列中的值。”
+
+但这个例子还有一个小问题：“这是个无限序列，显然会带来问题，我们会遇到溢出。那么如何限制它只生成特定数量的值呢？”Stroustrup 展示了改进的版本：
+
+```cpp
+template<int N>
+generator<int> fibonacci()  // 生成前 N 个斐波那契数
+{
+    int a = 0;
+    int b = 1;
+    int count = 0;
+    while (count < N) {
+        int next = a + b;
+        co_yield a;
+        a = b;
+        b = next;
+        count++;
+    }
+}
+
+for (auto v: fibonacci<10>())  // 只生成十个数：0,1,1,2,3,5,8,13,21,34
+    cout << v << '\n';
+```
+
+“虽然标准库对协程的支持还不如我想要的那么完善，”Stroustrup 说，“但这个例子中使用的 generator 已经在 C++23 中可用了。如果你使用的是较早的编译器，还可以使用 Facebook 的 coro 库或其他任务库。这个例子很好地展示了模板和协程是如何和谐地协同工作的。”
+
+“协程为我们提供了一种漂亮的方式来处理需要保持状态的计算，”他总结道。“它让代码更容易理解，也更容易维护。这正是我们一直追求的目标：简单的事情简单做。”
+
+
+### CppCon2024演讲： C++异常与嵌入式
+
+[C++ Exceptions for Smaller Firmware 视频链接](https://www.youtube.com/watch?v=bY2FlayomlE), 演讲者是 Khalil Estell（前 Google 工程师，曾参与 Pixel Watch/Buds 开发）。
+
+这也是该系列“三部曲”中的第一部。视频的核心论点完全挑战了嵌入式开发的传统智慧：在嵌入式固件中，使用 C++ 异常（Exceptions）实际上可以比使用错误码（如 std::expected 或返回 bool）生成更小的二进制文件。
+
+#### 1. 背景与动机：为什么嵌入式开发者“痛恨”异常？
+
+资源受限：演讲者首先介绍了嵌入式环境的严苛限制（Flash 往往小于 1MB，RAM 小于 100KB），没有操作系统，没有 printf，甚至没有堆内存（Heap）。
+
+传统观念：通常认为 C++ 异常会导致：
+1. 二进制膨胀 (Bloat)：引入巨大的表和库代码。
+2. 依赖动态内存 (Malloc)：异常对象通常需要 malloc，这在禁止动态分配的嵌入式系统中是禁忌。
+3. 性能不确定性：抛出异常时的开销未知。
+4. RTTI 开销：需要运行时类型信息。
+
+现状：因此，大家通常使用 -fno-exceptions，并依赖返回值（如 std::expected、错误码、bool）来处理错误。
+
+#### 2. 问题：错误码方案（Distributed Error Handling）的弊端
+
+Khalil 在他的教学框架（SJSU-Dev2）中强制学生使用 std::expected 两年半后，发现：
+
+- 代码“病毒式”传播：几乎所有函数都变成了 expected 类型，因为底层 I/O 错误（如 I2C 失败）需要层层上报。
+- 代码膨胀：这就是视频的核心数学模型。
+- 错误码模式：每次调用函数，都需要插入 if 检查和分支指令（Branch）。成本随调用次数 (Call Sites) 线性增长。
+- 异常模式：成本主要在于异常表（Metadata）和 unwinder（解栈器）。成本随函数定义数量 (Function Count) 增长，而不是调用次数。
+
+结论：在一个复杂的系统中，调用次数远多于函数定义数量。因此， **当代码规模超过某个临界点（他在图中展示大约是 550 次检查），异常机制反而更省空间**。
+
+#### 3. 实战优化：如何让异常在 ARM 上变小？
+
+演讲者并没有直接使用默认的异常配置，而是展示了如何通过“黑客”手段移除 bloat：
+
+障碍 1：默认禁用。ARM 工具链默认禁用异常，或者一旦启用就引入整个标准库。
+
+障碍 2：二进制巨大 (150KB -> 13KB) [16:52] 默认开启异常后，Hello World 从 2.6KB 暴涨到 150KB。
+关键优化 [18:22]：通过覆盖弱符号 (Weak Symbols) 替换掉 GCC 默认的 verbose_terminate_handler。默认的处理程序包含了解析异常名称并打印到 stderr 的复杂逻辑（引入了 malloc, snprintf, 字符串处理等）。 Khalil 自己写了一个只有几行代码的 terminate 处理程序（死循环），瞬间将大小降至 13KB（减少了 91%）。
+
+障碍 3：依赖 Malloc [19:37]， 异常抛出时需要分配内存保存异常对象。
+关键优化：覆盖 __cxa_allocate_exception。他将其重定向到一个静态缓冲区（Static Buffer）或自定义的简单分配器，从而彻底移除了对 malloc 的依赖。
+
+障碍 4：RTTI [20:27]
+实际上，编译器非常聪明。即使开启 -fno-rtti，编译器也会只为那些被抛出 (throw) 的类型保留必要的 RTTI，其余类型的 RTTI 会被剥离。因此 RTTI 的开销并没有想象中大。
+
+#### 4. 技术深挖：ARM 异常机制是如何工作的？ 
+(Under the hood) [30:20] 这一部分非常硬核，详细解释了 Itanium C++ ABI 在 ARM 上的实现。
+
+两个核心数据段：
+- .ARM.exidx (Index Table)：一个有序数组，存储函数地址和指向详细数据的指针。通过二分查找（Binary Search）定位当前 PC 指针属于哪个函数。
+- .ARM.extab (Exception Table)：存储具体的解栈指令（Unwind Instructions）和捕获逻辑。
+
+解栈指令 (Unwind Instructions)：
+- 不是机器码，而是一种紧凑的字节码（Bytecode），告诉 CPU 如何恢复寄存器（如 R4-R11, LR, SP）以回到上一层函数。
+- 大多数函数的解栈逻辑只需要 3 个字节 就能描述清楚。
+
+LSDA (Language Specific Data Area)：
+- 包含 Call Site Table：定义了代码中的 try 块范围。
+- 包含 Action Table：定义了 catch 块的类型匹配逻辑。
+- 包含 Type Table：存储被抛出的类型信息。
+
+实际上就是 Switch-Case：
+Khalil 指出，底层的 catch 逻辑在汇编层面就是一个 Switch-Case 语句，根据 Type Info 决定跳转到哪个处理块。
+
+#### 5. 数据对比与结论
+
+模型对比：
+- 错误码：每个检查点消耗约 4-8 字节（指令）。
+- 异常：每个函数增加约 47 字节的元数据（如果有 try/catch），或 8 字节（如果只是传递异常）。
+- 交叉点：当你的程序有大约 550 个错误检查点时，异常机制开始比错误码机制更省空间。
+
+案例：学生的一个 MP3 播放器项目，从错误码重构为使用异常后，二进制大小反而减小了（从 56KB 降至 40KB+）。
+
+哲学总结：Khalil 认为 C++ 异常本质上是一种 “代码压缩 (Code Compression)” 技术。它将分散在各处的错误处理指令提取出来，放入了集中的元数据表中。
+
+#### 6. 未来工具：Exception Insights Tool [01:14:00]
+
+他正在开发一个工具，可以通过分析二进制文件（而非源码），结合 call graph，模拟抛出异常，来告诉你：
+
+- 哪些异常没有被捕获（Uncaught exceptions）。
+- 哪些异常路径可能导致 terminate。
+- 帮助满足航空航天等领域对“所有分支都必须覆盖”的合规要求。
+
+#### 总结
+
+视频传达的核心思想是：不要因为“常识”就盲目禁用异常。 只要你愿意稍微从底层去配置（替换默认的 terminate handler 和 allocator），C++ 异常在嵌入式系统中不仅完全可用，而且在代码量达到一定规模后，它是比 if (err) 更节省空间的方案。
+
+---
+
+### CppCon2022演讲：现代 C++ 实战
+
+Contemporary C++ in Action
+
+#### 1. 核心挑战与目标 (The Mission)
+* **动机**：回应社区对 C++ 标准委员会“脱离现实”的质疑，进行一次“现实核查 (Reality Check)”。
+* **任务架构**：
+    * **Server**：扫描目录 $\to$ 解码视频 $\to$ 网络推流。
+    * **Client**：网络接收 $\to$ GUI 渲染播放。
+* **技术限制**：必须使用成熟的第三方 C 库，但代码风格必须是**纯粹的现代 C++**（Value Types, Coroutines, Modules, Ranges）。
+
+#### 2. 封装遗留 C 库：万能包装器 (The Wrapper)
+面对基于堆内存和裸指针的 C 库（如 libav, SDL），Daniela 拒绝了传统的 Wrapper 写法，采用了更激进的策略：
+* **Concepts & Requires Expressions**：利用 C++20 概念约束模板。
+* **值语义 (Value Semantics)**：
+    * 将 C 语言的指针（如 `AVCodecContext*`）封装为**值类型**。
+    * 对象像 `int` 一样可拷贝、移动。
+    * 利用 RAII 自动管理生命周期，彻底消除了手动的 `malloc/free`。
+
+#### 3. 视频处理流水线：Generators 与 Ranges
+通过 C++23 的生成器和管道重构了传统的死循环逻辑：
+* **无限范围 (Infinite Ranges)**：创建一个永远不结束的目录迭代器 (`end()` 永远返回 `false`)。
+* **过滤器管道 (Pipeline)**：
+    ```cpp
+    DirectoryIterator 
+    | Filter(只看 .gif/.tiff) 
+    | Transform(打开文件) 
+    | Transform(创建解码器)
+    ```
+* **协程生成器 (`std::generator`)**：
+    * 编写 `make_frames` 协程函数。
+    * **控制流反转**：在解码循环深处直接 `co_yield frame`。
+    * 外部调用者只需遍历生成器即可获取帧，状态机由编译器自动生成。
+
+#### 4. 网络层：ASIO + Coroutines (无锁编程)
+利用 ASIO 网络库，但完全摒弃了传统的回调地狱和互斥锁：
+* **No Mutex (零互斥锁)**：整个程序虽为多线程，但未显式使用任何 `std::mutex`。利用协程调度保证数据安全。
+* **协程化 IO**：
+    * 使用 `co_await socket.async_read(...)` 将异步操作扁平化。
+* **结构化并发 (Structured Concurrency)**：
+    * 利用 ASIO executors 和 `stop_source` / `stop_token` (C++20 `jthread` 概念)。
+    * **自动取消**：每个连接（Agent）独立。一旦连接断开，`stop_token` 触发，所有关联的 Timer 和 Socket 操作自动取消。
+
+#### 5. 错误处理：`std::expected`
+放弃异常（Exceptions）和错误码（Error Codes），拥抱 C++23 风格：
+* **`std::expected<T, E>`**：函数返回一个“要么是值，要么是错误”的对象。
+* **管道传递**：通过管道操作符处理 `expected` 对象。
+* **"Disappointment Channel"**：如果中间步骤出错，错误会自动流向管道末端（失败通道），只有成功的值才会进入下一步处理。
+
+#### 6. 模块系统 (C++20 Modules)
+这是演讲中最“硬核”的炫技部分，实现了全链路模块化：
+* **全面模块化**：不仅自己的代码用了 Modules，还将 **Boost、Libav (FFmpeg)、SDL** 全部封装为模块。
+* **宏隔离**：利用模块机制屏蔽了 C 库中的宏定义，防止污染全局命名空间。
+* **性能飞跃**：
+    * 传统 `#include <iostream>` 等头文件：预处理后代码量巨大，编译慢。
+    * **`import std;`**：编译速度相比传统方式提升了 **100 倍**以上。
+
+#### 7. 总结与成果
+* **现场演示**：Server 和 Client 成功编译运行（编译速度极快），并流畅播放动画。
+* **代码特征**：
+    * **Simple (简单)**：逻辑线性化，无回调地狱。
+    * **Concise (简洁)**：无样板代码 (Boilerplate)，协程替代了手动状态机。
+    * **Safe (安全)**：类型安全，内存安全，无数据竞争。
+    * **Composable (可组合)**：Modules 和 Ranges 让代码像积木一样搭建。
 
 ### 文章或PDF归档
 
@@ -2035,259 +3248,27 @@ test():
 ```
 volatile 不保证原子性， 不保证内存顺序，不同步缓存。
 
-### C++创始人 Bjarne Stroustrup 2025年底中国行内容实录
 
-之所以做这个演讲，原因在于，我注意到很多人还在用上世纪八九十年代的方式写C++代码。这让我感到很难过，在当今我们明明可以写出更好的代码。我今天将介绍一下现代的 C++，同时也会将其视为一个整体：不仅是那些最新的特性，而是几十年来不断创造和改进的成果。
-
-好的设计始于问题：
-
-- 我想构建一个分布式 Unix 系统。在 1979 年，没有一个编程语言能满足我的所有需要。
-- 我需要高效的硬件操作，就像 C。
-- 还需要管理复杂性的抽象能力：就像 Simula，一个灵活的“强”静态类型系统。
-
-所有好的解决方案基本上都始于一个好问题——而且是一个难题。
-
-**C++ 的诞生源于我来到 Bell 实验室，那时候觉得我必须得搞些大事**，因为当时的 Bell 实验室确实是一个很棒的地方。我决定要搞一个分布式 Unix 系统。要是成功了，我们就能提前十年坐拥 Unix 集群。但当然，这种工作我一个人干不了。
-
-首先发现的问题之一是，当时没有任何一种编程语言能够满足我构建分布式 Unix 系统的所有需求。第一，这种语言必须有处理底层事务的能力，例如设备驱动程序、进程调度器、内存管理器等等；同时，它还得必须具备高级特性，以便我们能够摆脱对硬件的依赖，从而拥有像包含进程和通信模块这样的高级特性；既然系统是分布式的，这些都必须被抽象化，你就不能依赖共享内存和指针之类的东西。总而言之，我意识到我需要这样的一个东西。
-
-核心理念：在代码中直接表达思想。例子：
- - 数学：tensor, polynomial
- - 工程：Matrix, Fourier transform
- - 图形学：Shading, gnome, path
- - 生物学：DNA string, protein
- - 电信：Buffer, channel
- - 航空航天：Electric motor, route
- - 汽车：vehicle, car, pedestrian
- - 金融：instrument, transaction
- - 计算机科学：map, task, image, file, edge
-　- ...
- - 还得让其易于接受
- - 唯一的限制就是你的想象力
- - 注：大多数优秀的软件都是“润物细无声”的（most good software is invisible）
-
-当时我在 Bell 实验室，处理硬件的底层语言自然是 C 语言。我之前有过面向对象编程的经验，也熟悉通过 Simula的静态类型系统来管理复杂性。我也正是这样写的。**该项目的核心思想是将硬件的抽象层次提升到更适合人类理解的程度。每个领域都有一些基本概念，我们希望能直接用代码来表达它们。**我不想自己当编译器，把那些高层次的概念记在脑子里、写在白板上，然后再去写底层代码。我希望高层次的想法能够直接用代码表达出来。这大致就是这里面的关键理念。
-
-仅仅做到这一点还不够。你必须以一种潜在用户能够接受的方式来实现它。我年轻那会儿做研究员的时候，电脑配置并不高，所以我必须得在如今看来性能极其低下、运行缓慢的机器上跑程序。多年来，这对我很有帮助，因为不同电脑之间的差异很大。
-
-优秀的设计，基于合理的原则：
-
-- 灵活的静态类型系统
-　- 可扩展性（Extensibility）
-　- 零开销（Zero overhead）
-　- 显式类型转换尽可能少（Minimial explicit type conversion）
-- 资源管理
-　- 防止泄露（No leaks）
-- 错误处理
-　- 提供保证（Guarantees）
-- 灵活的并发支持
-　- 不局限于一种风格（No one style）
-
-当代 C++ 能比以往所有早期 C++ 更好地实现这些目标。
-
-我们需要阐明一些原则。首先得有灵活的静态类型系统；所谓灵活，是指它可以表示各种各样的事物，而不局限于计算机科学的某个特定领域。为了降低成本，它必须具有可扩展性。我希望尽可能减少显式的类型转换、强制类型转换等等，这些操作在 C 代码中随处可见，但 Simula 中没那么多。我不希望出现内存泄漏。我希望资源管理能够有效维护现有资源。错误处理必须提供保证，并支持灵活的并发性。这就是我今天演讲的主题。
-
-
-好的工具随需求而演进：
-
-- 为什么要演进？
-　- 世界在变化
-　- 面对的问题也在变化
-　- 我们自己亦在变化
-- 优秀的工程依赖于反馈和演进
-　- 例如，泛型编程 (Generic programming)，编译期时计算 (Compile-time programming) ，模块 (Modules）。
-- “要是有人宣称自己有完美的编程语言，他要么是传销要么蠢，或者二者皆是。(Someone who claims to have a perfect programming language is either a salesman or a fool, or both.)”（—— Bjarne Stroustrup, 1980s onward)
-- “就算是我也能设计一个更好看的语言。(Even I could design a prettier language.)”（—— Bjarne Stroustrup, 1980s onward)
-
-一个问题是，为什么一门编程语言需要改变？
-
-C++之所以会变，其中一个原因，也是它当初设计成“可以改变”的原因，显然是因为我当时没办法设计出理想的编程语言。我的团队规模有限。除此之外，我也认为不可能有一种编程语言完美适用于所有人、所有情况。所以，我们必须跟上世界的变化，跟上写代码方式的变化，并与之保持同步。
-
-此外，优秀的工程设计依赖于反馈和改进。也就是说，**我们尽最大努力构建一个系统，然后观察运行情况——观察哪些有效，哪些无效，然后进行改进；这正是所有工程领域共通的基本工作方式**。在设计时，既知未来会发生某些事情，就必须将未来可能发生的事情纳入考量。你会有一个总体的方向，知道自己想要实现什么，也明白将来一定可以做得更好。所以不能把改进的道路给堵住。某些语言经过精心设计，旨在阻止你从事任何计划外的操作；而 C++ 的设计哲学恰恰相反——它被精心设计成能够适应新的挑战。
-
-稳定性与演进
-
-- 稳定性 (Stability)：过去能用的现在依然能用 (what used to work well, still works well)
-　- 演进 (Evolution)：我们如今往往能做得更好 (usually, we can do even better today)
-　- 现实世界的进步：开发者如何抓住那些必要的变化？
-现在面临两个问题：我们想要发展，但也需要稳定性。许多组织要求代码必须能够运行数十年。我们有些代码是在 20 世纪 80 年代、90 年代写出来的，至今仍在运行。这一点至关重要。我们曾多次尝试简化语言，但从未成功。开发者和用户都不希望他们的代码出现问题，所以我们需要稳定性。我们同时还需要发展，需要从现实世界的问题中汲取灵感，并解决问题，而不是将其变成一种脱离实际的学术演练。
-
-![image](https://pic4.zhimg.com/v2-35723c2b1f0d41dbee0da8034659053d_1440w.jpg)
-
-这里我们看到一张 C++ 历年发展历程的图表，展示了用户数量、以及他们最初接触 C++ 时所体验到的各种功能。需要指出，统计用户数量非常困难；这图只是我的估计，后来有人说我大错特错。实际上，有机构统计出有1630万用户，这意味着我的估计偏差了大约 2.5 倍。这个偏差算是好的。
-
-那些新东西不是当代 C++ 的全部。如果你去看网上那些文章和 YouTube 里的视频等等，会看到人们对着最新、最炫酷的东西大谈特谈，但那并非全貌。我们拥有的语言是一个整体，各个特性相互支持、相互补充。我们既会沿用几十年来一直在使用的传统方法，也会采用新技术，它们完美契合，这一点至关重要。**C++ 的真正目的在于编写优秀的代码。**
-
-![image](https://pic3.zhimg.com/v2-6cfde8a22b8d01bee08ef6ef1699b4e0_1440w.jpg)
-
-让我坚持下去的动力，也是我认为的关键所在，是编程语言的价值在于它的应用范围和质量。这里我们列举了一些具体应用。比如，用于制作电影和动画的软件。还有一个服务器集群，里面运行着许多复杂的大型程序。甚至还有咖啡机也在用 C++ 编程。我喜欢咖啡，我的办公桌上就有一台咖啡机。
-
-我不参与语言之争，因为很多语言的实现里就是大量用 C++ 的，所以还是别在这里挑起语言之争了。
-
-我的背景是分布式系统。我觉得分布式系统的应用才是最有趣的。重要的是我们能做什么，而不是具体的细节。在这里，我重点关注：
-
-- 资源管理 (Resource management)
-　- 包括控制生命周期和错误处理
-- 泛型编程 (Generic programming)
-　- 包括 concepts
-- 模块 (Modules)
-　- 包括去除预处理器
-- 指南及其施行
-　- 如何保证写出“21 世纪的 C++”？
-
-#### 21 世纪的 C++：演进、挑战与 AI
-
-我说过会研究资源管理和泛型编程的问题。然后，我想到一个难题：在一个充斥着遗留代码、且程序员们接受的训练早已过时的世界里，我们该如何真正使用这些新特性？我们如何在这门语言上迈出前进的一步？**我们该如何编写出真正属于 21 世纪的 C++，而不是 20 世纪的 C++**？
-
-资源管理
-- 资源是你必须获取并随后释放（归还）的东西
-　- 显式或隐式
-　- 例子：内存，字符串，锁，文件句柄 (file handles)，sockets，线程句柄 (thread handles)，事务 (transactions)，着色器 (shaders)，...
-- 防止资源泄露
-　- 避免手动释放
-　- 代码里不要有 free、delete，或者是类似的资源释放
-- 每个资源都由一个句柄表示
-　- 为获取和释放负责 (Responsible for access and release)
-　- 代码里不要有 malloc、new，或者是类似的资源获取
-- **每个资源句柄都根植于一个作用域中**
-　- 句柄可以从一个作用域移动到另一个
-
-我们从资源管理开始。这实际上是在 C++ 开发的最初两周就开始考虑的问题，因为我之前从事操作系统和机器架构方面的工作，深知我们不能泄漏资源。如果资源泄漏了，各种糟糕的事情就会发生。比如，如果你在为太空探测器编程，无论泄漏何种资源（比如一块内存），其结果就是探测器失效，你便没法派宇航员去火星或其他地方。
-
-资源指的是任何需要获取、随后释放的东西。释放操作需隐式进行，因为我们可能会忘记释放资源，抑或是错误地释放两次。我们不想遇到这种麻烦，而且从很久之前就理应避免这么写。但不知为何，人们仍然会写出需要显式释放的代码。不要这样做。如果你写出显式释放的代码，那么代码很可能存在问题。 **不要直接写 free、delete 以及类似的操作，所有这些都必须隐式进行。**
-
-我们实现的方式是用一个句柄 (handle) 来代表资源，这个句柄控制着对资源的访问。资源通常是程序的一部分，例如操作系统、内存管理器、内存池管理器、文档管理器等等。句柄负责资源的获取和删除，并提供使用该资源所需的正确操作。
-
-提升抽象层次
-
-![image](https://pic2.zhimg.com/v2-9f2e6682b7b0aab9e2efb7cebfa916c3_1440w.jpg)
-
-```cpp
-template<typename T>
-class Vector { // vector of elements of type T
-public:
-    Vector(std::initializer_list<T>); // acquire memory; initialize elements – constructor
-    ~Vector(); // destroy elements; release memory – destructor
-    // ...
-private:
-    T* elem; // pointer to elements
-    int s; // number of elements
-};
-
-void fct()
-{
-    Vector<double> constants {1, 1.618, 3.14, 2.99e8};
-    Vector<string> designers {"Strachey", "Richards", "Ritchie"};
-    Vector<pair<string, jthread>> vp{ {"producer", prd}, {"consumer", cons} };
-}
-```
-
-我举一个最简单、最传统的例子：一个vector。从最底层开始，首先需要有指针 elem和一个整数 s，用来表示元素的数量，C 风格代码就是这么写的。但是，我们希望提升到更高的抽象层次，使用必须正确初始化的类型。此外，还需要一个析构函数，在退出作用域时正确地清理资源。
-
-于是，我们可以在这里写出 Vector<double>，它包含一些浮点常数；也可以写出Vector<string>，包含一些字符串。以及这里最后还有一个刻意设计的、有些复杂的嵌套抽象 Vector<pair<string, thread>>， 我用它来表示生产者-消费者模型 (producer-consumer pair)。
-
-我们曾经在网上举办过一个比赛，主题是C++中最酷的特性是什么，一位叫 Roger Orr 的人回答是：
-
-```text
-}
-```
-你看，就是在大括号这里，所有神奇的事情都发生了。先是vp的析构函数被调用，然后是 designers和constants；并且这个过程是递归的，当vp的析构函数被调用时，它会调用pair函数的析构，pair又会调用 string的析构和线程析构函数，以此类推。这样我们就简化了原本可能很复杂的部分，现在看起来非常简单。
-
-我们每个资源句柄都是类似这样的东西，一个向量就是一个资源句柄。
-
-生存周期控制 (Control of lifetime)
-
-- 对简单且高效的资源管理是必要的
-　- 构造 (Construction)
-　　- Before first use establish the invariant (if any)
-　　- 构造函数 Constructor
-　- 析构 (Destruction)
-　　- After last use establish the resource (if any)
-　　- 析构函数 Destructor
-　- 复制 (Copy)
-　　- Copy: a=b implies a==b (regular types)
-　　- 复制构造函数 copy constructor X(const X&)
-　　- 复制赋值 copy assignment X::operator=(const X&)
-　- 移动 (Move)
-　　- 在作用域之间移动资源
-　　 - 移动构造函数 move constructor X(X&&)
-　　- 移动赋值 move assignment X::operator=(X&&)
-
-我们可以控制对象的生命周期，这非常重要。我们可以控制对象的构造、销毁、复制，以及将对象的句柄从一个作用域移动到另一个作用域的能力，所以我们拥有完全的控制权。这正是许多现代 C++ 的关键所在。
-
-我来展示一些现代 C++ 的例子。有些人认为“你必须阅读所有包含各种复杂内容的代码”，我选择这个例子就是为了颠覆这种固有观念。首先是引进标准库 (import std)。我们稍后会讲到模块 (Modules) 这个东西。随之用标准库的东西写出一个包含字符串和整数的哈希表。
-
-我到底想做什么呢？这个来自我的朋友 Afred Aho，他是 AWK文本处理工具的设计者之一，如果你对编译器和编译相关的东西感兴趣，他应该很出名，因为他写过一本关于编译器的教科书（指龙书）；他给了我 `!a[$0]++`这个命令行，可能不是每个人都理解：这个代码读取文件中每一行，寻找只出现过一次的行，然后将其输出。他问我“要是你该怎么做？”于是我就（用 C++）实现了一样的功能, 代码示例：
-
-```cpp
-// the AWK program (!a[$0]++) relies on implicit I/O and loops
-// 思路： 用unordered_map给字符串计数。
-
-import std;
-using namespace std;
-
-int main()  // print unique lines from input
-{
-    unordered_map<string, int> m; // hash table
-    for (string line; getline(cin, line);)
-        if (m[line]++ == 0)
-            cout << line << '\n';
-}
-```
-
-把文件中每一行放到line变量里，然后把line放到一个unordered_map里，如果是第一次见到它，则将之输出。
-这是一个相当简洁明了的程序，但重要的东西不在表面。这段代码没有内存分配和释放，没有涉及size，没有错误处理，没有显式类型转换，没有指针，也没有用预处理器。所以，如果你之前觉得 C++ 只是 C 的一个变体的话，现在就应该明白并非如此。
-
-这个程序效率很高，但我们可以做得更好。这种演示程序的写法，实际工作中几乎不会这么做。
-
-更可能的做法是创建一个函数，用于收集所有输入信息，然后将其存储在一个vector<string>中，以便我们可以对其进行操作，例如排序、搜索等等。这里，我们只是用它来输出不重复的行。函数名叫做collect_lines，它接受一个输入字符串，并返回一个vector<string>。这里我只需要一个set， 无需进行任何计数，set本身就知道如何只包含唯一一个值。我们调用getlines ，插入line ，然后把set转换成vector并返回。
-
-输出按行去重的代码示例2:
-
-[!imgae](https://pica.zhimg.com/v2-9b0986683ae8dfb51710b2a503e5578c_1440w.jpg)
-
-```cpp
-import std;
-using namespace std;
-
-vector<string> collect_lines(istream& is) // collect unique lines from input
-{
-    unordered_set<string> s; // hash table
-    for(string line; getline(is, line);) 
-        s.insert(line);
-    return vector{from_range, s}; // copy set elements into a vector
-}
-
-auto lines = collect_lines(cin);
-for (auto& s: lines)
-    cout << s << '\n';
-
-```
-
-
-
-
-
-
-
-
-
-谢谢大家。C++不是为了追求潮流而设计的，而是为了解决实际问题。四十年来，它的核心原则从未改变： **零开销抽象**。我们既要提供高效的硬件操作能力，又要通过强类型系统管理复杂性。
-
-针对“C++是否过时”的提问：
-
-“有些人认为C++太复杂，或者认为AI会取代程序员。我不同意。
-- 关于复杂性： 软件生态过于注重‘便利性’和‘速度’，导致核心原则被削弱。C++的复杂性源于现实世界的复杂性，我们不能为了简单而牺牲性能。
-- 关于AI： 即使利用AI编写代码，解决问题仍然是人类的工作。AI只是工具，它可能会助长‘无意识编码’，重复过去的错误模式（如原始指针）。真正的挑战不是语言本身，而是开发者的思维方式。优秀的开发者应该定义问题并构建模型，而不仅仅是写代码。”
-
-未来的 C++（C++26 及以后）核心目标是
-
-并发与并行： 这是提升性能的关键。我们将引入更高效的线程管理、无锁编程工具和任务调度器，让并行计算更简单。
-安全性： 我们正在引入‘准则检查配置文件’（Profiles），在编译期自动检测内存泄漏和越界访问。C++必须在保持高性能的同时，获得内存安全。
-新特性： 我们正在研究静态反射（Static Reflection）和模式匹配（Pattern Matching）。这能让代码更简洁、更具表达力，且没有运行时开销。
-AI与底层： C++将在AI的底层计算（如张量操作、GPU协同）中扮演核心角色。”
 
 ---
+
+### 编译配置
+
+Jetbrains Clion
+
+```text
+编译器选项（添加import支持）: 
+-std=c++23 -fmodules-ts
+
+```
+
+Cmake配置
+```cmake
+# C++设置
+set(CMAKE_CXX_STANDARD 23)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_SCAN_FOR_MODULES ON) # 开启模块扫描
+```
 
 ### Qt6 示例
 
