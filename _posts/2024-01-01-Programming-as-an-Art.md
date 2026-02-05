@@ -805,7 +805,7 @@ for (int i = 0; i < 100; i += 4) {
 在 Golang 中，性能调优通常遵循 **“先测量，后优化”** 的原则, 找到程序瓶颈。过度优化（Premature Optimization）是万恶之源。作为一名 C++ 背景的开发者，Go 很多调优技巧实际上是在**“对抗”垃圾回收（GC）和内存分配器的开销**。
 
 - runtime/pprof: Go 标准库内置的杀手锏。通过 net/http/pprof 可以实时查看 CPU 耗时、内存分配（Heap）和协程（Goroutine）状态。性能分析工具分析 Go 程序的复杂性和成本，例如内存使用情况和频繁调用的函数，以识别 Go 程序中成本高昂的部分。
-- Debugging： Delve， Go 程序的全面且可靠的调试器。
+- Debugging： [Delve](https://github.com/derekparker/delve)， Go 程序的全面且可靠的调试器。
 - Benchmark: 编写基准测试，使用 go test -bench . -benchmem 查看单次操作耗时和内存分配次数。
 
 某些诊断工具可能会相互干扰。例如，精确的内存分析会扭曲 CPU 分析，goroutine 阻塞分析会影响调度器跟踪。单独使用工具以获取更精确的信息。
@@ -1848,7 +1848,7 @@ void fct(jthread& prod, string name)
     vector<string> designers {"Strachey", "Richards", "Ritchie"};  // nested construction
     // ...
     jthread cons { receiver };
-    pair<string, jthread&> pipeline[] = {{"producer", prod}, {"consumer", cons}};
+    pair<string, jthread&> pipeline[] = {.{"producer", prod}, {"consumer", cons}.}; // 加上. 因为md编译无法通过
     // ...
 }
 ```
@@ -2699,6 +2699,33 @@ Contemporary C++ in Action
     * **Concise (简洁)**：无样板代码 (Boilerplate)，协程替代了手动状态机。
     * **Safe (安全)**：类型安全，内存安全，无数据竞争。
     * **Composable (可组合)**：Modules 和 Ranges 让代码像积木一样搭建。
+
+### Bjarne Stroustrup的一些观点
+
+#### 安全性
+对C++安全性批评的驳斥，表态他将增加新的安全工具应对批评，为全球数十亿行C++代码带来新的解决方案。
+
+- 第一，安全性指的不仅仅是内存安全。
+- 第二，语言之间的互操作性需求往往会被忽视。
+- 第三，语言切换的成本通常会被低估。
+
+通常提到的安全性只是内存安全——这是不够的......与其他语言（包括C++和C）进行互操作的需求往往不会被提及。而且转换的成本可能非常高。这一点很少被提及。从我所看到的观点来看，我们将用大约7种不同的语言来取代C++。也许在距今四十年后，我们可能会有20种不同的语言，它们必须相互操作。这将会很困难。
+
+**许多所谓的‘安全’语言将所有底层的东西都外包给了C或C++。**暂时脱离原始语言来访问硬件资源，甚至操作系统(通常是用C编写的)——甚至可能是极为古老的、藏在外部库中的“可信代码”。
+
+Stroustrup把我们目前的情况称为“一种渐进式和进化式的方法，而不是一味追求全新的方法。”就像盖尔定律:“ **一个有效的复杂系统势必是从一个有效的简单系统发展而来的。**”
+
+归根结底，就像Stroustrup所指出的，切换语言可能看起来是在构建一个新系统，但是想越过所有旧系统的问题来解决一切，只是一个幻想。切换语言所要付出的代价可能远比你理想中的要高。
+
+#### 制定安全使用的规则
+
+Stroustrup简要说明了一点：“小心”是行不通的。因此，虽然核心指导方针可能建议安全的编码实践，但“我们需要强制执行的规则”。
+
+```cpp
+export My_module[[provide(memory_safety)]];
+import std [[enable(memory_safety)]];
+import Mod [suppress(type_safety)]];
+```
 
 ### 文章或PDF归档
 
