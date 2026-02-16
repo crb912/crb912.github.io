@@ -2808,17 +2808,34 @@ GCC wiki recommends [a list of compiler books](https://gcc.gnu.org/wiki/ListOfCo
 
 ---
 
-## C5. 编程语言之 C++
+## C5. 我最喜欢的语言：面向现代的C++
 
+1.学习建议（[BS的视频采访](https://youtu.be/5m6c1DYy8uA?t=253)）：
 
-Bjarne Stroustrup谈到，“C++是一门庞大的语言，许多人迷失在它的细节中。然而，写好C++你只需要掌握一些基本技巧，其余的确只是细节”[BS12]。他的这番话也为我的C++学习指明了方向： 专注于C++核心的编程技术，忽略各种繁杂的细节。不是说细节完全不重要，而是细节可以在编程时通过Google学会，不需要浪费大量的时间去掌握细枝末节。把时间用在重要的事情上，提高学习的效率。
+- Bjarne Stroustrup谈到，“C++是一门庞大的语言，许多人迷失在它的细节中(Don't get obsessed with the details.)。然而，写好C++你只需要掌握一些基本技巧，其余的确只是细节”[BS12]。他的这番话也为我的C++学习指明了方向： 专注于C++核心的编程技术，忽略各种繁杂的细节。不是说细节完全不重要，而是细节可以在编程时通过Google学会，不需要浪费大量的时间去掌握细枝末节。把时间用在重要的事情上，提高学习的效率。
+- Don't try to understand everything. You can't know everything. [BS:采访](https://youtu.be/5m6c1DYy8uA?t=253)
+- 全局视角，不能因为树而失去森林。You have to not lose the forest for the trees. You have to get an overview of the languge. 
+- 找到关键的部分，学习C++的哲学: You have to decide which bits are important and design evolution of C++ if you are into philosophy of it.
+- BS：我无法记住所有的，我经常用cpp reference.com（检索）。I use CPP reference.dot a lot because I can't remember all of function arguements and details.
+- BS: 如果痴迷于细节，I would be a very worse programmer because I would be worrying about language and the details all the time.
+- BS： Don't get obsessed with one little fashion how to write code, because so many application areas. 在某些领域，绝对的安全很重要；在另一些领域则不是。你必须决定什么很重要。
+
+很多人只想发财，但是没有耐心了解C++的哲学。 
+BS: A lot of new programmers, a lot of students have very little patience with philosophy. They just want to get rich.
+
+2.现代C++的值得注意的东西：
+ 
+- Profiles 安全配置文件[C++ Core Guidelines](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#s-profile) and [Microsoft GSL 指南支持工具](https://github.com/Microsoft/GSL)
+
+### C++的核心技术： RAII与不变式
+
 
 因此我从BS的论文、采访、书籍里面搜集到了他提到的一些C++技术，记录在下面，并且会对每条给出解释和说明。希望这些对其他C++学习也能有些帮助。注意的是，C++标准库vector,map,set,list等一系列容器里面已经应用了这些技术，如果你不能理解，可以尝试通过阅读标准库的源码来得到更多的领悟。
 
-- classes for separating interfaces from implementations.
-- constructors for establishing invariants, including acquiring resources,
-- destructors for releasing resources,
-- templates for parameterizing types and algorithms with types
+1. 零开销的抽象：机器模型，内联（Inlining），编译时计算。
+2. 面向对象：classes for separating interfaces from implementations.
+3. RAII: constructors for establishing invariants, including acquiring resources. destructors for releasing resources,
+4. 泛型： templates for parameterizing types and algorithms with types
 - mapping of source language features to user-defined code specifying their meaning, e.g. [] for
 - subscripting, the for-loop, new/delete for construction/destruction on the free store, and the {}
 lists.
@@ -2833,10 +2850,42 @@ lists.
 - 对于不变式，BS提到：“我的经验法则是，当且仅当您可以考虑建立类的不变量时，您才应该拥有一个具有接口和隐藏表示的真实类”[BS03,Bill]。不变式用来保证对象有效。比如，你有个Temperature(温度)类，它接受输入的浮点数用来初始化，但是你始终应该在构造函数里面检测温度是否是大于绝对零度(-273.15℃)，因为初始化的数字小于绝对零度时，那它必定是错误值，对象是无效的。虽然你完全也可以用成员函数实现这一检测，但不应该那样做，你应该总是在构造函数建议不变式。这样就可以完全避免实例了一个无效的对象。
 - RAII，资源申请即初始化。就是说，当你开始申请资源时，表明你正在初始化；反过来，当你在销毁对象时，你应该释放资源。RAII，它把对象的生命周期与资源申请/释放的时间点联系到一起。它看起来不能称为一个技术，无非是在构造函数中申请资源，在析构函数中释放资源。但如果不它单独用一个术语去“显式的”提醒程序员们有这么一个技术存在，那么很多程序员就可能会在各种成员函数中申请资源，因此会造成资源管理的灾难。RAII提醒每个C++程序员，你最好不要在非构造函数中new一个资源，应该总是在构造函数申请，在析构函数释放。如果一个总是能做到RAII，那他基本不可能会写出资源泄漏的代码。（注意：「资源」一词不仅仅是指free store自由存储这一内存资源，也包括了文件描述符、信号量、数据库锁等资源，一定要避免这些资源的泄漏）。
 
-
 [BS12] B. Stroustrup: Foundations of C++, Texas A&M University.
 [BS03,Bill] A Conversation with Bjarne Stroustrup, https://www.artima.com/intv/bjarne.html
 
+### C++重难点： 1. 类与构造
+
+一个完备的C++类应该实现7个成员函数. 
+A well-defined/complete C++ class typically requires seven member functions, for example:
+
+```cpp
+class X{
+public:
+	X(SomeType);   // 'ordinary constructor': create an object from some type
+	X();           // default constructor
+	~X();          // destructor: clean up
+
+	X(const X&);    // copy constructor
+	X(X&&);         // move constructor
+
+	X& operator=(const X&);  // copy assignment: clean up target and copy
+	X& operator=(X&&);       // move assignment: clean up target and move
+};
+```
+
+分类：
+ 
+1.从空或者某个值去构造一个新对象。
+2.从已有的源对象（复制/移动）去构造一个新对象。
+3.将一个已存在的源对象赋值（复制/移动）给另一个已存在的目标对象。
+
+five situations in which an object can be moved or copied:
+
+1. As the source of an assignment.  `y = x;`
+2. As an object initializer. `complex z2 {z1};`
+3. As a function argument. `void test(complex z1)`
+4. As a function return value. 
+5. As an **exception**.
 
 ### 基础知识： Union
 
@@ -3926,7 +3975,369 @@ func doSomething(ctx context.Context) {
 - 它是线程安全的：你可以在无数个协程里传递同一个 ctx，安全地监听它的信号。
 - 层级传递：当你基于一个父 ctx 创建子 ctx 时（比如 WithTimeout），如果父级被取消，所有的子级也会跟着被取消。
 
+#### 手搓消息中间件
 
+1. 手搓一个消息队列v1，用go channel做Broker
+```go
+package main
+
+import (
+	"log"
+	"sync"
+	"time"
+)
+
+// Message 消息结构体
+type Message struct {
+	ID        int
+	Content   string
+	Timestamp time.Time
+}
+
+// SimpleBroker 简单的消息代理
+type SimpleBroker struct {
+	messages chan Message
+	mu       sync.RWMutex
+}
+
+// NewSimpleBroker 构造
+func NewSimpleBroker() *SimpleBroker {
+	return &SimpleBroker{
+		messages: make(chan Message, 100), // 缓冲 100 条消息
+	}
+}
+
+// Publish 发布消息
+func (b *SimpleBroker) Publish(msg Message) {
+	b.messages <- msg
+	log.Printf("[Broker] 收到消息: ID=%d, Content=%s\n", msg.ID, msg.Content)
+}
+
+// Subscribe 订阅消息
+func (b *SimpleBroker) Subscribe() <-chan Message {
+	return b.messages
+}
+
+// Producer 生产者
+type Producer struct {
+	broker *SimpleBroker
+}
+
+// NewProducer 创建生产者
+func NewProducer(broker *SimpleBroker) *Producer {
+	return &Producer{broker: broker}
+}
+
+// Start 启动生产者
+func (p *Producer) Start() {
+	go func() {
+		counter := 1
+		ticker := time.NewTicker(5 * time.Second)
+		defer ticker.Stop()
+
+		for range ticker.C {
+			msg := Message{
+				ID:        counter,
+				Content:   "hello",
+				Timestamp: time.Now(),
+			}
+
+			p.broker.Publish(msg)
+			log.Printf("✓ [Producer] 发送消息成功: ID=%d, Content=%s\n", msg.ID, msg.Content)
+			counter++
+		}
+	}()
+}
+
+// Consumer 消费者
+type Consumer struct {
+	id     int
+	broker *SimpleBroker
+}
+
+// NewConsumer 创建消费者
+func NewConsumer(id int, broker *SimpleBroker) *Consumer {
+	return &Consumer{
+		id:     id,
+		broker: broker,
+	}
+}
+
+// Start 启动消费者
+func (c *Consumer) Start() {
+	go func() {
+		msgChan := c.broker.Subscribe()
+
+		for msg := range msgChan {
+			log.Printf("★ [Consumer-%d] 接收到消息: ID=%d, Content=%s, Timestamp=%s\n",
+				c.id, msg.ID, msg.Content, msg.Timestamp.Format("15:04:05"))
+		}
+	}()
+}
+
+func main() {
+	// 创建 Broker
+	broker := NewSimpleBroker()
+	log.Println("✓ Broker 已创建")
+
+	// 创建生产者
+	producer := NewProducer(broker)
+	producer.Start()
+	log.Println("✓ Producer 已启动，将每 5 秒发送一条消息")
+
+	// 创建消费者（可以创建多个）
+	consumer1 := NewConsumer(1, broker)
+	consumer1.Start()
+	log.Println("✓ Consumer-1 已启动")
+
+	// 可选：创建第二个消费者
+	consumer2 := NewConsumer(2, broker)
+	consumer2.Start()
+	log.Println("✓ Consumer-2 已启动")
+	// 保持程序运行
+	select {}
+}
+```
+
+2. v2. 分布式，使用http协议
+```go
+package main
+
+import (
+	"bytes"
+	"encoding/json"
+	"fmt"
+	"log"
+	"net/http"
+	"time"
+)
+
+// ==========================================
+// 公共部分：数据协议 (Protocol)
+// ==========================================
+
+// Message 消息结构体，JSON 用于网络传输
+type Message struct {
+	ID      int    `json:"id"`
+	Content string `json:"content"`
+}
+
+// ==========================================
+// 机器 A：Broker (服务端)
+// ==========================================
+
+type BrokerServer struct {
+	queue chan Message // 内部消息队列
+}
+
+func NewBrokerServer() *BrokerServer {
+	return &BrokerServer{
+		// 创建一个带缓冲的 channel，模拟消息队列
+		queue: make(chan Message, 100),
+	}
+}
+
+// 处理生产者请求 (POST /publish)
+func (b *BrokerServer) handlePublish(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		http.Error(w, "只支持 POST 方法", http.StatusMethodNotAllowed)
+		return
+	}
+
+	var msg Message
+	// 1. 从网络流中解析 JSON
+	if err := json.NewDecoder(r.Body).Decode(&msg); err != nil {
+		http.Error(w, "JSON 格式错误", http.StatusBadRequest)
+		return
+	}
+
+	// 2. 尝试写入队列
+	select {
+	case b.queue <- msg:
+		log.Printf("[Broker - 8080] 收到并存入队列: ID=%d", msg.ID)
+		w.WriteHeader(http.StatusOK)
+		w.Write([]byte("Success"))
+	default:
+		log.Printf("[Broker - 8080] 队列已满，丢弃消息: ID=%d", msg.ID)
+		http.Error(w, "队列已满", http.StatusServiceUnavailable)
+	}
+}
+
+// 处理消费者请求 (GET /consume)
+func (b *BrokerServer) handleConsume(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodGet {
+		http.Error(w, "只支持 GET 方法", http.StatusMethodNotAllowed)
+		return
+	}
+
+	// 1. 尝试从队列读取
+	select {
+	case msg := <-b.queue:
+		// 2. 将消息序列化为 JSON 返回网络
+		w.Header().Set("Content-Type", "application/json")
+		json.NewEncoder(w).Encode(msg)
+		log.Printf("[Broker - 8080] 消息已投递给消费者: ID=%d", msg.ID)
+	default:
+		// 队列为空，返回 204 No Content
+		w.WriteHeader(http.StatusNoContent)
+	}
+}
+
+// StartBroker 启动 Broker 的 HTTP 服务
+func StartBroker() {
+	broker := NewBrokerServer()
+
+	// 注册路由
+	mux := http.NewServeMux()
+	mux.HandleFunc("/publish", broker.handlePublish)
+	mux.HandleFunc("/consume", broker.handleConsume)
+
+	log.Println(">>> [Machine A] Broker 服务启动，监听 :8080 端口...")
+	// 这是一个阻塞调用，我们在 main 中用 go routine 启动它
+	if err := http.ListenAndServe(":8080", mux); err != nil {
+		log.Fatalf("Broker 启动失败: %v", err)
+	}
+}
+
+// ==========================================
+// 机器 B：Producer (客户端)
+// ==========================================
+
+func StartProducer() {
+	log.Println(">>> [Machine B] Producer 启动...")
+	brokerURL := "http://localhost:8080/publish"
+	counter := 1
+
+	for {
+		// 1. 构造消息
+		msg := Message{
+			ID:      counter,
+			Content: fmt.Sprintf("来自机器 B 的订单 #%d", counter),
+		}
+
+		// 2. 序列化为 JSON
+		jsonData, _ := json.Marshal(msg)
+
+		// 3. 发起 HTTP POST 请求 (模拟跨机器网络调用)
+		resp, err := http.Post(brokerURL, "application/json", bytes.NewBuffer(jsonData))
+		if err != nil {
+			log.Printf("!!! [Producer] 连接 Broker 失败: %v", err)
+		} else {
+			// 务必关闭 Body
+			resp.Body.Close()
+			if resp.StatusCode == http.StatusOK {
+				log.Printf("✓ [Producer] 发送成功: ID=%d", msg.ID)
+			} else {
+				log.Printf("x [Producer] 发送被拒绝, 状态码: %d", resp.StatusCode)
+			}
+		}
+
+		counter++
+		// 模拟每 2 秒生产一条
+		time.Sleep(2 * time.Second)
+	}
+}
+
+// ==========================================
+// 机器 C：Consumer (客户端)
+// ==========================================
+
+func StartConsumer(clientID int) {
+	log.Printf(">>> [Machine C-%d] Consumer 启动...", clientID)
+	brokerURL := "http://localhost:8080/consume"
+
+	client := &http.Client{Timeout: 5 * time.Second}
+
+	for {
+		// 1. 发起 HTTP GET 请求 (轮询)
+		resp, err := client.Get(brokerURL)
+		if err != nil {
+			log.Printf("!!! [Consumer-%d] 连接 Broker 失败: %v", clientID, err)
+			time.Sleep(1 * time.Second)
+			continue
+		}
+
+		// 2. 处理响应
+		if resp.StatusCode == http.StatusOK {
+			var msg Message
+			if err := json.NewDecoder(resp.Body).Decode(&msg); err == nil {
+				log.Printf("★ [Consumer-%d] 消费成功: ID=%d, 内容: %s", clientID, msg.ID, msg.Content)
+			}
+		} else if resp.StatusCode == http.StatusNoContent {
+			// 队列为空，没有新消息
+			// log.Printf("[Consumer-%d] 暂无消息...", clientID)
+		}
+
+		resp.Body.Close()
+
+		// 模拟轮询间隔 (防止死循环把 CPU 跑满)
+		time.Sleep(500 * time.Millisecond)
+	}
+}
+
+// ==========================================
+// Main 入口：模拟整个分布式环境
+// ==========================================
+
+func main() {
+	// 1. 启动 Broker (模拟在机器 A)
+	// 使用 go routine 启动，因为它会阻塞监听端口
+	go StartBroker()
+
+	// 给 Broker 一点时间启动
+	time.Sleep(1 * time.Second)
+	fmt.Println("-------------------------------------------------")
+
+	// 2. 启动 Consumer (模拟在机器 C)
+	// 启动一个消费者
+	go StartConsumer(1)
+
+	// 3. 启动 Producer (模拟在机器 B)
+	// 启动生产者
+	go StartProducer()
+
+	// 4. 阻塞主进程，防止程序退出
+	select {}
+}
+```
+
+v3, gRPC通信。
+
+```go
+syntax = "proto3";
+
+package main;
+
+// 这是一个配置，让生成的 Go 代码属于 main 包，方便你在一个文件夹里跑
+option go_package = "./;main";
+
+// 1. 定义消息结构
+message Message {
+  int32 id = 1;
+  string content = 2;
+}
+
+// 空请求，用于 Subscribe 时（也可以传 ConsumerID）
+message SubscriptionRequest {
+  int32 id = 1;
+}
+
+// 简单的响应
+message PublishResponse {
+  bool success = 1;
+  string msg = 2;
+}
+
+// 2. 定义服务接口
+service BrokerService {
+  // 生产者调用：单次发送
+  rpc Publish (Message) returns (PublishResponse);
+
+  // 消费者调用：服务端流模式 (Server Streaming)
+  // 消费者建立一次连接，Broker 会源源不断地把 Message 推过来
+  rpc Subscribe (SubscriptionRequest) returns (stream Message);
+}
+```
 
 ## 技术工具： 喜鹊开发者
 
@@ -3995,6 +4406,16 @@ HBase 的底层数据结构非常精妙，它并不是像传统数据库那样�
 
 ### Kafka --  distributed event streaming platform 
 
+对消息队列的直觉： 消息中间件（Message Middleware）的本质是一个“队列”，它遵循最基本的 FIFO（先进先出） 原则。生产者负责写入（发布），消费者负责读取（订阅）。
+1. 为什么“循环队列”是一个好的类比？
+- 解耦： 生产者不需要知道消费者的存在，只需要把数据丢进“桶”里。
+- 缓冲： 当生产速度快于消费速度时，队列充当了蓄水池的角色，防止消费者被瞬间流量冲垮。
+2. 为什么它不仅仅是一个循环队列？
+- A. 持久化 (Persistence) 
+- B. 发布/订阅 (Pub/Sub) 与 扇出 (Fan-out) 中间件是支持广播的，不想队列点对点。 
+- C. 路由与交换 (Routing & Exchange)。RabbitMQ，它在生产者和队列之间加了一层 Exchange。它可以根据“路由键（Routing Key）”决定把消息发给哪一个或哪几个队列，而不仅仅是简单地往一个循环队列里写。
+
+关于kafka
 - 不是消息队列，Kafka 实现了消息队列的核心功能。
 - 更是分布式日志系统（Distributed Commit Log）
 

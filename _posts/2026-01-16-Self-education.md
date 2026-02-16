@@ -38,6 +38,8 @@ top: true
 
 「直觉」我看到数学分成许多专门领域,每一个领域都能费去我们所能有的短暂的一生。因此,我觉得自己的处境像布里丹的驴子一样,它不能决定究竟该吃哪一捆干草。这显然是由于我在数学领域里的直觉能力不够强,以致不能把真正带有根本性的最重要的东西同其余那些多少是可有可无的广博知识可靠地区分开来。此外,我对自然知识的兴趣,无疑地也比较强。 -- 爱因斯坦文集卷一，自述，8 页。
 
+I think some English philosoper in the 1600s says there'e two kind of knowledge: what you know, and how to find. That's I think pretty fundamental. -- Bjarne Stroustrup, [BS采访](https://youtu.be/5m6c1DYy8uA?t=334) 他引用的这句话应该是弗朗西斯·培根所说。
+
 我们会竭尽所能，尽快证明自己是错误的，唯有如此我们才能进步。—《物理之美：费曼与你谈物理》
 
 事实证明真理总是比你想象得更简单。The truth always turns out to be simpler than you thought. -- 费曼
