@@ -2808,7 +2808,7 @@ GCC wiki recommends [a list of compiler books](https://gcc.gnu.org/wiki/ListOfCo
 
 ---
 
-## C5. 我最喜欢的语言：面向现代的C++
+## C5. 最喜欢的语言：面向现代的C++
 
 1.学习建议（[BS的视频采访](https://youtu.be/5m6c1DYy8uA?t=253)）：
 
@@ -2827,8 +2827,23 @@ BS: A lot of new programmers, a lot of students have very little patience with p
  
 - Profiles 安全配置文件[C++ Core Guidelines](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#s-profile) and [Microsoft GSL 指南支持工具](https://github.com/Microsoft/GSL)
 
-### C++的核心技术： RAII与不变式
+BS 谈Profies, "we need them badly", Pepple want safety and they don't quite know what safety is. Some people think they can get security out of memory safety, the absence of memory leaks or memory corruption.
+It’s not that hard to get these things: the range checking and such. But in C++, it'll have to from profiles and it'll have to come without breaking a billion of lines of code and programming styles and techniques. I think profiles is the only way I know that can do that. And I did express a certain amount of sadness that we didn't already have it.
+That's very important. I think a lot of people then think philosophical shifts, people think, for instance, ideals of safety are new. They were thery from the beginning. Static type safey, resource safety, and some of the safety fanatics haven't even gotten to research source safety yet. And we can do much better. Evolution gets us from there to here and it gets us further. **I really want profiles up, near the top there**.
 
+3.职业建议
+
+Q:How did you decide what to focus on tronghout your career?
+BS: 
+- **One is to work with good people and hang out with good people. That's nice.**
+Sitting on your own is not fun. And working jerks and having to protect your back is not good for your health. And so **I've always looked out for how to be with interesting and good people**. 
+And usually intersting and good because they're doing interesting things. So you get inspired. 
+- So the other way of looking at it is I look for something interesting that is fun and useful to work at. I want to build something, I want to do something for people. And those two aspects are closely related.
+- So I learned object oriented programming by having a serious number of beers with Kristen Nygaard because he was a vistor to my university, and I was a grad student, so I got into that similarly, I like machine architecture and design machine insructions and such.So basically **keep your eyes open, have a board backgroud** so that you can take an opportunity when it walks by. What you do and how you get ready to do it, and **good solid broad education is what's underlined(基础教育要扎实且广泛)**. A Frenchman said **fortune favors the prepared mind **(Louis Pasteur). This is you have to recognize an opportunity when you see it.
+- And things I mentioned briefly and I should probably repeat. **I like to do thing that is useful to other people**. I don't want to do a crossword puzzles.
+与好人一起工作。与有趣的人一起做有趣的事情。广泛且扎实的基础。做对别人有用的事情。
+
+### C++的核心技术： RAII与不变式
 
 因此我从BS的论文、采访、书籍里面搜集到了他提到的一些C++技术，记录在下面，并且会对每条给出解释和说明。希望这些对其他C++学习也能有些帮助。注意的是，C++标准库vector,map,set,list等一系列容器里面已经应用了这些技术，如果你不能理解，可以尝试通过阅读标准库的源码来得到更多的领悟。
 
@@ -4606,7 +4621,15 @@ SF++ 后来深刻影响了后来的 MISRA C++ 标准（汽车行业标准）和 
 
 ## 编程杂谈
 
+### 编程与AI
 
+Bjarne Stroustrup： First of all, I'm not a AI expert and I don't plan to become one. So that's an area I cannot pick up. I don't have the backgroud, and I don't have the time. I don't have the people that could fire me up. 
+I have some worries, you know, I've always got some worries. I'm trying to solve problems and to solve problems. You have to start worrying about something. But the thing that I see is that people are using LMMs to get answers, and there's lot of stuff about letting them do the simple things. I worry that we lose the skills to determine what is good and what is correct, because we are not actually practicing doing things. We lose the ability to do it ourselves. And then we come to trust the AI. And the AI is at least now not trustworthy. And that is similar to when we started outsourcing and offshoring stuff, because it was cheaper and it worked beautifully for a couple of years until we lost the people who could actually do quality control on what was offshore. The skills were outsourced and such. And the companies that were doing it lost the ability to see what was good and bad. And then they got bloat from the outside.
+And I'm worrying what instead of being able to do fairly straghtforward things, we then have piles upon piles and tools and cross checks and double checks try and avoid the faults of the AI. But it's so complicated, I will never become an expert on this.
+
+1. 我担心我们会失去判断好坏和辨别正确或错误的能力，因为我们实际上并没有实践过。我们失去了自己动手的能力。
+2. 我们信任AI， 但是目前的AI还不值得信任。与软件外包业务很相似，更便宜，直到公司失去了进行质量控制的员工。
+3. 原本我们可以简单直接的做事，后来我们开始用一堆工具试图避免AI的缺陷。
 
 ### 推特的开源算法
 
