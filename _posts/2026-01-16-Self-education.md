@@ -94,6 +94,20 @@ I think some English philosoper in the 1600s says there'e two kind of knowledge:
 
 ## 人生观
 
+### 0. 给年轻人的建议
+
+在实践中，发现自己的能力与不足。然后开始产出并且帮助到别人。
+My basic idea is to say, whoever you are, you’ve got a unique combination of talents that’s been given to you. Don't decide ... Your life is kind of like a binary search,  **you try things and find out you did well in this, you try other things, you find out you didn't do so well in that, you go on and continue discovering what are the best ways to use the abilities you were born with instead of what you think they ought to have been.** And you also read what other people have done, and try to learn from that and extend abilities that you have in ways that appeal to you. And then, ... My experience was, once things start to click, then **you can start producing and other people will be able to make use of what you did, and you can help them along in the same way.** It sounds idealistic, but that's  really been the pattern all through my life, and it was based on this sort of idea, saying, well, just learn what you're good at, and what you can do that other people might be able to use, that's fun for you.”-- [Knuth](https://www.bu.edu/quantum/zen/readings/quoteKnuth.pdf)
+
+不要因为某样东西很流行就认为它好。If somebody asked what advice I would give to a young person—they always ask that kind of question—one of the first things that would come to me is this: **don't just believe that because something is trendy, it's good.** I'd probably go to the other extreme: if I find too many people adopting a certain idea, I'd probably think it's wrong. If my work had become too popular, I would think I needed to change. This is, of course, ridiculous, but I see the other side too often: people will do something against their own gut instincts because they think the community wants them to do it that way. **People will work on a certain subject even though they aren't terribly interested in it because they think they'll get more prestige by working on it**.  
+**Follow your own instincts, it seems to me, is better than follow the herd.** ( 在我看来，遵循自己的直觉比随波逐流要好得多。)
+The classic phrase is that a liberal education is to learn something about everything and everything about something. I like this idea about learning everything about an area before you feel confident. If you don't know something real solid, you never have enough confidence. A lot of times I'll have to read through a lot of material just in order to write one sentence, because my sentence will then have words that make it more convincing. If I don't really have the knowledge, it won't come out implicitly in my writing. 人们会违背自己的直觉去做事，因为他们觉得社会希望他们这样做。人们会去做自己并不特别感兴趣的某个课题，因为他们认为这样做能提升自己的声望。
+我认为，做优秀的科学研究比做科普研究更能赢得声望。如果你坚持做你真正认为重要的事情，那么它最终真正重要的可能性就更大，而长远来看，对世界最有益的事情也正是如此。  
+The classic phrase is that a liberal education is to **learn something about everything and everything about something（博采众长，精通一门）**. I like this idea about learning everything about an area before you feel confident. If you don't know something real solid, you never have enough confidence. **A lot of times I'll have to read through a lot of material just in order to write one sentence, because my sentence will then have words that make it more convincing.** If I don't really have the knowledge, it won't come out implicitly in my writing. 
+-- [Knuth 采访](https://www.youtube.com/watch?v=75Ju0eM5T2c)
+
+---
+
 ### 1. 超越自己，做最好的自己
 The Art of Being Happy
 
@@ -845,6 +859,11 @@ My mom taught me English, and she doesn't speak English. That tells you somethin
 
 大家都努力地考试，也教下一代如何考试，然而大家却什么都不懂。—— 费曼
 
+Drawing on his vast array of experiences, Stroustrup argued that programming education needs more variability. He notes that one of the biggest failures in education is that courses “teach programming as one thing for everybody.” In his teaching, Stroustrup hopes to inspire students who are eager to learn more and mentioned a controversial idea among many universities: fewer computer science students overall.  “Far too many students study software and software development in general,” Stroustrup said.
+凭借他丰富的经验，斯特劳斯特鲁普认为编程教育需要更多的多样性。他指出，教育中最大的失败之一是课程“把编程作为一件事教给所有人”。在教学中，斯特劳斯特鲁普希望激励那些渴望深入了解的学生，并提到许多大学中一个颇具争议的观点：整体减少计算机科学学生。
+
+So basically **keep your eyes open, have a board backgroud** so that you can take an opportunity when it walks by. What you do and how you get ready to do it, and **good solid broad education is what's underlined(基础教育要扎实且广泛)**. A Frenchman said **fortune favors the prepared mind** (Louis Pasteur). This is you have to recognize an opportunity when you see it. --  Stroustrup
+
 过分强调竞争制度,以及依据直接用途而过早专门化,这就会扼杀包括专业知识在内的一切文化生活所依存的那种精神。使青年人发展批判的独立思考,对于有价值的教育也是生命攸关的,由于太多和太杂的学科(学分制)造成的青年人的过重负担,大大地危害了这种独立思考的发展。负担过重必导致肤浅教育应当使所提供的东西让学生作为一种宝贵的礼物来领受,而不是作为一种艰苦的任务要他去负担。-- 培养独立思考的教育，爱因斯坦文集，卷3，p359, 1952年10月《纽约时报》
 
 人们为了考试,不论愿意与否,都得把所有这些废物统统塞进自己的脑袋。这种强制的结果使我如此畏缩不前,以致在我通过最后的考试以后有整整一年对科学问题的任何思考都感到乏味。现代的教学方法,竟然还没有把研究问题的神圣好奇心完全扼杀掉,真可以说是一个奇迹;因为这株脆弱的幼苗,除了需要鼓励以外,主要需要自由;要是没有自由,它不可避免地会夭折。认为用强制和责任感就能增进观察和探索的乐趣,那是一种严重的错误。我想,即使是一头健康的猛兽,当它不饿的时候,如果有可能用鞭子强迫它不断地吞食,特别是,当人们强迫喂给它吃的食物是经过适当选择的时候,也会使它丧失其贪吃的习性的。-- 爱因斯坦，自述，p9
@@ -1116,6 +1135,10 @@ Unwise people who keep beavers in their libraries find that, when wet weather is
 
 所以我一直跟我的研究生说，这个学校里头的有些口头课你一定要去听，你听了第一次不懂没关系，你第二次再去的话你觉得你多懂了一点，这样子的听过几次以后你就可能慢慢的懂了。我把这个叫做渗透性的学习方法。这个渗透性的学习方法是中国传统上不赞成的，而是我认为是一个非常重要的学习的方法。[视频](https://v.douyin.com/MYKlLT1rQzk/)
 
+####  其他
+
+- [我希望大学时就知道的事情（如何高效学习）](https://medium.com/@k4rtik/things-i-wish-i-knew-in-college-250034d1dc12)
+
 #### 无条件的关爱与接纳
 
 人类的大脑或神经系统面对挑战时会产生三种反应。第一种是原始的爬行脑反应，它存在于大脑的较低区域，表现为 “僵住”，这被称为 “制动反应”。这种反应包括身体静止（以避免被注意到）和 “解离”—— 就像老鼠被猫抓住时，会进入解离状态，这样被伤害时的痛苦感就不会那么强烈。这就是制动反应，一种原始的爬行脑本能，而我们人类身上也存在这种反应。
@@ -1161,6 +1184,37 @@ Unwise people who keep beavers in their libraries find that, when wet weather is
 第三个层面我觉得如果想要管一个更大的团队，比如管一个公司或者管一个大的事业部，其实我们在讲的是你如何构建领导力。我觉得领导力最难的什么呢？其实是在各种各样的复杂， **非常难的环境下跟大家达成共识，就帮助所有人去达成共识**。所以这时候其实就是你得让别人理解你，也协助别人相互去理解，从而构建起来共识。我觉得共识是领导力的一个关键，无论是不是巴菲特，无论是贝索斯还是乔布斯，他构建共识能力非常之强。很多人又会出现另外一个问题就说就抱怨说他为什么不理解我？刚才说的他为什么跟我不一样？就来一个他为什么不理解我？其实让别人理解你,我觉得是更高维度的一个你的一个义务，而且不但让别人理解你，你还得让帮助别人去理解其他人，从而让帮助大家构建起来共识。我觉得这就是《高效能人士的七个习惯》。帮我们来看如何训练每个人成为成年人。如何训练每一个人，其实成为一个合格的管理者，还要让一部分更有潜力人有机会其实成为一个领导者。我觉得你这本书我也读过好几遍，但是我觉得你刚才总结的过程我觉得你们发展了这套体系。
 
 [视频访谈](https://v.douyin.com/ed5evkagH8c/)
+
+## 创业
+
+### 经验分享
+
+这篇文章Phil谈论了自己创业失败[Failure suuuuucks](https://haacked.com/archive/2023/11/13/failure/)，他认为
+> 当你失败时，很多人会告诉你失败是最好的老师。他们说得没错。但你知道还有什么也是很好的老师吗？成功！而且成功的代价远低于失败。
+足够清醒地明白，如果我的下一家公司成功了，那很可能是当时运气使然，而不是我从这次失败中吸取了教训。
+
+其他人也分享了一些好的观点：
+
+Howard van Rooijen: 在我二十多年的咨询生涯中，我与众多初创公司、成长型企业以及成功的成熟企业合作过，有一点始终让我印象深刻—— **技术本身并不重要**。我见过一些极其成功的产品，但它们背后的运作（技术、人员、流程）却糟糕透顶，但这似乎并不重要，因为它们精准地把握了价值主张，并拥有庞大的潜在市场。技术始终只是降低价值交付成本的工具。 他分享了一本书：Bill Aulet 的《Disciplined Entrepreneurship》。
+
+### Bill Aulet 的《Disciplined Entrepreneurship》
+
+1.  谁是你的客户？（Who is your customer?）重点在于市场细分，选择一个“滩头阵地市场”（Beachhead Market），并构建精确的“用户画像”（Persona）。
+2.  你能为客户做什么？（What can you do for your customer?）分析客户的完整生命周期用例，确定产品的核心价值主张，并定义产品的“高层级设计方案”。
+3.  客户如何获得你的产品？（How does your customer acquire your product?）
+4.  你如何从产品中赚钱？（How do you make money off your product?）
+5.  你如何设计并构建产品？（How do you design and build your product?） 识别并测试核心假设，通过最小可行商业产品（MVBP）进行验证。
+6.  你如何规模化业务？（How do you scale your business?）
+
+书的核心理念:
+
+- 反对“孤独天才”论： 奥莱特认为，成功的创业者往往不是因为拥有某种不可复制的天赋，而是因为他们遵循了严谨的方法论。
+- 以客户为中心： 书中反复强调，**创业的起点不是“我有技术/产品”，而是“谁有痛点”** 如果找不到愿意付钱的客户，技术再先进也不是一门生意。
+- 滩头阵地策略：**创业初期资源有限，必须聚焦于一个极小的细分市场并取得统治地位**，而不是试图在一开始就服务所有人。
+- 重视单位经济效益： 书中对 LTV（生命周期价值）必须远大于 COCA（获客成本） 的逻辑进行了深度剖析，这对于评估初创企业的长期生存能力至关重要。
+
+估算后续市场的总潜在市场规模（TAM），并制定长期产品路线图。设计商业模式，并计算两个关键财务指标：客户终身价值（LTV）和获客成本（COCA）。分析决策单位（DMU）和销售周期，弄清楚客户是如何做购买决定的。
+LTV > 3 × COCA：长期来看，客户生命周期价值应至少是获客成本的 3 倍。 回收期 (Payback Period)：建议在 12 个月内收回获客成本。
 
 ## 苍蝇拍
 

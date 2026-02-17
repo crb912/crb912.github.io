@@ -217,12 +217,10 @@ func(p);  // 更简洁
 | `-O3` / `-Ofast` | **极致性能优化** | 利用编译器进行循环展开、指令对齐、向量化优化 |
 | `-Wall -Werror` | **警告即错误** | 强制执行最高标准的编码规范，消除潜在隐患 |
 
+### 哲学
 
-### Golang 代码规范
-
-- 优先考虑复用对象，而不是用make重新分配内存。
-- 尽量预分配切片的容量，用空间换时间，避免运行时扩容。
-- 理解值类型和指针的权衡
+异常： 
+On free will and the problem of evil: “I can design a program that never crashes if I don’t give the user any options. And if I allow the user to choose from only a small number of options, limited to things that appear on a menu, I can be sure that nothing anomalous will happen, because each option can be foreseen in advance and its effects can be checked. But if I give the user the ability to write programs that will combine with my own program, all hell might break loose. (In this sense the users of Emacs have much more free will than the users of Microsoft Word.) … I suppose we could even regard Figure 5 （a binary tree representing someone’s choices） as the Tree of the Knowledge of Good and Evil.” (p. 189-190)
 
 ---
 
@@ -2739,6 +2737,11 @@ C++
 - [Abstraction and the C++ machine model](https://www.stroustrup.com/abstraction-and-machine.pdf)
 - [C++ Primer Plus](https://zhjwpku.com/assets/pdf/books/C++.Primer.Plus.6th.Edition.Oct.2011.pdf)
 
+编程技术：、
+
+[The Free Lunch Is Over: A Fundamental Turn Toward Concurrency in Software By Herb Sutter](https://www.cs.utexas.edu/~lin/cs380p/Free_Lunch.pdf)
+
+
 
 [CSCI E-192](https://canvas.harvard.edu/courses/34992/assignments/syllabus) 课程提供了很好的参考，他们列出的Paper主要在这里：[master list.](https://canvas.harvard.edu/courses/34992/assignments/syllabus)
 
@@ -2810,7 +2813,9 @@ GCC wiki recommends [a list of compiler books](https://gcc.gnu.org/wiki/ListOfCo
 
 ## C5. 最喜欢的语言：面向现代的C++
 
-1.学习建议（[BS的视频采访](https://youtu.be/5m6c1DYy8uA?t=253)）：
+C++的魅力：核心是零开销抽象（Zero-overhead Abstraction），不牺牲性能的前提下提升表达力；同时坚持兼容性、实用性、直接映射硬件、支持多种编程范式，让 C++ 能适配从嵌入式到超算的全场景。
+
+**1.学习建议：**（[BS的视频采访](https://youtu.be/5m6c1DYy8uA?t=253)）：
 
 - Bjarne Stroustrup谈到，“C++是一门庞大的语言，许多人迷失在它的细节中(Don't get obsessed with the details.)。然而，写好C++你只需要掌握一些基本技巧，其余的确只是细节”[BS12]。他的这番话也为我的C++学习指明了方向： 专注于C++核心的编程技术，忽略各种繁杂的细节。不是说细节完全不重要，而是细节可以在编程时通过Google学会，不需要浪费大量的时间去掌握细枝末节。把时间用在重要的事情上，提高学习的效率。
 - Don't try to understand everything. You can't know everything. [BS:采访](https://youtu.be/5m6c1DYy8uA?t=253)
@@ -2823,7 +2828,7 @@ GCC wiki recommends [a list of compiler books](https://gcc.gnu.org/wiki/ListOfCo
 很多人只想发财，但是没有耐心了解C++的哲学。 
 BS: A lot of new programmers, a lot of students have very little patience with philosophy. They just want to get rich.
 
-2.现代C++的值得注意的东西：
+**2.现代C++的值得注意的东西：**
  
 - Profiles 安全配置文件[C++ Core Guidelines](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#s-profile) and [Microsoft GSL 指南支持工具](https://github.com/Microsoft/GSL)
 
@@ -2831,21 +2836,23 @@ BS 谈Profies, "we need them badly", Pepple want safety and they don't quite kno
 It’s not that hard to get these things: the range checking and such. But in C++, it'll have to from profiles and it'll have to come without breaking a billion of lines of code and programming styles and techniques. I think profiles is the only way I know that can do that. And I did express a certain amount of sadness that we didn't already have it.
 That's very important. I think a lot of people then think philosophical shifts, people think, for instance, ideals of safety are new. They were thery from the beginning. Static type safey, resource safety, and some of the safety fanatics haven't even gotten to research source safety yet. And we can do much better. Evolution gets us from there to here and it gets us further. **I really want profiles up, near the top there**.
 
-3.职业建议
+**3.职业建议：**
 
 Q:How did you decide what to focus on tronghout your career?
 BS: 
 - **One is to work with good people and hang out with good people. That's nice.**
-Sitting on your own is not fun. And working jerks and having to protect your back is not good for your health. And so **I've always looked out for how to be with interesting and good people**. 
+Sitting on your own is not fun. And working jerks and having to protect your back is not good for your health. And so **I've always looked out for how to be with interesting and good people.**
 And usually intersting and good because they're doing interesting things. So you get inspired. 
 - So the other way of looking at it is I look for something interesting that is fun and useful to work at. I want to build something, I want to do something for people. And those two aspects are closely related.
-- So I learned object oriented programming by having a serious number of beers with Kristen Nygaard because he was a vistor to my university, and I was a grad student, so I got into that similarly, I like machine architecture and design machine insructions and such.So basically **keep your eyes open, have a board backgroud** so that you can take an opportunity when it walks by. What you do and how you get ready to do it, and **good solid broad education is what's underlined(基础教育要扎实且广泛)**. A Frenchman said **fortune favors the prepared mind **(Louis Pasteur). This is you have to recognize an opportunity when you see it.
+- So I learned object oriented programming by having a serious number of beers with Kristen Nygaard because he was a vistor to my university, and I was a grad student, so I got into that similarly, I like machine architecture and design machine insructions and such.So basically **keep your eyes open, have a board backgroud** so that you can take an opportunity when it walks by. What you do and how you get ready to do it, and **good solid broad education is what's underlined(基础教育要扎实且广泛)**. A Frenchman said **fortune favors the prepared mind** (Louis Pasteur). This is you have to recognize an opportunity when you see it.
 - And things I mentioned briefly and I should probably repeat. **I like to do thing that is useful to other people**. I don't want to do a crossword puzzles.
-与好人一起工作。与有趣的人一起做有趣的事情。广泛且扎实的基础。做对别人有用的事情。
+与优秀的人一起工作。与有趣的人一起做有趣的事情。广泛且扎实的基础。做对别人有用的事情。
+
+“I don't consider anyone a professional if they only know only one language,” BS said, noting that there's a difference between knowing a language's syntax and knowing how to write good code.  知道一门语言的语法与写出好代码是有区别的。
 
 ### C++的核心技术： RAII与不变式
 
-因此我从BS的论文、采访、书籍里面搜集到了他提到的一些C++技术，记录在下面，并且会对每条给出解释和说明。希望这些对其他C++学习也能有些帮助。注意的是，C++标准库vector,map,set,list等一系列容器里面已经应用了这些技术，如果你不能理解，可以尝试通过阅读标准库的源码来得到更多的领悟。
+因此我从BS的论文、采访、书籍里面搜集到了他提到的一些C++技术，记录在下面，并且会对每条给出解释和说明。希望这些对其他C++学习者也能有些帮助。注意的是，C++标准库vector,map,set,list等一系列容器里面已经应用了这些技术，如果你不能理解，可以尝试通过阅读标准库的源码来得到更多的领悟。
 
 1. 零开销的抽象：机器模型，内联（Inlining），编译时计算。
 2. 面向对象：classes for separating interfaces from implementations.
@@ -2864,6 +2871,8 @@ lists.
 
 - 对于不变式，BS提到：“我的经验法则是，当且仅当您可以考虑建立类的不变量时，您才应该拥有一个具有接口和隐藏表示的真实类”[BS03,Bill]。不变式用来保证对象有效。比如，你有个Temperature(温度)类，它接受输入的浮点数用来初始化，但是你始终应该在构造函数里面检测温度是否是大于绝对零度(-273.15℃)，因为初始化的数字小于绝对零度时，那它必定是错误值，对象是无效的。虽然你完全也可以用成员函数实现这一检测，但不应该那样做，你应该总是在构造函数建议不变式。这样就可以完全避免实例了一个无效的对象。
 - RAII，资源申请即初始化。就是说，当你开始申请资源时，表明你正在初始化；反过来，当你在销毁对象时，你应该释放资源。RAII，它把对象的生命周期与资源申请/释放的时间点联系到一起。它看起来不能称为一个技术，无非是在构造函数中申请资源，在析构函数中释放资源。但如果不它单独用一个术语去“显式的”提醒程序员们有这么一个技术存在，那么很多程序员就可能会在各种成员函数中申请资源，因此会造成资源管理的灾难。RAII提醒每个C++程序员，你最好不要在非构造函数中new一个资源，应该总是在构造函数申请，在析构函数释放。如果一个总是能做到RAII，那他基本不可能会写出资源泄漏的代码。（注意：「资源」一词不仅仅是指free store自由存储这一内存资源，也包括了文件描述符、信号量、数据库锁等资源，一定要避免这些资源的泄漏）。
+
+![image](https://image.devclass.com/117718.webp?imageId=117718&width=1412&height=918&format=webp)
 
 [BS12] B. Stroustrup: Foundations of C++, Texas A&M University.
 [BS03,Bill] A Conversation with Bjarne Stroustrup, https://www.artima.com/intv/bjarne.html
@@ -4354,6 +4363,13 @@ service BrokerService {
 }
 ```
 
+### Golang 代码规范
+
+- 优先考虑复用对象，而不是用make重新分配内存。
+- 尽量预分配切片的容量，用空间换时间，避免运行时扩容。
+- 理解值类型和指针的权衡
+
+
 ## 技术工具： 喜鹊开发者
 
 [The Magpie Developer](https://blog.codinghorror.com/the-magpie-developer)
@@ -4621,6 +4637,23 @@ SF++ 后来深刻影响了后来的 MISRA C++ 标准（汽车行业标准）和 
 
 ## 编程杂谈
 
+### 向优秀的开发者学习
+
+ [Phil Haack](https://github.com/haacked?tab=overview) 
+偶然看到Phil Haack 2007 年的文章，那时候他大约33岁在写ASP.NET。身为创业公司的合伙人，经常为了支付员工工资而放弃自己的薪水，当时他妻子怀孕压力很大。随后08年加入了微软担任高级项目经理。2011年他放弃了微软待遇优渥的高薪工作，再以低得多的薪水跳槽到当时名不见经传的小公司Github，用C#和WPF编写Git Windows客户端 和Atom编辑器。2018年（约43岁）从Github离职创业，职位是工程总监。从最初的开发人员到经理，从工程总监再到自己创业担任CTO，创业失败24年休息了一年。2025 年，他加入了 PostHog 重回 IC (个人贡献者)。Phil 写代码估计 25 年左右，50多岁仍然在高强度贡献代码。
+
+我对Phil的评价：
+1. 经历相当丰富，勤奋且性格上的韧性极强。
+2. 我认为他选错了技术栈，应该选择一门上限更高的语言，最好是可以面向系统编程的语言。
+3. 创业失败怎么说呢，这就是人生。
+
+[Kartik Singhal](https://github.com/k4rtik)  从布朗大学到芝加哥，从事量子计算。
+I also came to realize that to achieve my long term goals going back to the industry will not help. I was still interested in the sweet spot of systems and PL research that focuses on concurrency and figured that the right way forward will be to work in a research environment where I could focus on things that I really want to do. This realization and a lot of encouragement from people around me led to my decision to apply for a PhD.
+A common theme that I see in papers I really like is that they provide a fair bit of historical perspective on how big ideas in computing/systems emerged.
+我也逐渐意识到，重返工业界并不能帮助我实现长期目标。我仍然对系统和编程语言研究的并发性领域充满热情，并认为正确的方向是在研究环境中工作，这样我就可以专注于自己真正想做的事情。这种认识以及周围人的鼓励促使我决定申请攻读博士学位。
+我非常喜欢的论文中一个共同的主题是，**它们都提供了相当多的历史视角，** 阐述了计算机/系统领域重大思想的出现过程。[](https://medium.com/@k4rtik/2016-year-and-a-half-in-review-58a77b06677f)
+
+
 ### 编程与AI
 
 Bjarne Stroustrup： First of all, I'm not a AI expert and I don't plan to become one. So that's an area I cannot pick up. I don't have the backgroud, and I don't have the time. I don't have the people that could fire me up. 
@@ -4630,6 +4663,8 @@ And I'm worrying what instead of being able to do fairly straghtforward things, 
 1. 我担心我们会失去判断好坏和辨别正确或错误的能力，因为我们实际上并没有实践过。我们失去了自己动手的能力。
 2. 我们信任AI， 但是目前的AI还不值得信任。与软件外包业务很相似，更便宜，直到公司失去了进行质量控制的员工。
 3. 原本我们可以简单直接的做事，后来我们开始用一堆工具试图避免AI的缺陷。
+
+我担心人们因为太习惯于别人帮忙做，导致他们失去了发现问题的能力。
 
 ### 推特的开源算法
 
