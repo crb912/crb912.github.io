@@ -150,6 +150,10 @@ C++规范对这两个术语的精确措辞很难，但是有助于解决一些�
 | prvalue | 不具有身份+可移动的纯右值，它没有一个地址 |
 |xvalue | 可移动+具有身份；具有一个地址，但程序不再能访问。 |
 
+Bjarne Stroustrup 本人对左值和右值的解释（参见A Tour of C++, Moving Containers） :
+> The word "rvalue" is intended to complement "lvalue", which roughly means "something that can appear on the left-hand side of an assginment." 
+So an rvalue is - to a first approximation - a value that you can't assign to, such as an integer returned by a function call. Thus, an rvalue reference is a reference to something that nobody else can assign to, wo we can safely "steal" its value. 
+
 如果对这些术语有困惑，不必惊慌，随后会给出具体的示例。
 
 ## 3 值分类示例(Examples)  <a name="examples"></a>

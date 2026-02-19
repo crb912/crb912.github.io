@@ -361,6 +361,8 @@ The only way I could get the people to like me a little bit was to get very rich
 
 文明人践行一种奇怪的才智：他们把短暂的生命，浪费在繁琐的事物上。-- 毛姆《月亮与六便士》
 
+[ Focus is about saying no](https://www.youtube.com/shorts/CzO2MQNwWjY?feature=share)
+
 战略不仅仅是选择做什么，更是知道并理解要放弃什么的纪律。Strategy is not just about choosing what to do, it is also about the discipline of knowing and understanding what to leave behind. --黄仁勋，剑桥大学访谈
 
 我觉得，最重要的是做好自己。不去关心不能控制的因素，然后把自己的因素做到最好。很多时候，你的恐慌本身就是最大的问题。就是说，你自己的步伐乱了，你自己的决策乱了。我觉得自己做的最重要的事情就是认准方向，脚步不停。其他不能控制的事情，我觉得就不要去关心。--张一鸣

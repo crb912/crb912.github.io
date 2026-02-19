@@ -2897,6 +2897,23 @@ public:
 };
 ```
 
+As a typical, Vector's move constructor is trivial to define:
+
+```cpp
+class Vector{
+	   Vector(Vector && a)                      // move constructor
+	   Vector& operator=(Vector&& a);  // move assignment 
+}
+
+Vector::Vector((Vector&& a)                 // the move constructor implement
+        :elem{a.elem},
+        sz{a.sz}
+{
+		a.elem = nullptr';
+		a.sz = 0;
+}
+```
+
 分类：
  
 1.从空或者某个值去构造一个新对象。
@@ -4640,10 +4657,10 @@ SF++ 后来深刻影响了后来的 MISRA C++ 标准（汽车行业标准）和 
 ### 向优秀的开发者学习
 
  [Phil Haack](https://github.com/haacked?tab=overview) 
-偶然看到Phil Haack 2007 年的文章，那时候他大约33岁在写ASP.NET。身为创业公司的合伙人，经常为了支付员工工资而放弃自己的薪水，当时他妻子怀孕压力很大。随后08年加入了微软担任高级项目经理。2011年他放弃了微软待遇优渥的高薪工作，再以低得多的薪水跳槽到当时名不见经传的小公司Github，用C#和WPF编写Git Windows客户端 和Atom编辑器。2018年（约43岁）从Github离职创业，职位是工程总监。从最初的开发人员到经理，从工程总监再到自己创业担任CTO，创业失败24年休息了一年。2025 年，他加入了 PostHog 重回 IC (个人贡献者)。Phil 写代码估计 25 年左右，50多岁仍然在高强度贡献代码。
+偶然看到Phil Haack 2007 年谈论测试驱动开发TDD的文章[Career Chutes and Ladder](https://haacked.com/archive/2024/12/10/chutes-and-ladder/)，那时候他大约33岁在写ASP.NET。身为创业公司的合伙人，经常为了支付员工工资而放弃自己的薪水，当时他妻子怀孕压力很大。随后08年加入了微软担任高级项目经理。2011年他放弃了微软待遇优渥的高薪工作，再以低得多的薪水跳槽到当时名不见经传的小公司Github，用C#和WPF编写Git Windows客户端 和Atom。2018年（约43岁）从Github以工程总监的职位离职创业。从最初的开发人员到经理，从工程总监再到自己创业担任CTO，创业失败，24年休息了一年。2025 年，他加入了 PostHog 重回 IC (个人贡献者)。Phil 写代码估计25年左右，50多岁仍然在高强度贡献代码。
 
 我对Phil的评价：
-1. 经历相当丰富，勤奋且性格上的韧性极强。
+1. 经历相当丰富，勤奋且性格的韧性极强。Phil认为职业生涯并非关乎完美的头衔，而是关乎经验、人脉和技能的积累，这些都会塑造你。
 2. 我认为他选错了技术栈，应该选择一门上限更高的语言，最好是可以面向系统编程的语言。
 3. 创业失败怎么说呢，这就是人生。
 
@@ -4656,7 +4673,9 @@ A common theme that I see in papers I really like is that they provide a fair bi
 
 ### 编程与AI
 
-Bjarne Stroustrup： First of all, I'm not a AI expert and I don't plan to become one. So that's an area I cannot pick up. I don't have the backgroud, and I don't have the time. I don't have the people that could fire me up. 
+Bjarne Stroustrup：
+
+First of all, I'm not a AI expert and I don't plan to become one. So that's an area I cannot pick up. I don't have the backgroud, and I don't have the time. I don't have the people that could fire me up. 
 I have some worries, you know, I've always got some worries. I'm trying to solve problems and to solve problems. You have to start worrying about something. But the thing that I see is that people are using LMMs to get answers, and there's lot of stuff about letting them do the simple things. I worry that we lose the skills to determine what is good and what is correct, because we are not actually practicing doing things. We lose the ability to do it ourselves. And then we come to trust the AI. And the AI is at least now not trustworthy. And that is similar to when we started outsourcing and offshoring stuff, because it was cheaper and it worked beautifully for a couple of years until we lost the people who could actually do quality control on what was offshore. The skills were outsourced and such. And the companies that were doing it lost the ability to see what was good and bad. And then they got bloat from the outside.
 And I'm worrying what instead of being able to do fairly straghtforward things, we then have piles upon piles and tools and cross checks and double checks try and avoid the faults of the AI. But it's so complicated, I will never become an expert on this.
 
@@ -4665,6 +4684,14 @@ And I'm worrying what instead of being able to do fairly straghtforward things, 
 3. 原本我们可以简单直接的做事，后来我们开始用一堆工具试图避免AI的缺陷。
 
 我担心人们因为太习惯于别人帮忙做，导致他们失去了发现问题的能力。
+
+---
+
+[Why C++ programmers keep growing fast despite competition, safety, and AI](https://herbsutter.com/2025/12/)
+
+- First, I think that people who think AI isn't a major game-changer are fooling themselves.
+- Second, I think that people who think AI is going to put a large fraction of programmers out of work are fooling themselves.
+- If your job is fundamentally “follow complex instructions and push buttons,” AI will come for it eventually.
 
 ### 推特的开源算法
 
