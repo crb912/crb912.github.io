@@ -2815,6 +2815,8 @@ GCC wiki recommends [a list of compiler books](https://gcc.gnu.org/wiki/ListOfCo
 
 C++的魅力：核心是零开销抽象（Zero-overhead Abstraction），不牺牲性能的前提下提升表达力；同时坚持兼容性、实用性、直接映射硬件、支持多种编程范式，让 C++ 能适配从嵌入式到超算的全场景。
 
+
+
 **1.学习建议：**（[BS的视频采访](https://youtu.be/5m6c1DYy8uA?t=253)）：
 
 - Bjarne Stroustrup谈到，“C++是一门庞大的语言，许多人迷失在它的细节中(Don't get obsessed with the details.)。然而，写好C++你只需要掌握一些基本技巧，其余的确只是细节”[BS12]。他的这番话也为我的C++学习指明了方向： 专注于C++核心的编程技术，忽略各种繁杂的细节。不是说细节完全不重要，而是细节可以在编程时通过Google学会，不需要浪费大量的时间去掌握细枝末节。把时间用在重要的事情上，提高学习的效率。
@@ -2848,9 +2850,9 @@ And usually intersting and good because they're doing interesting things. So you
 - And things I mentioned briefly and I should probably repeat. **I like to do thing that is useful to other people**. I don't want to do a crossword puzzles.
 与优秀的人一起工作。与有趣的人一起做有趣的事情。广泛且扎实的基础。做对别人有用的事情。
 
-“I don't consider anyone a professional if they only know only one language,” BS said, noting that there's a difference between knowing a language's syntax and knowing how to write good code.  知道一门语言的语法与写出好代码是有区别的。
+“I don't consider anyone a professional if they only know only one language,” BS said, noting that there's a difference between knowing a language's syntax and knowing how to write good code.  **知道一门语言的语法与写出好代码是有区别的**。
 
-### C++的核心技术： RAII与不变式
+######  C++ fundamental techniques:  RAII与不变式
 
 因此我从BS的论文、采访、书籍里面搜集到了他提到的一些C++技术，记录在下面，并且会对每条给出解释和说明。希望这些对其他C++学习者也能有些帮助。注意的是，C++标准库vector,map,set,list等一系列容器里面已经应用了这些技术，如果你不能理解，可以尝试通过阅读标准库的源码来得到更多的领悟。
 
@@ -2909,16 +2911,13 @@ Vector::Vector((Vector&& a)                 // the move constructor implement
         :elem{a.elem},
         sz{a.sz}
 {
-		a.elem = nullptr';
+		a.elem = nullptr;
 		a.sz = 0;
 }
 ```
+We didn't really want a copy; we just wanted to get the result out of a function: we wanted to *move* a **Vector** rather than *copy*  it. Given that definition, the compiler will choose the move constructor to implement the transfer of th return value out of the funcion. This means that `r=x+y+z` will involve no copying of Vectors. Instead, Vectors are just moved.
 
-分类：
- 
-1.从空或者某个值去构造一个新对象。
-2.从已有的源对象（复制/移动）去构造一个新对象。
-3.将一个已存在的源对象赋值（复制/移动）给另一个已存在的目标对象。
+Initially, I was puzzled by the use of a reference as the return type for copy assignment, as I expected local function scope to invalidate it. However, I now understand that it returns a reference to the object pointed to by `this`. Since the object's lifetime is managed outside the member function, returning `*this` by reference is safe and avoids unnecessary copying.
 
 five situations in which an object can be moved or copied:
 
@@ -2928,6 +2927,22 @@ five situations in which an object can be moved or copied:
 4. As a function return value. 
 5. As an **exception**.
 
+复制和拷贝的分类：
+ 
+1.从空或者某个值去构造一个新对象。
+2.从已有的源对象（复制/移动）去构造一个新对象。
+3.将一个已存在的源对象赋值（复制/移动）给另一个已存在的目标对象。
+
+ C++ 伪代码：利用移动语义避免拷贝：
+```cpp
+Matrix operator+(Matrix&& lhs, const Matrix& rhs) {
+    lhs.add_data(rhs); // 直接修改左值（临时对象）的内部数据
+    return std::move(lhs); // 转移所有权
+}
+```
+C语言的设计哲学是**“所见即所得”**，C 不希望在 a + b 后面隐藏一个复杂的函数调用（甚至是移动操作）。C的类型系统不支持区分左值和右值的引用，引入它会破坏 C 与汇编之间极其接近的对应关系。
+
+###  C++ fundamental techniques:  Templates  
 ### 基础知识： Union
 
 1. Union的通常用法：节约空间，共享内存。2. 类型双关（type punning）或者说位的重解释（Bit Reinterpretation） 。
@@ -4693,6 +4708,28 @@ And I'm worrying what instead of being able to do fairly straghtforward things, 
 - Second, I think that people who think AI is going to put a large fraction of programmers out of work are fooling themselves.
 - If your job is fundamentally “follow complex instructions and push buttons,” AI will come for it eventually.
 
+---
+
+### AI 基础知识
+
+- RNN（循环神经网络）的缺点： 1. 依赖前一次输入，无法并发。2. 梯度消失 (Vanishing Gradient)。玩“传声筒”游戏，传到第 100 个人时，最初的信息已经变得极其微弱甚至消失了。这导致它记不住长句子前面的内容。
+- CNN（卷积神经网络）的问题：可以把 CNN 想象成一个 **“拿着放大镜观察世界的侦探”**。它观察局部很厉害，但全局观和灵活性上有些欠缺。 CNN 的池化（Pooling），它的目的是压缩信息，只保留最重要的特点。同一只猫，换个方向就不认识了。
+
+
+如果你想从“驾驶员”进阶到“技师”，你只需要掌握以下三块的**“直觉”**，而不是去背公式：
+
+1. 线性代数（矩阵运算），直觉： 把一堆数据看成一个“表格”（矩阵），学习如何把两个表格叠在一起或乘在一起。这在处理图像（CNN）和文本时是基础。
+2. 微积分（导数/梯度）， 直觉： 就是“下坡”。模型预测错了，得往哪个方向改才能错得少一点？导数就是指明那个“下坡最快方向”的路标。
+3. 概率统计，直觉： 机器学习本质上是在“猜”。统计学告诉我们，猜对的概率有多大，以及我们对这个结果有多大的信心。
+
+推荐的学习路径：
+
+1. 先跑通： 找个教程，用 Python 跑通一个 MNIST 手写数字识别。
+2. 点对点爆破： 遇到不懂的术语（比如“损失函数”），再去查它背后的数学直觉。
+3. 图形化理解： 多看动图和可视化。数学是静态的，而机器学习是动态的优化过程
+
+---
+
 ### 推特的开源算法
 
 推特开源了他们的算法，https://github.com/xai-org/x-algorithm 。
@@ -4714,11 +4751,13 @@ And I'm worrying what instead of being able to do fairly straghtforward things, 
 
 该算法显然的弊端会导致信息收敛，因为数据源来自关注列表和ML打分出来相关度高的帖子。最终推荐给用户的内容，其中就只剩下用户想看的内容，信息茧房或者说收敛。应当加入一些热门或随机的东西，让信息发散。
 
-
+---
 
 ### zendesk服务
 
 这个服务很有意思，致力于简化客户和公司之间的客户解决方案。这是一个在细分领域成功创业的想法，特别棒的idea。在未来当互联网的基础设置被巨头垄断时，初创公司想要在互联网分一杯羹，他们就要从细分领域着眼。认真考虑用户的需求，考虑公司的需求，尤其这种看起来毫不起眼的。
+
+---
 
 ### 对软件更新过快的抱怨
 
