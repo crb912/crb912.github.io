@@ -3471,9 +3471,9 @@ connect(sender, &Sender::signal,
 ```
 ---
 
-## G.6 编程语言之 Golang
+## G.6 Golang Programming 
 
-### 基础知识
+### Common Sense
 
 #### Golang的defer
 
@@ -3820,8 +3820,12 @@ func main() {
 
 答案：原则：由生产者关闭，或者使用 sync.Once 确保只关一次。
 
-#### select 语句的作用？
-答案：监听多个 Channel 操作，哪个就绪执行哪个。若都未就绪且有 default，则执行 default。
+#### The behavior of `select`
+
+- Rule 1: Execute whichever is ready first (Blocking wait).
+- Rule 2: If multiple are ready simultaneously, it uses a "random coin flip" strategy (Fairness).
+- Rule 3: If there is a default case, it never waits (Non-blocking).
+
 
 #### 如何判断一个接口变量是否为 nil？
 
@@ -3885,7 +3889,14 @@ func main() {
 ```
 ---
 
-### 最佳实践
+### 基本技术
+
+#### 0. Golang 代码与设计规范
+
+- 优先考虑复用对象，而不是用make重新分配内存。
+- 尽量预分配切片的容量，用空间换时间，避免运行时扩容。
+- 理解值类型和指针的权衡
+
 
 #### 1. 对象池模式（Object Pool Pattern）
 
@@ -3993,7 +4004,140 @@ type ReadWriteCloser interface {
 
 ---
 
-### 其他
+#### 4. Error Handing: Create Custom Error Types Wherever Suitable
+
+Because `error` is an interface, you can build custom error types with extra functionality as long as they implement `Error() string`.
+
+### Best Practice
+
+#### Graceful Shutdown
+
+The old method (the traditional three-step process):
+
+```golang
+q := make(chan os.Signal, 1)
+
+// signal.Notify  accept (Send-Only Channel, Variadic Parameter: Ctrl+c or kill pid)
+signal.Notify(q, syscall.SIGINT, syscall.SIGTERM)  
+<-q
+```
+
+The underlying mechanism of `signal.Notify`:
+
+1. Registration: When signal.Notify is called, it adds the current channel into the Signal Registry.
+2. OS Interrupt: When an interrupt occurs (such as pressing Ctrl+C on the keyboard), the operating system sends a real hardware/system interrupt to the Go process and hands over control to the Go runtime.
+3. Dispatch: The Go runtime checks the global registry, finds all the channels that have subscribed to this specific signal, and iterates through them to send the signal using Non-blocking Dispatch.
+
+Conceptual code:
+
+```golang
+// Conceptual code of what Notify does internally
+func Notify(c chan<- os.Signal, sig ...os.Signal) {
+	// If no specific signals are provided, listen to all
+	if len(sig) == 0 {
+		// Register channel 'c' for all signals
+		// ...
+		return
+	}
+
+	// Loop through the provided signals
+	for _, s := range sig {
+		// Add the channel 'c' to the list of listeners for signal 's'
+		// Go runtime uses a global struct to store these mappings
+		add(c, s) 
+	}
+}
+
+// Inside Go runtime signal dispatcher
+func dispatchSignal(s os.Signal) {
+	// Find all channels waiting for this signal
+	channels := getListenersFor(s)
+	
+	for _, c := range channels {
+		// Try to send the signal to channel 'c'
+		select {
+		case c <- s:
+			// Success! The channel had space.
+		default:
+			// Warning! The channel is full or not ready.
+			// Go runtime drops the signal and moves on!
+		}
+	}
+}
+```
+The new method:
+
+```go
+// 1 & 2. Create context and listen for signals in one line
+ctx, stop := signal.NotifyContext(context.Background(), syscall.SIGINT, syscall.SIGTERM)
+
+// Clean up resources when done
+defer stop()
+
+// 3. Wait for the context to be canceled
+<-ctx.Done()
+```
+
+A complete example of a modern HTTP graceful shutdown.
+
+```golang
+package main
+
+import (
+	"context"
+	"fmt"
+	"log"
+	"net/http"
+	"os/signal"
+	"syscall"
+	"time"
+)
+
+func main() {
+	// Create a context that listens for system signals
+	ctx, stop := signal.NotifyContext(context.Background(), syscall.SIGINT, syscall.SIGTERM)
+	
+	// Ensure we release the signal resources when main ends
+	defer stop()
+
+	// Setup a simple HTTP server
+	srv := &http.Server{
+		Addr: ":8080",
+		Handler: http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			// Sleep for 3 seconds to test slow requests
+			time.Sleep(3 * time.Second)
+			fmt.Fprintln(w, "Hello, modern Go!")
+		}),
+	}
+
+	// Start the server in a new goroutine
+	go func() {
+		log.Println("Server is running on port 8080...")
+		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+			log.Fatalf("Server error: %v", err)
+		}
+	}()
+
+	// Block main goroutine here until we get a signal
+	<-ctx.Done()
+
+	// Stop listening for signals right now.
+	// This means a second Ctrl+C will kill the app instantly.
+	stop()
+	log.Println("Signal received. Starting graceful shutdown...")
+
+	// Create a new context with a 5-second timeout for the shutdown process
+	shutdownCtx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	// Shut down the server safely
+	if err := srv.Shutdown(shutdownCtx); err != nil {
+		log.Fatalf("Server forced to stop: %v", err)
+	}
+
+	log.Println("Server stopped safely.")
+}
+```
 
 #### context.Context 处理并发控制和超时取消的核心机制。
 
@@ -4030,6 +4174,194 @@ func doSomething(ctx context.Context) {
 - 不要传递 nil：如果你不知道传什么，传 context.TODO()。
 - 它是线程安全的：你可以在无数个协程里传递同一个 ctx，安全地监听它的信号。
 - 层级传递：当你基于一个父 ctx 创建子 ctx 时（比如 WithTimeout），如果父级被取消，所有的子级也会跟着被取消。
+
+####  Breaking Down Large Interfaces
+
+> "The bigger the interface, the weaker the abstraction" —— Rob Pike
+
+Example 1 :  [Golang: Breaking Down Large Interfaces with Embedding
+Golang](https://medium.com/@cjkaminer/golang-breaking-down-large-interfaces-with-embedding-82a92bdcb02b)
+
+```golang
+// database package
+type DBInterface interface {
+    CreateItem(Item) (*Item, error)
+} 
+type DB struct {
+    *sql.DB
+} 
+func (db *DB) CreateItem(item Item) (*Item, error) {
+    query := `INSERT INTO Table_Items(Name) VALUES(@itemName)`
+    db.Query(query, sql.Named("itemName", item.Name))
+    
+    return &item, nil
+} 
+type MockDB struct {} 
+func (db *MockDB) CreateItem(item Item) (*Item, error) {
+    i := Item{Name: "Foo"}
+    return &i, nil
+}  
+// shopping cart package - import database package
+type Cart struct {
+    DB db.DBInterface
+} 
+// Live implementation
+db := db.DB{*sql.DB}
+cartService := Cart{DB: &db} 
+// Mock out db when testing the cart service
+db := db.MockDB{}
+cartService := Cart{DB: &mockDB}
+```
+
+Before: 
+```golang
+// package db
+type MyDB interface {
+    CreateThingOne(ThingOne) (ThingOne, error)
+    FindThingOne(string) (ThingOne, error)
+    UpdateThingOne(ThingOne) (ThingOne, error)
+    DeleteThingOne(string) error
+    CreateThingTwo(ThingTwo) (ThingTwo, error)
+    FindThingTwo(string) (ThingTwo, error)
+    UpdateThingTwo(ThingTwo) (ThingTwo, error)
+    DeleteThingTwo(string) error
+}
+// package foo
+type FooService struct {
+    DB db.MyDB
+}
+```
+
+One way to get around this problem is to split our database into sub-packages by entity.
+
+After:
+
+```
+// package db/thing_one_db
+type ThingOneDB interface {
+    CreateThingOne(ThingOne) (ThingOne, error)
+    FindThingOne(string) (ThingOne, error)
+    UpdateThingOne(ThingOne) (ThingOne, error)
+    DeleteThingOne(string) error
+}
+// package db/thing_two_db
+type ThingTwoDB interface {
+    CreateThingTwo(ThingTwo) (ThingTwo, error)
+    FindThingTwo(string) (ThingTwo, error)
+    UpdateThingTwo(ThingTwo) (ThingTwo, error)
+    DeleteThingTwo(string) error
+}
+
+// package foo
+type FooService struct {
+    ThingOneDB thing_one_db.ThingOneDB
+    ThingTwoDB thing_two_db.ThingTwoDB
+}
+```
+
+Improved Solution: Embedding
+This is great because **Go’s interface type can absolutely be embedded**. Applying this concept to our problem looks something like this:
+
+```golang
+// package db
+type MyDB struct {
+    ThingOneDB
+    ThingTwoDB
+}
+type ThingOneDB interface {
+    CreateThingOne(ThingOne) (ThingOne, error)
+    FindThingOne(string) (ThingOne, error)
+    UpdateThingOne(ThingOne) (ThingOne, error)
+    DeleteThingOne(string) error
+}
+type ThingTwoDB interface {
+    CreateThingTwo(ThingTwo) (ThingTwo, error)
+    FindThingTwo(string) (ThingTwo, error)
+    UpdateThingTwo(ThingTwo) (ThingTwo, error)
+    DeleteThingTwo(string) error
+}
+
+// package foo
+type FooService struct {
+    DB db.MyDB
+}
+
+// package main
+func main() {
+    database := db.MyDB{ThingOneDB: db.ThingOneDBImpl{}}
+    fooService := FooService{
+                      DB: database,
+                  }
+}
+```
+
+The difference here is that we are now able to import the database struct type which consists of embedded interfaces instead of importing one giant interface.
+
+
+Example 2:
+
+[IOT device-sdk-go](https://github.com/edgexfoundry/device-sdk-go) 
+
+```golang
+type ProtocolDriver interface {
+    Initialize(sdk DeviceServiceSDK) error  // Lifecycle Management
+    Start() error                           
+    Stop(force bool) error                
+
+    HandleReadCommands(...) error           // cmd handle
+    HandleWriteCommands(...) error          
+
+    AddDevice(...) error                    //  device event
+    UpdateDevice(...) error                 
+    RemoveDevice(...) error                 
+}
+```
+
+Disadvantages: Forces the implementation of irrelevant methods
+
+Better practice:
+
+```golang
+// Responsibility 1: Lifecycle Management
+type Lifecycle interface {
+    Initialize(sdk DeviceServiceSDK) error
+    Start() error
+    Stop(force bool) error
+}
+
+// Responsibility 2: Command Handling (Read-only devices can implement only Reader)
+type CommandReader interface {
+    HandleReadCommands(
+        deviceName string,
+        protocols map[string]ProtocolProperties,
+        reqs []CommandRequest,
+    ) ([]*CommandValue, error)
+}
+type CommandWriter interface {
+    HandleWriteCommands(
+        deviceName string,
+        protocols map[string]ProtocolProperties,
+        reqs []CommandRequest,
+        params []*CommandValue,
+    ) error
+}
+
+// Responsibility 3: Device Events (Optional, isolated with a separate interface)
+type DeviceWatcher interface {
+    AddDevice(deviceName string, protocols map[string]ProtocolProperties, adminState AdminState) error
+    UpdateDevice(deviceName string, protocols map[string]ProtocolProperties, adminState AdminState) error
+    RemoveDevice(deviceName string, protocols map[string]ProtocolProperties) error
+}
+
+// The SDK internally calls as needed via type assertions, rather than requiring full implementation
+type ProtocolDriver interface {
+    Lifecycle
+    CommandReader
+    CommandWriter
+}
+```
+
+
 
 #### 手搓消息中间件
 
@@ -4395,11 +4727,6 @@ service BrokerService {
 }
 ```
 
-### Golang 代码规范
-
-- 优先考虑复用对象，而不是用make重新分配内存。
-- 尽量预分配切片的容量，用空间换时间，避免运行时扩容。
-- 理解值类型和指针的权衡
 
 
 ## 技术工具： 喜鹊开发者
