@@ -273,6 +273,9 @@ Geliebtwerden ist Schicksal, oder es ist kein Schicksal, Lieben aber ist ein Tun
 
 “模糊的正确好过于精准的错误” “It is better to be approximately right, than precisely wrong.” — Warren Buffett
 
+"Somebody told me a long time ago a very valuable lesson: If you do the right thing on the top line, the bottom line will follow."- Steve Jobs, 1997
+很久以前，有人告诉我一个非常有价值的教训：如果你在关键问题上做正确的事，结果自然会随之而来。 —— 史蒂夫·乔布斯，1997 年
+
 大多数行为都是习惯成自然。常言道，习惯的枷锁开始的时候轻得难以察觉，到后来却重得无法摆脱。我在生活中见过一些人，他们有的和我年纪差不多，有的比我年轻十几二十几岁，但是他们染上了一些坏习性，把自己毁了，改也改不掉，走到哪都招人烦。他们原来不是这样的，但是习惯成自然，积累到一定程度，根本改不了了。你们还年轻，想养成什么习惯、想形成什么品格，都可以，就看你自己怎么想了。--  [沃伦·巴菲特1998年佛罗里达大学演讲](https://www.bilibili.com/video/BV1uv411t7ao) 68岁
 
 往回看个几十年，你会看到很多很“聪明”的“聪明人成就很小，原因可能在他们大概没把聪明放在做对的事情上。一般来讲，聪明人知道如何把事情做对，但有智慧指的是要做对的事情。有人说什么东西最重要，他说勤奋最重要，我说不是，我说是做对的事情。因为我说勤奋最重要，你会变得更勤奋吗？你不会，至少我不会。
@@ -359,6 +362,8 @@ The only way I could get the people to like me a little bit was to get very rich
 
 ### 11. 简单、专注
 
+Focusing is about saying no. And you've got to say no no no.  - Steve Jobs  [视频](https://x.com/TheShiftJournal/status/2030949246581567594)
+
 文明人践行一种奇怪的才智：他们把短暂的生命，浪费在繁琐的事物上。-- 毛姆《月亮与六便士》
 
 [ Focus is about saying no](https://www.youtube.com/shorts/CzO2MQNwWjY?feature=share)
@@ -397,6 +402,9 @@ Quit, don't quit. Noodles, don't noodles. You are too concerned with what was an
 ## 方法论
 
 假如事情没做成，那是做得不得法。做任何事，都要讲究方法。
+
+The smartest people are all self-taught, even if they went to school.
+最聪明的人都是自学成才，即使他们上过学。-- Naval [naval twitter](https://x.com/naval/status/1880853934883197275)
 
 ### 学习的方法
 
