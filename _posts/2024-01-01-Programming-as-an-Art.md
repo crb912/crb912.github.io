@@ -4743,11 +4743,10 @@ func NewServer(host string, port int, timeout time.Duration, maxConn int) *Serve
 // 调用时非常恶心，你必须记住参数顺序，不想设置的值也要瞎传
 server := NewServer("localhost", 8080, 0, 0)
 
-// 配置结构体
+// 结构体作为初始化参数
+// 缺陷：处理默认值非常头疼。比如 timeout 传了 0，代表用户想禁用超时，还是用户忘了传（应该用默认值 30s）？Go 里的零值很难区分这两种语义
 type Config struct { ... }
 func NewServer(cfg Config) *Server { ... }
-
-// 缺陷：处理默认值非常头疼。比如 timeout 传了 0，代表用户想禁用超时，还是用户忘了传（应该用默认值 30s）？Go 里的零值很难区分这两种语义
 ```
 
 Good:
