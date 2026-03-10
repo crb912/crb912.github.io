@@ -4727,7 +4727,148 @@ service BrokerService {
 }
 ```
 
+## Programming technique: Design Patterns
 
+### Functional Options Pattern
+
+#### golang
+
+Bad: 
+
+```golang
+
+// 常规写法: 每次增加参数，所有调用者都会报错！
+func NewServer(host string, port int, timeout time.Duration, maxConn int) *Server { ... }
+
+// 调用时非常恶心，你必须记住参数顺序，不想设置的值也要瞎传
+server := NewServer("localhost", 8080, 0, 0)
+
+// 配置结构体
+type Config struct { ... }
+func NewServer(cfg Config) *Server { ... }
+
+// 缺陷：处理默认值非常头疼。比如 timeout 传了 0，代表用户想禁用超时，还是用户忘了传（应该用默认值 30s）？Go 里的零值很难区分这两种语义
+```
+
+Good:
+
+```golang
+package server
+
+import (
+	"fmt"
+	"time"
+)
+
+// 1. 定义核心结构体和 Option 类型
+type Server struct {
+	Host     string
+	Port     int
+	Timeout  time.Duration
+	MaxConns int
+}
+
+type Option func(*Server)
+
+// 2. 提供具体的配置函数 (With... 开头)
+
+func WithHost(host string) Option {
+	return func(s *Server) {
+		s.Host = host
+	}
+}
+
+func WithPort(port int) Option {
+	return func(s *Server) {
+		s.Port = port
+	}
+}
+
+func WithTimeout(timeout time.Duration) Option {
+	return func(s *Server) {
+		s.Timeout = timeout
+	}
+}
+
+func WithMaxConns(maxConns int) Option {
+	return func(s *Server) {
+		s.MaxConns = maxConns
+	}
+}
+
+// 3. 编写构造函数 (New...)
+func NewServer(opts ...Option) *Server {
+	// a. 初始化默认值 (Default configuration)
+	s := &Server{
+		Host:     "127.0.0.1",
+		Port:     8080,
+		Timeout:  30 * time.Second,
+		MaxConns: 100,
+	}
+
+	// b. 遍历并应用所有的 Option (覆盖默认值)
+	for _, opt := range opts {
+		opt(s) // 执行传入的函数，修改 s 的字段
+	}
+
+	return s
+}
+
+func (s *Server) Start() {
+	fmt.Printf("Server starting on %s:%d, Timeout: %v, MaxConns: %d\n", 
+		s.Host, s.Port, s.Timeout, s.MaxConns)
+}
+
+```
+
+原理是定义一个可修改结构体的函数，将该函数作为参数传入“构造”函数，因此可以在构造的过程修改该结构体的参数。高可读，可配置，Backward Compatibility。
+
+客户端调用的方法：
+
+```golang
+package main
+
+import (
+	"time"
+	"your_project/server"
+)
+
+func main() {
+	// 场景 1：完全使用默认配置
+	// 不需要传一堆 nil 或 0，干干净净
+	s1 := server.NewServer()
+	s1.Start() 
+	// 输出: Server starting on 127.0.0.1:8080, Timeout: 30s, MaxConns: 100
+
+	// 场景 2：只修改端口和超时时间，其余默认
+	s2 := server.NewServer(
+		server.WithPort(9090),
+		server.WithTimeout(60 * time.Second),
+	)
+	s2.Start()
+	// 输出: Server starting on 127.0.0.1:9090, Timeout: 1m0s, MaxConns: 100
+
+	// 场景 3：配置项可以随意增删调换位置，完全不受影响
+	s3 := server.NewServer(
+		server.WithMaxConns(500),
+		server.WithHost("0.0.0.0"),
+	)
+	s3.Start()
+}
+```
+### Factory Pattern
+
+面向接口编程，隐藏具体实现。
+
+#### golang
+
+在 Go 中实现彻底解耦的工厂模式，有三个关键步骤：
+
+1. 服务端定义接口（抽象）。
+2. 服务端实现具体逻辑，但将结构体私有化（首字母小写）。
+3. 服务端提供一个公开的工厂函数，返回该接口。
+
+通过这种设计，客户端只能通过工厂函数获取实例，且只知道接口有哪些方法，完全不知道底层的具体结构体是什么。这就实现了完美的物理层和逻辑层解耦。
 
 ## 技术工具： 喜鹊开发者
 
