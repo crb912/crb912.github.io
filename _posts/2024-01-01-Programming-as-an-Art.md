@@ -3950,16 +3950,15 @@ func process(data []byte) string {
 
 ---
 
-#### 2. 面向接口编程
+#### Accept interfaces, return concrete types
+函数参数用接口，返回值用具体类型 —— 当合理时.
 
 1. 接口由使用者定义（The consumer defines the interface）
-
-
-2.接口要小（Small interfaces）
-
-一个接口只做一件事（Single Responsibility 原则）
+2. 接口要小（Small interfaces）
+4. 一个接口只做一件事（Single Responsibility 原则）
 
 > “The bigger the interface, the weaker the abstraction.” — Rob Pike
+
 
 ```go
 type Reader interface {
@@ -3999,8 +3998,7 @@ type ReadWriteCloser interface {
 | 为测试而设计 | 小接口 = 易 mock |
 | 不要过度设计 | 没有第二实现？先别定义接口！ |
 
-最后忠告（来自 Go 团队）：“**Accept interfaces, return concrete types.**”
-（函数参数用接口，返回值用具体类型 —— 当合理时）
+
 
 ---
 
