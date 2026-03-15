@@ -106,6 +106,8 @@ The classic phrase is that a liberal education is to learn something about every
 The classic phrase is that a liberal education is to **learn something about everything and everything about something（博采众长，精通一门）**. I like this idea about learning everything about an area before you feel confident. If you don't know something real solid, you never have enough confidence. **A lot of times I'll have to read through a lot of material just in order to write one sentence, because my sentence will then have words that make it more convincing.** If I don't really have the knowledge, it won't come out implicitly in my writing. 
 -- [Knuth 采访](https://www.youtube.com/watch?v=75Ju0eM5T2c)
 
+我这一辈子都在花时间做两件事情，一件事发现什么是有效的，然后坚决去执行；另一件事发现什么是无效的，然后坚决去避免。-- 芒格
+
 ---
 
 ### 1. 超越自己，做最好的自己
@@ -315,6 +317,8 @@ Geliebtwerden ist Schicksal, oder es ist kein Schicksal, Lieben aber ist ein Tun
 ### 5. 百折不挠的性格
 
 苹果推出Apple II那年秋季的时候，我意识到需要做些广告，因此在技术期刊和公司的广告中物色人选。英特尔的广告吸引了我的注意，于是我联系了英特尔公司，询问他们的广告代理商是谁。他们说是Regis Mckenna。我问什么是Regis Mckenna，他们说是一个人。因此我们去找Regis，第一次走进去时，他差点把我们赶出去。但最终还是接纳了我们作为客户，所以他很早就参与进来了。弗雷德大概两年后才加入的。
+
+“每个人都会犯一些错误。即使是最好的网球运动员，有时也会在中心场地打出一个糟糕的日子。这是正常的。不要让糟糕的一天摧毁你的生活。” : "Everybody has some bad mistakes. The greatest tennis player goes out there some days to center court and has a bad day. It happens. Do not live your life in such a fashion that a bad day can kill you." 查理·芒格 Charlie Munger
 
 I am constantly learning through failure. 把挫折视为机会，痛苦和苦难会增强性格、韧性和敏捷性，这是他最珍视的“终极超能力”。智力不是首位，忍受痛苦的能力才是。-- 黄仁勋
 
