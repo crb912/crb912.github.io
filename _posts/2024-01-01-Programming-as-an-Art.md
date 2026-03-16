@@ -4070,14 +4070,29 @@ func GetGreeting() io.Reader {
 Summary Rule of Thumb:
 
 **Stick to returning structs by default. Only return an interface if you have a concrete reason to hide the underlying type** (e.g., swapping out implementations, wrapping standard library behaviors, or strictly locking down the API surface).
+
 ---
+
+
+[]
+
+### Best Practice
+
+#### 常规
+
+- [How I organize (most of) my Go microservices](https://victorpierre.dev/blog/my-go-project-organization/)
+
+我的规则：
+
+- keep the package name as simple as possible, if possible in a single word.
+- keep it all lowercase, with no separation.
+- keep the package name singular.
+- For each package, I usually have a .go file with the same name, declaring the main interface or struct of the package.
+- For non-package folders, it is ok to have a multi-word name, but separate them by -, not _.
 
 #### Error Handing: Create Custom Error Types Wherever Suitable
 
 Because `error` is an interface, you can build custom error types with extra functionality as long as they implement `Error() string`.
-
-### Best Practice
-
 #### Graceful Shutdown
 
 The old method (the traditional three-step process):
@@ -4815,7 +4830,88 @@ service BrokerService {
 
 ## Programming technique: Design Patterns
 
-### Functional Options Pattern
+
+### Factory Pattern
+
+面向接口编程，隐藏具体实现。
+
+#### golang - interface
+
+我定义，我实现，我使用：只给你一个工厂函数和它的方法。
+
+在 Go 中实现彻底解耦的工厂模式，有三个关键步骤：
+
+1. 服务端定义接口（抽象）。
+2. 服务端实现具体逻辑，但将结构体私有化（首字母小写）。
+3. 服务端提供一个公开的工厂函数，返回该接口。
+
+通过这种设计，客户端只能通过工厂函数获取实例，且只知道接口有哪些方法，完全不知道底层的具体结构体是什么。这就实现了完美的物理层和逻辑层解耦。
+
+```golang
+package main
+
+// Define the behavior
+type Storage interface {
+	Save(data []byte) error
+}
+
+// Disk storage implementation
+type Disk struct{}
+
+func (d *Disk) Save(data []byte) error { 
+    return nil 
+}
+
+// Memory storage implementation
+type Memory struct{}
+
+func (m *Memory) Save(data []byte) error { 
+    return nil 
+}
+
+// Factory function returns the interface
+func NewStorage(useDisk bool) Storage {
+	if useDisk {
+		return &Disk{}
+	}
+	return &Memory{}
+}
+```
+If a function can return different underlying types based on the input parameters, you must return an interface. This allows the caller to interact with the behavior without knowing which specific struct was created under the hood.
+
+### The decorator pattern
+
+The decorator pattern is a structural design pattern that allows augmenting an object’s behaviour without altering its core structure. In Go, this pattern is especially powerful when separating concerns like caching, logging, or instrumentation from your core business logic.
+
+```golang
+type CachedSource struct {
+    Source DataSource
+    Cache  map[string]string
+}
+
+func (c *CachedSource) Get(id string) (string, error) {
+    // 1. Check cache
+    if val, ok := c.Cache[id]; ok {
+        log.Printf("Cache Hit for %s", id)
+        return val, nil
+    }
+
+    // 2. Call underlying source if not in cache
+    val, err := c.Source.Get(id)
+    if err != nil {
+        return "", err
+    }
+
+    // 3. Update cache
+    c.Cache[id] = val
+    return val, nil
+}
+```
+不会修改原先的数据结构，通过装饰器（结构体嵌入），新增了新的行为。上述的示例就是数据库读取增加了优先内存缓存读取的方法。
+
+[Enhancing Data Access with the Decorator Pattern in Go](https://victorpierre.dev/blog/decorator-pattern-in-go/)
+
+### The Functional Options Pattern
 
 #### golang
 
@@ -4941,58 +5037,33 @@ func main() {
 	s3.Start()
 }
 ```
-### Factory Pattern
+## Problem Solving
 
-面向接口编程，隐藏具体实现。
+### Dual-Writes and the Outbox Pattern
 
-#### golang - interface
+When working on any distributed system, you might need to write data into different sources and guarantee that there is still consistency across all systems. **The dual-write problem comes when you need to write data to multiple systems atomically**. Because you’re dealing with a distributed system, you can’t use atomic transactions, so if one write fails, the other system can be left in an inconsistent state.
 
-我定义，我实现，我使用：只给你一个工厂函数和它的方法。
+Example:  Your daily reconciliation job flags a problem: dozens of orders exist in your database, but no corresponding events ever reached Kafka. The email service never sent confirmations. The inventory service never reserved stock. After some digging, you find the culprit - Kafka had a brief hiccup yesterday and returned errors for a few publish attempts. The database writes succeeded, but without the outbox pattern, those events were simply lost.
 
-在 Go 中实现彻底解耦的工厂模式，有三个关键步骤：
+![Dual-Write Problem](https://images.ctfassets.net/23aumh6u8s0i/40ysjU1a2l685WVMtNhF5v/c07900432a427417054696ff22def754/dual-write-problem.jpg)
 
-1. 服务端定义接口（抽象）。
-2. 服务端实现具体逻辑，但将结构体私有化（首字母小写）。
-3. 服务端提供一个公开的工厂函数，返回该接口。
+A common strategy to mitigate the dual-write problem is the transactional outbox pattern, which relies on database transactions to update two tables: the table your app wants to update and an outbox table. The idea is to use atomic database transactions to ensure the write is successful in the two tables of your database. Once the write is successful, you can use a separate process to consume it from the outbox table and update any other service.
 
-通过这种设计，客户端只能通过工厂函数获取实例，且只知道接口有哪些方法，完全不知道底层的具体结构体是什么。这就实现了完美的物理层和逻辑层解耦。
+- [Handling the Dual-Write Problem in Distributed Systems: Five Strategies](https://auth0.com/blog/handling-the-dual-write-problem-in-distributed-systems/)
+- [Dual-Writes and the Outbox Pattern](https://victorpierre.dev/blog/transactional-outbox-pattern/)
 
-```golang
-package main
+利用本地数据库原子事务，同时写业务表和outbox事件表；独立服务轮询 outbox 表，异步同步至 OpenFGA，成功则标记事件为已处理。
 
-// Define the behavior
-type Storage interface {
-	Save(data []byte) error
-}
+### Distributed Tracing
 
-// Disk storage implementation
-type Disk struct{}
-
-func (d *Disk) Save(data []byte) error { 
-    return nil 
-}
-
-// Memory storage implementation
-type Memory struct{}
-
-func (m *Memory) Save(data []byte) error { 
-    return nil 
-}
-
-// Factory function returns the interface
-func NewStorage(useDisk bool) Storage {
-	if useDisk {
-		return &Disk{}
-	}
-	return &Memory{}
-}
-```
-If a function can return different underlying types based on the input parameters, you must return an interface. This allows the caller to interact with the behavior without knowing which specific struct was created under the hood.
+[Distributed Tracing in Go](https://victorpierre.dev/blog/distributed-tracing-in-go/)
 
 ## 技术工具： 喜鹊开发者
 
 [The Magpie Developer](https://blog.codinghorror.com/the-magpie-developer)
 
+- [End-to-End tests with Venom](https://victorpierre.dev/blog/e2e-tests-with-venom/)  yaml格式的测试用例。
+- [OpenFGA is](https://github.com/openfga/openfga)
 ### 数据库之 Redis
 
 核心：Redis 将所有数据存储在 RAM（内存） 中。 

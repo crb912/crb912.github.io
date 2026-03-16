@@ -23,6 +23,12 @@ Trump, at 77, is still campaigning for president. He has gone bankrupt several t
 
 In summary, in one sentence: In life, one must keep moving forward through action—constantly doing something and learning—while cultivating a character of resilience and tenacity.
 
+---
+
+I’m Ray Cao, I've been working as a software engineer since 2016, particularly as a backend engineer and doing system design. I care about solving complex problems well, delivering software that’s reliable, maintainable, and easy to reason about. I consider myself a language-agnostic developer but if I had to choose, I like to work with C++ and Python.
+
+---
+
 终身学习。
 
 用自己有限的生命来提高我的生产力，追求发展我个人的智慧和理性。
