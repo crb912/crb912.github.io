@@ -3934,9 +3934,13 @@ func process(data []byte) string {
 接口的注意事项：
 
 1. 接口由使用者定义（The consumer defines the interface）
-2. 接口要小（Small interfaces）, 一个接口只做一件事（Single Responsibility 原则）
-3. 函数参数用接口，返回值用具体类型.
+2. 接口要小（Keep Interfaces Small and Focused ）, 一个接口只做一件事（Single Responsibility 原则）
+3.  Use Composition to Build More Complex Interfaces 
+4. 函数参数用接口，返回值用具体类型.。
 
+One of the most famous proverbs in Go: "Accept interfaces, return structs." Returning structs is the default because it forces callers to rely on concrete implementations rather than abstractions they might not need. It also allows you to add new methods to your struct later without breaking existing code.
+
+接受接口返回接口最大区别，前者具有良好的解耦，后者返回了整个实现，对象（struct）和它的方法。
 
 1. The small interface: 
 
@@ -3994,8 +3998,78 @@ type body struct {
 
 理解接口的本质：
 
-接口的语法很简单，看起来很容易学会，但它的哲学不是那么容易理解的。它不同于 int, bool, struct这些编译时就确定的类型， 接口只要求 某个类型实现了接口中的方法，就属于这种接口类型。这是一种运行时多态。
+接口的语法很简单，看起来很容易学会，但它的哲学不是那么容易理解的。它不同于 int, bool, struct这些编译时就确定的类型， 接口只要求 某个类型实现了接口中的方法，就属于这种接口类型。这是种运行时多态。
 
+**Best Practice : Define Interfaces Where They Are Used**  
+我定义，我使用，你实现:   实现方可以采用值接收者，也可以是指针接收者。
+
+```golang
+// consumer package
+type FileReader interface {
+    ReadFile(filePath string) ([]byte, error)
+}
+
+func ProcessFile(reader FileReader, filePath string) ([]byte, error) {
+    return reader.ReadFile(filePath)
+}
+
+// implementation package
+type LocalFileReader struct {}
+
+func (lfr LocalFileReader) ReadFile(filePath string) ([]byte, error) {
+    // Implementation for reading a file from local storage
+}
+```
+
+When to return interfaces?
+
+1. The Factory Pattern  (Multiple Implementations)
+
+2.  Information Hiding (Strict Encapsulation)
+
+Sometimes you have a complex struct with many exported fields and methods, but you only want to expose a very specific subset of its capabilities to the caller. Returning an interface acts as a contract that restricts what the caller can do, protecting your internal state.
+
+```golang
+// A complex struct with many features
+type UserSession struct {
+	ID       string
+	Token    string
+	IsActive bool
+}
+
+func (s *UserSession) GetID() string { return s.ID }
+func (s *UserSession) Destroy()      { s.IsActive = false }
+
+// ReadOnlySession only allows getting the ID
+type ReadOnlySession interface {
+	GetID() string
+}
+
+// Return the interface to hide the Destroy method and fields
+func GetSession(id string) ReadOnlySession {
+	return &UserSession{ID: id, IsActive: true}
+}
+```
+
+3. Returning Standard Library Interfaces
+
+You likely already return interfaces all the time without thinking about it! The built-in error type is an interface. It is also highly idiomatic to return standard library interfaces like `io.Reader` or `io.Writer` when writing generic utility functions that wrap other streams of data.
+
+```golang
+import (
+	"bytes"
+	"io"
+)
+
+// Return io.Reader so the caller can read the data easily
+func GetGreeting() io.Reader {
+	return bytes.NewBufferString("Hello, World!")
+}
+```
+
+Summary Rule of Thumb:
+
+**Stick to returning structs by default. Only return an interface if you have a concrete reason to hide the underlying type** (e.g., swapping out implementations, wrapping standard library behaviors, or strictly locking down the API surface).
 ---
 
 #### Error Handing: Create Custom Error Types Wherever Suitable
@@ -4871,7 +4945,9 @@ func main() {
 
 面向接口编程，隐藏具体实现。
 
-#### golang
+#### golang - interface
+
+我定义，我实现，我使用：只给你一个工厂函数和它的方法。
 
 在 Go 中实现彻底解耦的工厂模式，有三个关键步骤：
 
@@ -4880,6 +4956,38 @@ func main() {
 3. 服务端提供一个公开的工厂函数，返回该接口。
 
 通过这种设计，客户端只能通过工厂函数获取实例，且只知道接口有哪些方法，完全不知道底层的具体结构体是什么。这就实现了完美的物理层和逻辑层解耦。
+
+```golang
+package main
+
+// Define the behavior
+type Storage interface {
+	Save(data []byte) error
+}
+
+// Disk storage implementation
+type Disk struct{}
+
+func (d *Disk) Save(data []byte) error { 
+    return nil 
+}
+
+// Memory storage implementation
+type Memory struct{}
+
+func (m *Memory) Save(data []byte) error { 
+    return nil 
+}
+
+// Factory function returns the interface
+func NewStorage(useDisk bool) Storage {
+	if useDisk {
+		return &Disk{}
+	}
+	return &Memory{}
+}
+```
+If a function can return different underlying types based on the input parameters, you must return an interface. This allows the caller to interact with the behavior without knowing which specific struct was created under the hood.
 
 ## 技术工具： 喜鹊开发者
 
