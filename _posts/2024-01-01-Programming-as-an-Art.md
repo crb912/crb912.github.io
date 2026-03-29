@@ -3875,6 +3875,16 @@ P 负责连接 G 和 M，实现多核调度。
 - 尽量预分配切片的容量，用空间换时间，避免运行时扩容。
 - 理解值类型和指针的权衡
 
+When creating Go packages, I try to follow these rules:
+
+- keep the package name as simple as possible, if possible in a single word.
+- keep it all lowercase, with no separation.
+- keep the package name singular.
+- For each package, I usually have a .go file with the same name, declaring the main interface or struct of the package.
+- For non-package folders, it is ok to have a multi-word name, but separate them by -, not _.
+
+Link： [How I organize (most of) my Go microservices](https://victorpierre.dev/blog/my-go-project-organization/)
+
 #### 1. 对象池模式（Object Pool Pattern）
 
 🎯 为什么需要对象池？有些对象的创建/销毁成本很高，例如：
@@ -4077,18 +4087,6 @@ Summary Rule of Thumb:
 []
 
 ### Best Practice
-
-#### 常规
-
-- [How I organize (most of) my Go microservices](https://victorpierre.dev/blog/my-go-project-organization/)
-
-我的规则：
-
-- keep the package name as simple as possible, if possible in a single word.
-- keep it all lowercase, with no separation.
-- keep the package name singular.
-- For each package, I usually have a .go file with the same name, declaring the main interface or struct of the package.
-- For non-package folders, it is ok to have a multi-word name, but separate them by -, not _.
 
 #### Error Handing: Create Custom Error Types Wherever Suitable
 
