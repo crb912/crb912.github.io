@@ -96,6 +96,9 @@ I think some English philosoper in the 1600s says there'e two kind of knowledge:
 
 ### 0. 给年轻人的建议
 
+“爱上某件事，然后去做！没有人能真正弄明白人生的意义，但这也不重要。去探索世界吧。只要你足够深入地了解，几乎所有事物都非常有趣。尽你所能，努力去做你最喜欢做的事情。不要想着你想成为什么样的人，而是想着你想做什么。同时，也要兼顾其他事情，这样社会才不会限制你去做任何事。” “Fall in love with some activity, and do it! Nobody ever figures out what life is all about, and it doesn’t matter. Explore the world. Nearly everything is really interesting if you go into it deeply enough. Work as hard and as much as you want to on the things you like to do the best. Don’t think about what you want to be, but what you want to do. Keep up some kind of a minimum with other things so that society doesn’t stop you from doing anything at all.” -- 理查德·费曼
+
+
 在实践中，发现自己的能力与不足。然后开始产出并且帮助到别人。
 My basic idea is to say, whoever you are, you’ve got a unique combination of talents that’s been given to you. Don't decide ... Your life is kind of like a binary search,  **you try things and find out you did well in this, you try other things, you find out you didn't do so well in that, you go on and continue discovering what are the best ways to use the abilities you were born with instead of what you think they ought to have been.** And you also read what other people have done, and try to learn from that and extend abilities that you have in ways that appeal to you. And then, ... My experience was, once things start to click, then **you can start producing and other people will be able to make use of what you did, and you can help them along in the same way.** It sounds idealistic, but that's  really been the pattern all through my life, and it was based on this sort of idea, saying, well, just learn what you're good at, and what you can do that other people might be able to use, that's fun for you.”-- [Knuth](https://www.bu.edu/quantum/zen/readings/quoteKnuth.pdf)
 
@@ -208,7 +211,7 @@ I was never really the best at anything. I wan't good at singing. I wasn't googd
 
 生命不息，折腾不止，这才是有意义的人生。 ——张一鸣
 
-
+一个精心挑选的问题能够揭示特定领域的核心难点，并成为衡量该领域进展的标尺。它可能像一块“棉花糖”，带来短暂的美味享受；也可能像一颗“橡子”，需要深刻而精妙的全新洞见，才能孕育出参天大树。 A well-chosen problem can isolate an essential difficulty in a particular area, serving as a benchmark against which progress in this area can be measured. It might be like a 'marshmallow', serving as a tasty tidbit supplying a few moments of fleeting enjoyment. Or it might be like an 'acorn', requiring deep and subtle new insights from which a mighty oak can develop. -- 保罗·埃尔德什， 《我最喜欢的一些问题和结果 》，1997 年
 
 ### 4. 有趣
 
