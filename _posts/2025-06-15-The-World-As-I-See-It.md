@@ -20,12 +20,14 @@ hide: false
 
 ## 抽象 -- 看清事情的本质
 
+- 天赋并不在于纯粹的智商，而在于极强的抽象能力。能够剥离复杂的细节，直接看到问题的核心本质.--兰伯特
 -  狭义相对论告诉我们，**时空中事件不存在不变的全序（Total Order）; 不同的观察者可能会对两个事件中哪个先发生存在分歧**。1.对于这类“互不相干”（不存在因果关系）的事件，时空不存在不变的全序。2.但是因果律是不容破坏的。事件 A（你开枪），事件 B（子弹击中靶子）；在全宇宙任何观察者看来，必定是先开枪，后中弹。其他例子：爱因斯坦的“火车与月台”思想实验。 Leslie Lamport利用这个想法，提出了 **逻辑时钟** (整数变量)，基于因果律排序分布式系统的事件排序。 **分布式系统可以描述为通过处理器网络实现的特定顺序状态机。** ( A distributed system can be described as a particular sequential state machine that is implemented with a network of processors. ) 逻辑时钟虽然可以给全网事件严格排序，但是丢失了真实的物理时间，因此现代分布式数据库（比如 CockroachDB 或 Google 的 Spanner）发明了混合逻辑时钟 (HLC)  -[Time, Clocks and the Ordering of Events in a Distributed System ](https://lamport.azurewebsites.net/pubs/pubs.html#time-clocks) 
 - 马斯克给我们的启发：如果一件事在理论上是可行的，那么它在现实上同样也是可能实现的。
+- 如果你觉得自己懂得某件事，但没有把它写下来，那你只是“以为”自己懂了而已。If you think you know something but don't write it down, you only think you know it.
 
-个人
 
-- 人要有信念，所谓信念：就是相信自己可以把一个复杂工程成功做好的决心。
+
+人要有信念，所谓信念：就是相信自己可以把一个复杂工程成功做好的决心。
 
 
 ## 人生 - 别梦游
