@@ -3471,59 +3471,51 @@ connect(sender, &Sender::signal,
 ```
 ---
 
-## G.6 Golang Programming 
+## Golang Programming 
 
-### 基础知识
+### 基本知识
 
-#### 简单问题
+基本语法:
 
-Golang的defer
+- Golang的defer：LIFO，后进先出，栈的数据结构。弄清入栈顺序。defer注意函数返回前的参数的状态。
+- uintptr vs unsafe.Pointer （指针）。uintptr是整数类型，可算数运算；后者是指针类型，不能算数运算。 GC会忽略uitptr， 后者gc会跟踪它指向的对象。这两个类型可以相互转换，实际应用场景主要是Cgo交互的时候。
+- new(T)与make: new 任意类型分配零值，内存并返回 *T 指针； make 仅用于 Slice、Map、Channel 的初始化，返回引用类型。
+- init() 在 main() 之前调用。注册驱动， 加载配置文件，初始化全局变量。它很强，但不要使用。执行顺序有时难以控制，容易引入隐藏 bug。
+- 结构体比较规则？ 只有当所有成员都可比较（如基本类型）时，结构体才可以用 == 比较。
+- 判断一个接口变量是否为 nil？接口由 (type, value) 组成,只有当类型和值都为 nil 时，接口才等于 nil。
 
-1. 是LIFO，后进先出，栈的数据结构。因此想要弄清defer的顺序，只需要弄清入栈的顺序。
-2. 函数返回前才开始调用，所以如果有参数或状态，defer掉用的是函数返回前的状态。
-3. 有个坑：如果defer执行的一个无传参的闭包，里面的参数是i的引用，也就是函数返回前的参数的状态。所以闭包要传参数，避免搞错了。
+基本哲学:
 
----
+- golang 重载： golang不支持重载，每个函数都必须要唯一. 替代的方式是：泛型和接口。
+- Go 传参是传值还是传引用？ 全都是传值（Pass by Value）。Slice  Map Chan 但引用类型的值是引用，所以修改底层数据会影响原变量。
+- Go 的强制类型转换语法？ T(v)。Go 不支持隐式转换，即使是 int32 转 int64 也必须强转。
+- Go 语言没有传统的“继承”（inheritance）概念，也没有 class 关键字。Go 鼓励组合优于继承（composition over inheritance）的设计哲学。结构体嵌入（embedding）可以实现类似继承的效果。指针嵌入可以修改父类。
 
-uintptr vs unsafe.Pointer （指针）
+基本特性:
 
-1. uintptr是整数类型，可以做算数的运算； 后者是指针类型，不能做算数运算。。  
-2. GC会忽略uitptr， gc会跟踪它指向的对象。
-3. 这两个类型可以相互转换。
+- Goroutine 是用户态轻量级线程。区别：栈大小（2KB 起步 vs 线程数 MB）、切换开销（用户态切换 vs 内核态切换）。
+- Golang 的逃逸分析（Escape Analysis），编译器决定变量分配在栈上还是堆上。如果变量在函数外部被引用，则会逃逸到堆。
+- Map 是线程安全的吗？ 答案：不是。并发读写会 panic。并发安全需使用 sync.Map 或加锁
+- 比空接口更好的方式是泛型。空接口 interface{}可以存储任意类型的值。Go 1.18 之后可以用 any 代替，any 是 interface{} 的类型别名 。. interface{} 失去了类型信息。 需要做类型判断， 才能用。泛型 类似C++的模板，  零运行时开销（编译期单态化）。 **interface{} 是“运行时多态”，泛型是“编译时多态”**。如果你在写容器、算法、工具库，优先考虑泛型；如果只是临时传递未知类型的数据（如配置解析），any 依然有用武之地。
+-  GMP 模型：G（Goroutine）：用户级轻量级协程。M（Machine）：OS 线程（真正被 CPU 执行的实体） P（Processor）：逻辑处理器，包含 Goroutine 队列，M 必须绑定一个 P 才能运行 G。默认情况下，GOMAXPROCS = CPU 核心数（Go 1.5+），意味着 Go runtime 会启动多个 OS 线程（M），每个线程绑定一个 P，并行执行多个 Goroutine。P 负责连接 G 和 M，实现多核调度。
 
-实际应用场景主要是Cgo交互的时候。
+代码规范:
 
----
+- 优先考虑复用对象，而不是用make重新分配内存。
+- 尽量预分配切片的容量，用空间换时间，避免运行时扩容。
+- 理解值类型和指针的权衡
 
-golang 重载： golang不支持重载，每个函数都必须要唯一. 替代的方式是：泛型和接口。
+When creating Go packages, I try to follow these rules:
 
----
+- keep the package name as simple as possible, if possible in a single word.
+- keep it all lowercase, with no separation.
+- keep the package name singular.
+- For each package, I usually have a .go file with the same name, declaring the main interface or struct of the package.
+- For non-package folders, it is ok to have a multi-word name, but separate them by -, not _.
 
-init 函数的作用和执行时机？
+Link： [How I organize (most of) my Go microservices](https://victorpierre.dev/blog/my-go-project-organization/)
 
-init() 在 main() 之前调用，函数的主要作用是初始化包级变量、执行一些预备工作或注册服务，在程序真正运行。
-注册驱动， 加载配置文件，初始化全局变量
-
-1. 每个包的 init() 只执行一次，即使被多个包导入。
-2. 在包被导入时执行（import 语句执行时就会触发）。
-3. 所有 init() 全部执行完后，才执行 main() 函数
-
-建议： 尽量不用 init()：因为执行顺序有时难以控制，容易引入隐藏 bug。
-
----
-
-Map 是线程安全的吗？ 答案：不是。并发读写会 panic。并发安全需使用 sync.Map 或加锁
-
----
-
-什么是 Goroutine？它和线程的区别？Goroutine 是用户态轻量级线程。
-区别：栈大小（2KB 起步 vs 线程数 MB）、切换开销（用户态切换 vs 内核态切换）。
-
-结构体比较规则？  答案：只有当所有成员都可比较（如基本类型）时，结构体才可以用 == 比较。
-
-Golang 的逃逸分析（Escape Analysis）是什么？ 答案：编译器决定变量分配在栈上还是堆上。如果变量在函数外部被引用，则会逃逸到堆。
-
----
+### 有趣的部分
 
 #### const和iota
 
@@ -3562,121 +3554,7 @@ const (
 )
 ```
 
-Go 传参是传值还是传引用？  答：全都是传值（Pass by Value）。Slice  Map Chan 但引用类型的值是引用，所以修改底层数据会影响原变量。
-
-
-make 和 new 的区别？
-
-1. new(T) 任意类型分配零值，内存并返回 *T 指针； make 仅用于 Slice、Map、Channel 的初始化，返回引用类型。
-2. new只分配内存， 只零值初始化（所有字段为零值）。   make会初始化
-3. new可以是任意类型
-
-```
-s := make([]int, 0)   
-s := make([]T, length, capacity)
-m := make(map[int]ValueType)
-ch := make(chan bool)
-```
-
-Go 的强制类型转换语法？ T(v)。Go 不支持隐式转换，即使是 int32 转 int64 也必须强转。
-
-
-#### 如何实现结构体的“继承”？ 
-
-Go 语言中，没有传统的“继承”（inheritance）概念，也没有 class 关键字。Go 鼓励组合优于继承（composition over inheritance）的设计哲学。
-结构体嵌入（embedding），可以实现类似继承的效果。
-
-1. 基本嵌入（字段提升）
-```
-// 基类结构体（类似父类）
-type Animal struct {
-    Name string
-    Age  int
-}
-
-// 嵌入 Animal，实现类似“继承”
-type Dog struct {
-    Animal        // 匿名嵌入（值类型）
-    Breed  string // 自己的字段
-}
-
-
-dog := Dog{
-        Animal: Animal{Name: "Buddy", Age: 3},
-        Breed:  "Golden Retriever",
-    }
-```
-
-2.方法提升
-
-```
-func (a Animal) Speak() string {
-    return "Some sound"
-}
-
-func (d Dog) Speak() string { // 可以覆盖方法
-    return "Woof!"
-}
-```
-
-3. 指针嵌入（常见于需要修改嵌入对象时）   
-
-```
-type Person struct {
-    Name string
-}
-
-func (p *Person) SetName(name string) {
-    p.Name = name
-}
-
-type Employee struct {
-    *Person // 指针嵌入
-    ID      int
-}
-
-func main() {
-    emp := Employee{
-        Person: &Person{Name: "Alice"},
-        ID:     123,
-    }
-
-    emp.SetName("Bob") // 直接调用指针方法，修改嵌入对象
-    fmt.Println(emp.Name) // Bob
-}
-```
-
-#### 什么是空接口 interface{}？  更好的方式是泛型。
-
-答案：
-
-可以存储任意类型的值。Go 1.18 之后可以用 any 代替，any 是 interface{} 的类型别名 。
-1. interface{} 失去了类型信息。 需要做类型判断， 才能用。
-2. 运行时开销
-
-```
-type any = interface{}
-```
-
-泛型： 类似C++的模板，  零运行时开销（编译期单态化）
-
-```
-func AddGeneric[T int | float64](a, b T) T {
-    return a + b // 编译器知道 T 一定能相加，所以直接写 +
-}
-
-// 调用：
-AddGeneric(1, 2)       // 正常，T 自动推导为 int
-AddGeneric(1.5, 2.2)   // 正常，T 自动推导为 float64
-// AddGeneric(1, "hello") // ❌ 编译直接报错！连运行的机会都不给它
-```
-
-interface{} 是“运行时多态”，泛型是“编译时多态”。
-
-如果你在写容器、算法、工具库，优先考虑泛型；如果只是临时传递未知类型的数据（如配置解析），any 依然有用武之地。
-
-
-#### Slice的底层结构与扩容
+#### Slice的底层结构与扩容: 
 
 一个结构体，包含：指向底层数组的指针、长度（len）、容量（cap）。
 
@@ -3834,110 +3712,22 @@ func main() {
 - Rule 3: If there is a default case, it never waits (Non-blocking).
 
 
-#### 接口
 
-如何判断一个接口变量是否为 nil？
-
-答案：接口由 (type, value) 组成。只有当类型和值都为 nil 时，接口才等于 nil。
-
-iface == nil	仅当接口的类型和值都为 nil 时为真
-iface != nil	只要接口有类型信息（即使值是 nil 指针），就为真。
-
-#### 如何高效拼接字符串？
-
-尽量不要用加号，每次拼接都会创建新字符串，导致大量内存分配和拷贝。
-
-1. 使用 strings.Builder 或 bytes.Buffer，避免多次内存分配。
-2. 已经有一个字符串切片时，这是最简洁高效的方式：string.Join()
-3. 如果最终要写入 io.Writer（如文件、HTTP 响应），直接用 strings.Builder 的 WriteTo，避免转成字符串.
 
 ```
-builder.Grow(1024) // 预分配 1KB
+
 ```
 
-#### GMP 模型？
 
-- G（Goroutine）：用户级轻量级协程。
-- M（Machine）：OS 线程（真正被 CPU 执行的实体）。
-- P（Processor）：逻辑处理器，包含 Goroutine 队列，M 必须绑定一个 P 才能运行 G。
-
-默认情况下，GOMAXPROCS = CPU 核心数（Go 1.5+），意味着 Go runtime 会启动多个 OS 线程（M），每个线程绑定一个 P，并行执行多个 Goroutine。
-
-P 负责连接 G 和 M，实现多核调度。
 
 ---
 
-### 基本技术
+### 核心技术 (抽象)
 
-#### 0. Golang 代码规范
+- 并发: Channel 协程通信, contex 并发控制
+- 接口 (抽象设计)
 
-- 优先考虑复用对象，而不是用make重新分配内存。
-- 尽量预分配切片的容量，用空间换时间，避免运行时扩容。
-- 理解值类型和指针的权衡
-
-When creating Go packages, I try to follow these rules:
-
-- keep the package name as simple as possible, if possible in a single word.
-- keep it all lowercase, with no separation.
-- keep the package name singular.
-- For each package, I usually have a .go file with the same name, declaring the main interface or struct of the package.
-- For non-package folders, it is ok to have a multi-word name, but separate them by -, not _.
-
-Link： [How I organize (most of) my Go microservices](https://victorpierre.dev/blog/my-go-project-organization/)
-
-#### 1. 对象池模式（Object Pool Pattern）
-
-🎯 为什么需要对象池？有些对象的创建/销毁成本很高，例如：
-
-- 数据库连接（建立 TCP + 认证）
-- 线程（操作系统资源）
-- 大型结构体或带缓冲区的对象（如 bytes.Buffer、网络包解析器）
-- 图形渲染中的纹理、粒子
-
-如果每次用完就丢弃，下次再新建，会导致：
-- 频繁 GC（垃圾回收）
-- 系统调用开销大
-- 内存碎片
-
-```mermaid
-graph LR
-    A[客户端需要对象] --> B{池中有空闲对象?}
-    B -- 有 --> C[从池中取出一个]
-    B -- 无 --> D[创建新对象]
-    C --> E[使用对象]
-    D --> E
-    E --> F[用完后归还到池]
-    F --> G[重置对象状态]
-    G --> H[等待下次被借出]
-```
-
-Go 中的经典例子：`sync.Pool`， 复用 bytes.Buffer
-
-```go
-var bufferPool = sync.Pool{
-    New: func() interface{} {
-        return new(bytes.Buffer)
-    },
-}
-
-func process(data []byte) string {
-    // 1. 借对象
-    buf := bufferPool.Get().(*bytes.Buffer)
-    buf.Reset() // 重要：清空旧数据！
-
-    // 2. 使用
-    buf.Write(data)
-    result := buf.String()
-
-    // 3. 归还
-    bufferPool.Put(buf)
-    return result
-}
-```
-
----
-
-#### 2. Accept interfaces, return concrete types
+#### 1. Accept interfaces, return concrete types
 
 > “The bigger the interface, the weaker the abstraction.” — Rob Pike
 
@@ -4080,199 +3870,6 @@ func GetGreeting() io.Reader {
 Summary Rule of Thumb:
 
 **Stick to returning structs by default. Only return an interface if you have a concrete reason to hide the underlying type** (e.g., swapping out implementations, wrapping standard library behaviors, or strictly locking down the API surface).
-
----
-
-
-[]
-
-### Best Practice
-
-#### Error Handing: Create Custom Error Types Wherever Suitable
-
-Because `error` is an interface, you can build custom error types with extra functionality as long as they implement `Error() string`.
-#### Graceful Shutdown
-
-The old method (the traditional three-step process):
-
-```golang
-q := make(chan os.Signal, 1)
-
-// signal.Notify  accept (Send-Only Channel, Variadic Parameter: Ctrl+c or kill pid)
-signal.Notify(q, syscall.SIGINT, syscall.SIGTERM)  
-<-q
-```
-
-The underlying mechanism of `signal.Notify`:
-
-1. Registration: When signal.Notify is called, it adds the current channel into the Signal Registry.
-2. OS Interrupt: When an interrupt occurs (such as pressing Ctrl+C on the keyboard), the operating system sends a real hardware/system interrupt to the Go process and hands over control to the Go runtime.
-3. Dispatch: The Go runtime checks the global registry, finds all the channels that have subscribed to this specific signal, and iterates through them to send the signal using Non-blocking Dispatch.
-
-Conceptual code:
-
-```golang
-// Conceptual code of what Notify does internally
-func Notify(c chan<- os.Signal, sig ...os.Signal) {
-	// If no specific signals are provided, listen to all
-	if len(sig) == 0 {
-		// Register channel 'c' for all signals
-		// ...
-		return
-	}
-
-	// Loop through the provided signals
-	for _, s := range sig {
-		// Add the channel 'c' to the list of listeners for signal 's'
-		// Go runtime uses a global struct to store these mappings
-		add(c, s) 
-	}
-}
-
-// Inside Go runtime signal dispatcher
-func dispatchSignal(s os.Signal) {
-	// Find all channels waiting for this signal
-	channels := getListenersFor(s)
-	
-	for _, c := range channels {
-		// Try to send the signal to channel 'c'
-		select {
-		case c <- s:
-			// Success! The channel had space.
-		default:
-			// Warning! The channel is full or not ready.
-			// Go runtime drops the signal and moves on!
-		}
-	}
-}
-```
-The new method:
-
-```go
-// 1 & 2. Create context and listen for signals in one line
-ctx, stop := signal.NotifyContext(context.Background(), syscall.SIGINT, syscall.SIGTERM)
-
-// Clean up resources when done
-defer stop()
-
-// 3. Wait for the context to be canceled
-<-ctx.Done()
-```
-
-A complete example of a modern HTTP graceful shutdown.
-
-```golang
-package main
-
-import (
-	"context"
-	"fmt"
-	"log"
-	"net/http"
-	"os/signal"
-	"syscall"
-	"time"
-)
-
-func main() {
-	// Create a context that listens for system signals
-	ctx, stop := signal.NotifyContext(context.Background(), syscall.SIGINT, syscall.SIGTERM)
-	
-	// Ensure we release the signal resources when main ends
-	defer stop()
-
-	// Setup a simple HTTP server
-	srv := &http.Server{
-		Addr: ":8080",
-		Handler: http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			// Sleep for 3 seconds to test slow requests
-			time.Sleep(3 * time.Second)
-			fmt.Fprintln(w, "Hello, modern Go!")
-		}),
-	}
-
-	// Start the server in a new goroutine
-	go func() {
-		log.Println("Server is running on port 8080...")
-		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
-			log.Fatalf("Server error: %v", err)
-		}
-	}()
-
-	// Block main goroutine here until we get a signal
-	<-ctx.Done()
-
-	// Stop listening for signals right now.
-	// This means a second Ctrl+C will kill the app instantly.
-	stop()
-	log.Println("Signal received. Starting graceful shutdown...")
-
-	// Create a new context with a 5-second timeout for the shutdown process
-	shutdownCtx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-	defer cancel()
-
-	// Shut down the server safely
-	if err := srv.Shutdown(shutdownCtx); err != nil {
-		log.Fatalf("Server forced to stop: %v", err)
-	}
-
-	log.Println("Server stopped safely.")
-}
-```
-
-#### 异步和生产者消费者模型： chanel, defer, goroutine
-
-```golang
-func producer(ch chan<- int) {
-    defer close(ch) // 发完数据后关闭
-    ch <- 1
-    ch <- 2
-}
-
-func main() {
-    ch := make(chan int)
-    go producer(ch)
-    for v := range ch { // 自动在 channel 关闭后退出循环
-        fmt.Println(v)
-    }
-}
-```
-
-#### context.Context 处理并发控制和超时取消的核心机制。
-
-超时控制，然后传递元数据（Value）。
-
-```
-func main() {
-    // 创建一个 2 秒后自动过期的 Context
-    ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
-    defer cancel() // 别忘了释放资源
-
-    go doSomething(ctx)
-
-    // 等待结果
-    <-ctx.Done()
-    fmt.Println("主程序退出:", ctx.Err()) 
-}
-
-func doSomething(ctx context.Context) {
-    for {
-        select {
-        case <-ctx.Done(): // 收到“停止”信号
-            fmt.Println("协程：收到指令，停止工作")
-            return
-        default:
-            fmt.Println("协程：正在搬砖...")
-            time.Sleep(500 * time.Millisecond)
-        }
-    }
-}
-```
-
-- 不要把 Context 放在结构体里：它应该作为函数的第一个参数显式传递，通常起名为 ctx。
-- 不要传递 nil：如果你不知道传什么，传 context.TODO()。
-- 它是线程安全的：你可以在无数个协程里传递同一个 ctx，安全地监听它的信号。
-- 层级传递：当你基于一个父 ctx 创建子 ctx 时（比如 WithTimeout），如果父级被取消，所有的子级也会跟着被取消。
 
 ####  Breaking Down Large Interfaces
 
@@ -4460,9 +4057,29 @@ type ProtocolDriver interface {
 }
 ```
 
+#### 2. Channel: 手搓消息队列
+
+**生产者消费者模型**
+
+```golang
+func producer(ch chan<- int) {
+    defer close(ch) // 发完数据后关闭
+    ch <- 1
+    ch <- 2
+}
+
+func main() {
+    ch := make(chan int)
+    go producer(ch)
+    for v := range ch { // 自动在 channel 关闭后退出循环
+        fmt.Println(v)
+    }
+}
+```
 
 
-#### 手搓消息中间件
+
+**手搓消息中间件**
 
 1. 手搓一个消息队列v1，用go channel做Broker
 ```go
@@ -4826,92 +4443,245 @@ service BrokerService {
 }
 ```
 
-## Programming technique: Design Patterns
+#### contex 处理并发控制。
 
+超时控制，然后传递元数据（Value）。
 
-### Factory Pattern
+```
+func main() {
+    // 创建一个 2 秒后自动过期的 Context
+    ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
+    defer cancel() // 别忘了释放资源
 
-面向接口编程，隐藏具体实现。
+    go doSomething(ctx)
 
-#### golang - interface
+    // 等待结果
+    <-ctx.Done()
+    fmt.Println("主程序退出:", ctx.Err()) 
+}
 
-我定义，我实现，我使用：只给你一个工厂函数和它的方法。
+func doSomething(ctx context.Context) {
+    for {
+        select {
+        case <-ctx.Done(): // 收到“停止”信号
+            fmt.Println("协程：收到指令，停止工作")
+            return
+        default:
+            fmt.Println("协程：正在搬砖...")
+            time.Sleep(500 * time.Millisecond)
+        }
+    }
+}
+```
 
-在 Go 中实现彻底解耦的工厂模式，有三个关键步骤：
+- 不要把 Context 放在结构体里：它应该作为函数的第一个参数显式传递，通常起名为 ctx。
+- 不要传递 nil：如果你不知道传什么，传 context.TODO()。
+- 它是线程安全的：你可以在无数个协程里传递同一个 ctx，安全地监听它的信号。
+- 层级传递：当你基于一个父 ctx 创建子 ctx 时（比如 WithTimeout），如果父级被取消，所有的子级也会跟着被取消。
 
-1. 服务端定义接口（抽象）。
-2. 服务端实现具体逻辑，但将结构体私有化（首字母小写）。
-3. 服务端提供一个公开的工厂函数，返回该接口。
+#### Graceful Shutdown
 
-通过这种设计，客户端只能通过工厂函数获取实例，且只知道接口有哪些方法，完全不知道底层的具体结构体是什么。这就实现了完美的物理层和逻辑层解耦。
+The old method (the traditional three-step process):
+
+```golang
+q := make(chan os.Signal, 1)
+
+// signal.Notify  accept (Send-Only Channel, Variadic Parameter: Ctrl+c or kill pid)
+signal.Notify(q, syscall.SIGINT, syscall.SIGTERM)  
+<-q
+```
+
+The underlying mechanism of `signal.Notify`:
+
+1. Registration: When signal.Notify is called, it adds the current channel into the Signal Registry.
+2. OS Interrupt: When an interrupt occurs (such as pressing Ctrl+C on the keyboard), the operating system sends a real hardware/system interrupt to the Go process and hands over control to the Go runtime.
+3. Dispatch: The Go runtime checks the global registry, finds all the channels that have subscribed to this specific signal, and iterates through them to send the signal using Non-blocking Dispatch.
+
+Conceptual code:
+
+```golang
+// Conceptual code of what Notify does internally
+func Notify(c chan<- os.Signal, sig ...os.Signal) {
+	// If no specific signals are provided, listen to all
+	if len(sig) == 0 {
+		// Register channel 'c' for all signals
+		// ...
+		return
+	}
+
+	// Loop through the provided signals
+	for _, s := range sig {
+		// Add the channel 'c' to the list of listeners for signal 's'
+		// Go runtime uses a global struct to store these mappings
+		add(c, s) 
+	}
+}
+
+// Inside Go runtime signal dispatcher
+func dispatchSignal(s os.Signal) {
+	// Find all channels waiting for this signal
+	channels := getListenersFor(s)
+	
+	for _, c := range channels {
+		// Try to send the signal to channel 'c'
+		select {
+		case c <- s:
+			// Success! The channel had space.
+		default:
+			// Warning! The channel is full or not ready.
+			// Go runtime drops the signal and moves on!
+		}
+	}
+}
+```
+The new method:
+
+```go
+// 1 & 2. Create context and listen for signals in one line
+ctx, stop := signal.NotifyContext(context.Background(), syscall.SIGINT, syscall.SIGTERM)
+
+// Clean up resources when done
+defer stop()
+
+// 3. Wait for the context to be canceled
+<-ctx.Done()
+```
+
+A complete example of a modern HTTP graceful shutdown.
 
 ```golang
 package main
 
-// Define the behavior
-type Storage interface {
-	Save(data []byte) error
-}
+import (
+	"context"
+	"fmt"
+	"log"
+	"net/http"
+	"os/signal"
+	"syscall"
+	"time"
+)
 
-// Disk storage implementation
-type Disk struct{}
+func main() {
+	// Create a context that listens for system signals
+	ctx, stop := signal.NotifyContext(context.Background(), syscall.SIGINT, syscall.SIGTERM)
+	
+	// Ensure we release the signal resources when main ends
+	defer stop()
 
-func (d *Disk) Save(data []byte) error { 
-    return nil 
-}
-
-// Memory storage implementation
-type Memory struct{}
-
-func (m *Memory) Save(data []byte) error { 
-    return nil 
-}
-
-// Factory function returns the interface
-func NewStorage(useDisk bool) Storage {
-	if useDisk {
-		return &Disk{}
+	// Setup a simple HTTP server
+	srv := &http.Server{
+		Addr: ":8080",
+		Handler: http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			// Sleep for 3 seconds to test slow requests
+			time.Sleep(3 * time.Second)
+			fmt.Fprintln(w, "Hello, modern Go!")
+		}),
 	}
-	return &Memory{}
+
+	// Start the server in a new goroutine
+	go func() {
+		log.Println("Server is running on port 8080...")
+		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+			log.Fatalf("Server error: %v", err)
+		}
+	}()
+
+	// Block main goroutine here until we get a signal
+	<-ctx.Done()
+
+	// Stop listening for signals right now.
+	// This means a second Ctrl+C will kill the app instantly.
+	stop()
+	log.Println("Signal received. Starting graceful shutdown...")
+
+	// Create a new context with a 5-second timeout for the shutdown process
+	shutdownCtx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	// Shut down the server safely
+	if err := srv.Shutdown(shutdownCtx); err != nil {
+		log.Fatalf("Server forced to stop: %v", err)
+	}
+
+	log.Println("Server stopped safely.")
 }
 ```
-If a function can return different underlying types based on the input parameters, you must return an interface. This allows the caller to interact with the behavior without knowing which specific struct was created under the hood.
 
-### The decorator pattern
+---
 
-The decorator pattern is a structural design pattern that allows augmenting an object’s behaviour without altering its core structure. In Go, this pattern is especially powerful when separating concerns like caching, logging, or instrumentation from your core business logic.
 
-```golang
-type CachedSource struct {
-    Source DataSource
-    Cache  map[string]string
+#### 3. Error Handing: Create Custom Error Types Wherever Suitable。
+
+Because `error` is an interface, you can build custom error types with extra functionality as long as they implement `Error() string`.
+
+---
+
+#### 4. 性能优化
+
+golang性能的瓶颈:  make从heap分配内存的开销，频繁gc的压力
+
+高效拼接字符串？
+
+尽量不要用加号，每次拼接都会创建新字符串，导致大量内存分配和拷贝 1. 使用 strings.Builder 或 bytes.Buffer，避免多次内存分配。2. 已经有一个字符串切片时，这是最简洁高效的方式：string.Join() 3. 如果最终要写入 io.Writer（如文件、HTTP 响应），直接用 strings.Builder 的 WriteTo，避免转成字符串. `builder.Grow(1024)`
+
+make切片时预分配容量，避免运行时扩容。
+
+#### 对象池模式（Object Pool Pattern）
+
+🎯 为什么需要对象池？有些对象的创建/销毁成本很高，例如：
+
+- 数据库连接（建立 TCP + 认证）
+- 线程（操作系统资源）
+- 大型结构体或带缓冲区的对象（如 bytes.Buffer、网络包解析器）
+- 图形渲染中的纹理、粒子
+
+如果每次用完就丢弃，下次再新建，会导致：
+- 频繁 GC（垃圾回收）
+- 系统调用开销大
+- 内存碎片
+
+```mermaid
+graph LR
+    A[客户端需要对象] --> B{池中有空闲对象?}
+    B -- 有 --> C[从池中取出一个]
+    B -- 无 --> D[创建新对象]
+    C --> E[使用对象]
+    D --> E
+    E --> F[用完后归还到池]
+    F --> G[重置对象状态]
+    G --> H[等待下次被借出]
+```
+
+Go 中的经典例子：`sync.Pool`， 复用 bytes.Buffer
+
+```go
+var bufferPool = sync.Pool{
+    New: func() interface{} {
+        return new(bytes.Buffer)
+    },
 }
 
-func (c *CachedSource) Get(id string) (string, error) {
-    // 1. Check cache
-    if val, ok := c.Cache[id]; ok {
-        log.Printf("Cache Hit for %s", id)
-        return val, nil
-    }
+func process(data []byte) string {
+    // 1. 借对象
+    buf := bufferPool.Get().(*bytes.Buffer)
+    buf.Reset() // 重要：清空旧数据！
 
-    // 2. Call underlying source if not in cache
-    val, err := c.Source.Get(id)
-    if err != nil {
-        return "", err
-    }
+    // 2. 使用
+    buf.Write(data)
+    result := buf.String()
 
-    // 3. Update cache
-    c.Cache[id] = val
-    return val, nil
+    // 3. 归还
+    bufferPool.Put(buf)
+    return result
 }
 ```
-不会修改原先的数据结构，通过装饰器（结构体嵌入），新增了新的行为。上述的示例就是数据库读取增加了优先内存缓存读取的方法。
 
-[Enhancing Data Access with the Decorator Pattern in Go](https://victorpierre.dev/blog/decorator-pattern-in-go/)
+---
 
-### The Functional Options Pattern
+### 设计模式
 
-#### golang
+#### The Functional Options Pattern
 
 Bad: 
 
@@ -5002,39 +4772,86 @@ func (s *Server) Start() {
 
 原理是定义一个可修改结构体的函数，将该函数作为参数传入“构造”函数，因此可以在构造的过程修改该结构体的参数。高可读，可配置，Backward Compatibility。
 
-客户端调用的方法：
+---
+
+#### Factory Pattern
+
+面向接口编程，隐藏具体实现。在 Go 中实现彻底解耦的工厂模式，有三个关键步骤：
+
+1. 服务端定义接口（抽象）。
+2. 服务端实现具体逻辑，但将结构体私有化（首字母小写）。
+3. 服务端提供一个公开的工厂函数，返回该接口。
+
+通过这种设计，客户端只能通过工厂函数获取实例，且只知道接口有哪些方法，完全不知道底层的具体结构体是什么。这就实现了完美的物理层和逻辑层解耦。
 
 ```golang
 package main
 
-import (
-	"time"
-	"your_project/server"
-)
+// Define the behavior
+type Storage interface {
+	Save(data []byte) error
+}
 
-func main() {
-	// 场景 1：完全使用默认配置
-	// 不需要传一堆 nil 或 0，干干净净
-	s1 := server.NewServer()
-	s1.Start() 
-	// 输出: Server starting on 127.0.0.1:8080, Timeout: 30s, MaxConns: 100
+// Disk storage implementation
+type Disk struct{}
 
-	// 场景 2：只修改端口和超时时间，其余默认
-	s2 := server.NewServer(
-		server.WithPort(9090),
-		server.WithTimeout(60 * time.Second),
-	)
-	s2.Start()
-	// 输出: Server starting on 127.0.0.1:9090, Timeout: 1m0s, MaxConns: 100
+func (d *Disk) Save(data []byte) error { 
+    return nil 
+}
 
-	// 场景 3：配置项可以随意增删调换位置，完全不受影响
-	s3 := server.NewServer(
-		server.WithMaxConns(500),
-		server.WithHost("0.0.0.0"),
-	)
-	s3.Start()
+// Memory storage implementation
+type Memory struct{}
+
+func (m *Memory) Save(data []byte) error { 
+    return nil 
+}
+
+// Factory function returns the interface
+func NewStorage(useDisk bool) Storage {
+	if useDisk {
+		return &Disk{}
+	}
+	return &Memory{}
 }
 ```
+If a function can return different underlying types based on the input parameters, you must return an interface. This allows the caller to interact with the behavior without knowing which specific struct was created under the hood.
+
+#### The decorator pattern
+
+The decorator pattern is a structural design pattern that allows augmenting an object’s behaviour without altering its core structure. In Go, this pattern is especially powerful when separating concerns like caching, logging, or instrumentation from your core business logic.
+
+```golang
+type CachedSource struct {
+    Source DataSource
+    Cache  map[string]string
+}
+
+func (c *CachedSource) Get(id string) (string, error) {
+    // 1. Check cache
+    if val, ok := c.Cache[id]; ok {
+        log.Printf("Cache Hit for %s", id)
+        return val, nil
+    }
+
+    // 2. Call underlying source if not in cache
+    val, err := c.Source.Get(id)
+    if err != nil {
+        return "", err
+    }
+
+    // 3. Update cache
+    c.Cache[id] = val
+    return val, nil
+}
+```
+不会修改原先的数据结构，通过装饰器（结构体嵌入），新增了新的行为。上述的示例就是数据库读取增加了优先内存缓存读取的方法。
+
+[Enhancing Data Access with the Decorator Pattern in Go](https://victorpierre.dev/blog/decorator-pattern-in-go/)
+
+#### 适配器模式
+
+自己定义接口和实现接口，为原先的数据结构新增了新的行为。
+
 ## Problem Solving
 
 ### Dual-Writes and the Outbox Pattern
