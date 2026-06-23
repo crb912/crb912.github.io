@@ -5337,3 +5337,8 @@ Go 语言的创始人之一 Rob Pike 曾给出过一个非常精辟的总结：
 并发 (Concurrency) 是关于程序的结构： 处理多个事情的能力（Dealing with lots of things at once）。
 
 并行 (Parallelism) 是关于程序的执行： 同时执行多个事情的能力（Doing lots of things at once）。
+
+## 编程工具箱
+
+- [移动开发skills](https://pasqualepillitteri.it/en/news/1802/best-claude-skills-mobile-development-2026)
+- [浏览器如何工作](https://web.dev/articles/howbrowserswork)
