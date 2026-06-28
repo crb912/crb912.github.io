@@ -96,12 +96,14 @@ I think some English philosoper in the 1600s says there'e two kind of knowledge:
 
 ## 人生观
 
-### 0. 给年轻人的建议
+### 0. 聆听智者的教诲
 
-“爱上某件事，然后去做！没有人能真正弄明白人生的意义，但这也不重要。去探索世界吧。只要你足够深入地了解，几乎所有事物都非常有趣。尽你所能，努力去做你最喜欢做的事情。不要想着你想成为什么样的人，而是想着你想做什么。同时，也要兼顾其他事情，这样社会才不会限制你去做任何事。” “Fall in love with some activity, and do it! Nobody ever figures out what life is all about, and it doesn’t matter. Explore the world. Nearly everything is really interesting if you go into it deeply enough. Work as hard and as much as you want to on the things you like to do the best. Don’t think about what you want to be, but what you want to do. Keep up some kind of a minimum with other things so that society doesn’t stop you from doing anything at all.” -- 理查德·费曼
+巴菲特的谢幕信： **想好你希望自己的讣告写些什么，然后就去努力过上配得上那样的人生**。我提前写好了自己的讣告： 一个程序员，写过很棒的软件。一个投资者，长期以来实现20%的复利。一个技术作者，追求让复杂的知识简单化。努力创造价值。善良，正直，怜悯，宽容，简单。
+
+“爱上某件事，然后去做！没有人能真正弄明白人生的意义，但这也不重要。去探索世界吧。只要你足够深入地了解，几乎所有事物都非常有趣。尽你所能，努力去做你最喜欢做的事情。不要想着你想成为什么样的人， **而是想着你想做什么**。同时，也要兼顾其他事情，这样社会才不会限制你去做任何事。” “Fall in love with some activity, and do it! Nobody ever figures out what life is all about, and it doesn’t matter. Explore the world. Nearly everything is really interesting if you go into it deeply enough. Work as hard and as much as you want to on the things you like to do the best. Don’t think about what you want to be, but what you want to do. Keep up some kind of a minimum with other things so that society doesn’t stop you from doing anything at all.” -- 理查德·费曼
 
 
-在实践中，发现自己的能力与不足。然后开始产出并且帮助到别人。
+在实践中，发现自己的能力所在。然后开始产出并且帮助到别人。
 My basic idea is to say, whoever you are, you’ve got a unique combination of talents that’s been given to you. Don't decide ... Your life is kind of like a binary search,  **you try things and find out you did well in this, you try other things, you find out you didn't do so well in that, you go on and continue discovering what are the best ways to use the abilities you were born with instead of what you think they ought to have been.** And you also read what other people have done, and try to learn from that and extend abilities that you have in ways that appeal to you. And then, ... My experience was, once things start to click, then **you can start producing and other people will be able to make use of what you did, and you can help them along in the same way.** It sounds idealistic, but that's  really been the pattern all through my life, and it was based on this sort of idea, saying, well, just learn what you're good at, and what you can do that other people might be able to use, that's fun for you.”-- [Knuth](https://www.bu.edu/quantum/zen/readings/quoteKnuth.pdf)
 
 不要因为某样东西很流行就认为它好。If somebody asked what advice I would give to a young person—they always ask that kind of question—one of the first things that would come to me is this: **don't just believe that because something is trendy, it's good.** I'd probably go to the other extreme: if I find too many people adopting a certain idea, I'd probably think it's wrong. If my work had become too popular, I would think I needed to change. This is, of course, ridiculous, but I see the other side too often: people will do something against their own gut instincts because they think the community wants them to do it that way. **People will work on a certain subject even though they aren't terribly interested in it because they think they'll get more prestige by working on it**.  
@@ -116,12 +118,15 @@ The classic phrase is that a liberal education is to **learn something about eve
 ---
 
 ### 1. 超越自己，做最好的自己
+
 The Art of Being Happy
 
 If you live each day as if it was your last, someday you'll most certainly be right. 
 如果你把每一天都当成最后一天来过，总有一天你会发现你是对的。记住自己随时会死，避免患得患失的陷阱，只剩下真正重要的东西。-- Steve Jobs. 斯坦福演讲，2005年6月12日
 
-想好你希望自己的讣告写些什么，然后就去努力过上配得上那样的人生。--巴菲特的谢幕信
+**普通人也可以创造属于自己的东西:**
+When you grow up you tend to get told that the world is the way it is and your life is just to live your life inside the world... That's a very limited life. Life can be much broader once you discover one simple fact: Everything around you that you call life was made up by people that were no smarter than you. And you can change it, you can influence it, you can build your own things that other people can use. Once you learn that, you'll never be the same again.". -- Steve Jobs，1994，filmed interview, Santa Clara Valley Historical Association
+当你长大后，你往往会被告知世界就是这个样子，你的生命就是要在世界里过日子。尽量别太频繁地撞墙（别太频繁地碰壁/挑战规则），试着拥有一个美好的家庭生活、开心玩乐、存点钱。这是一种非常有限的生活。一旦你发现一个简单的事实，你的生命就会变得广阔得多——那就是，你周围一切你称之为‘生活’的东西，都是由和你一样聪明（甚至不如你聪明）的人创造出来的。你可以改变它，你可以影响它，你可以建造属于自己的东西，让别人使用。一旦你明白这一点，你就再也不会和以前一样了。"
 
 “在我那本书中说到我对于绘画、解读马雅文字、打鼓、开保险箱等，都和研究科学一样努力，这点我虽然没有大力强调，但却千真万确。生命中真正好玩的是持续尝试了解运用自己的潜能可以做到什么地步。”—《费曼手扎：不休止的鼓声》，致凡得海，1986年7月
 
@@ -140,8 +145,6 @@ If you live each day as if it was your last, someday you'll most certainly be ri
 当一个人试图用天赐的才能实现自我时，他做的是他能做的最高尚且唯一有意义的事。-- 《纳西索斯与戈尔蒙德》，赫尔曼·黑塞,1927-1929 [黑塞的十句名言](https://www.suhrkamp.de/empfehlung/hermann-hesse-fuer-alle-lebenslagen-10-zitate-b-3773)
 
 "伟大一族"不是空想家，不是只会从众起哄的狂热分子，更不是连事情还没弄清就热血沸腾的青年。他们相信，任何美好的梦想都有可能成真——换言之，不能成真的梦想本身就是不美好的。假如事情没做成，那是做得不得法；假如做成了，却不美好，倒像是一场噩梦，那是因为从开始就想得不对头。不管结局是怎样，这条路总是存在的——必须准备梦想，准备为梦想工作。这种想法对不对，现在我也没有把握。我有把握的只是：确实有这样的一族。-- 王小波《伟大一族》
-
-**生活可以宽广无限：**当你长大后，你往往会被告知世界就是这个样子，你的生命就是要在世界里过日子。尽量别太频繁地撞墙（别太频繁地碰壁/挑战规则），试着拥有一个美好的家庭生活、开心玩乐、存点钱。这是一种非常有限的生活。一旦你发现一个简单的事实，你的生命就会变得广阔得多——那就是，你周围一切你称之为‘生活’的东西，都是由和你一样聪明（甚至不如你聪明）的人创造出来的。你可以改变它，你可以影响它，你可以建造属于自己的东西，让别人使用。一旦你明白这一点，你就再也不会和以前一样了。 When you grow up, you tend to get told that the world is the way it is, and your life is just to live your life inside the world. Try not to bash into the walls too much, try to have a nice family life, have fun, save a little money. That's a very limited life. Life can be much broader once you discover one simple fact, and that is that everything around you that you call life was made up by people that were no smarter than you. And you can change it, you can influence it, you can build your own things that other people can use. Once you learn that, you'll never be the same again. -- Steve Jobs，1994，filmed interview, Santa Clara Valley Historical Association
 
 那些不适应这个世界的人，其实已经快要找到自我了。Wer sich nicht in diese Welt einfügen will, der ist schon nahe daran, sich selbst zu finden. ——《德米安》, 赫尔曼·黑塞
 
