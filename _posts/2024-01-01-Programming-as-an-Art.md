@@ -7,41 +7,54 @@ category: programming
 top: true
 ---
 
-作为艺术的计算机编程
+The Art of Computer Programming
 
 * **目录**
 {:toc}
 
 ## Numbers Every Programmer Should Know (~2026)
 
-| Operation                              | ns         | us      | ms    | Notes                                 |
-| ------------------------------------- | ---------- | ------- | ----- | ------------------------------------- |
-| L1 cache reference                    | 0.5 ns          | -         | -        |   3-5 cycles( pointer dereference 3~4)    |
-| **Branch mispredict**                     | 3~5 ns            | -         | -        | ~10-20 clock cycles, **avg 18**   |
-| **L2 cache reference**                    | 7  ns          | -         | -        | 14x L1 cache                          |
-| **Mutex lock/unlock**                     | 25 ns           | -         | -        | -                                     |
-| **Main memory reference**                 | ~50–100 ns          | -         | -        | 20x L2 cache,~150–300+ cycles   **avg 18**        |
-| **Context Switch**                 | 1000 ns ~3000 ns          | -         | -        | 20x L2 cache, 200x L1 cache           |
-| Compress 1K bytes with Zippy          | 3,000        | 3         | -        | -                                     |
-| Send 1K bytes over 1 Gbps network     | 10,000       | 10        | -        | -                                     |
-| Read 4K randomly from SSD*            | 150,000      | 150       | -        | ~1GB/sec SSD                          |
-| Read 1 MB sequentially from memory   | 250,000      | 250       | -        | -                                     |
-| Round trip within same datacenter     | 500,000      | 500       | -        | -                                     |
-| Read 1 MB sequentially from SSD*     | 1,000,000    | 1,000     | 1        | ~1GB/sec SSD, 4X memory               |
-| **Disk seek**                             | 10,000,000   | 10,000    | 10       | 20x datacenter roundtrip              |
-| Local LLM, generate 1 token           | 15,000,000   | 15,000    | 15       | Small model on consumer GPU (2026)    |
-| Read 1 MB sequentially from disk     | 20,000,000   | 20,000    | 20       | 80x memory, 20X SSD                   |
-| Frontier LLM, generate 1 token        | 20,000,000   | 20,000    | 20       | Hosted model output (2026)            |
-| Local LLM, time to first token        | 75,000,000   | 75,000    | 75       | Small model, short prompt (2026)      |
-| Local LLM (CPU), generate 1 token     | 100,000,000  | 100,000   | 100      | Small model, no GPU (2026)            |
-| Send packet CA->Netherlands->CA       | 150,000,000  | 150,000   | 150      | -                                     |
-| Fast LLM, time to first token         | 250,000,000  | 250,000   | 250      | Specialized inference hardware (2026) |
-| Frontier LLM, time to first token     | -            | -         | 1,000    | Short prompt, no cache (2026)         |
+| Operation  |  latency  | Notes   |
+| --- | --- | --- |
+| L1 cache reference   | 0.5 ns  |  3-5 cycles( pointer dereference 3~4)   |
+| **L2 cache reference**  | ~2-4 ns   | 12~14 cycles AMD, 16-17 cycles Intel   | 
+| **Branch mispredict**   | ~3-5 ns   | 10-20 clock cycles, avg:18  |
+| **Mutex lock + unlock(round-trip)**   | ~20-60ns    | 60-200+ cycles      |
+| **Main memory reference**     | ~70–110 ns    | 350–550 cycles    |
+| **Context Switch**                     | 600ns ~ 2 μs    | 3k ~ 100k cycles, L1/L2/L3 + TLB miss    |
+| Compress 1K bytes with Zippy          | 3,000 ns / 3 μs                 | -                                             |
+| Send 1KB over 1 Gbps network      | 10,000 ns / 10 μs               | -                                             |
+| Read 4K randomly from SSD*            | 150,000 ns / 150 μs             | ~1GB/sec SSD                                  |
+| Read 1 MB sequentially from memory     | 250,000 ns / 250 μs             | -                                             |
+| Round trip within same datacenter      | 500,000 ns / 500 μs             | -                                             |
+| Read 1 MB sequentially from SSD*       | 1,000,000 ns / 1,000 μs / 1 ms  | ~1GB/sec SSD, 4X memory                       |
+| **Disk seek**                          | 10,000,000 ns / 10,000 μs / 10 ms | 20x datacenter roundtrip                    |
+| Local LLM, generate 1 token            | 15,000,000 ns / 15,000 μs / 15 ms | Small model on consumer GPU (2026)          |
+| Read 1 MB sequentially from disk        | 20,000,000 ns / 20,000 μs / 20 ms | 80x memory, 20X SSD                         |
+| Frontier LLM, generate 1 token         | 20,000,000 ns / 20,000 μs / 20 ms | Hosted model output (2026)                  |
+| Local LLM, time to first token         | 75,000,000 ns / 75,000 μs / 75 ms | Small model, short prompt (2026)            |
+| Local LLM (CPU), generate 1 token      | 100,000,000 ns / 100,000 μs / 100 ms | Small model, no GPU (2026)                |
+| Send packet CA->Netherlands->CA         | 150,000,000 ns / 150,000 μs / 150 ms | -                                        |
+| Fast LLM, time to first token           | 250,000,000 ns / 250,000 μs / 250 ms | Specialized inference hardware (2026)     |
+| Frontier LLM, time to first token      | 1,000 ms                        | Short prompt, no cache (2026)                 |
 
-Branch misprediction penalty: modern x86 CPUs have long pipelines, so a misprediction requires flushing speculative work and refilling from the correct path. Actual cost varies:
+ At ~4–5.5 GHz boost clocks common on latest chips, 15 cycles ≈ 3–4 ns; 20 cycles ≈ 4–5+ ns.  1 ns ≈4–5.5 个 cycles
+ 
+**Branch misprediction penalty**: modern x86 CPUs have long pipelines, so a misprediction requires **flushing speculative instructions** and refilling from the correct path. Actual cost varies:
 - Minimum pipeline refill is often ~10–15 cycles.
 - It can be higher (dozens of cycles) if the correct target must come from farther in the cache hierarchy (L2/L3) or due to dependencies/scheduler effects.
-- At ~4–5.5 GHz boost clocks common on latest chips, 15 cycles ≈ 3–4 ns; 20 cycles ≈ 4–5+ ns. Real-world impact also depends on misprediction rate (modern predictors are very good, but branch-heavy code still suffers).
+- Real-world impact also depends on misprediction rate (modern predictors are very good, but branch-heavy code still suffers).
+
+**Mutex Lock/Unlock Latency**: 
+
+Uncontended Case (userspace atomic operation):
+
+- ~20–60 ns (roughly 60–200+ cycles at 4–5.5 GHz) on modern x86.
+- Best case (highly optimized, in-cache atomic): Can be as low as 15–30 ns.
+- Realistic average for std::mutex / pthread_mutex (uncontended): 25–50 ns.
+
+Contended Case:  Mutex falls back to kernel futex (or equivalent), involving context switches.
+Key Factors Affecting Latency: Cache state All in L1/L2 → fastest.
 
 ## P0. 编程原则
 
