@@ -3500,6 +3500,25 @@ Qt的核心概念：
 connect(sender, &Sender::signal,
         receiver, &Receiver::slot);
 ```
+
+---
+
+## Rust programming 
+
+### Core Concepts
+
+#### 1. Ownership and Borrowing
+
+1. Each value has exactly ONE owner variable.
+2. When the owner goes out of scope, the value is dropped (freed).
+3. Ownership can be transferred (moved) but not `duplicated` (unless `Clone`).
+
+- 在 C++ 中，如果你写 `std::string s2 = s1`;，编译器默认会调用拷贝构造函数，在堆上开辟一块新内存，把数据原封不动地复制一遍（深拷贝）。如果这个字符串有 100MB，这行代码就会默默卡住一阵子，容易引发难以察觉的性能瓶颈。
+- 在 Python 中，s2 = s1 只是多了一个引用指向同一个对象（引用计数 +1），这又带来了多线程下需要 GIL 保护的麻烦。
+- Rust 的态度是： 既不允许像 Python 那样隐式共享（容易导致数据竞争），也不允许像 C++ 那样隐式深拷贝（隐藏性能损耗）。因此，默认情况下，数据是“不可复制（not duplicated）”的。
+
+clone = explict deep copy
+
 ---
 
 ## Golang Programming 

@@ -98,7 +98,7 @@ I think some English philosoper in the 1600s says there'e two kind of knowledge:
 
 ### 0. 聆听智者的教诲
 
-巴菲特的谢幕信： **想好你希望自己的讣告写些什么，然后就去努力过上配得上那样的人生**。我提前写好了自己的讣告： 一个程序员，写过很棒的软件。一个投资者，长期以来实现20%的复利。一个技术作者，追求让复杂的知识简单化。努力创造价值。善良，正直，怜悯，宽容，简单。
+巴菲特的谢幕信： **想好你希望自己的讣告写些什么，然后就去努力过上配得上那样的人生**。我提前写好了自己的讣告： 一个程序员，写过很棒的软件。一个投资者，做过出色的投资。一个技术作者，追求让复杂的知识简单化。平凡，但努力创造价值。善良，正直，怜悯，宽容，简单。
 
 “爱上某件事，然后去做！没有人能真正弄明白人生的意义，但这也不重要。去探索世界吧。只要你足够深入地了解，几乎所有事物都非常有趣。尽你所能，努力去做你最喜欢做的事情。不要想着你想成为什么样的人， **而是想着你想做什么**。同时，也要兼顾其他事情，这样社会才不会限制你去做任何事。” “Fall in love with some activity, and do it! Nobody ever figures out what life is all about, and it doesn’t matter. Explore the world. Nearly everything is really interesting if you go into it deeply enough. Work as hard and as much as you want to on the things you like to do the best. Don’t think about what you want to be, but what you want to do. Keep up some kind of a minimum with other things so that society doesn’t stop you from doing anything at all.” -- 理查德·费曼
 
