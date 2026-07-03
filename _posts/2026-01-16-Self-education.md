@@ -292,6 +292,8 @@ Geliebtwerden ist Schicksal, oder es ist kein Schicksal, Lieben aber ist ein Tun
 
 我这一辈子都在花时间做两件事情，一件事发现什么是有效的，然后坚决去执行；另一件事发现什么是无效的，然后坚决去避免。(芒格)
 
+很久以前有人教给我，非常有价值的一课：只要你把根本的事情做对，好的结果自然水到渠成。他们想表达的意思是，只要战略方向对了，团队人才济济并且公司文化积极向上，那么打造出好产品，做好市场营销乃至供应链，生产制造和分销环节，如果你把这些都做对了，利润自然水到渠成。-- 乔布斯
+
 “模糊的正确好过于精准的错误” “It is better to be approximately right, than precisely wrong.” — Warren Buffett
 
 "Somebody told me a long time ago a very valuable lesson: If you do the right thing on the top line, the bottom line will follow."- Steve Jobs, 1997
